@@ -93,7 +93,7 @@ class BookingService
             ['To', $parcel->recipient_name.', '.$parcel->recipient_phone],
             ['Collect at', 'Pick&Send pickup station, '.$parcel->town->name],
             ['Parcel', $parcel->contents_description],
-            ['Estimated worth', $this->fmt($parcel->estimated_worth)],
+            // ['Estimated worth', $this->fmt($parcel->estimated_worth)],
             ['Packaging', $parcel->pack_fee > 0 ? 'Packed, '.$this->fmt($parcel->pack_fee) : 'Not needed'],
             ['Cash on Delivery', $parcel->cod_amount > 0 ? $this->fmt($parcel->cod_amount).' to pay at collection' : 'None'],
             ['Total', $this->fmt($parcel->total)],

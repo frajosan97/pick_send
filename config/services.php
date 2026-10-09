@@ -39,4 +39,11 @@ return [
         'whatsapp' => env('PICK_AND_SEND_WHATSAPP', '254718819413'),
     ],
 
+    'sms' => [
+        'api_key' => env('SMS_API_KEY'),
+        'api_url' => env('SMS_API_URL'),
+        'sender_id' => env('SMS_SENDER_ID'),
+        'partner_id' => env('SMS_PARTNER_ID'),
+    ],
+
 ];

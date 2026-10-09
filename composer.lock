@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2bcb3c3250b0e31756e8fc029fd6709a",
+    "content-hash": "53337008783cbc324fe4f1750c2df0cb",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -663,6 +663,80 @@
                 }
             ],
             "time": "2025-03-06T22:45:56+00:00"
+        },
+        {
+            "name": "felixmuhoro/laravel-mpesa",
+            "version": "v1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/felixmuhoro/laravel-mpesa.git",
+                "reference": "977f00a17ae736172708e4fca2f07f36b8015b79"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/felixmuhoro/laravel-mpesa/zipball/977f00a17ae736172708e4fca2f07f36b8015b79",
+                "reference": "977f00a17ae736172708e4fca2f07f36b8015b79",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^10.0|^11.0|^12.0|^13.0",
+                "illuminate/http": "^10.0|^11.0|^12.0|^13.0",
+                "illuminate/support": "^10.0|^11.0|^12.0|^13.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.6",
+                "orchestra/testbench": "^8.0|^9.0|^10.0|^11.0",
+                "phpunit/phpunit": "^10.0|^11.0|^12.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Mpesa": "FelixMuhoro\\Mpesa\\Facades\\Mpesa"
+                    },
+                    "providers": [
+                        "FelixMuhoro\\Mpesa\\MpesaServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FelixMuhoro\\Mpesa\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Felix Muhoro",
+                    "email": "hi@felixmuhoro.dev",
+                    "homepage": "https://felixmuhoro.dev",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Modern, fully-typed M-Pesa Daraja 2.0 integration for Laravel 10 / 11 / 12. STK Push, C2B, B2C, callbacks, events, and an exhaustive result-code dictionary — battle-tested in production.",
+            "homepage": "https://github.com/felixmuhoro/laravel-mpesa",
+            "keywords": [
+                "B2C",
+                "c2b",
+                "daraja",
+                "kenya",
+                "laravel",
+                "lipa-na-mpesa",
+                "mpesa",
+                "payments",
+                "safaricom",
+                "stk-push"
+            ],
+            "support": {
+                "email": "hi@felixmuhoro.dev",
+                "issues": "https://github.com/felixmuhoro/laravel-mpesa/issues",
+                "source": "https://github.com/felixmuhoro/laravel-mpesa"
+            },
+            "time": "2026-05-02T18:55:35+00:00"
         },
         {
             "name": "fruitcake/php-cors",
