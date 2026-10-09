@@ -1,0 +1,776 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../js';
+
+/* ============================================================
+   VARIANTS
+   ------------------------------------------------------------
+   dark  → applies unless `.light` is on an ancestor
+           (dark is the DEFAULT, so this is the common case)
+   light → applies only inside `.light`
+   ============================================================ */
+@custom-variant dark (&:where(:not(.light *)));
+@custom-variant light (&:where(.light *));
+
+/* ============================================================
+   THEME TOKENS (Tailwind v4 @theme)
+   ============================================================ */
+@theme {
+    /* ---------- fonts ---------- */
+    --font-sans:
+        'Plus Jakarta Sans', 'Instrument Sans', ui-sans-serif, system-ui,
+        sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
+    --font-mono:
+        'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        'Liberation Mono', 'Courier New', monospace;
+
+    /* ---------- radii ---------- */
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
+
+    /* ---------- shadcn semantic tokens ---------- */
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+
+    /* ---------- Pick&Send palette (names; values below) ---------- */
+    --color-ps-bg: var(--ps-bg);
+    --color-ps-surface: var(--ps-surface);
+    --color-ps-surface2: var(--ps-surface2);
+    --color-ps-ink: var(--ps-ink);
+    --color-ps-muted: var(--ps-muted);
+    --color-ps-line: var(--ps-line);
+    --color-ps-brand: var(--ps-brand);
+    --color-ps-onbrand: var(--ps-onbrand);
+    --color-ps-brandink: var(--ps-brandink);
+    --color-ps-accent: var(--ps-accent);
+    --color-ps-soft: var(--ps-soft);
+    --color-ps-softink: var(--ps-softink);
+    --color-ps-wa: var(--ps-wa);
+    --color-ps-onwa: var(--ps-onwa);
+    --color-ps-band: var(--ps-band);
+    --color-ps-bandmuted: var(--ps-bandmuted);
+    --color-ps-bandline: var(--ps-bandline);
+    --color-ps-key: var(--ps-key);
+    --color-ps-warn: var(--ps-warn);
+    --color-ps-warnink: var(--ps-warnink);
+    --color-ps-coast: var(--ps-coast);
+    --color-ps-mount: var(--ps-mount);
+    --color-ps-rift: var(--ps-rift);
+    --color-ps-lake: var(--ps-lake);
+}
+
+/* ============================================================
+   DEFAULT THEME = NAVY DARK
+   :root IS the navy theme. No class needed on <html>.
+   ============================================================ */
+:root {
+    color-scheme: dark;
+
+    /* ---------- shadcn tokens → mapped to navy palette ---------- */
+    --background: #0b1424;
+    --foreground: #e8edf6;
+    --card: #121e33;
+    --card-foreground: #e8edf6;
+    --popover: #18263f;
+    --popover-foreground: #e8edf6;
+    --primary: #8fb8f2;
+    --primary-foreground: #0b1f3d;
+    --secondary: #18263f;
+    --secondary-foreground: #e8edf6;
+    --muted: #18263f;
+    --muted-foreground: #a7b3c9;
+    --accent: #4fd1c0;
+    --accent-foreground: #062a27;
+    --destructive: #f87171;
+    --destructive-foreground: #1a0a0a;
+    --border: #2a3a57;
+    --input: #2a3a57;
+    --ring: #8fb8f2;
+
+    /* ---------- charts ---------- */
+    --chart-1: #8fb8f2;
+    --chart-2: #4fd1c0;
+    --chart-3: #e3b04b;
+    --chart-4: #f08a5d;
+    --chart-5: #7fb0f5;
+
+    /* ---------- radius ---------- */
+    --radius: 0.625rem;
+
+    /* ---------- sidebar ---------- */
+    --sidebar: #0f1c33;
+    --sidebar-foreground: #e8edf6;
+    --sidebar-primary: #8fb8f2;
+    --sidebar-primary-foreground: #0b1f3d;
+    --sidebar-accent: #18263f;
+    --sidebar-accent-foreground: #e8edf6;
+    --sidebar-border: #2a3a57;
+    --sidebar-ring: #8fb8f2;
+
+    /* ---------- Pick&Send raw palette (dark navy) ---------- */
+    --ps-bg: #0b1424;
+    --ps-surface: #121e33;
+    --ps-surface2: #18263f;
+    --ps-ink: #e8edf6;
+    --ps-muted: #a7b3c9;
+    --ps-line: #2a3a57;
+    --ps-brand: #8fb8f2;
+    --ps-onbrand: #0b1f3d;
+    --ps-brandink: #cfe0fa;
+    --ps-accent: #4fd1c0;
+    --ps-soft: #123b38;
+    --ps-softink: #a9ede3;
+    --ps-wa: #3cb652;
+    --ps-onwa: #06260c;
+    --ps-band: #0f2747;
+    --ps-bandmuted: #b9c8e0;
+    --ps-bandline: #35507b;
+    --ps-key: #4fd1c0;
+    --ps-warn: #3d2e0c;
+    --ps-warnink: #f3d08a;
+    --ps-coast: #f08a5d;
+    --ps-mount: #4fd1c0;
+    --ps-rift: #e3b04b;
+    --ps-lake: #7fb0f5;
+}
+
+/* ============================================================
+   LIGHT OVERRIDE — opt-in via `.light` on <html>
+   ============================================================ */
+.light {
+    color-scheme: light;
+
+    /* ---------- shadcn tokens ---------- */
+    --background: #f4f7fc;
+    --foreground: #0b1424;
+    --card: #ffffff;
+    --card-foreground: #0b1424;
+    --popover: #ffffff;
+    --popover-foreground: #0b1424;
+    --primary: #2a5db0;
+    --primary-foreground: #ffffff;
+    --secondary: #eef2f9;
+    --secondary-foreground: #0b1424;
+    --muted: #eef2f9;
+    --muted-foreground: #5b6a82;
+    --accent: #0d9488;
+    --accent-foreground: #ffffff;
+    --destructive: #dc2626;
+    --destructive-foreground: #ffffff;
+    --border: #d6deec;
+    --input: #d6deec;
+    --ring: #2a5db0;
+
+    /* ---------- charts ---------- */
+    --chart-1: #2a5db0;
+    --chart-2: #0d9488;
+    --chart-3: #b45309;
+    --chart-4: #ea580c;
+    --chart-5: #2563eb;
+
+    /* ---------- sidebar ---------- */
+    --sidebar: #ffffff;
+    --sidebar-foreground: #0b1424;
+    --sidebar-primary: #2a5db0;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #eef2f9;
+    --sidebar-accent-foreground: #0b1424;
+    --sidebar-border: #d6deec;
+    --sidebar-ring: #2a5db0;
+
+    /* ---------- Pick&Send raw palette (light) ---------- */
+    --ps-bg: #f4f7fc;
+    --ps-surface: #ffffff;
+    --ps-surface2: #eef2f9;
+    --ps-ink: #0b1424;
+    --ps-muted: #5b6a82;
+    --ps-line: #d6deec;
+    --ps-brand: #2a5db0;
+    --ps-onbrand: #ffffff;
+    --ps-brandink: #1c3f7c;
+    --ps-accent: #0d9488;
+    --ps-soft: #ccfbf1;
+    --ps-softink: #0f766e;
+    --ps-wa: #25d366;
+    --ps-onwa: #06260c;
+    --ps-band: #e8eefb;
+    --ps-bandmuted: #4a5b78;
+    --ps-bandline: #c4d0e6;
+    --ps-key: #0d9488;
+    --ps-warn: #fef3c7;
+    --ps-warnink: #92400e;
+    --ps-coast: #ea580c;
+    --ps-mount: #0d9488;
+    --ps-rift: #b45309;
+    --ps-lake: #2563eb;
+}
+
+/* ============================================================
+   LEGACY ALIAS — `.dark` is a no-op for safety.
+   ============================================================ */
+.dark {
+    color-scheme: dark;
+}
+
+/* ============================================================
+   BASE LAYER
+   ============================================================ */
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    html {
+        background-color: var(--background);
+        color: var(--foreground);
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ---------- Native form controls pick up tokens ---------- */
+    input[type='text'],
+    input[type='email'],
+    input[type='password'],
+    input[type='search'],
+    input[type='tel'],
+    input[type='url'],
+    input[type='number'],
+    input[type='date'],
+    input[type='datetime-local'],
+    input[type='month'],
+    input[type='time'],
+    input[type='week'],
+    textarea,
+    select {
+        background-color: var(--card);
+        color: var(--card-foreground);
+        border: 1px solid var(--input);
+        border-radius: var(--radius-md);
+        padding: 0.5rem 0.75rem;
+        transition:
+            border-color 150ms ease,
+            box-shadow 150ms ease,
+            background-color 150ms ease;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+        color: var(--muted-foreground);
+        opacity: 1;
+    }
+
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible {
+        outline: none;
+        border-color: var(--ring);
+        box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 35%, transparent);
+    }
+
+    input:disabled,
+    textarea:disabled,
+    select:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    input[type='checkbox'],
+    input[type='radio'] {
+        accent-color: var(--primary);
+        width: 1rem;
+        height: 1rem;
+        border-radius: 0.25rem;
+        cursor: pointer;
+    }
+
+    input[type='checkbox']:focus-visible,
+    input[type='radio']:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 35%, transparent);
+    }
+
+    /* ---------- Links ---------- */
+    a {
+        color: var(--primary);
+        transition: color 150ms ease;
+    }
+
+    a:hover {
+        color: color-mix(in oklab, var(--primary) 80%, var(--foreground));
+    }
+
+    /* ---------- Selection ---------- */
+    ::selection {
+        background-color: color-mix(in oklab, var(--primary) 30%, transparent);
+        color: var(--foreground);
+    }
+
+    /* ---------- Scrollbars ---------- */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--border) transparent;
+    }
+
+    *::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    *::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background-color: var(--border);
+        border-radius: 9999px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+    }
+
+    *::-webkit-scrollbar-thumb:hover {
+        background-color: var(--muted-foreground);
+        background-clip: content-box;
+    }
+
+    /* ---------- Autofill (Chrome/Safari) ---------- */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    select:-webkit-autofill {
+        -webkit-text-fill-color: var(--card-foreground);
+        -webkit-box-shadow: 0 0 0 1000px var(--card) inset;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+}
+
+/* ============================================================
+   ADMIN DASHBOARD — component styles
+   ------------------------------------------------------------
+   All rules live under `@layer components` so utilities
+   (e.g. `mt-4`, `text-lg`) still win when applied inline.
+   ============================================================ */
+@layer components {
+    /* ---------------- Layout shell ---------------- */
+    .ps-dash {
+        @apply mx-auto w-full max-w-[1440px] px-4 py-5 sm:px-6 lg:px-8;
+    }
+
+    .ps-dash-grid {
+        @apply grid gap-4;
+        grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    }
+
+    .ps-dash-grid--kpi {
+        grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+    }
+
+    .ps-dash-grid--split {
+        grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+    }
+
+    /* ---------------- Cards / panels ---------------- */
+    .ps-card {
+        @apply relative flex min-w-0 flex-col gap-3 rounded-xl border p-4 sm:p-5;
+        background: var(--card);
+        border-color: var(--border);
+        color: var(--card-foreground);
+    }
+
+    .ps-card__head {
+        @apply flex flex-wrap items-start justify-between gap-3;
+    }
+
+    .ps-card__title {
+        @apply m-0 text-[1rem] leading-tight font-bold;
+        color: var(--foreground);
+    }
+
+    .ps-card__sub {
+        @apply text-[.82rem];
+        color: var(--muted-foreground);
+    }
+
+    .ps-card__body {
+        @apply min-w-0 flex-1;
+    }
+
+    /* ---------------- KPI tile ---------------- */
+    .ps-kpi {
+        @apply relative flex min-w-0 flex-col gap-2 overflow-hidden rounded-xl border p-4 sm:p-5;
+        background: var(--card);
+        border-color: var(--border);
+    }
+
+    .ps-kpi__label {
+        @apply text-[.78rem] font-semibold tracking-[.02em] uppercase;
+        color: var(--muted-foreground);
+    }
+
+    .ps-kpi__value {
+        @apply text-[1.7rem] leading-none font-extrabold tabular-nums;
+        color: var(--foreground);
+    }
+
+    .ps-kpi__hint {
+        @apply text-[.78rem];
+        color: var(--muted-foreground);
+    }
+
+    .ps-kpi__trend {
+        @apply mt-1 h-10 w-full;
+        color: var(--accent);
+    }
+
+    .ps-kpi--brand {
+        border-color: color-mix(in oklab, var(--ps-brand) 40%, var(--border));
+        background:
+            linear-gradient(
+                180deg,
+                color-mix(in oklab, var(--ps-brand) 8%, transparent),
+                transparent 60%
+            ),
+            var(--card);
+    }
+
+    .ps-kpi--warn {
+        border-color: color-mix(in oklab, var(--ps-warnink) 40%, var(--border));
+        background:
+            linear-gradient(
+                180deg,
+                color-mix(in oklab, var(--ps-warn) 60%, transparent),
+                transparent 60%
+            ),
+            var(--card);
+    }
+
+    .ps-kpi--danger {
+        border-color: color-mix(
+            in oklab,
+            var(--destructive) 40%,
+            var(--border)
+        );
+    }
+
+    .ps-kpi__delta {
+        @apply inline-flex items-center gap-1 rounded-full px-2 py-[2px] text-[.72rem] font-bold tabular-nums;
+    }
+
+    .ps-kpi__delta--up {
+        background: color-mix(in oklab, var(--accent) 22%, transparent);
+        color: var(--accent);
+    }
+
+    .ps-kpi__delta--down {
+        background: color-mix(in oklab, var(--destructive) 22%, transparent);
+        color: var(--destructive);
+    }
+
+    /* ---------------- Toolbar (range picker etc) ---------------- */
+    .ps-toolbar {
+        @apply flex flex-wrap items-center justify-between gap-3 rounded-xl border px-3 py-2.5;
+        background: var(--card);
+        border-color: var(--border);
+    }
+
+    .ps-toolbar__group {
+        @apply flex flex-wrap items-center gap-1.5;
+    }
+
+    .ps-toolbar__meta {
+        @apply text-[.8rem] tabular-nums;
+        color: var(--muted-foreground);
+    }
+
+    .ps-chip {
+        @apply inline-flex min-h-9 items-center rounded-lg border px-3 text-[.82rem] font-semibold no-underline transition;
+        background: var(--card);
+        border-color: var(--border);
+        color: var(--foreground);
+        cursor: pointer;
+    }
+
+    .ps-chip:hover {
+        background: var(--muted);
+    }
+
+    .ps-chip[aria-pressed='true'],
+    .ps-chip--active {
+        background: var(--ps-brand);
+        border-color: var(--ps-brand);
+        color: var(--ps-onbrand);
+    }
+
+    .ps-chip--ghost {
+        background: transparent;
+    }
+
+    /* ---------------- Data table ---------------- */
+    .ps-table {
+        @apply w-full border-collapse text-[.88rem] tabular-nums;
+    }
+
+    .ps-table thead th {
+        @apply sticky top-0 z-[1] border-b px-4 py-2.5 text-left text-[.72rem] font-bold tracking-[.06em] uppercase;
+        background: var(--card);
+        border-color: var(--border);
+        color: var(--muted-foreground);
+        backdrop-filter: blur(6px);
+    }
+
+    .ps-table thead th.text-right,
+    .ps-table tbody td.text-right {
+        text-align: right;
+    }
+
+    .ps-table tbody td {
+        @apply border-b px-4 py-2.5 align-middle;
+        border-color: color-mix(in oklab, var(--border) 70%, transparent);
+    }
+
+    .ps-table tbody tr:last-child td {
+        border-bottom: 0;
+    }
+
+    .ps-table tbody tr:hover td {
+        background: color-mix(in oklab, var(--muted) 60%, transparent);
+    }
+
+    .ps-table--zebra tbody tr:nth-child(even) td {
+        background: color-mix(in oklab, var(--muted) 35%, transparent);
+    }
+
+    .ps-table__num {
+        @apply text-right font-mono;
+    }
+
+    .ps-table__mono {
+        @apply font-mono text-[.82rem];
+    }
+
+    /* ---------------- Pill / badge ---------------- */
+    .ps-pill {
+        @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-[3px] text-[.78rem] font-bold whitespace-nowrap;
+        background: var(--muted);
+        color: var(--muted-foreground);
+    }
+
+    .ps-pill--wait {
+        background: color-mix(in oklab, var(--ps-warn) 70%, transparent);
+        color: var(--ps-warnink);
+    }
+
+    .ps-pill--move {
+        background: color-mix(in oklab, var(--ps-brand) 22%, transparent);
+        color: var(--ps-brandink);
+    }
+
+    .ps-pill--done {
+        background: color-mix(in oklab, var(--ps-accent) 22%, transparent);
+        color: var(--ps-accent);
+    }
+
+    .ps-pill--danger {
+        background: color-mix(in oklab, var(--destructive) 22%, transparent);
+        color: var(--destructive);
+    }
+
+    /* ---------------- Charts ---------------- */
+    .ps-chart {
+        @apply relative w-full;
+    }
+
+    .ps-chart svg {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .ps-chart__legend {
+        @apply mt-2 flex flex-wrap gap-x-4 gap-y-1.5 text-[.78rem];
+        color: var(--muted-foreground);
+    }
+
+    .ps-chart__legend i {
+        @apply inline-block h-2.5 w-2.5 flex-none rounded-full;
+    }
+
+    .ps-chart__axis {
+        @apply flex justify-between text-[.68rem];
+        color: var(--muted-foreground);
+    }
+
+    .ps-chart__grid line {
+        stroke: var(--border);
+        stroke-width: 0.5;
+        vector-effect: non-scaling-stroke;
+        opacity: 0.6;
+    }
+
+    .ps-donut__track {
+        stroke: var(--border);
+    }
+
+    .ps-donut__label {
+        fill: var(--foreground);
+        font-weight: 700;
+    }
+
+    /* ---------------- Funnel rows ---------------- */
+    .ps-funnel {
+        @apply m-0 flex list-none flex-col gap-2 p-0;
+    }
+
+    .ps-funnel__row {
+        @apply flex items-center gap-3;
+    }
+
+    .ps-funnel__label {
+        @apply w-[130px] flex-none text-[.82rem] font-semibold capitalize;
+        color: var(--muted-foreground);
+    }
+
+    .ps-funnel__track {
+        @apply relative h-6 flex-1 overflow-hidden rounded-md;
+        background: var(--muted);
+    }
+
+    .ps-funnel__fill {
+        @apply absolute inset-y-0 left-0 rounded-md transition-[width] duration-500;
+        background: linear-gradient(
+            90deg,
+            var(--accent),
+            color-mix(in oklab, var(--accent) 70%, var(--ps-brand))
+        );
+    }
+
+    .ps-funnel__value {
+        @apply w-14 flex-none text-right font-mono text-[.82rem];
+    }
+
+    /* ---------------- Empty state ---------------- */
+    .ps-empty {
+        @apply flex flex-col items-center justify-center gap-1 rounded-lg border border-dashed px-4 py-8 text-center text-[.86rem];
+        border-color: var(--border);
+        color: var(--muted-foreground);
+    }
+
+    .ps-empty b {
+        color: var(--foreground);
+    }
+
+    /* ---------------- Skeleton ---------------- */
+    .ps-skel {
+        @apply block rounded-md;
+        background: linear-gradient(
+            90deg,
+            var(--muted) 25%,
+            color-mix(in oklab, var(--muted) 60%, var(--card)) 37%,
+            var(--muted) 63%
+        );
+        background-size: 400% 100%;
+        animation: ps-skel 1.4s ease-in-out infinite;
+    }
+
+    @keyframes ps-skel {
+        0% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0 50%;
+        }
+    }
+
+    /* ---------------- Value change flash ---------------- */
+    .ps-flash {
+        animation: ps-flash 900ms ease-out;
+    }
+
+    @keyframes ps-flash {
+        0% {
+            background-color: color-mix(
+                in oklab,
+                var(--accent) 30%,
+                transparent
+            );
+        }
+        100% {
+            background-color: transparent;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ps-skel,
+        .ps-flash,
+        .ps-funnel__fill {
+            animation: none !important;
+            transition: none !important;
+        }
+    }
+
+    /* ---------------- Print ---------------- */
+    @media print {
+        .ps-dash {
+            max-width: none;
+            padding: 0;
+        }
+
+        .ps-toolbar,
+        .ps-chip {
+            display: none !important;
+        }
+
+        .ps-card,
+        .ps-kpi {
+            border: 1px solid #ccc;
+            background: #fff !important;
+            color: #000 !important;
+            break-inside: avoid;
+        }
+
+        .ps-table thead th {
+            background: #f5f5f5 !important;
+            color: #000 !important;
+        }
+    }
+}
