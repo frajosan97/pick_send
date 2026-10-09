@@ -11,7 +11,11 @@ use Illuminate\Support\Str;
 
 class ItemSeeder extends Seeder
 {
-    /** Pickup fee overrides (KSh). Anything not listed defaults to 50. */
+    /**
+     * Pickup fee overrides (KSh). Anything not listed defaults to 50.
+     *
+     * @var array<string, int>
+     */
     private array $pickupOverrides = [
         '10' => 100,
         'monitor' => 100,
