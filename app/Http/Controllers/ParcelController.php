@@ -5,26 +5,31 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreParcelRequest;
 use App\Models\Parcel;
 use App\Services\BookingService;
+use App\Services\NotificationService;
 use App\Services\PricingService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 
 class ParcelController extends Controller
 {
     public function __construct(
         private PricingService $pricing,
         private BookingService $booking,
-    ) {}
+        private NotificationService $notifier,
+    ) {
+    }
 
     public function store(StoreParcelRequest $request): RedirectResponse
     {
-        // 1. Compute the authoritative price server-side
         $data = $request->validated();
         $price = $this->pricing->price($data);
 
-        // 2. Create the parcel + first event + payment row in a transaction
         $parcel = $this->booking->create($data, $price, $request->user());
 
-        // 3. Return to the page with the created parcel for the receipt UI
+        // Fire-and-forget style notifications. If you have a queue worker,
+        // make NotificationService implement ShouldQueue for true async.
+        $this->notifier->parcelBooked($parcel);
+
         return back()->with('booking', [
             'tracking_no' => $parcel->tracking_no,
             'handover_code' => $parcel->handover_code,

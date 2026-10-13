@@ -40,10 +40,16 @@ return [
     ],
 
     'sms' => [
+        'base_url' => env('SMS_BASE_URL', 'https://sms.frajosantech.co.ke'),
         'api_key' => env('SMS_API_KEY'),
-        'api_url' => env('SMS_API_URL'),
         'sender_id' => env('SMS_SENDER_ID'),
         'partner_id' => env('SMS_PARTNER_ID'),
+    ],
+
+    'whatsapp' => [
+        'base_url' => env('WHATSAPP_BASE_URL', 'https://graph.facebook.com/v20.0'),
+        'token' => env('WHATSAPP_TOKEN'),
+        'phone_number_id' => env('WHATSAPP_PHONE_NUMBER_ID'),
     ],
 
 ];

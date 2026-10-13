@@ -19,11 +19,11 @@ class SmsService
 
     public function __construct()
     {
-        $this->apiBaseUrl = rtrim('https://sms.frajosantech.co.ke/', '/');
-
         $this->apiKey = config('services.sms.api_key');
         $this->partnerId = config('services.sms.partner_id');
         $this->senderId = config('services.sms.sender_id');
+
+        $this->apiBaseUrl = config('services.sms.base_url');
 
         $this->client = new Client([
             'timeout' => 30,
