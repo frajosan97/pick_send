@@ -10,15 +10,11 @@ use Illuminate\Support\Facades\Log;
 class PaymentService
 {
     public function __construct(
-        protected SmsService $sms,
         protected MpesaService $mpesa,
         protected NotificationService $notifier,
     ) {
     }
 
-    /**
-     * Kick off an STK push for a parcel and persist a pending payment row.
-     */
     public function initiateParcelPayment(Parcel $parcel, string $phone): array
     {
         $result = $this->mpesa->stkPush(
@@ -29,12 +25,7 @@ class PaymentService
         );
 
         if (!($result['success'] ?? false)) {
-            // Let the customer know the push failed so they can retry
-            $this->notifier->notify(
-                $phone,
-                "We couldn't initiate payment for parcel {$parcel->tracking_no}. "
-                . "Please try again or contact support."
-            );
+            $this->notifier->paymentInitFailed($phone, $parcel);
 
             return $result;
         }
@@ -47,19 +38,11 @@ class PaymentService
             'phone' => $phone,
         ]);
 
-        // Notify customer to complete the STK prompt on their phone
-        $this->notifier->notify(
-            $phone,
-            "An M-PESA prompt for KES {$parcel->delivery_fee} has been sent to your phone "
-            . "for parcel {$parcel->tracking_no}. Enter your PIN to complete payment."
-        );
+        $this->notifier->paymentPromptSent($phone, $parcel);
 
         return $result;
     }
 
-    /**
-     * Record a manually-entered M-PESA code (e.g. from SMS forwarder or user input).
-     */
     public function recordMpesaCode(Parcel $parcel, string $code): void
     {
         $code = strtoupper(trim($code));
@@ -89,13 +72,9 @@ class PaymentService
             ]);
         });
 
-        // Fan-out payment confirmation to SMS + WhatsApp
         $this->notifier->parcelPaid($parcel->fresh(), $code);
     }
 
-    /**
-     * Called from the M-PESA STK callback when payment succeeds.
-     */
     public function recordStkSuccess($payment, string $receipt, $amount): void
     {
         DB::transaction(function () use ($payment, $receipt, $amount) {
@@ -130,9 +109,6 @@ class PaymentService
         }
     }
 
-    /**
-     * Called from the M-PESA STK callback when payment fails or is cancelled.
-     */
     public function recordStkFailure($payment, string $resultDesc): void
     {
         $payment->update([
@@ -146,10 +122,10 @@ class PaymentService
         ]);
 
         if ($payment->parcel && $payment->phone) {
-            $this->notifier->notify(
+            $this->notifier->paymentFailed(
                 $payment->phone,
-                "Payment for parcel {$payment->parcel->tracking_no} was not completed. "
-                . "Reason: {$resultDesc}. Reply or tap to retry."
+                $payment->parcel,
+                $resultDesc
             );
         }
     }

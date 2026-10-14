@@ -9,10 +9,6 @@ use Illuminate\Support\Facades\Log;
 
 class MpesaService
 {
-    /**
-     * 发起 STK Push（Lipa Na M-Pesa）
-     * 返回 checkoutRequestId 用于后续回调对账
-     */
     public function stkPush(
         string $phone,
         int $amount,
@@ -47,16 +43,10 @@ class MpesaService
                 'error' => $e->getMessage(),
             ]);
 
-            return [
-                'success' => false,
-                'error' => $e->getMessage(),
-            ];
+            return ['success' => false, 'error' => $e->getMessage()];
         }
     }
 
-    /**
-     * 发起 B2C 提现（用于 MerchantService::withdraw）
-     */
     public function b2c(
         string $phone,
         int $amount,

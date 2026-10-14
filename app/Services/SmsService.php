@@ -65,9 +65,6 @@ class SmsService
         return $responseInfo;
     }
 
-    /**
-     * POST helper.
-     */
     protected function post(string $endpoint, array $payload): array
     {
         try {
@@ -86,9 +83,6 @@ class SmsService
         }
     }
 
-    /**
-     * Validate input.
-     */
     protected function validateInput(
         string $mobile,
         string $message,
@@ -112,9 +106,6 @@ class SmsService
         }
     }
 
-    /**
-     * Persist message record.
-     */
     protected function saveMessage(
         array $responseInfo,
         string $mobile,
