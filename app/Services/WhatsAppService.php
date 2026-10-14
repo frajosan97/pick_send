@@ -27,7 +27,7 @@ class WhatsAppService
     /**
      * Your template names, exactly as approved in the WABA.
      */
-    public const TEMPLATE_PARCEL_BOOKED = 'parcel_booked';
+    public const TEMPLATE_PARCEL_BOOKED = 'parcel_booked_v2';
     public const TEMPLATE_PARCEL_PAID = 'parcel_paid';
     public const TEMPLATE_PARCEL_IN_TRANSIT = 'parcel_in_transit';
     public const TEMPLATE_PARCEL_DELIVERED = 'parcel_delivered';
