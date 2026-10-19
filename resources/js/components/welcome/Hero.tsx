@@ -87,7 +87,7 @@ export function Hero({ config }: { config: Config }) {
                         <b className="text-ps-ink">
                             anyone with something to send
                         </b>
-                        .
+                        . Professional packaging is free of charge.
                     </p>
                     <div className="flex flex-wrap gap-3">
                         <a className={PRIMARY} href="#send">
@@ -111,7 +111,7 @@ export function Hero({ config }: { config: Config }) {
                                 Sending bulk items? Get a quote.
                             </b>
                             <span className="text-[.95rem] font-semibold opacity-90">
-                                Call or WhatsApp 0718 819 413
+                                Call or WhatsApp 0716 983 983
                             </span>
                         </span>
                         <i
@@ -125,7 +125,7 @@ export function Hero({ config }: { config: Config }) {
                         <li>Free pickup from CBD shops</li>
                         <li>Pay by M-PESA</li>
                         <li>Collected with an SMS code</li>
-                        <li>From documents to fridges</li>
+                        <li>Free professional packaging</li>
                     </ul>
                 </div>
 

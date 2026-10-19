@@ -360,7 +360,7 @@ export function SendParcel({
                                 ))}
                             </Fld>
                             <div className="flex flex-col gap-1.5">
-                                <Choice label="Need packaging? We pack it for you at a small fee.">
+                                <Choice label="Free professional packaging — want us to pack it for you?">
                                     <Opt
                                         type="radio"
                                         name="pack"
@@ -379,7 +379,8 @@ export function SendParcel({
                                     </Opt>
                                 </Choice>
                                 <span className={HINT}>
-                                    {`Professional packaging for this item is ${fmt(p.item.pack)}. You only pay if you choose yes.`}
+                                    Professional parcel packaging is provided
+                                    free of charge.
                                 </span>
                             </div>
                             <Fld
@@ -399,7 +400,7 @@ export function SendParcel({
                                 inputMode="numeric"
                                 placeholder="Leave empty if already paid"
                                 autoComplete="off"
-                                hint="Only if the recipient must pay you for the goods."
+                                hint="Only if the recipient must pay you for the goods. A 1.6% COD fee applies."
                                 value={f.cod}
                                 onChange={on("cod")}
                                 error={fErr.cod}
@@ -634,7 +635,7 @@ export function SendParcel({
                             </div>
                             <span className={HINT}>
                                 Share the receipt with the recipient. Send the
-                                booking to us on 0718 819 413 and we reply with
+                                booking to us on 0716 983 983 and we reply with
                                 your tracking number.
                             </span>
                         </div>

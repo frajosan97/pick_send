@@ -1,6 +1,6 @@
 <?php
 
-// app/Http/Controllers/Admin/DashboardController.php
+// app/Http/Controllers/aController.php
 
 namespace App\Http\Controllers\Admin;
 
@@ -19,7 +19,7 @@ class DashboardController extends Controller
     {
         [$from, $to] = $this->range($request);
 
-        return Inertia::render('Admin/Dashboard', [
+        return Inertia::render('admin/dashboard', [
             'report' => $this->reports->payload($from, $to),
         ]);
     }

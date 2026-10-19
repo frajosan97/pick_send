@@ -92,6 +92,11 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
         return $this->hasMany(ParcelEvent::class, 'staff_id');
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->type === 'admin';
+    }
+
     /* ---------- helpers ---------- */
     public function isMerchant(): bool
     {

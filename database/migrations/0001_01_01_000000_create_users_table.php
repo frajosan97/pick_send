@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
@@ -15,7 +14,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone')->nullable()->unique();
             $table->timestamp('phone_verified_at')->nullable();
-            $table->enum('type', ['customer', 'merchant', 'staff'])->default('customer');
+            $table->enum('type', ['customer', 'merchant', 'staff', 'admin'])->default('customer');
             $table->string('business_name')->nullable();
             $table->string('password');
             $table->rememberToken();
