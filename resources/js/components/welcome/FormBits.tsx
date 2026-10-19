@@ -1,6 +1,6 @@
 // src/components/pickandsend/FormBits.tsx
 import type { ReactNode } from 'react';
-import { INPUT, HINT, H3, TH, TD } from './shared';
+import { INPUT, HINT, H3, TH } from './shared';
 
 export function Fld({
     id,

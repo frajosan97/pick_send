@@ -7654,18 +7654,15 @@ var hl = `Menu`,
                             i,
                         ),
                         o = n.find((e) => e.textValue === a)?.ref.current;
-                    (K(
-                        function e(t) {
-                            ((P.current = t),
-                                window.clearTimeout(N.current),
-                                t !== `` &&
-                                    (N.current = window.setTimeout(
-                                        () => e(``),
-                                        1e3,
-                                    )));
-                        },
-                        `updateSearch`,
-                    )(t),
+                    (K(function e(t) {
+                        ((P.current = t),
+                            window.clearTimeout(N.current),
+                            t !== `` &&
+                                (N.current = window.setTimeout(
+                                    () => e(``),
+                                    1e3,
+                                )));
+                    }, `updateSearch`)(t),
                         o && setTimeout(() => o.focus()));
                 }, `handleTypeaheadSearch`);
             (A.useEffect(() => () => window.clearTimeout(N.current), []), Pa());

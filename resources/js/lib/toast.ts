@@ -12,7 +12,7 @@ export function toastSuccess(title: string) {
             toast.onmouseleave = Swal.resumeTimer;
         },
     });
-    Toast.fire({ icon: 'success', title });
+    void Toast.fire({ icon: 'success', title });
 }
 
 export function toastError(title: string) {
@@ -23,7 +23,7 @@ export function toastError(title: string) {
         timer: 3500,
         timerProgressBar: true,
     });
-    Toast.fire({ icon: 'error', title });
+    void Toast.fire({ icon: 'error', title });
 }
 
 export async function confirmDelete(

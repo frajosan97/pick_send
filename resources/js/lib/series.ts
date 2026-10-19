@@ -1,5 +1,5 @@
 // resources/js/lib/series.ts
-import { dateKey, dateRangeKeys, parseDateOnly, toDateOnly } from './date';
+import { dateRangeKeys, toDateOnly } from './date';
 
 export type SeriesPoint = {
     date: string;

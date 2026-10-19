@@ -1,7 +1,5 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Textarea } from '@/components/ui/textarea';
 
 type Props = {
     label: string;
@@ -22,12 +20,10 @@ export function Field({ label, error, children }: Props) {
 export function TextField({
     value,
     onChange,
-    error,
     type = 'text',
 }: {
     value: any;
     onChange: (v: any) => void;
-    error?: string;
     type?: string;
 }) {
     return (

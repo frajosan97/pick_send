@@ -1,6 +1,4 @@
 // src/components/pickandsend/shared.tsx
-import type { ReactNode } from 'react';
-
 /* ---------- shared class strings ---------- */
 export const WRAP = 'mx-auto w-full max-w-[1120px] px-4 sm:px-5';
 export const BTN =

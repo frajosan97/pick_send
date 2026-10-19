@@ -7,5 +7,3 @@ declare global {
 if (typeof window !== 'undefined') {
     window.route = route;
 }
-
-

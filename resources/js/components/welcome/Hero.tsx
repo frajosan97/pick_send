@@ -1,6 +1,5 @@
 // src/components/pickandsend/Hero.tsx
 import type { CSSProperties, ReactNode } from 'react';
-import { SectionHead } from './SectionHead';
 import {
     EYEBROW,
     FACTS,
@@ -12,7 +11,6 @@ import {
     waHref,
 } from './shared';
 import type { Config } from '@/types/config';
-import { fmt } from '@/lib/pricing';
 
 export function Hero({ config }: { config: Config }) {
     const { wa: WA, routes: ROUTES, towns: TOWNS } = config;

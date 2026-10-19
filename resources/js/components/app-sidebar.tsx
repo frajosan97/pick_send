@@ -8,7 +8,6 @@ import {
     FolderTree,
     Package,
     Map,
-    Truck,
     HelpCircle,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';

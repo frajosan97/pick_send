@@ -2,7 +2,7 @@
 import { useMemo, useState } from 'react';
 import { useForm } from '@inertiajs/react';
 import type { Config } from '@/types/config';
-import { fmt, makePricing, num, toNum } from '@/lib/pricing';
+import { fmt, makePricing, toNum } from '@/lib/pricing';
 import { Block } from './Block';
 import { SectionHead } from './SectionHead';
 import { Choice, Fld, Opt, Part } from './FormBits';
