@@ -1,8 +1,8 @@
 // src/components/pickandsend/Faq.tsx
-import type { Config } from "@/types/config";
-import { Block } from "./Block";
-import { SectionHead } from "./SectionHead";
-import { WRAP } from "./shared";
+import type { Config } from '@/types/config';
+import { Block } from './Block';
+import { SectionHead } from './SectionHead';
+import { WRAP } from './shared';
 
 export function Faq({ config }: { config: Config }) {
     const { faq: FAQ } = config;

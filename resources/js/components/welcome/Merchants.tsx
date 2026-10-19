@@ -1,8 +1,8 @@
 // src/components/pickandsend/Merchants.tsx
-import { useForm, router } from "@inertiajs/react";
-import { Block } from "./Block";
-import { SectionHead } from "./SectionHead";
-import { Fld, Table } from "./FormBits";
+import { useForm, router } from '@inertiajs/react';
+import { Block } from './Block';
+import { SectionHead } from './SectionHead';
+import { Fld, Table } from './FormBits';
 import {
     CARD,
     CHECKS,
@@ -17,9 +17,9 @@ import {
     PILLS,
     PRIMARY,
     WRAP,
-} from "./shared";
-import type { AuthUser, Flash, MerchantData } from "./shared";
-import { fmt } from "@/lib/pricing";
+} from './shared';
+import type { AuthUser, Flash, MerchantData } from './shared';
+import { fmt } from '@/lib/pricing';
 
 export function Merchants({
     user,
@@ -31,21 +31,21 @@ export function Merchants({
     flash: Flash;
 }) {
     const merchantUser = user?.is_merchant ? user : null;
-    const otpForm = useForm({ phone: "", code: "" });
+    const otpForm = useForm({ phone: '', code: '' });
     const requestingOtp = flash?.otp_sent === true;
 
     const requestOtp = (e: React.FormEvent) => {
         e.preventDefault();
-        otpForm.post("/merchant/otp", { preserveScroll: true });
+        otpForm.post('/merchant/otp', { preserveScroll: true });
     };
     const verifyOtp = (e: React.FormEvent) => {
         e.preventDefault();
-        otpForm.post("/merchant/verify", { preserveScroll: true });
+        otpForm.post('/merchant/verify', { preserveScroll: true });
     };
     const logout = () =>
-        router.post("/merchant/logout", {}, { preserveScroll: true });
+        router.post('/merchant/logout', {}, { preserveScroll: true });
     const withdraw = () =>
-        router.post("/merchant/withdraw", {}, { preserveScroll: true });
+        router.post('/merchant/withdraw', {}, { preserveScroll: true });
 
     return (
         <Block id="merchants" tone="tint">
@@ -94,7 +94,7 @@ export function Merchants({
                                 autoComplete="tel"
                                 value={otpForm.data.phone}
                                 onChange={(e: any) =>
-                                    otpForm.setData("phone", e.target.value)
+                                    otpForm.setData('phone', e.target.value)
                                 }
                                 error={otpForm.errors.phone}
                             />
@@ -105,7 +105,7 @@ export function Merchants({
                                     inputMode="numeric"
                                     value={otpForm.data.code}
                                     onChange={(e: any) =>
-                                        otpForm.setData("code", e.target.value)
+                                        otpForm.setData('code', e.target.value)
                                     }
                                     error={otpForm.errors.code}
                                 />
@@ -116,10 +116,10 @@ export function Merchants({
                                 disabled={otpForm.processing}
                             >
                                 {otpForm.processing
-                                    ? "Sending…"
+                                    ? 'Sending…'
                                     : requestingOtp
-                                      ? "Verify and log in"
-                                      : "Send code"}
+                                      ? 'Verify and log in'
+                                      : 'Send code'}
                             </button>
                             <span className={HINT}>
                                 We text you a code each time. No password to
@@ -149,37 +149,37 @@ export function Merchants({
                             {(
                                 [
                                     [
-                                        "Wallet, ready to withdraw",
+                                        'Wallet, ready to withdraw',
                                         fmt(merchant?.wallet ?? 0),
                                         null,
                                         true,
                                     ],
                                     [
-                                        "Waiting for customers to collect",
+                                        'Waiting for customers to collect',
                                         fmt(merchant?.waiting ?? 0),
                                         null,
                                         false,
                                     ],
                                     [
-                                        "Withdrawn this month",
+                                        'Withdrawn this month',
                                         fmt(merchant?.withdrawn_month ?? 0),
                                         null,
                                         false,
                                     ],
                                     [
-                                        "Pick&Send points",
+                                        'Pick&Send points',
                                         String(merchant?.points ?? 0),
-                                        "Worth KSh 1 off each on delivery",
+                                        'Worth KSh 1 off each on delivery',
                                         false,
                                     ],
                                 ] as [string, string, string | null, boolean][]
                             ).map(([label, v, sub, main]) => (
                                 <div
                                     key={label}
-                                    className={`flex min-w-0 flex-col gap-1.5 rounded-[14px] border p-[18px] ${main ? "border-transparent bg-ps-soft" : "border-ps-line"}`}
+                                    className={`flex min-w-0 flex-col gap-1.5 rounded-[14px] border p-[18px] ${main ? 'border-transparent bg-ps-soft' : 'border-ps-line'}`}
                                 >
                                     <span
-                                        className={`text-[.9rem] font-semibold ${main ? "text-ps-softink" : "text-ps-muted"}`}
+                                        className={`text-[.9rem] font-semibold ${main ? 'text-ps-softink' : 'text-ps-muted'}`}
                                     >
                                         {label}
                                     </span>
@@ -222,11 +222,11 @@ export function Merchants({
                         <div className="overflow-x-auto rounded-[14px] border border-ps-line bg-ps-surface">
                             <Table
                                 head={[
-                                    "Tracking no.",
-                                    "Recipient",
-                                    "Town",
-                                    "Status",
-                                    "COD",
+                                    'Tracking no.',
+                                    'Recipient',
+                                    'Town',
+                                    'Status',
+                                    'COD',
                                 ]}
                                 rows={(merchant?.orders ?? []).map((o) => (
                                     <tr key={o.tracking_no} className="group">
@@ -243,12 +243,12 @@ export function Merchants({
                                             <span
                                                 className={
                                                     PILLS[
-                                                        o.status === "at_pickup"
-                                                            ? "wait"
+                                                        o.status === 'at_pickup'
+                                                            ? 'wait'
                                                             : o.status ===
-                                                                "in_transit"
-                                                              ? "move"
-                                                              : "done"
+                                                                'in_transit'
+                                                              ? 'move'
+                                                              : 'done'
                                                     ]
                                                 }
                                             >

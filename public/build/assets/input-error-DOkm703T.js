@@ -1,1 +1,13 @@
-import{t as e}from"./jsx-runtime-B0kIVEhB.js";import{r as t}from"./wayfinder-ibgkyrwZ.js";var n=e();function r({message:e,className:r=``,...i}){return e?(0,n.jsx)(`p`,{...i,className:t(`text-sm text-red-600 dark:text-red-400`,r),children:e}):null}export{r as t};
+import { t as e } from './jsx-runtime-B0kIVEhB.js';
+import { r as t } from './wayfinder-ibgkyrwZ.js';
+var n = e();
+function r({ message: e, className: r = ``, ...i }) {
+    return e
+        ? (0, n.jsx)(`p`, {
+              ...i,
+              className: t(`text-sm text-red-600 dark:text-red-400`, r),
+              children: e,
+          })
+        : null;
+}
+export { r as t };

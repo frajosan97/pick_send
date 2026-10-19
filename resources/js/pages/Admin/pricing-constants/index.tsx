@@ -1,6 +1,6 @@
-import { Head, router, useForm } from "@inertiajs/react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Head, router, useForm } from '@inertiajs/react';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogContent,
@@ -8,11 +8,11 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from "@/components/ui/dialog";
-import { Field, TextField } from "@/components/admin/form-field";
-import { confirmDelete, toastError, toastSuccess } from "@/lib/toast";
-import { RowActions } from "@/components/admin/row-actions";
-import { PenIcon, PlusCircle, Trash2 } from "lucide-react";
+} from '@/components/ui/dialog';
+import { Field, TextField } from '@/components/admin/form-field';
+import { confirmDelete, toastError, toastSuccess } from '@/lib/toast';
+import { RowActions } from '@/components/admin/row-actions';
+import { PenIcon, PlusCircle, Trash2 } from 'lucide-react';
 
 type Constant = {
     id: number;
@@ -28,7 +28,7 @@ type ConstantForm = {
     description: string | null;
 };
 
-const emptyForm: ConstantForm = { key: "", value: 0, description: "" };
+const emptyForm: ConstantForm = { key: '', value: 0, description: '' };
 
 export default function Index({ constants }: { constants: Constant[] }) {
     const [open, setOpen] = useState(false);
@@ -50,7 +50,7 @@ export default function Index({ constants }: { constants: Constant[] }) {
         setData({
             key: c.key,
             value: c.value,
-            description: c.description ?? "",
+            description: c.description ?? '',
         });
         setOpen(true);
     };
@@ -68,38 +68,38 @@ export default function Index({ constants }: { constants: Constant[] }) {
                 closeModal();
                 toastSuccess(
                     editing
-                        ? "Constant updated successfully"
-                        : "Constant created successfully",
+                        ? 'Constant updated successfully'
+                        : 'Constant created successfully',
                 );
             },
-            onError: () => toastError("Please fix the errors below"),
+            onError: () => toastError('Please fix the errors below'),
             preserveScroll: true,
         };
 
         if (editing?.id) {
-            put(route("admin.pricing-constants.update", editing.id), opts);
+            put(route('admin.pricing-constants.update', editing.id), opts);
         } else {
-            post(route("admin.pricing-constants.store"), opts);
+            post(route('admin.pricing-constants.store'), opts);
         }
     };
 
     const destroy = async (id: number) => {
         const ok = await confirmDelete(
-            "This constant will be deleted permanently.",
+            'This constant will be deleted permanently.',
         );
         if (!ok) return;
 
-        router.delete(route("admin.pricing-constants.destroy", id), {
+        router.delete(route('admin.pricing-constants.destroy', id), {
             preserveScroll: true,
-            onSuccess: () => toastSuccess("Constant deleted"),
-            onError: () => toastError("Failed to delete constant"),
+            onSuccess: () => toastSuccess('Constant deleted'),
+            onError: () => toastError('Failed to delete constant'),
         });
     };
 
     return (
         <>
             <Head title="Pricing Constants" />
-            <div className="p-6 space-y-4">
+            <div className="space-y-4 p-6">
                 <div className="flex items-center justify-between">
                     <h1 className="text-2xl font-semibold">
                         Pricing Constants
@@ -109,14 +109,14 @@ export default function Index({ constants }: { constants: Constant[] }) {
                     </Button>
                 </div>
 
-                <div className="rounded-lg border overflow-hidden">
+                <div className="overflow-hidden rounded-lg border">
                     <table className="w-full text-sm">
                         <thead className="bg-muted">
                             <tr>
-                                <th className="text-left p-3">Key</th>
-                                <th className="text-left p-3">Value</th>
-                                <th className="text-left p-3">Description</th>
-                                <th className="text-right p-3">Actions</th>
+                                <th className="p-3 text-left">Key</th>
+                                <th className="p-3 text-left">Value</th>
+                                <th className="p-3 text-left">Description</th>
+                                <th className="p-3 text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -137,7 +137,7 @@ export default function Index({ constants }: { constants: Constant[] }) {
                                     <td className="p-3 text-muted-foreground">
                                         {c.description}
                                     </td>
-                                    <td className="p-3 text-right space-x-2">
+                                    <td className="space-x-2 p-3 text-right">
                                         <RowActions>
                                             <Button
                                                 size="sm"
@@ -169,12 +169,12 @@ export default function Index({ constants }: { constants: Constant[] }) {
                 <DialogContent className="max-w-lg">
                     <DialogHeader>
                         <DialogTitle>
-                            {editing ? "Edit Constant" : "New Constant"}
+                            {editing ? 'Edit Constant' : 'New Constant'}
                         </DialogTitle>
                         <DialogDescription>
                             {editing
-                                ? "Update the pricing constant details."
-                                : "Create a new pricing constant."}
+                                ? 'Update the pricing constant details.'
+                                : 'Create a new pricing constant.'}
                         </DialogDescription>
                     </DialogHeader>
 
@@ -182,20 +182,20 @@ export default function Index({ constants }: { constants: Constant[] }) {
                         <Field label="Key" error={errors.key}>
                             <TextField
                                 value={data.key}
-                                onChange={(v) => setData("key", v)}
+                                onChange={(v) => setData('key', v)}
                             />
                         </Field>
                         <Field label="Value" error={errors.value}>
                             <TextField
                                 type="number"
                                 value={data.value}
-                                onChange={(v) => setData("value", v)}
+                                onChange={(v) => setData('value', v)}
                             />
                         </Field>
                         <Field label="Description" error={errors.description}>
                             <TextField
-                                value={data.description ?? ""}
-                                onChange={(v) => setData("description", v)}
+                                value={data.description ?? ''}
+                                onChange={(v) => setData('description', v)}
                             />
                         </Field>
 
@@ -208,7 +208,7 @@ export default function Index({ constants }: { constants: Constant[] }) {
                                 Cancel
                             </Button>
                             <Button type="submit" disabled={processing}>
-                                {processing ? "Saving..." : "Save"}
+                                {processing ? 'Saving...' : 'Save'}
                             </Button>
                         </DialogFooter>
                     </form>

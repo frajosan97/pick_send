@@ -1,6 +1,6 @@
 // resources/js/components/admin/charts.tsx
-import { useMemo, useState } from "react";
-import { shortLabel } from "@/lib/date";
+import { useMemo, useState } from 'react';
+import { shortLabel } from '@/lib/date';
 
 /* ----------------------------- shared geometry ---------------------------- */
 const PAD = { top: 12, right: 16, bottom: 28, left: 48 } as const;
@@ -27,16 +27,16 @@ export function Kpi({
     value,
     hint,
     trend,
-    tone = "neutral",
+    tone = 'neutral',
 }: {
     label: string;
     value: string;
     hint?: string;
     trend?: number[];
-    tone?: "neutral" | "brand" | "warn";
+    tone?: 'neutral' | 'brand' | 'warn';
 }) {
     const color =
-        tone === "brand" ? "#4FD1C0" : tone === "warn" ? "#E3B04B" : "#94a3b8";
+        tone === 'brand' ? '#4FD1C0' : tone === 'warn' ? '#E3B04B' : '#94a3b8';
     const spark = useMemo(() => {
         if (!trend || trend.length < 2) return null;
         const max = Math.max(...trend, 1);
@@ -48,7 +48,7 @@ export function Kpi({
                 const y = h - (v / max) * h;
                 return `${x.toFixed(2)},${y.toFixed(2)}`;
             })
-            .join(" ");
+            .join(' ');
         return { pts, w, h, color };
     }, [trend, color]);
 
@@ -90,7 +90,7 @@ export function Kpi({
 export function BarChart({
     labels,
     values,
-    color = "#4FD1C0",
+    color = '#4FD1C0',
     height = VB_H,
 }: {
     labels: string[];
@@ -129,7 +129,7 @@ export function BarChart({
                             fill="currentColor"
                             fillOpacity={0.55}
                         >
-                            {Math.round(t).toLocaleString("en-KE")}
+                            {Math.round(t).toLocaleString('en-KE')}
                         </text>
                     </g>
                 );
@@ -215,7 +215,7 @@ export function LineChart({
                                 fill="currentColor"
                                 fillOpacity={0.55}
                             >
-                                {Math.round(t).toLocaleString("en-KE")}
+                                {Math.round(t).toLocaleString('en-KE')}
                             </text>
                         </g>
                     );
@@ -228,7 +228,7 @@ export function LineChart({
                             const y = PAD.top + PLOT_H - (v / max) * PLOT_H;
                             return `${x.toFixed(2)},${y.toFixed(2)}`;
                         })
-                        .join(" ");
+                        .join(' ');
                     return (
                         <g key={s.name}>
                             <polyline
@@ -301,7 +301,7 @@ export function Funnel({
                 return (
                     <div key={s.status} className="flex items-center gap-3">
                         <span className="w-24 shrink-0 truncate text-[.82rem] capitalize">
-                            {s.status.replace(/_/g, " ")}
+                            {s.status.replace(/_/g, ' ')}
                         </span>
                         <div className="h-4 flex-1 rounded bg-neutral-100 dark:bg-neutral-800">
                             <div
@@ -310,7 +310,7 @@ export function Funnel({
                             />
                         </div>
                         <span className="w-12 shrink-0 text-right text-[.82rem] tabular-nums">
-                            {s.count.toLocaleString("en-KE")}
+                            {s.count.toLocaleString('en-KE')}
                         </span>
                     </div>
                 );
@@ -347,7 +347,7 @@ export function Donut({
                                 strokeWidth={hover === d.label ? 26 : 20}
                                 strokeDasharray={`${dash} ${C - dash}`}
                                 strokeDashoffset={-offset}
-                                style={{ transition: "stroke-width .15s" }}
+                                style={{ transition: 'stroke-width .15s' }}
                                 onMouseEnter={() => setHover(d.label)}
                                 onMouseLeave={() => setHover(null)}
                             />
@@ -374,7 +374,7 @@ export function Donut({
                     fontWeight="700"
                     fill="currentColor"
                 >
-                    {Math.round(total).toLocaleString("en-KE")}
+                    {Math.round(total).toLocaleString('en-KE')}
                 </text>
             </svg>
 
@@ -392,9 +392,9 @@ export function Donut({
                             style={{ background: d.color }}
                         />
                         <span className="capitalize">
-                            {d.label.replace(/_/g, " ")}
+                            {d.label.replace(/_/g, ' ')}
                         </span>
-                        <span className="ml-auto tabular-nums text-neutral-500">
+                        <span className="ml-auto text-neutral-500 tabular-nums">
                             {((d.value / total) * 100).toFixed(1)}%
                         </span>
                     </li>

@@ -1,6 +1,6 @@
 // src/components/pickandsend/Community.tsx
-import { Block } from "./Block";
-import { SectionHead } from "./SectionHead";
+import { Block } from './Block';
+import { SectionHead } from './SectionHead';
 import {
     CARD,
     CHECKS_BAND,
@@ -11,7 +11,7 @@ import {
     PAY,
     WRAP,
     waHref,
-} from "./shared";
+} from './shared';
 
 export function Community({ wa }: { wa: string }) {
     return (
@@ -50,7 +50,7 @@ export function Community({ wa }: { wa: string }) {
                         rel="noopener"
                         href={waHref(
                             wa,
-                            "Hi Pick&Send, please add me to your WhatsApp group. I want to join the movement.",
+                            'Hi Pick&Send, please add me to your WhatsApp group. I want to join the movement.',
                         )}
                     >
                         Join the group
@@ -61,7 +61,7 @@ export function Community({ wa }: { wa: string }) {
                         rel="noopener"
                         href={waHref(
                             wa,
-                            "Hi Pick&Send, please send me the link to your WhatsApp channel for updates.",
+                            'Hi Pick&Send, please send me the link to your WhatsApp channel for updates.',
                         )}
                     >
                         Follow the channel for updates
@@ -72,7 +72,7 @@ export function Community({ wa }: { wa: string }) {
                         rel="noopener"
                         href={waHref(
                             wa,
-                            "Hi Pick&Send, please book a parcel for me.\n\nFrom (name and phone):\nPickup or drop-off:\nTo (name and phone):\nDestination town:\nWhat is inside and weight:\nEstimated worth:\nM-PESA number paying:",
+                            'Hi Pick&Send, please book a parcel for me.\n\nFrom (name and phone):\nPickup or drop-off:\nTo (name and phone):\nDestination town:\nWhat is inside and weight:\nEstimated worth:\nM-PESA number paying:',
                         )}
                     >
                         Book a parcel on WhatsApp

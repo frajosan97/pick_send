@@ -1,5 +1,5 @@
 // src/components/pickandsend/TopStrip.tsx
-import { WRAP } from "./shared";
+import { WRAP } from './shared';
 
 export function TopStrip({ wa }: { wa: string }) {
     return (
@@ -8,17 +8,17 @@ export function TopStrip({ wa }: { wa: string }) {
                 className={`${WRAP} flex flex-wrap justify-between gap-x-6 gap-y-1`}
             >
                 <span>
-                    Nairobi to <b className="text-white">Mombasa</b> ·{" "}
-                    <b className="text-white">Mt Kenya</b> ·{" "}
-                    <b className="text-white">North Rift</b> ·{" "}
+                    Nairobi to <b className="text-white">Mombasa</b> ·{' '}
+                    <b className="text-white">Mt Kenya</b> ·{' '}
+                    <b className="text-white">North Rift</b> ·{' '}
                     <b className="text-white">Kisumu</b>
                 </span>
                 <span>
                     <span className="max-sm:hidden">
-                        Nairobi CBD open{" "}
-                        <b className="text-white">7am to 8pm</b> ·{" "}
+                        Nairobi CBD open{' '}
+                        <b className="text-white">7am to 8pm</b> ·{' '}
                     </span>
-                    Call or WhatsApp{" "}
+                    Call or WhatsApp{' '}
                     <a className="text-white" href={`https://wa.me/${wa}`}>
                         <b>0718 819 413</b>
                     </a>

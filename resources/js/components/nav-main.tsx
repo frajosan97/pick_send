@@ -1,11 +1,11 @@
 // resources/js/components/nav-main.tsx
-import { Link } from "@inertiajs/react";
-import { ChevronRight } from "lucide-react";
+import { Link } from '@inertiajs/react';
+import { ChevronRight } from 'lucide-react';
 import {
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from '@/components/ui/collapsible';
 import {
     SidebarGroup,
     SidebarGroupLabel,
@@ -15,9 +15,9 @@ import {
     SidebarMenuSub,
     SidebarMenuSubButton,
     SidebarMenuSubItem,
-} from "@/components/ui/sidebar";
-import { useCurrentUrl } from "@/hooks/use-current-url";
-import type { NavItem } from "@/types";
+} from '@/components/ui/sidebar';
+import { useCurrentUrl } from '@/hooks/use-current-url';
+import type { NavItem } from '@/types';
 
 type Props = {
     items: NavItem[];

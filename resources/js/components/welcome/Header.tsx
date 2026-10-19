@@ -1,7 +1,7 @@
 // src/components/pickandsend/Header.tsx
-import { ListIcon } from "lucide-react";
-import { Wordmark } from "./Wordmark";
-import { GHOST, PRIMARY, WRAP, NAV } from "./shared";
+import { ListIcon } from 'lucide-react';
+import { Wordmark } from './Wordmark';
+import { GHOST, PRIMARY, WRAP, NAV } from './shared';
 
 export function Header({
     menu,
@@ -25,7 +25,7 @@ export function Header({
                 <nav
                     aria-label="Site"
                     onClick={() => setMenu(false)}
-                    className={`${menu ? "order-last mt-1 flex w-full flex-col border-t border-ps-line" : "hidden"} md:order-none md:mt-0 md:flex md:w-auto md:flex-row md:flex-wrap md:gap-x-3.5 md:border-0`}
+                    className={`${menu ? 'order-last mt-1 flex w-full flex-col border-t border-ps-line' : 'hidden'} md:order-none md:mt-0 md:flex md:w-auto md:flex-row md:flex-wrap md:gap-x-3.5 md:border-0`}
                 >
                     {NAV.map(([id, t]) => (
                         <a

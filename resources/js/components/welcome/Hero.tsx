@@ -1,6 +1,6 @@
 // src/components/pickandsend/Hero.tsx
-import type { CSSProperties, ReactNode } from "react";
-import { SectionHead } from "./SectionHead";
+import type { CSSProperties, ReactNode } from 'react';
+import { SectionHead } from './SectionHead';
 import {
     EYEBROW,
     FACTS,
@@ -10,9 +10,9 @@ import {
     PRIMARY,
     WRAP,
     waHref,
-} from "./shared";
-import type { Config } from "@/types/config";
-import { fmt } from "@/lib/pricing";
+} from './shared';
+import type { Config } from '@/types/config';
+import { fmt } from '@/lib/pricing';
 
 export function Hero({ config }: { config: Config }) {
     const { wa: WA, routes: ROUTES, towns: TOWNS } = config;
@@ -20,38 +20,38 @@ export function Hero({ config }: { config: Config }) {
     const ROUTE_LIST = Object.entries(ROUTES).map(([key, name], i) => [
         key,
         name,
-        (TOWNS.find(([k]) => k === key)?.[1] ?? []).join(" · "),
-        ["#F08A5D", "#4FD1C0", "#E3B04B", "#7FB0F5"][i % 4],
+        (TOWNS.find(([k]) => k === key)?.[1] ?? []).join(' · '),
+        ['#F08A5D', '#4FD1C0', '#E3B04B', '#7FB0F5'][i % 4],
     ]);
 
     const HOW: [string, string, ReactNode][] = [
         [
-            "Book and pay",
-            "M-PESA",
+            'Book and pay',
+            'M-PESA',
             <>
                 <rect x="7" y="2.5" width="10" height="19" rx="2" />
                 <path d="M11 18h2" />
             </>,
         ],
         [
-            "Collect or drop off",
-            "by 7pm",
+            'Collect or drop off',
+            'by 7pm',
             <>
                 <path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z" />
                 <path d="M3.5 7.5 12 12l8.5-4.5M12 12v9" />
             </>,
         ],
         [
-            "Code collection",
-            "by SMS",
+            'Code collection',
+            'by SMS',
             <>
                 <rect x="5" y="10.5" width="14" height="10" rx="2" />
                 <path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" />
             </>,
         ],
         [
-            "Get paid",
-            "instantly, with COD",
+            'Get paid',
+            'instantly, with COD',
             <>
                 <path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" />
                 <path d="M4 7V6a2 2 0 0 1 2-2h10v3M16 13.5h2" />
@@ -74,7 +74,7 @@ export function Hero({ config }: { config: Config }) {
                         </em>
                     </h1>
                     <p className="text-[1.25rem] leading-tight font-extrabold text-ps-brandink">
-                        From just{" "}
+                        From just{' '}
                         <em className="text-[1.7rem] whitespace-nowrap text-ps-accent not-italic">
                             KSh 199
                         </em>
@@ -83,7 +83,7 @@ export function Hero({ config }: { config: Config }) {
                     </p>
                     <p className="max-w-[34rem] text-[1.12rem] text-pretty text-ps-muted">
                         Send a parcel from Nairobi to towns across Kenya. For
-                        shops, online sellers and{" "}
+                        shops, online sellers and{' '}
                         <b className="text-ps-ink">
                             anyone with something to send
                         </b>
@@ -103,7 +103,7 @@ export function Hero({ config }: { config: Config }) {
                         rel="noopener"
                         href={waHref(
                             WA,
-                            "Hi Pick&Send, I would like a quote for bulk items.",
+                            'Hi Pick&Send, I would like a quote for bulk items.',
                         )}
                     >
                         <span className="flex min-w-0 flex-col">
@@ -148,7 +148,7 @@ export function Hero({ config }: { config: Config }) {
                             {ROUTE_LIST.map(([k, t, towns, c]) => (
                                 <li
                                     key={k}
-                                    style={{ "--rc": c } as CSSProperties}
+                                    style={{ '--rc': c } as CSSProperties}
                                     className="relative flex flex-col gap-0.5 border-t border-ps-line py-3.5 pl-[34px] before:absolute before:inset-y-0 before:left-2 before:w-1 before:bg-[var(--rc)] after:absolute after:top-[19px] after:left-px after:h-[18px] after:w-[18px] after:rounded-full after:border-4 after:border-[var(--rc)] after:bg-ps-surface"
                                 >
                                     <b className={`text-[1.12rem] ${H3}`}>

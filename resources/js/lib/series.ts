@@ -36,11 +36,13 @@ export function densifySeries(
         }
     }
     return dateRangeKeys(from, to).map(
-        (key) =>
-            acc.get(key) ?? { date: key, parcels: 0, revenue: 0, cod: 0 },
+        (key) => acc.get(key) ?? { date: key, parcels: 0, revenue: 0, cod: 0 },
     );
 }
 
 /** Sum a metric across a densified series. */
 export const sumBy = (s: SeriesPoint[], k: keyof SeriesPoint) =>
-    s.reduce((a, p) => a + (typeof p[k] === 'number' ? (p[k] as number) : 0), 0);
+    s.reduce(
+        (a, p) => a + (typeof p[k] === 'number' ? (p[k] as number) : 0),
+        0,
+    );

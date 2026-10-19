@@ -1,6 +1,6 @@
-import { Head, router, useForm } from "@inertiajs/react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Head, router, useForm } from '@inertiajs/react';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogContent,
@@ -8,12 +8,12 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from "@/components/ui/dialog";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Field, TextField } from "@/components/admin/form-field";
-import { confirmDelete, toastError, toastSuccess } from "@/lib/toast";
-import { RowActions } from "@/components/admin/row-actions";
-import { PenIcon, PlusCircle, Trash2 } from "lucide-react";
+} from '@/components/ui/dialog';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Field, TextField } from '@/components/admin/form-field';
+import { confirmDelete, toastError, toastSuccess } from '@/lib/toast';
+import { RowActions } from '@/components/admin/row-actions';
+import { PenIcon, PlusCircle, Trash2 } from 'lucide-react';
 
 type Group = { id: number; name: string };
 
@@ -32,7 +32,7 @@ type Item = {
 
 type ItemForm = {
     id?: number;
-    item_group_id: number | "";
+    item_group_id: number | '';
     code: string;
     label: string;
     price: number;
@@ -43,9 +43,9 @@ type ItemForm = {
 };
 
 const emptyForm: ItemForm = {
-    item_group_id: "",
-    code: "",
-    label: "",
+    item_group_id: '',
+    code: '',
+    label: '',
     price: 0,
     packaging: 0,
     pickup_fee: 0,
@@ -102,37 +102,37 @@ export default function Index({
                 closeModal();
                 toastSuccess(
                     editing
-                        ? "Item updated successfully"
-                        : "Item created successfully",
+                        ? 'Item updated successfully'
+                        : 'Item created successfully',
                 );
             },
-            onError: () => toastError("Please fix the errors below"),
+            onError: () => toastError('Please fix the errors below'),
             preserveScroll: true,
         };
 
         if (editing?.id) {
-            put(route("admin.items.update", editing.id), opts);
+            put(route('admin.items.update', editing.id), opts);
         } else {
-            post(route("admin.items.store"), opts);
+            post(route('admin.items.store'), opts);
         }
     };
 
     const destroy = async (id: number) => {
         const ok = await confirmDelete(
-            "This item will be deleted permanently.",
+            'This item will be deleted permanently.',
         );
         if (!ok) return;
-        router.delete(route("admin.items.destroy", id), {
+        router.delete(route('admin.items.destroy', id), {
             preserveScroll: true,
-            onSuccess: () => toastSuccess("Item deleted"),
-            onError: () => toastError("Failed to delete item"),
+            onSuccess: () => toastSuccess('Item deleted'),
+            onError: () => toastError('Failed to delete item'),
         });
     };
 
     return (
         <>
             <Head title="Items" />
-            <div className="p-6 space-y-4">
+            <div className="space-y-4 p-6">
                 <div className="flex items-center justify-between">
                     <h1 className="text-2xl font-semibold">Items</h1>
                     <Button onClick={openCreate}>
@@ -140,18 +140,18 @@ export default function Index({
                     </Button>
                 </div>
 
-                <div className="rounded-lg border overflow-hidden">
+                <div className="overflow-hidden rounded-lg border">
                     <table className="w-full text-sm">
                         <thead className="bg-muted">
                             <tr>
-                                <th className="text-left p-3">Code</th>
-                                <th className="text-left p-3">Label</th>
-                                <th className="text-left p-3">Group</th>
-                                <th className="text-left p-3">Price</th>
-                                <th className="text-left p-3">Packaging</th>
-                                <th className="text-left p-3">Pickup</th>
-                                <th className="text-left p-3">Active</th>
-                                <th className="text-right p-3">Actions</th>
+                                <th className="p-3 text-left">Code</th>
+                                <th className="p-3 text-left">Label</th>
+                                <th className="p-3 text-left">Group</th>
+                                <th className="p-3 text-left">Price</th>
+                                <th className="p-3 text-left">Packaging</th>
+                                <th className="p-3 text-left">Pickup</th>
+                                <th className="p-3 text-left">Active</th>
+                                <th className="p-3 text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -170,15 +170,15 @@ export default function Index({
                                     <td className="p-3 font-mono">{i.code}</td>
                                     <td className="p-3">{i.label}</td>
                                     <td className="p-3 text-muted-foreground">
-                                        {i.group?.name ?? "—"}
+                                        {i.group?.name ?? '—'}
                                     </td>
                                     <td className="p-3">{i.price}</td>
                                     <td className="p-3">{i.packaging}</td>
                                     <td className="p-3">{i.pickup_fee}</td>
                                     <td className="p-3">
-                                        {i.is_active ? "Yes" : "No"}
+                                        {i.is_active ? 'Yes' : 'No'}
                                     </td>
-                                    <td className="p-3 text-right space-x-2">
+                                    <td className="space-x-2 p-3 text-right">
                                         <RowActions>
                                             <Button
                                                 size="sm"
@@ -210,12 +210,12 @@ export default function Index({
                 <DialogContent className="max-w-lg">
                     <DialogHeader>
                         <DialogTitle>
-                            {editing ? "Edit Item" : "New Item"}
+                            {editing ? 'Edit Item' : 'New Item'}
                         </DialogTitle>
                         <DialogDescription>
                             {editing
-                                ? "Update the item details."
-                                : "Create a new item."}
+                                ? 'Update the item details.'
+                                : 'Create a new item.'}
                         </DialogDescription>
                     </DialogHeader>
 
@@ -225,10 +225,10 @@ export default function Index({
                                 value={data.item_group_id}
                                 onChange={(e) =>
                                     setData(
-                                        "item_group_id",
+                                        'item_group_id',
                                         e.target.value
                                             ? Number(e.target.value)
-                                            : "",
+                                            : '',
                                     )
                                 }
                                 className="h-9 w-full rounded-md border bg-transparent px-3"
@@ -244,27 +244,27 @@ export default function Index({
                         <Field label="Code" error={errors.code}>
                             <TextField
                                 value={data.code}
-                                onChange={(v) => setData("code", v)}
+                                onChange={(v) => setData('code', v)}
                             />
                         </Field>
                         <Field label="Label" error={errors.label}>
                             <TextField
                                 value={data.label}
-                                onChange={(v) => setData("label", v)}
+                                onChange={(v) => setData('label', v)}
                             />
                         </Field>
                         <Field label="Price (KSh)" error={errors.price}>
                             <TextField
                                 type="number"
                                 value={data.price}
-                                onChange={(v) => setData("price", v)}
+                                onChange={(v) => setData('price', v)}
                             />
                         </Field>
                         <Field label="Packaging (KSh)" error={errors.packaging}>
                             <TextField
                                 type="number"
                                 value={data.packaging}
-                                onChange={(v) => setData("packaging", v)}
+                                onChange={(v) => setData('packaging', v)}
                             />
                         </Field>
                         <Field
@@ -274,21 +274,21 @@ export default function Index({
                             <TextField
                                 type="number"
                                 value={data.pickup_fee}
-                                onChange={(v) => setData("pickup_fee", v)}
+                                onChange={(v) => setData('pickup_fee', v)}
                             />
                         </Field>
                         <Field label="Sort Order" error={errors.sort_order}>
                             <TextField
                                 type="number"
                                 value={data.sort_order}
-                                onChange={(v) => setData("sort_order", v)}
+                                onChange={(v) => setData('sort_order', v)}
                             />
                         </Field>
                         <label className="flex items-center gap-2">
                             <Checkbox
                                 checked={data.is_active}
                                 onCheckedChange={(v) =>
-                                    setData("is_active", !!v)
+                                    setData('is_active', !!v)
                                 }
                             />
                             <span>Active</span>
@@ -303,7 +303,7 @@ export default function Index({
                                 Cancel
                             </Button>
                             <Button type="submit" disabled={processing}>
-                                {processing ? "Saving..." : "Save"}
+                                {processing ? 'Saving...' : 'Save'}
                             </Button>
                         </DialogFooter>
                     </form>

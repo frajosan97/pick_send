@@ -1,7 +1,7 @@
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Textarea } from "@/components/ui/textarea";
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Textarea } from '@/components/ui/textarea';
 
 type Props = {
     label: string;
@@ -23,7 +23,7 @@ export function TextField({
     value,
     onChange,
     error,
-    type = "text",
+    type = 'text',
 }: {
     value: any;
     onChange: (v: any) => void;
@@ -33,10 +33,10 @@ export function TextField({
     return (
         <Input
             type={type}
-            value={value ?? ""}
+            value={value ?? ''}
             onChange={(e) =>
                 onChange(
-                    type === "number" ? Number(e.target.value) : e.target.value,
+                    type === 'number' ? Number(e.target.value) : e.target.value,
                 )
             }
         />

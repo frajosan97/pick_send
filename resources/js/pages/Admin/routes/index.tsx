@@ -1,6 +1,6 @@
-import { Head, router, useForm } from "@inertiajs/react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Head, router, useForm } from '@inertiajs/react';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogContent,
@@ -8,12 +8,12 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from "@/components/ui/dialog";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Field, TextField } from "@/components/admin/form-field";
-import { confirmDelete, toastError, toastSuccess } from "@/lib/toast";
-import { RowActions } from "@/components/admin/row-actions";
-import { MapPin, PenIcon, PlusCircle, Trash2 } from "lucide-react";
+} from '@/components/ui/dialog';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Field, TextField } from '@/components/admin/form-field';
+import { confirmDelete, toastError, toastSuccess } from '@/lib/toast';
+import { RowActions } from '@/components/admin/row-actions';
+import { MapPin, PenIcon, PlusCircle, Trash2 } from 'lucide-react';
 
 type Town = {
     id: number;
@@ -50,10 +50,10 @@ type TownForm = {
     is_active: boolean;
 };
 
-const emptyRoute: RouteForm = { name: "", slug: "", is_active: true };
+const emptyRoute: RouteForm = { name: '', slug: '', is_active: true };
 const emptyTown = (routeId: number): TownForm => ({
     route_id: routeId,
-    name: "",
+    name: '',
     is_satellite: false,
     satellite_fee: 0,
     sort_order: 0,
@@ -110,27 +110,27 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
         const opts = {
             onSuccess: () => {
                 closeRouteModal();
-                toastSuccess(editingRoute ? "Route updated" : "Route created");
+                toastSuccess(editingRoute ? 'Route updated' : 'Route created');
             },
-            onError: () => toastError("Please fix the errors below"),
+            onError: () => toastError('Please fix the errors below'),
             preserveScroll: true,
         };
         if (editingRoute?.id) {
-            routeForm.put(route("admin.routes.update", editingRoute.id), opts);
+            routeForm.put(route('admin.routes.update', editingRoute.id), opts);
         } else {
-            routeForm.post(route("admin.routes.store"), opts);
+            routeForm.post(route('admin.routes.store'), opts);
         }
     };
 
     const destroyRoute = async (id: number) => {
         const ok = await confirmDelete(
-            "Deleting this route will also delete its towns.",
+            'Deleting this route will also delete its towns.',
         );
         if (!ok) return;
-        router.delete(route("admin.routes.destroy", id), {
+        router.delete(route('admin.routes.destroy', id), {
             preserveScroll: true,
-            onSuccess: () => toastSuccess("Route deleted"),
-            onError: () => toastError("Failed to delete route"),
+            onSuccess: () => toastSuccess('Route deleted'),
+            onError: () => toastError('Failed to delete route'),
         });
     };
 
@@ -182,15 +182,15 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
         const opts = {
             onSuccess: () => {
                 closeTownModal();
-                toastSuccess(editingTown ? "Town updated" : "Town added");
+                toastSuccess(editingTown ? 'Town updated' : 'Town added');
             },
-            onError: () => toastError("Please fix the errors below"),
+            onError: () => toastError('Please fix the errors below'),
             preserveScroll: true,
         };
 
         if (editingTown?.id) {
             townForm.put(
-                route("admin.routes.towns.update", [
+                route('admin.routes.towns.update', [
                     activeRoute.id,
                     editingTown.id,
                 ]),
@@ -198,7 +198,7 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
             );
         } else {
             townForm.post(
-                route("admin.routes.towns.store", activeRoute.id),
+                route('admin.routes.towns.store', activeRoute.id),
                 opts,
             );
         }
@@ -207,15 +207,15 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
     const destroyTown = async (t: Town) => {
         if (!activeRoute) return;
         const ok = await confirmDelete(
-            "This town will be removed from the route.",
+            'This town will be removed from the route.',
         );
         if (!ok) return;
         router.delete(
-            route("admin.routes.towns.destroy", [activeRoute.id, t.id]),
+            route('admin.routes.towns.destroy', [activeRoute.id, t.id]),
             {
                 preserveScroll: true,
-                onSuccess: () => toastSuccess("Town removed"),
-                onError: () => toastError("Failed to remove town"),
+                onSuccess: () => toastSuccess('Town removed'),
+                onError: () => toastError('Failed to remove town'),
             },
         );
     };
@@ -223,7 +223,7 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
     return (
         <>
             <Head title="Routes" />
-            <div className="p-6 space-y-4">
+            <div className="space-y-4 p-6">
                 <div className="flex items-center justify-between">
                     <h1 className="text-2xl font-semibold">Routes</h1>
                     <Button onClick={openCreateRoute}>
@@ -231,15 +231,15 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
                     </Button>
                 </div>
 
-                <div className="rounded-lg border overflow-hidden">
+                <div className="overflow-hidden rounded-lg border">
                     <table className="w-full text-sm">
                         <thead className="bg-muted">
                             <tr>
-                                <th className="text-left p-3">Name</th>
-                                <th className="text-left p-3">Slug</th>
-                                <th className="text-left p-3">Towns</th>
-                                <th className="text-left p-3">Active</th>
-                                <th className="text-right p-3">Actions</th>
+                                <th className="p-3 text-left">Name</th>
+                                <th className="p-3 text-left">Slug</th>
+                                <th className="p-3 text-left">Towns</th>
+                                <th className="p-3 text-left">Active</th>
+                                <th className="p-3 text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -261,9 +261,9 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
                                     </td>
                                     <td className="p-3">{r.towns_count}</td>
                                     <td className="p-3">
-                                        {r.is_active ? "Yes" : "No"}
+                                        {r.is_active ? 'Yes' : 'No'}
                                     </td>
-                                    <td className="p-3 text-right space-x-2">
+                                    <td className="space-x-2 p-3 text-right">
                                         <RowActions>
                                             <Button
                                                 size="sm"
@@ -308,12 +308,12 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
                 <DialogContent className="max-w-lg">
                     <DialogHeader>
                         <DialogTitle>
-                            {editingRoute ? "Edit Route" : "New Route"}
+                            {editingRoute ? 'Edit Route' : 'New Route'}
                         </DialogTitle>
                         <DialogDescription>
                             {editingRoute
-                                ? "Update the route details."
-                                : "Create a new route."}
+                                ? 'Update the route details.'
+                                : 'Create a new route.'}
                         </DialogDescription>
                     </DialogHeader>
 
@@ -322,13 +322,13 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
                             <TextField
                                 value={routeForm.data.name}
                                 onChange={(v) => {
-                                    routeForm.setData("name", v);
+                                    routeForm.setData('name', v);
                                     routeForm.setData(
-                                        "slug",
+                                        'slug',
                                         v
                                             .toLowerCase()
-                                            .replace(/[^a-z0-9]+/g, "-")
-                                            .replace(/^-|-$/g, ""),
+                                            .replace(/[^a-z0-9]+/g, '-')
+                                            .replace(/^-|-$/g, ''),
                                     );
                                 }}
                             />
@@ -336,14 +336,14 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
                         <Field label="Slug" error={routeForm.errors.slug}>
                             <TextField
                                 value={routeForm.data.slug}
-                                onChange={(v) => routeForm.setData("slug", v)}
+                                onChange={(v) => routeForm.setData('slug', v)}
                             />
                         </Field>
                         <label className="flex items-center gap-2">
                             <Checkbox
                                 checked={routeForm.data.is_active}
                                 onCheckedChange={(v) =>
-                                    routeForm.setData("is_active", !!v)
+                                    routeForm.setData('is_active', !!v)
                                 }
                             />
                             <span>Active</span>
@@ -361,7 +361,7 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
                                 type="submit"
                                 disabled={routeForm.processing}
                             >
-                                {routeForm.processing ? "Saving..." : "Save"}
+                                {routeForm.processing ? 'Saving...' : 'Save'}
                             </Button>
                         </DialogFooter>
                     </form>
@@ -389,19 +389,19 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
                                 <PlusCircle /> Add Town
                             </Button>
                         </div>
-                        <div className="rounded-lg border overflow-hidden max-h-96 overflow-y-auto">
+                        <div className="max-h-96 overflow-hidden overflow-y-auto rounded-lg border">
                             <table className="w-full text-sm">
                                 <thead className="bg-muted">
                                     <tr>
-                                        <th className="text-left p-3">Name</th>
-                                        <th className="text-left p-3">
+                                        <th className="p-3 text-left">Name</th>
+                                        <th className="p-3 text-left">
                                             Satellite
                                         </th>
-                                        <th className="text-left p-3">Fee</th>
-                                        <th className="text-left p-3">
+                                        <th className="p-3 text-left">Fee</th>
+                                        <th className="p-3 text-left">
                                             Active
                                         </th>
-                                        <th className="text-right p-3">
+                                        <th className="p-3 text-right">
                                             Actions
                                         </th>
                                     </tr>
@@ -422,15 +422,15 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
                                         <tr key={t.id} className="border-t">
                                             <td className="p-3">{t.name}</td>
                                             <td className="p-3">
-                                                {t.is_satellite ? "Yes" : "No"}
+                                                {t.is_satellite ? 'Yes' : 'No'}
                                             </td>
                                             <td className="p-3">
                                                 {t.satellite_fee}
                                             </td>
                                             <td className="p-3">
-                                                {t.is_active ? "Yes" : "No"}
+                                                {t.is_active ? 'Yes' : 'No'}
                                             </td>
-                                            <td className="p-3 text-right space-x-2">
+                                            <td className="space-x-2 p-3 text-right">
                                                 <RowActions>
                                                     <Button
                                                         size="sm"
@@ -471,12 +471,12 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
                 <DialogContent className="max-w-lg">
                     <DialogHeader>
                         <DialogTitle>
-                            {editingTown?.id ? "Edit Town" : "Add Town"}
+                            {editingTown?.id ? 'Edit Town' : 'Add Town'}
                         </DialogTitle>
                         <DialogDescription>
                             {editingTown?.id
-                                ? "Update the town details."
-                                : "Add a new town to this route."}
+                                ? 'Update the town details.'
+                                : 'Add a new town to this route.'}
                         </DialogDescription>
                     </DialogHeader>
 
@@ -484,7 +484,7 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
                         <Field label="Name" error={townForm.errors.name}>
                             <TextField
                                 value={townForm.data.name}
-                                onChange={(v) => townForm.setData("name", v)}
+                                onChange={(v) => townForm.setData('name', v)}
                             />
                         </Field>
                         <Field
@@ -495,7 +495,7 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
                                 type="number"
                                 value={townForm.data.sort_order}
                                 onChange={(v) =>
-                                    townForm.setData("sort_order", v)
+                                    townForm.setData('sort_order', v)
                                 }
                             />
                         </Field>
@@ -507,7 +507,7 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
                                 type="number"
                                 value={townForm.data.satellite_fee}
                                 onChange={(v) =>
-                                    townForm.setData("satellite_fee", v)
+                                    townForm.setData('satellite_fee', v)
                                 }
                             />
                         </Field>
@@ -515,7 +515,7 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
                             <Checkbox
                                 checked={townForm.data.is_satellite}
                                 onCheckedChange={(v) =>
-                                    townForm.setData("is_satellite", !!v)
+                                    townForm.setData('is_satellite', !!v)
                                 }
                             />
                             <span>Satellite town</span>
@@ -524,7 +524,7 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
                             <Checkbox
                                 checked={townForm.data.is_active}
                                 onCheckedChange={(v) =>
-                                    townForm.setData("is_active", !!v)
+                                    townForm.setData('is_active', !!v)
                                 }
                             />
                             <span>Active</span>
@@ -542,7 +542,7 @@ export default function Index({ routes }: { routes: RouteModel[] }) {
                                 type="submit"
                                 disabled={townForm.processing}
                             >
-                                {townForm.processing ? "Saving..." : "Save"}
+                                {townForm.processing ? 'Saving...' : 'Save'}
                             </Button>
                         </DialogFooter>
                     </form>

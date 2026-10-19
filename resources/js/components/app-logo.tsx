@@ -1,7 +1,7 @@
-import { usePage } from "@inertiajs/react";
+import { usePage } from '@inertiajs/react';
 
-import AppLogoIcon from "@/components/app-logo-icon";
-import type { Config } from "@/types/config";
+import AppLogoIcon from '@/components/app-logo-icon';
+import type { Config } from '@/types/config';
 
 export default function AppLogo() {
     const { name, config } = usePage<{
@@ -9,7 +9,7 @@ export default function AppLogo() {
         config?: Config;
     }>().props;
 
-    const brand = name ?? config?.name ?? "Pick&Send";
+    const brand = name ?? config?.name ?? 'Pick&Send';
 
     return (
         <>

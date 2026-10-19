@@ -1,14 +1,3728 @@
-import{n as e}from"./rolldown-runtime-CbXtAM7H.js";import{c as t,f as n,i as r,n as i,p as a,t as o,u as s}from"./jsx-runtime-B0kIVEhB.js";import{y as c}from"./app-esw2zJOg.js";var l=c(`List`,[[`path`,{d:`M3 12h.01`,key:`nlz23k`}],[`path`,{d:`M3 18h.01`,key:`1tta3j`}],[`path`,{d:`M3 6h.01`,key:`1rqtza`}],[`path`,{d:`M8 12h13`,key:`1za7za`}],[`path`,{d:`M8 18h13`,key:`1lx6n3`}],[`path`,{d:`M8 6h13`,key:`ik3vkj`}]]),u=e(n(),1),d=i(),f=`mx-auto w-full max-w-[1120px] px-4 sm:px-5`,p=`inline-flex min-h-[52px] items-center justify-center gap-2.5 rounded-xl border-[1.5px] border-transparent px-6 text-center font-bold no-underline max-sm:w-full`,m=`${p} bg-ps-brand text-ps-onbrand`,h=`${p} border-ps-line bg-ps-surface text-ps-brandink`,g=`${p} bg-ps-wa tracking-wide text-ps-onwa`,_=`text-[.8rem] font-bold uppercase tracking-[.12em] text-ps-accent`,v=`flex flex-col gap-3.5 rounded-[18px] border border-ps-line bg-ps-surface p-4 text-ps-ink sm:p-6`,y=`min-h-12 w-full rounded-[10px] border-[1.5px] border-ps-line bg-ps-surface px-3 text-ps-ink`,b=`text-[.84rem] text-ps-muted`,x=`font-extrabold text-ps-brandink`,S=`m-0 flex list-none flex-col gap-3 p-0 text-[1.03rem] text-ps-muted [&_b]:text-ps-ink`,C=`m-0 flex list-none flex-col gap-3 p-0 text-[1.03rem] text-ps-bandmuted [&_b]:text-white`,w=`border-b border-ps-line px-4 py-[13px] text-left text-[.82rem] font-bold uppercase tracking-[.04em] text-ps-muted max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.66rem] max-sm:tracking-normal`,T=`grid grid-cols-[repeat(auto-fit,minmax(min(230px,100%),1fr))] gap-3.5`,E=`grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-4`,D=`grid grid-cols-[repeat(auto-fit,minmax(min(400px,100%),1fr))] gap-11`,O=`inline-block whitespace-nowrap rounded-full px-2.5 py-[3px] text-[.84rem] font-bold`,k={wait:`${O} bg-ps-warn text-ps-warnink`,move:`${O} bg-ps-surface2 text-ps-brandink`,done:`${O} bg-ps-soft text-ps-softink`},A=`m-0 flex list-none flex-wrap gap-x-[22px] gap-y-1.5 p-0 text-[.92rem] font-semibold text-ps-muted`,j=`rounded-[5px] bg-ps-onwa px-2 py-[3px] text-[.75rem] font-extrabold tracking-[.04em] whitespace-nowrap text-ps-wa`,M=[[`send`,`Send a parcel`],[`supplies`,`Get supplies`],[`merchants`,`Merchants`],[`pricing`,`Pricing`],[`track`,`Track`],[`community`,`Community`],[`faq`,`Questions`]];function N(e,t){return`https://wa.me/${e}?text=${encodeURIComponent(t)}`}var P=o();function F(e){let t=(0,d.c)(8),{wa:n}=e,r;t[0]===Symbol.for(`react.memo_cache_sentinel`)?(r=(0,P.jsx)(`b`,{className:`text-white`,children:`Mombasa`}),t[0]=r):r=t[0];let i;t[1]===Symbol.for(`react.memo_cache_sentinel`)?(i=(0,P.jsx)(`b`,{className:`text-white`,children:`Mt Kenya`}),t[1]=i):i=t[1];let a;t[2]===Symbol.for(`react.memo_cache_sentinel`)?(a=(0,P.jsx)(`b`,{className:`text-white`,children:`North Rift`}),t[2]=a):a=t[2];let o;t[3]===Symbol.for(`react.memo_cache_sentinel`)?(o=(0,P.jsxs)(`span`,{children:[`Nairobi to `,r,` ·`,` `,i,` ·`,` `,a,` ·`,` `,(0,P.jsx)(`b`,{className:`text-white`,children:`Kisumu`})]}),t[3]=o):o=t[3];let s;t[4]===Symbol.for(`react.memo_cache_sentinel`)?(s=(0,P.jsxs)(`span`,{className:`max-sm:hidden`,children:[`Nairobi CBD open`,` `,(0,P.jsx)(`b`,{className:`text-white`,children:`7am to 8pm`}),` ·`,` `]}),t[4]=s):s=t[4];let c=`https://wa.me/${n}`,l;t[5]===Symbol.for(`react.memo_cache_sentinel`)?(l=(0,P.jsx)(`b`,{children:`0718 819 413`}),t[5]=l):l=t[5];let u;return t[6]===c?u=t[7]:(u=(0,P.jsx)(`div`,{className:`bg-ps-band py-2 text-[.85rem] text-ps-bandmuted max-sm:py-1.5 max-sm:text-[.78rem]`,children:(0,P.jsxs)(`div`,{className:`${f} flex flex-wrap justify-between gap-x-6 gap-y-1`,children:[o,(0,P.jsxs)(`span`,{children:[s,`Call or WhatsApp`,` `,(0,P.jsx)(`a`,{className:`text-white`,href:c,children:l})]})]})}),t[6]=c,t[7]=u),u}function I({onBand:e=!1,size:t=`text-[1.35rem]`}){let n=e?`bg-ps-key`:`bg-ps-accent`;return(0,P.jsxs)(`span`,{className:`inline-flex flex-col gap-[3px]`,children:[(0,P.jsxs)(`span`,{className:`${t} leading-none font-extrabold tracking-[-.03em] ${e?`text-white`:`text-ps-brandink`}`,children:[`Pick`,(0,P.jsx)(`i`,{className:`not-italic ${e?`text-ps-key`:`text-ps-accent`}`,children:`&`}),`Send`]}),(0,P.jsxs)(`span`,{className:`flex h-2.5 items-center`,"aria-hidden":`true`,children:[(0,P.jsx)(`span`,{className:`h-[9px] w-[9px] flex-none rounded-full ${n}`}),(0,P.jsx)(`span`,{className:`h-[3.5px] flex-1 ${n}`}),(0,P.jsx)(`span`,{className:`h-0 w-0 flex-none border-y-[5px] border-l-[9px] border-y-transparent ${e?`border-l-ps-key`:`border-l-ps-accent`}`})]})]})}function L(e){let t=(0,d.c)(19),{menu:n,setMenu:r}=e,i;t[0]===Symbol.for(`react.memo_cache_sentinel`)?(i=(0,P.jsx)(`a`,{href:`#home`,"aria-label":`Pick&Send home`,className:`flex items-center no-underline`,children:(0,P.jsx)(I,{size:`text-[1.55rem]`})}),t[0]=i):i=t[0];let a;t[1]===r?a=t[2]:(a=()=>r(!1),t[1]=r,t[2]=a);let o=`${n?`order-last mt-1 flex w-full flex-col border-t border-ps-line`:`hidden`} md:order-none md:mt-0 md:flex md:w-auto md:flex-row md:flex-wrap md:gap-x-3.5 md:border-0`,s;t[3]===Symbol.for(`react.memo_cache_sentinel`)?(s=M.map(R),t[3]=s):s=t[3];let c;t[4]!==a||t[5]!==o?(c=(0,P.jsx)(`nav`,{"aria-label":`Site`,onClick:a,className:o,children:s}),t[4]=a,t[5]=o,t[6]=c):c=t[6];let u,p;t[7]===Symbol.for(`react.memo_cache_sentinel`)?(u=(0,P.jsx)(`a`,{href:`#merchants`,className:`${h} !min-h-11 !px-3 !text-[.86rem] max-lg:hidden`,children:`Merchant log in`}),p=(0,P.jsx)(`a`,{href:`#send`,className:`${m} !min-h-11 !w-auto !px-3 !text-[.86rem]`,children:`Send with us`}),t[7]=u,t[8]=p):(u=t[7],p=t[8]);let g;t[9]!==n||t[10]!==r?(g=()=>r(!n),t[9]=n,t[10]=r,t[11]=g):g=t[11];let _;t[12]===Symbol.for(`react.memo_cache_sentinel`)?(_=(0,P.jsx)(l,{}),t[12]=_):_=t[12];let v;t[13]!==n||t[14]!==g?(v=(0,P.jsxs)(`div`,{className:`flex flex-nowrap gap-2`,children:[u,p,(0,P.jsx)(`button`,{type:`button`,"aria-expanded":n,"aria-controls":`site-nav`,onClick:g,className:`min-h-11 rounded-[10px] border-[1.5px] border-ps-line bg-ps-surface px-3 text-[.92rem] font-bold text-ps-brandink md:hidden`,children:_})]}),t[13]=n,t[14]=g,t[15]=v):v=t[15];let y;return t[16]!==v||t[17]!==c?(y=(0,P.jsx)(`header`,{className:`sticky top-0 z-[5] border-b border-ps-line bg-ps-surface`,children:(0,P.jsxs)(`div`,{className:`${f} flex flex-wrap items-center justify-between gap-x-4 gap-y-2 py-2.5`,children:[i,c,v]})}),t[16]=v,t[17]=c,t[18]=y):y=t[18],y}function R(e){let[t,n]=e;return(0,P.jsx)(`a`,{href:`#${t}`,className:`flex min-h-[46px] items-center border-b border-ps-line text-base font-semibold text-ps-ink no-underline last:border-b-0 hover:text-ps-accent md:min-h-11 md:border-0 md:text-[.84rem]`,children:n},t)}function z(e){let t=(0,d.c)(34),{config:n}=e,{wa:r,routes:i,towns:a}=n,o;t[0]===i?o=t[1]:(o=Object.entries(i),t[0]=i,t[1]=o);let s;t[2]!==a||t[3]!==o?(s=o.map((e,t)=>{let[n,r]=e;return[n,r,(a.find(e=>{let[t]=e;return t===n})?.[1]??[]).join(` · `),[`#F08A5D`,`#4FD1C0`,`#E3B04B`,`#7FB0F5`][t%4]]}),t[2]=a,t[3]=o,t[4]=s):s=t[4];let c=s,l;t[5]===Symbol.for(`react.memo_cache_sentinel`)?(l=[`Book and pay`,`M-PESA`,(0,P.jsxs)(P.Fragment,{children:[(0,P.jsx)(`rect`,{x:`7`,y:`2.5`,width:`10`,height:`19`,rx:`2`}),(0,P.jsx)(`path`,{d:`M11 18h2`})]})],t[5]=l):l=t[5];let u;t[6]===Symbol.for(`react.memo_cache_sentinel`)?(u=[`Collect or drop off`,`by 7pm`,(0,P.jsxs)(P.Fragment,{children:[(0,P.jsx)(`path`,{d:`M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z`}),(0,P.jsx)(`path`,{d:`M3.5 7.5 12 12l8.5-4.5M12 12v9`})]})],t[6]=u):u=t[6];let p;t[7]===Symbol.for(`react.memo_cache_sentinel`)?(p=[`Code collection`,`by SMS`,(0,P.jsxs)(P.Fragment,{children:[(0,P.jsx)(`rect`,{x:`5`,y:`10.5`,width:`14`,height:`10`,rx:`2`}),(0,P.jsx)(`path`,{d:`M8 10.5V8a4 4 0 0 1 8 0v2.5`})]})],t[7]=p):p=t[7];let g;t[8]===Symbol.for(`react.memo_cache_sentinel`)?(g=[l,u,p,[`Get paid`,`instantly, with COD`,(0,P.jsxs)(P.Fragment,{children:[(0,P.jsx)(`path`,{d:`M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z`}),(0,P.jsx)(`path`,{d:`M4 7V6a2 2 0 0 1 2-2h10v3M16 13.5h2`})]})]],t[8]=g):g=t[8];let v=g,y;t[9]===Symbol.for(`react.memo_cache_sentinel`)?(y=(0,P.jsx)(`span`,{className:_,children:`The coast · the mountain · the Rift · the lake`}),t[9]=y):y=t[9];let b;t[10]===Symbol.for(`react.memo_cache_sentinel`)?(b=(0,P.jsxs)(`h1`,{className:`text-[clamp(2.3rem,6vw,4.1rem)] leading-[1.01] font-extrabold tracking-[-.045em] text-ps-brandink`,children:[`Your business sells.`,(0,P.jsx)(`br`,{}),(0,P.jsx)(`em`,{className:`text-ps-accent not-italic`,children:`We Pick & Send.`})]}),t[10]=b):b=t[10];let S;t[11]===Symbol.for(`react.memo_cache_sentinel`)?(S=(0,P.jsxs)(`p`,{className:`text-[1.25rem] leading-tight font-extrabold text-ps-brandink`,children:[`From just`,` `,(0,P.jsx)(`em`,{className:`text-[1.7rem] whitespace-nowrap text-ps-accent not-italic`,children:`KSh 199`}),(0,P.jsx)(`br`,{}),`One price across all our towns in Kenya.`]}),t[11]=S):S=t[11];let C;t[12]===Symbol.for(`react.memo_cache_sentinel`)?(C=(0,P.jsxs)(`p`,{className:`max-w-[34rem] text-[1.12rem] text-pretty text-ps-muted`,children:[`Send a parcel from Nairobi to towns across Kenya. For shops, online sellers and`,` `,(0,P.jsx)(`b`,{className:`text-ps-ink`,children:`anyone with something to send`}),`.`]}),t[12]=C):C=t[12];let w;t[13]===Symbol.for(`react.memo_cache_sentinel`)?(w=(0,P.jsxs)(`div`,{className:`flex flex-wrap gap-3`,children:[(0,P.jsx)(`a`,{className:m,href:`#send`,children:`Send a parcel`}),(0,P.jsx)(`a`,{className:h,href:`#track`,children:`Track a parcel`})]}),t[13]=w):w=t[13];let T;t[14]===r?T=t[15]:(T=N(r,`Hi Pick&Send, I would like a quote for bulk items.`),t[14]=r,t[15]=T);let E,O;t[16]===Symbol.for(`react.memo_cache_sentinel`)?(E=(0,P.jsxs)(`span`,{className:`flex min-w-0 flex-col`,children:[(0,P.jsx)(`b`,{className:`text-[1.3rem] leading-tight font-extrabold max-sm:text-[1.1rem]`,children:`Sending bulk items? Get a quote.`}),(0,P.jsx)(`span`,{className:`text-[.95rem] font-semibold opacity-90`,children:`Call or WhatsApp 0718 819 413`})]}),O=(0,P.jsx)(`i`,{className:`flex-none text-[1.6rem] font-extrabold not-italic`,"aria-hidden":`true`,children:`→`}),t[16]=E,t[17]=O):(E=t[16],O=t[17]);let k;t[18]===T?k=t[19]:(k=(0,P.jsxs)(`a`,{className:`flex max-w-[34rem] items-center justify-between gap-3.5 rounded-[14px] bg-ps-brand px-5 py-4 text-ps-onbrand no-underline`,target:`_blank`,rel:`noopener`,href:T,children:[E,O]}),t[18]=T,t[19]=k);let j;t[20]===Symbol.for(`react.memo_cache_sentinel`)?(j=(0,P.jsxs)(`ul`,{className:A,children:[(0,P.jsx)(`li`,{children:`Free pickup from CBD shops`}),(0,P.jsx)(`li`,{children:`Pay by M-PESA`}),(0,P.jsx)(`li`,{children:`Collected with an SMS code`}),(0,P.jsx)(`li`,{children:`From documents to fridges`})]}),t[20]=j):j=t[20];let M;t[21]===k?M=t[22]:(M=(0,P.jsxs)(`div`,{className:`flex min-w-0 flex-col gap-[18px]`,children:[y,b,S,C,w,k,j]}),t[21]=k,t[22]=M);let F;t[23]===Symbol.for(`react.memo_cache_sentinel`)?(F=(0,P.jsx)(`h2`,{id:`board-h`,className:`mb-2 text-[1.1rem] ${x}`,children:`Where we go`}),t[23]=F):F=t[23];let I;t[24]===Symbol.for(`react.memo_cache_sentinel`)?(I=(0,P.jsxs)(`div`,{className:`flex items-center gap-2.5 pb-3 font-bold`,children:[(0,P.jsx)(`i`,{className:`h-5 w-5 flex-none rounded-full bg-ps-brand`,"aria-hidden":`true`}),`From Nairobi`]}),t[24]=I):I=t[24];let L;t[25]===c?L=t[26]:(L=(0,P.jsxs)(`div`,{className:`flex min-w-0 flex-col gap-1 rounded-[18px] border border-ps-line bg-ps-surface p-4 sm:px-6 sm:py-[22px]`,"aria-labelledby":`board-h`,children:[F,I,(0,P.jsx)(`ul`,{className:`m-0 flex list-none flex-col p-0`,children:c.map(V)})]}),t[25]=c,t[26]=L);let R;t[27]===Symbol.for(`react.memo_cache_sentinel`)?(R=(0,P.jsx)(`h2`,{id:`how-h`,className:`mb-3 text-[1.1rem] ${x}`,children:`How it works`}),t[27]=R):R=t[27];let z;t[28]===Symbol.for(`react.memo_cache_sentinel`)?(z=(0,P.jsxs)(`div`,{className:`rounded-[18px] border border-ps-line bg-ps-surface p-4 sm:px-[22px] sm:py-[18px]`,"aria-labelledby":`how-h`,children:[R,(0,P.jsx)(`ol`,{className:`relative m-0 grid list-none grid-cols-2 gap-x-2 gap-y-3.5 p-0 sm:grid-cols-4 sm:gap-2 sm:before:absolute sm:before:top-[21px] sm:before:right-[12%] sm:before:left-[12%] sm:before:h-[3px] sm:before:bg-ps-soft`,children:v.map(B)})]}),t[28]=z):z=t[28];let H;t[29]===L?H=t[30]:(H=(0,P.jsxs)(`div`,{className:`flex min-w-0 flex-col gap-3.5`,children:[L,z]}),t[29]=L,t[30]=H);let U;return t[31]!==M||t[32]!==H?(U=(0,P.jsx)(`section`,{className:`py-[26px_34px] md:py-[52px_56px]`,children:(0,P.jsxs)(`div`,{className:`${f} ${D} items-center max-sm:gap-[26px]`,children:[M,H]})}),t[31]=M,t[32]=H,t[33]=U):U=t[33],U}function B(e){let[t,n,r]=e;return(0,P.jsxs)(`li`,{className:`relative flex min-w-0 flex-col items-center gap-[3px] text-center`,children:[(0,P.jsx)(`svg`,{viewBox:`0 0 24 24`,"aria-hidden":`true`,className:`mb-1 h-11 w-11 rounded-full bg-ps-soft fill-none stroke-ps-softink stroke-2 p-2.5 [stroke-linecap:round] [stroke-linejoin:round]`,children:r}),(0,P.jsx)(`b`,{className:`text-[.88rem] leading-tight`,children:t}),(0,P.jsx)(`span`,{className:`text-[.78rem] leading-tight text-ps-muted`,children:n})]},t)}function V(e){let[t,n,r,i]=e;return(0,P.jsxs)(`li`,{style:{"--rc":i},className:`relative flex flex-col gap-0.5 border-t border-ps-line py-3.5 pl-[34px] before:absolute before:inset-y-0 before:left-2 before:w-1 before:bg-[var(--rc)] after:absolute after:top-[19px] after:left-px after:h-[18px] after:w-[18px] after:rounded-full after:border-4 after:border-[var(--rc)] after:bg-ps-surface`,children:[(0,P.jsx)(`b`,{className:`text-[1.12rem] ${x}`,children:n}),(0,P.jsx)(`span`,{className:`text-[.94rem] text-ps-muted`,children:r})]},t)}var H=e=>Math.round(e).toLocaleString(`en-KE`),U=e=>`KSh `+H(e),W=e=>Number(String(e).replace(/[^0-9.]/g,``))||0,G=e=>Math.ceil(W(e));function K(e){let t=e.constants,n={};e.elec.forEach(e=>e.items.forEach(e=>n[e.id]=e));let r={};e.general.forEach(e=>r[e.id]=e);let i=e=>t.base10+t.perKg*(e-10),a=e=>e<=20?150:e<=30?200:250,o=t=>{let[n,r]=t.split(`|`);return{route:e.routes[n]??n,town:r??``}},s=e=>e.hand===`collect`?`collect`:(e.point??``).startsWith(`out|`)?`out`:`drop`;function c(e){let o=e.kind===`e`,c;if(o){if(c=n[e.item],!c)return{n:1,point:``,free5:!1,mode:`drop`,fee:0,base:0,pack:0,coll:0,share:!1,total:0,elec:!0,item:{label:``,p:0,pack:0,pu:0},points:0}}else{let n=r[e.size];if(n?.perKg){let r=Math.min(t.maxKg,Math.max(11,G(e.kg)));c={label:r+` kg`,p:i(r),pack:n.pack,pu:a(r)}}else c=n??{label:``,p:0,pack:0,pu:0}}let l=e.pack?c.pack:0,[,u]=(e.point??``).split(`|`),d=s(e),f=c.pu<=100,p=d===`collect`?f?0:c.pu+50:d===`out`?c.pu+50:0,m=Math.max(1,parseInt(String(e.count??1).replace(/[^0-9]/g,``),10)||1),h=d===`collect`&&f,g=h||d!==`drop`&&f&&m>1&&e.same?0:p,_=c.p+l+g;return{n:m,point:u,free5:h,mode:d,fee:p,base:c.p,pack:l,coll:g,share:f,total:_,elec:o,item:c,points:Math.floor(_*t.pointsRate)}}function l(e){let t=e.mode;return`${e.item.label} delivery ${U(e.base)}`+(t===`drop`?`, drop-off free`:e.coll?` + `+(t===`collect`?`pickup `:`agent drop-off `)+U(e.coll):e.free5?`, CBD pickup free`:`, already paid today`)+(e.pack?` + packaging `+U(e.pack):``)+`.`}function u(e){if(e<=0)return``;let n=Math.round(e*t.codFeeRate);return`Recipient pays ${U(e)} by M-PESA. Our ${(t.codFeeRate*100).toFixed(1)}% fee is ${U(n)}, so you receive ${U(e-n)}.`}let d=e=>{let t=String(e).replace(/[^0-9]/g,``);return t.charAt(0)===`0`?`254`+t.slice(1):t};function f(t,n,r){let i=o(t.rtown),a=W(t.cod),s=t.code.trim().toUpperCase(),c=n.mode===`collect`?`Picked up from ${t.addr.trim()} (CBD)`:`Brought to ${n.point}`,l=[[`From`,`${t.sname.trim()}, ${t.sphone.trim()}`],[`Handover`,c],[`Delivery`,U(n.base)],[n.mode===`out`?`Agent drop-off fee`:`Pickup`,n.mode===`drop`?`None, brought to our CBD point`:n.coll?U(n.coll):n.free5?`Free, CBD shop pickup`:`Already paid today`],[`To`,`${t.rname.trim()}, ${t.rphone.trim()}`],[`Collect at`,`Pick&Send pickup station, `+i.town],[`Parcel`,`${t.what.trim()} (${n.item.label})`],[`Estimated worth`,U(W(t.worth))],[`Packaging`,n.pack?`Packed by Pick&Send, `+U(n.pack):`Not needed`],[`Cash on Delivery`,a>0?U(a)+` to pay at collection`:`None`],[`Total`,U(n.total)],[`Hand over to`,(n.mode===`collect`?`Rider Kevin M., staff ID PS-R014`:`Agent Mary W., agent ID PS-A007`)+`, handover code ${r} (example)`],[`M-PESA number paying`,t.paynum.trim()||`Not entered yet`],[`M-PESA code`,s||`Not entered yet`],[`Points earned`,String(n.points)]],u=l.map(e=>e[0]+`: `+e[1]).join(`
-`),f=`PICK&SEND RECEIPT
-`+u+`
+import { n as e } from './rolldown-runtime-CbXtAM7H.js';
+import {
+    c as t,
+    f as n,
+    i as r,
+    n as i,
+    p as a,
+    t as o,
+    u as s,
+} from './jsx-runtime-B0kIVEhB.js';
+import { y as c } from './app-esw2zJOg.js';
+var l = c(`List`, [
+        [`path`, { d: `M3 12h.01`, key: `nlz23k` }],
+        [`path`, { d: `M3 18h.01`, key: `1tta3j` }],
+        [`path`, { d: `M3 6h.01`, key: `1rqtza` }],
+        [`path`, { d: `M8 12h13`, key: `1za7za` }],
+        [`path`, { d: `M8 18h13`, key: `1lx6n3` }],
+        [`path`, { d: `M8 6h13`, key: `ik3vkj` }],
+    ]),
+    u = e(n(), 1),
+    d = i(),
+    f = `mx-auto w-full max-w-[1120px] px-4 sm:px-5`,
+    p = `inline-flex min-h-[52px] items-center justify-center gap-2.5 rounded-xl border-[1.5px] border-transparent px-6 text-center font-bold no-underline max-sm:w-full`,
+    m = `${p} bg-ps-brand text-ps-onbrand`,
+    h = `${p} border-ps-line bg-ps-surface text-ps-brandink`,
+    g = `${p} bg-ps-wa tracking-wide text-ps-onwa`,
+    _ = `text-[.8rem] font-bold uppercase tracking-[.12em] text-ps-accent`,
+    v = `flex flex-col gap-3.5 rounded-[18px] border border-ps-line bg-ps-surface p-4 text-ps-ink sm:p-6`,
+    y = `min-h-12 w-full rounded-[10px] border-[1.5px] border-ps-line bg-ps-surface px-3 text-ps-ink`,
+    b = `text-[.84rem] text-ps-muted`,
+    x = `font-extrabold text-ps-brandink`,
+    S = `m-0 flex list-none flex-col gap-3 p-0 text-[1.03rem] text-ps-muted [&_b]:text-ps-ink`,
+    C = `m-0 flex list-none flex-col gap-3 p-0 text-[1.03rem] text-ps-bandmuted [&_b]:text-white`,
+    w = `border-b border-ps-line px-4 py-[13px] text-left text-[.82rem] font-bold uppercase tracking-[.04em] text-ps-muted max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.66rem] max-sm:tracking-normal`,
+    T = `grid grid-cols-[repeat(auto-fit,minmax(min(230px,100%),1fr))] gap-3.5`,
+    E = `grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-4`,
+    D = `grid grid-cols-[repeat(auto-fit,minmax(min(400px,100%),1fr))] gap-11`,
+    O = `inline-block whitespace-nowrap rounded-full px-2.5 py-[3px] text-[.84rem] font-bold`,
+    k = {
+        wait: `${O} bg-ps-warn text-ps-warnink`,
+        move: `${O} bg-ps-surface2 text-ps-brandink`,
+        done: `${O} bg-ps-soft text-ps-softink`,
+    },
+    A = `m-0 flex list-none flex-wrap gap-x-[22px] gap-y-1.5 p-0 text-[.92rem] font-semibold text-ps-muted`,
+    j = `rounded-[5px] bg-ps-onwa px-2 py-[3px] text-[.75rem] font-extrabold tracking-[.04em] whitespace-nowrap text-ps-wa`,
+    M = [
+        [`send`, `Send a parcel`],
+        [`supplies`, `Get supplies`],
+        [`merchants`, `Merchants`],
+        [`pricing`, `Pricing`],
+        [`track`, `Track`],
+        [`community`, `Community`],
+        [`faq`, `Questions`],
+    ];
+function N(e, t) {
+    return `https://wa.me/${e}?text=${encodeURIComponent(t)}`;
+}
+var P = o();
+function F(e) {
+    let t = (0, d.c)(8),
+        { wa: n } = e,
+        r;
+    t[0] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((r = (0, P.jsx)(`b`, {
+              className: `text-white`,
+              children: `Mombasa`,
+          })),
+          (t[0] = r))
+        : (r = t[0]);
+    let i;
+    t[1] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((i = (0, P.jsx)(`b`, {
+              className: `text-white`,
+              children: `Mt Kenya`,
+          })),
+          (t[1] = i))
+        : (i = t[1]);
+    let a;
+    t[2] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((a = (0, P.jsx)(`b`, {
+              className: `text-white`,
+              children: `North Rift`,
+          })),
+          (t[2] = a))
+        : (a = t[2]);
+    let o;
+    t[3] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((o = (0, P.jsxs)(`span`, {
+              children: [
+                  `Nairobi to `,
+                  r,
+                  ` ·`,
+                  ` `,
+                  i,
+                  ` ·`,
+                  ` `,
+                  a,
+                  ` ·`,
+                  ` `,
+                  (0, P.jsx)(`b`, {
+                      className: `text-white`,
+                      children: `Kisumu`,
+                  }),
+              ],
+          })),
+          (t[3] = o))
+        : (o = t[3]);
+    let s;
+    t[4] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((s = (0, P.jsxs)(`span`, {
+              className: `max-sm:hidden`,
+              children: [
+                  `Nairobi CBD open`,
+                  ` `,
+                  (0, P.jsx)(`b`, {
+                      className: `text-white`,
+                      children: `7am to 8pm`,
+                  }),
+                  ` ·`,
+                  ` `,
+              ],
+          })),
+          (t[4] = s))
+        : (s = t[4]);
+    let c = `https://wa.me/${n}`,
+        l;
+    t[5] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((l = (0, P.jsx)(`b`, { children: `0718 819 413` })), (t[5] = l))
+        : (l = t[5]);
+    let u;
+    return (
+        t[6] === c
+            ? (u = t[7])
+            : ((u = (0, P.jsx)(`div`, {
+                  className: `bg-ps-band py-2 text-[.85rem] text-ps-bandmuted max-sm:py-1.5 max-sm:text-[.78rem]`,
+                  children: (0, P.jsxs)(`div`, {
+                      className: `${f} flex flex-wrap justify-between gap-x-6 gap-y-1`,
+                      children: [
+                          o,
+                          (0, P.jsxs)(`span`, {
+                              children: [
+                                  s,
+                                  `Call or WhatsApp`,
+                                  ` `,
+                                  (0, P.jsx)(`a`, {
+                                      className: `text-white`,
+                                      href: c,
+                                      children: l,
+                                  }),
+                              ],
+                          }),
+                      ],
+                  }),
+              })),
+              (t[6] = c),
+              (t[7] = u)),
+        u
+    );
+}
+function I({ onBand: e = !1, size: t = `text-[1.35rem]` }) {
+    let n = e ? `bg-ps-key` : `bg-ps-accent`;
+    return (0, P.jsxs)(`span`, {
+        className: `inline-flex flex-col gap-[3px]`,
+        children: [
+            (0, P.jsxs)(`span`, {
+                className: `${t} leading-none font-extrabold tracking-[-.03em] ${e ? `text-white` : `text-ps-brandink`}`,
+                children: [
+                    `Pick`,
+                    (0, P.jsx)(`i`, {
+                        className: `not-italic ${e ? `text-ps-key` : `text-ps-accent`}`,
+                        children: `&`,
+                    }),
+                    `Send`,
+                ],
+            }),
+            (0, P.jsxs)(`span`, {
+                className: `flex h-2.5 items-center`,
+                'aria-hidden': `true`,
+                children: [
+                    (0, P.jsx)(`span`, {
+                        className: `h-[9px] w-[9px] flex-none rounded-full ${n}`,
+                    }),
+                    (0, P.jsx)(`span`, { className: `h-[3.5px] flex-1 ${n}` }),
+                    (0, P.jsx)(`span`, {
+                        className: `h-0 w-0 flex-none border-y-[5px] border-l-[9px] border-y-transparent ${e ? `border-l-ps-key` : `border-l-ps-accent`}`,
+                    }),
+                ],
+            }),
+        ],
+    });
+}
+function L(e) {
+    let t = (0, d.c)(19),
+        { menu: n, setMenu: r } = e,
+        i;
+    t[0] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((i = (0, P.jsx)(`a`, {
+              href: `#home`,
+              'aria-label': `Pick&Send home`,
+              className: `flex items-center no-underline`,
+              children: (0, P.jsx)(I, { size: `text-[1.55rem]` }),
+          })),
+          (t[0] = i))
+        : (i = t[0]);
+    let a;
+    t[1] === r ? (a = t[2]) : ((a = () => r(!1)), (t[1] = r), (t[2] = a));
+    let o = `${n ? `order-last mt-1 flex w-full flex-col border-t border-ps-line` : `hidden`} md:order-none md:mt-0 md:flex md:w-auto md:flex-row md:flex-wrap md:gap-x-3.5 md:border-0`,
+        s;
+    t[3] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((s = M.map(R)), (t[3] = s))
+        : (s = t[3]);
+    let c;
+    t[4] !== a || t[5] !== o
+        ? ((c = (0, P.jsx)(`nav`, {
+              'aria-label': `Site`,
+              onClick: a,
+              className: o,
+              children: s,
+          })),
+          (t[4] = a),
+          (t[5] = o),
+          (t[6] = c))
+        : (c = t[6]);
+    let u, p;
+    t[7] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((u = (0, P.jsx)(`a`, {
+              href: `#merchants`,
+              className: `${h} !min-h-11 !px-3 !text-[.86rem] max-lg:hidden`,
+              children: `Merchant log in`,
+          })),
+          (p = (0, P.jsx)(`a`, {
+              href: `#send`,
+              className: `${m} !min-h-11 !w-auto !px-3 !text-[.86rem]`,
+              children: `Send with us`,
+          })),
+          (t[7] = u),
+          (t[8] = p))
+        : ((u = t[7]), (p = t[8]));
+    let g;
+    t[9] !== n || t[10] !== r
+        ? ((g = () => r(!n)), (t[9] = n), (t[10] = r), (t[11] = g))
+        : (g = t[11]);
+    let _;
+    t[12] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((_ = (0, P.jsx)(l, {})), (t[12] = _))
+        : (_ = t[12]);
+    let v;
+    t[13] !== n || t[14] !== g
+        ? ((v = (0, P.jsxs)(`div`, {
+              className: `flex flex-nowrap gap-2`,
+              children: [
+                  u,
+                  p,
+                  (0, P.jsx)(`button`, {
+                      type: `button`,
+                      'aria-expanded': n,
+                      'aria-controls': `site-nav`,
+                      onClick: g,
+                      className: `min-h-11 rounded-[10px] border-[1.5px] border-ps-line bg-ps-surface px-3 text-[.92rem] font-bold text-ps-brandink md:hidden`,
+                      children: _,
+                  }),
+              ],
+          })),
+          (t[13] = n),
+          (t[14] = g),
+          (t[15] = v))
+        : (v = t[15]);
+    let y;
+    return (
+        t[16] !== v || t[17] !== c
+            ? ((y = (0, P.jsx)(`header`, {
+                  className: `sticky top-0 z-[5] border-b border-ps-line bg-ps-surface`,
+                  children: (0, P.jsxs)(`div`, {
+                      className: `${f} flex flex-wrap items-center justify-between gap-x-4 gap-y-2 py-2.5`,
+                      children: [i, c, v],
+                  }),
+              })),
+              (t[16] = v),
+              (t[17] = c),
+              (t[18] = y))
+            : (y = t[18]),
+        y
+    );
+}
+function R(e) {
+    let [t, n] = e;
+    return (0, P.jsx)(
+        `a`,
+        {
+            href: `#${t}`,
+            className: `flex min-h-[46px] items-center border-b border-ps-line text-base font-semibold text-ps-ink no-underline last:border-b-0 hover:text-ps-accent md:min-h-11 md:border-0 md:text-[.84rem]`,
+            children: n,
+        },
+        t,
+    );
+}
+function z(e) {
+    let t = (0, d.c)(34),
+        { config: n } = e,
+        { wa: r, routes: i, towns: a } = n,
+        o;
+    t[0] === i ? (o = t[1]) : ((o = Object.entries(i)), (t[0] = i), (t[1] = o));
+    let s;
+    t[2] !== a || t[3] !== o
+        ? ((s = o.map((e, t) => {
+              let [n, r] = e;
+              return [
+                  n,
+                  r,
+                  (
+                      a.find((e) => {
+                          let [t] = e;
+                          return t === n;
+                      })?.[1] ?? []
+                  ).join(` · `),
+                  [`#F08A5D`, `#4FD1C0`, `#E3B04B`, `#7FB0F5`][t % 4],
+              ];
+          })),
+          (t[2] = a),
+          (t[3] = o),
+          (t[4] = s))
+        : (s = t[4]);
+    let c = s,
+        l;
+    t[5] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((l = [
+              `Book and pay`,
+              `M-PESA`,
+              (0, P.jsxs)(P.Fragment, {
+                  children: [
+                      (0, P.jsx)(`rect`, {
+                          x: `7`,
+                          y: `2.5`,
+                          width: `10`,
+                          height: `19`,
+                          rx: `2`,
+                      }),
+                      (0, P.jsx)(`path`, { d: `M11 18h2` }),
+                  ],
+              }),
+          ]),
+          (t[5] = l))
+        : (l = t[5]);
+    let u;
+    t[6] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((u = [
+              `Collect or drop off`,
+              `by 7pm`,
+              (0, P.jsxs)(P.Fragment, {
+                  children: [
+                      (0, P.jsx)(`path`, {
+                          d: `M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z`,
+                      }),
+                      (0, P.jsx)(`path`, {
+                          d: `M3.5 7.5 12 12l8.5-4.5M12 12v9`,
+                      }),
+                  ],
+              }),
+          ]),
+          (t[6] = u))
+        : (u = t[6]);
+    let p;
+    t[7] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((p = [
+              `Code collection`,
+              `by SMS`,
+              (0, P.jsxs)(P.Fragment, {
+                  children: [
+                      (0, P.jsx)(`rect`, {
+                          x: `5`,
+                          y: `10.5`,
+                          width: `14`,
+                          height: `10`,
+                          rx: `2`,
+                      }),
+                      (0, P.jsx)(`path`, { d: `M8 10.5V8a4 4 0 0 1 8 0v2.5` }),
+                  ],
+              }),
+          ]),
+          (t[7] = p))
+        : (p = t[7]);
+    let g;
+    t[8] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((g = [
+              l,
+              u,
+              p,
+              [
+                  `Get paid`,
+                  `instantly, with COD`,
+                  (0, P.jsxs)(P.Fragment, {
+                      children: [
+                          (0, P.jsx)(`path`, {
+                              d: `M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z`,
+                          }),
+                          (0, P.jsx)(`path`, {
+                              d: `M4 7V6a2 2 0 0 1 2-2h10v3M16 13.5h2`,
+                          }),
+                      ],
+                  }),
+              ],
+          ]),
+          (t[8] = g))
+        : (g = t[8]);
+    let v = g,
+        y;
+    t[9] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((y = (0, P.jsx)(`span`, {
+              className: _,
+              children: `The coast · the mountain · the Rift · the lake`,
+          })),
+          (t[9] = y))
+        : (y = t[9]);
+    let b;
+    t[10] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((b = (0, P.jsxs)(`h1`, {
+              className: `text-[clamp(2.3rem,6vw,4.1rem)] leading-[1.01] font-extrabold tracking-[-.045em] text-ps-brandink`,
+              children: [
+                  `Your business sells.`,
+                  (0, P.jsx)(`br`, {}),
+                  (0, P.jsx)(`em`, {
+                      className: `text-ps-accent not-italic`,
+                      children: `We Pick & Send.`,
+                  }),
+              ],
+          })),
+          (t[10] = b))
+        : (b = t[10]);
+    let S;
+    t[11] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((S = (0, P.jsxs)(`p`, {
+              className: `text-[1.25rem] leading-tight font-extrabold text-ps-brandink`,
+              children: [
+                  `From just`,
+                  ` `,
+                  (0, P.jsx)(`em`, {
+                      className: `text-[1.7rem] whitespace-nowrap text-ps-accent not-italic`,
+                      children: `KSh 199`,
+                  }),
+                  (0, P.jsx)(`br`, {}),
+                  `One price across all our towns in Kenya.`,
+              ],
+          })),
+          (t[11] = S))
+        : (S = t[11]);
+    let C;
+    t[12] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((C = (0, P.jsxs)(`p`, {
+              className: `max-w-[34rem] text-[1.12rem] text-pretty text-ps-muted`,
+              children: [
+                  `Send a parcel from Nairobi to towns across Kenya. For shops, online sellers and`,
+                  ` `,
+                  (0, P.jsx)(`b`, {
+                      className: `text-ps-ink`,
+                      children: `anyone with something to send`,
+                  }),
+                  `.`,
+              ],
+          })),
+          (t[12] = C))
+        : (C = t[12]);
+    let w;
+    t[13] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((w = (0, P.jsxs)(`div`, {
+              className: `flex flex-wrap gap-3`,
+              children: [
+                  (0, P.jsx)(`a`, {
+                      className: m,
+                      href: `#send`,
+                      children: `Send a parcel`,
+                  }),
+                  (0, P.jsx)(`a`, {
+                      className: h,
+                      href: `#track`,
+                      children: `Track a parcel`,
+                  }),
+              ],
+          })),
+          (t[13] = w))
+        : (w = t[13]);
+    let T;
+    t[14] === r
+        ? (T = t[15])
+        : ((T = N(r, `Hi Pick&Send, I would like a quote for bulk items.`)),
+          (t[14] = r),
+          (t[15] = T));
+    let E, O;
+    t[16] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((E = (0, P.jsxs)(`span`, {
+              className: `flex min-w-0 flex-col`,
+              children: [
+                  (0, P.jsx)(`b`, {
+                      className: `text-[1.3rem] leading-tight font-extrabold max-sm:text-[1.1rem]`,
+                      children: `Sending bulk items? Get a quote.`,
+                  }),
+                  (0, P.jsx)(`span`, {
+                      className: `text-[.95rem] font-semibold opacity-90`,
+                      children: `Call or WhatsApp 0718 819 413`,
+                  }),
+              ],
+          })),
+          (O = (0, P.jsx)(`i`, {
+              className: `flex-none text-[1.6rem] font-extrabold not-italic`,
+              'aria-hidden': `true`,
+              children: `→`,
+          })),
+          (t[16] = E),
+          (t[17] = O))
+        : ((E = t[16]), (O = t[17]));
+    let k;
+    t[18] === T
+        ? (k = t[19])
+        : ((k = (0, P.jsxs)(`a`, {
+              className: `flex max-w-[34rem] items-center justify-between gap-3.5 rounded-[14px] bg-ps-brand px-5 py-4 text-ps-onbrand no-underline`,
+              target: `_blank`,
+              rel: `noopener`,
+              href: T,
+              children: [E, O],
+          })),
+          (t[18] = T),
+          (t[19] = k));
+    let j;
+    t[20] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((j = (0, P.jsxs)(`ul`, {
+              className: A,
+              children: [
+                  (0, P.jsx)(`li`, { children: `Free pickup from CBD shops` }),
+                  (0, P.jsx)(`li`, { children: `Pay by M-PESA` }),
+                  (0, P.jsx)(`li`, { children: `Collected with an SMS code` }),
+                  (0, P.jsx)(`li`, { children: `From documents to fridges` }),
+              ],
+          })),
+          (t[20] = j))
+        : (j = t[20]);
+    let M;
+    t[21] === k
+        ? (M = t[22])
+        : ((M = (0, P.jsxs)(`div`, {
+              className: `flex min-w-0 flex-col gap-[18px]`,
+              children: [y, b, S, C, w, k, j],
+          })),
+          (t[21] = k),
+          (t[22] = M));
+    let F;
+    t[23] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((F = (0, P.jsx)(`h2`, {
+              id: `board-h`,
+              className: `mb-2 text-[1.1rem] ${x}`,
+              children: `Where we go`,
+          })),
+          (t[23] = F))
+        : (F = t[23]);
+    let I;
+    t[24] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((I = (0, P.jsxs)(`div`, {
+              className: `flex items-center gap-2.5 pb-3 font-bold`,
+              children: [
+                  (0, P.jsx)(`i`, {
+                      className: `h-5 w-5 flex-none rounded-full bg-ps-brand`,
+                      'aria-hidden': `true`,
+                  }),
+                  `From Nairobi`,
+              ],
+          })),
+          (t[24] = I))
+        : (I = t[24]);
+    let L;
+    t[25] === c
+        ? (L = t[26])
+        : ((L = (0, P.jsxs)(`div`, {
+              className: `flex min-w-0 flex-col gap-1 rounded-[18px] border border-ps-line bg-ps-surface p-4 sm:px-6 sm:py-[22px]`,
+              'aria-labelledby': `board-h`,
+              children: [
+                  F,
+                  I,
+                  (0, P.jsx)(`ul`, {
+                      className: `m-0 flex list-none flex-col p-0`,
+                      children: c.map(V),
+                  }),
+              ],
+          })),
+          (t[25] = c),
+          (t[26] = L));
+    let R;
+    t[27] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((R = (0, P.jsx)(`h2`, {
+              id: `how-h`,
+              className: `mb-3 text-[1.1rem] ${x}`,
+              children: `How it works`,
+          })),
+          (t[27] = R))
+        : (R = t[27]);
+    let z;
+    t[28] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((z = (0, P.jsxs)(`div`, {
+              className: `rounded-[18px] border border-ps-line bg-ps-surface p-4 sm:px-[22px] sm:py-[18px]`,
+              'aria-labelledby': `how-h`,
+              children: [
+                  R,
+                  (0, P.jsx)(`ol`, {
+                      className: `relative m-0 grid list-none grid-cols-2 gap-x-2 gap-y-3.5 p-0 sm:grid-cols-4 sm:gap-2 sm:before:absolute sm:before:top-[21px] sm:before:right-[12%] sm:before:left-[12%] sm:before:h-[3px] sm:before:bg-ps-soft`,
+                      children: v.map(B),
+                  }),
+              ],
+          })),
+          (t[28] = z))
+        : (z = t[28]);
+    let H;
+    t[29] === L
+        ? (H = t[30])
+        : ((H = (0, P.jsxs)(`div`, {
+              className: `flex min-w-0 flex-col gap-3.5`,
+              children: [L, z],
+          })),
+          (t[29] = L),
+          (t[30] = H));
+    let U;
+    return (
+        t[31] !== M || t[32] !== H
+            ? ((U = (0, P.jsx)(`section`, {
+                  className: `py-[26px_34px] md:py-[52px_56px]`,
+                  children: (0, P.jsxs)(`div`, {
+                      className: `${f} ${D} items-center max-sm:gap-[26px]`,
+                      children: [M, H],
+                  }),
+              })),
+              (t[31] = M),
+              (t[32] = H),
+              (t[33] = U))
+            : (U = t[33]),
+        U
+    );
+}
+function B(e) {
+    let [t, n, r] = e;
+    return (0, P.jsxs)(
+        `li`,
+        {
+            className: `relative flex min-w-0 flex-col items-center gap-[3px] text-center`,
+            children: [
+                (0, P.jsx)(`svg`, {
+                    viewBox: `0 0 24 24`,
+                    'aria-hidden': `true`,
+                    className: `mb-1 h-11 w-11 rounded-full bg-ps-soft fill-none stroke-ps-softink stroke-2 p-2.5 [stroke-linecap:round] [stroke-linejoin:round]`,
+                    children: r,
+                }),
+                (0, P.jsx)(`b`, {
+                    className: `text-[.88rem] leading-tight`,
+                    children: t,
+                }),
+                (0, P.jsx)(`span`, {
+                    className: `text-[.78rem] leading-tight text-ps-muted`,
+                    children: n,
+                }),
+            ],
+        },
+        t,
+    );
+}
+function V(e) {
+    let [t, n, r, i] = e;
+    return (0, P.jsxs)(
+        `li`,
+        {
+            style: { '--rc': i },
+            className: `relative flex flex-col gap-0.5 border-t border-ps-line py-3.5 pl-[34px] before:absolute before:inset-y-0 before:left-2 before:w-1 before:bg-[var(--rc)] after:absolute after:top-[19px] after:left-px after:h-[18px] after:w-[18px] after:rounded-full after:border-4 after:border-[var(--rc)] after:bg-ps-surface`,
+            children: [
+                (0, P.jsx)(`b`, {
+                    className: `text-[1.12rem] ${x}`,
+                    children: n,
+                }),
+                (0, P.jsx)(`span`, {
+                    className: `text-[.94rem] text-ps-muted`,
+                    children: r,
+                }),
+            ],
+        },
+        t,
+    );
+}
+var H = (e) => Math.round(e).toLocaleString(`en-KE`),
+    U = (e) => `KSh ` + H(e),
+    W = (e) => Number(String(e).replace(/[^0-9.]/g, ``)) || 0,
+    G = (e) => Math.ceil(W(e));
+function K(e) {
+    let t = e.constants,
+        n = {};
+    e.elec.forEach((e) => e.items.forEach((e) => (n[e.id] = e)));
+    let r = {};
+    e.general.forEach((e) => (r[e.id] = e));
+    let i = (e) => t.base10 + t.perKg * (e - 10),
+        a = (e) => (e <= 20 ? 150 : e <= 30 ? 200 : 250),
+        o = (t) => {
+            let [n, r] = t.split(`|`);
+            return { route: e.routes[n] ?? n, town: r ?? `` };
+        },
+        s = (e) =>
+            e.hand === `collect`
+                ? `collect`
+                : (e.point ?? ``).startsWith(`out|`)
+                  ? `out`
+                  : `drop`;
+    function c(e) {
+        let o = e.kind === `e`,
+            c;
+        if (o) {
+            if (((c = n[e.item]), !c))
+                return {
+                    n: 1,
+                    point: ``,
+                    free5: !1,
+                    mode: `drop`,
+                    fee: 0,
+                    base: 0,
+                    pack: 0,
+                    coll: 0,
+                    share: !1,
+                    total: 0,
+                    elec: !0,
+                    item: { label: ``, p: 0, pack: 0, pu: 0 },
+                    points: 0,
+                };
+        } else {
+            let n = r[e.size];
+            if (n?.perKg) {
+                let r = Math.min(t.maxKg, Math.max(11, G(e.kg)));
+                c = { label: r + ` kg`, p: i(r), pack: n.pack, pu: a(r) };
+            } else c = n ?? { label: ``, p: 0, pack: 0, pu: 0 };
+        }
+        let l = e.pack ? c.pack : 0,
+            [, u] = (e.point ?? ``).split(`|`),
+            d = s(e),
+            f = c.pu <= 100,
+            p =
+                d === `collect`
+                    ? f
+                        ? 0
+                        : c.pu + 50
+                    : d === `out`
+                      ? c.pu + 50
+                      : 0,
+            m = Math.max(
+                1,
+                parseInt(String(e.count ?? 1).replace(/[^0-9]/g, ``), 10) || 1,
+            ),
+            h = d === `collect` && f,
+            g = h || (d !== `drop` && f && m > 1 && e.same) ? 0 : p,
+            _ = c.p + l + g;
+        return {
+            n: m,
+            point: u,
+            free5: h,
+            mode: d,
+            fee: p,
+            base: c.p,
+            pack: l,
+            coll: g,
+            share: f,
+            total: _,
+            elec: o,
+            item: c,
+            points: Math.floor(_ * t.pointsRate),
+        };
+    }
+    function l(e) {
+        let t = e.mode;
+        return (
+            `${e.item.label} delivery ${U(e.base)}` +
+            (t === `drop`
+                ? `, drop-off free`
+                : e.coll
+                  ? ` + ` +
+                    (t === `collect` ? `pickup ` : `agent drop-off `) +
+                    U(e.coll)
+                  : e.free5
+                    ? `, CBD pickup free`
+                    : `, already paid today`) +
+            (e.pack ? ` + packaging ` + U(e.pack) : ``) +
+            `.`
+        );
+    }
+    function u(e) {
+        if (e <= 0) return ``;
+        let n = Math.round(e * t.codFeeRate);
+        return `Recipient pays ${U(e)} by M-PESA. Our ${(t.codFeeRate * 100).toFixed(1)}% fee is ${U(n)}, so you receive ${U(e - n)}.`;
+    }
+    let d = (e) => {
+        let t = String(e).replace(/[^0-9]/g, ``);
+        return t.charAt(0) === `0` ? `254` + t.slice(1) : t;
+    };
+    function f(t, n, r) {
+        let i = o(t.rtown),
+            a = W(t.cod),
+            s = t.code.trim().toUpperCase(),
+            c =
+                n.mode === `collect`
+                    ? `Picked up from ${t.addr.trim()} (CBD)`
+                    : `Brought to ${n.point}`,
+            l = [
+                [`From`, `${t.sname.trim()}, ${t.sphone.trim()}`],
+                [`Handover`, c],
+                [`Delivery`, U(n.base)],
+                [
+                    n.mode === `out` ? `Agent drop-off fee` : `Pickup`,
+                    n.mode === `drop`
+                        ? `None, brought to our CBD point`
+                        : n.coll
+                          ? U(n.coll)
+                          : n.free5
+                            ? `Free, CBD shop pickup`
+                            : `Already paid today`,
+                ],
+                [`To`, `${t.rname.trim()}, ${t.rphone.trim()}`],
+                [`Collect at`, `Pick&Send pickup station, ` + i.town],
+                [`Parcel`, `${t.what.trim()} (${n.item.label})`],
+                [`Estimated worth`, U(W(t.worth))],
+                [
+                    `Packaging`,
+                    n.pack ? `Packed by Pick&Send, ` + U(n.pack) : `Not needed`,
+                ],
+                [
+                    `Cash on Delivery`,
+                    a > 0 ? U(a) + ` to pay at collection` : `None`,
+                ],
+                [`Total`, U(n.total)],
+                [
+                    `Hand over to`,
+                    (n.mode === `collect`
+                        ? `Rider Kevin M., staff ID PS-R014`
+                        : `Agent Mary W., agent ID PS-A007`) +
+                        `, handover code ${r} (example)`,
+                ],
+                [`M-PESA number paying`, t.paynum.trim() || `Not entered yet`],
+                [`M-PESA code`, s || `Not entered yet`],
+                [`Points earned`, String(n.points)],
+            ],
+            u = l.map((e) => e[0] + `: ` + e[1]).join(`
+`),
+            f =
+                `PICK&SEND RECEIPT
+` +
+                u +
+                `
 
 The recipient gets an SMS code when the parcel is ready to collect.
-Questions: call or WhatsApp 0718 819 413`,p=`Hi Pick&Send, I would like to send a parcel.
+Questions: call or WhatsApp 0718 819 413`,
+            p =
+                `Hi Pick&Send, I would like to send a parcel.
 
-`+u+`
-Route: `+i.route,m=d(t.paynum),h=!!m&&m!==d(t.sphone),g=`Hi, ${t.sname.trim()} is sending a parcel with Pick&Send to ${i.town} for ${t.rname.trim()}.\n\nPlease pay ${U(n.total)}: M-PESA, Lipa na M-PESA, Buy Goods, Till [TILL NO.].\n\nOnce it is paid, the parcel leaves Nairobi and the recipient gets an SMS code to collect it at our ${i.town} pickup station.\nQuestions: call or WhatsApp 0718 819 413`,_=n.mode===`collect`?[`Who is coming to collect`,`Example rider: Kevin M.`,`Staff ID PS-R014 · Motorbike [NUMBER PLATE]`,`Hand your parcel only to this rider, and only after they tell you this handover code. We never send a different person by phone call or text. If anyone else comes, do not hand over: call or WhatsApp us on 0718 819 413.`]:[`Who receives your parcel`,`Example agent: Mary W.`,`Agent ID PS-A007 · `+n.point,`Hand your parcel only to this agent at the counter, and give them this handover code. You get an SMS the moment they scan it in. Do not hand it to anyone outside the station who says they work for us.`];return{rows:l,paid:!!s,code:s,who:_,other:h,receiptHref:`https://wa.me/?text=`+encodeURIComponent(f),bookingHref:`https://wa.me/${e.wa}?text=`+encodeURIComponent(p),custHref:`https://wa.me/${m}?text=`+encodeURIComponent(g),receipt:f}}function p(e){let n=[],r=e.hand===`collect`,i=e.kind===`e`;e.sname.trim()||n.push(`your name`),e.sphone.trim()||n.push(`your phone number`),r&&!e.addr.trim()&&n.push(`where your shop is`),e.rname.trim()||n.push(`the recipient's name`),e.rphone.trim()||n.push(`the recipient's phone number`),e.what.trim()||n.push(`what is inside`),!r&&e.point&&e.point.split(`|`)[1].indexOf(o(e.rtown).town.split(` CBD`)[0])===0&&n.push(`a destination town different from where you drop it`),W(e.worth)||n.push(`the estimated worth of the parcel`),e.paynum.replace(/[^0-9]/g,``).length<9&&n.push(`the M-PESA number that will pay`);let a=!i&&e.size===`kg`;return a&&G(e.kg)>t.maxKg?`Parcels over ${t.maxKg} kg are quoted. Please call or WhatsApp 0718 819 413.`:(a&&G(e.kg)<11&&n.push(`the weight in kg (11 or more)`),n.length?`Before you continue, please add `+n.join(`, `)+`.`:``)}function m(e){let t=o(e.town);return`Hi Pick&Send, please pick something for me in Nairobi.
+` +
+                u +
+                `
+Route: ` +
+                i.route,
+            m = d(t.paynum),
+            h = !!m && m !== d(t.sphone),
+            g = `Hi, ${t.sname.trim()} is sending a parcel with Pick&Send to ${i.town} for ${t.rname.trim()}.\n\nPlease pay ${U(n.total)}: M-PESA, Lipa na M-PESA, Buy Goods, Till [TILL NO.].\n\nOnce it is paid, the parcel leaves Nairobi and the recipient gets an SMS code to collect it at our ${i.town} pickup station.\nQuestions: call or WhatsApp 0718 819 413`,
+            _ =
+                n.mode === `collect`
+                    ? [
+                          `Who is coming to collect`,
+                          `Example rider: Kevin M.`,
+                          `Staff ID PS-R014 · Motorbike [NUMBER PLATE]`,
+                          `Hand your parcel only to this rider, and only after they tell you this handover code. We never send a different person by phone call or text. If anyone else comes, do not hand over: call or WhatsApp us on 0718 819 413.`,
+                      ]
+                    : [
+                          `Who receives your parcel`,
+                          `Example agent: Mary W.`,
+                          `Agent ID PS-A007 · ` + n.point,
+                          `Hand your parcel only to this agent at the counter, and give them this handover code. You get an SMS the moment they scan it in. Do not hand it to anyone outside the station who says they work for us.`,
+                      ];
+        return {
+            rows: l,
+            paid: !!s,
+            code: s,
+            who: _,
+            other: h,
+            receiptHref: `https://wa.me/?text=` + encodeURIComponent(f),
+            bookingHref: `https://wa.me/${e.wa}?text=` + encodeURIComponent(p),
+            custHref: `https://wa.me/${m}?text=` + encodeURIComponent(g),
+            receipt: f,
+        };
+    }
+    function p(e) {
+        let n = [],
+            r = e.hand === `collect`,
+            i = e.kind === `e`;
+        (e.sname.trim() || n.push(`your name`),
+            e.sphone.trim() || n.push(`your phone number`),
+            r && !e.addr.trim() && n.push(`where your shop is`),
+            e.rname.trim() || n.push(`the recipient's name`),
+            e.rphone.trim() || n.push(`the recipient's phone number`),
+            e.what.trim() || n.push(`what is inside`),
+            !r &&
+                e.point &&
+                e.point
+                    .split(`|`)[1]
+                    .indexOf(o(e.rtown).town.split(` CBD`)[0]) === 0 &&
+                n.push(`a destination town different from where you drop it`),
+            W(e.worth) || n.push(`the estimated worth of the parcel`),
+            e.paynum.replace(/[^0-9]/g, ``).length < 9 &&
+                n.push(`the M-PESA number that will pay`));
+        let a = !i && e.size === `kg`;
+        return a && G(e.kg) > t.maxKg
+            ? `Parcels over ${t.maxKg} kg are quoted. Please call or WhatsApp 0718 819 413.`
+            : (a && G(e.kg) < 11 && n.push(`the weight in kg (11 or more)`),
+              n.length
+                  ? `Before you continue, please add ` + n.join(`, `) + `.`
+                  : ``);
+    }
+    function m(e) {
+        let t = o(e.town);
+        return `Hi Pick&Send, please pick something for me in Nairobi.
 
-Name: ${e.name.trim()}, ${e.phone.trim()}\nSend to: Pick&Send pickup station, ${t.town} (${t.route})\nPick: ${e.what.trim()}\nFrom: ${e.from.trim()}${e.sphone.trim()?`, `+e.sphone.trim():``}\nHow often: ${e.often}`}return{price:c,breakdown:l,codNote:u,buildBooking:f,validate:p,supplyText:m,pickTown:o,kgPrice:i,kgPu:a}}function q(e){let t=(0,d.c)(4),{id:n,tone:r,children:i}=e,a=`scroll-mt-[76px] py-10 md:py-[60px] ${r===`tint`?`bg-ps-surface2`:r===`band`?`bg-ps-band text-ps-bandmuted`:``}`,o;return t[0]!==i||t[1]!==n||t[2]!==a?(o=(0,P.jsx)(`section`,{id:n,className:a,children:i}),t[0]=i,t[1]=n,t[2]=a,t[3]=o):o=t[3],o}function ee({eyebrow:e,title:t,text:n,dark:r,className:i=`mb-6`,children:a}){return(0,P.jsxs)(`div`,{className:`flex flex-col gap-2 ${i}`,children:[(0,P.jsx)(`span`,{className:r?_.replace(`text-ps-accent`,`text-ps-key`):_,children:e}),(0,P.jsx)(`h2`,{className:`text-[clamp(1.7rem,3.4vw,2.4rem)] leading-[1.1] font-extrabold tracking-[-.03em] ${r?`text-white`:`text-ps-brandink`}`,children:t}),n&&(0,P.jsx)(`p`,{className:`max-w-[40rem] ${r?`text-ps-bandmuted`:`text-ps-muted`}`,children:n}),a]})}function J(e){let t=(0,d.c)(27),n,r,i,a,o,s,c,l,u;if(t[0]===e?(n=t[1],r=t[2],i=t[3],a=t[4],o=t[5],s=t[6],c=t[7],l=t[8],u=t[9]):({id:s,label:c,hint:o,error:i,hidden:a,select:u,children:n,className:r,...l}=e,t[0]=e,t[1]=n,t[2]=r,t[3]=i,t[4]=a,t[5]=o,t[6]=s,t[7]=c,t[8]=l,t[9]=u),a)return null;let f=typeof i==`string`&&i?i:``,p;t[10]!==s||t[11]!==c?(p=(0,P.jsx)(`label`,{htmlFor:s,className:`text-[.88rem] font-semibold`,children:c}),t[10]=s,t[11]=c,t[12]=p):p=t[12];let m;t[13]!==n||t[14]!==r||t[15]!==f||t[16]!==s||t[17]!==l||t[18]!==u?(m=u?(0,P.jsx)(`select`,{id:s,className:`${y} ${f?`border-ps-warn`:``}`,...l,children:n}):(0,P.jsx)(`input`,{id:s,className:`${y} ${f?`border-ps-warn`:``} ${r??``}`,"aria-invalid":!!f,...l}),t[13]=n,t[14]=r,t[15]=f,t[16]=s,t[17]=l,t[18]=u,t[19]=m):m=t[19];let h;t[20]!==f||t[21]!==o?(h=f?(0,P.jsx)(`span`,{className:`text-[.84rem] font-semibold text-ps-warnink`,children:f}):o&&(0,P.jsx)(`span`,{className:`text-[.84rem] text-ps-muted`,children:o}),t[20]=f,t[21]=o,t[22]=h):h=t[22];let g;return t[23]!==p||t[24]!==m||t[25]!==h?(g=(0,P.jsxs)(`div`,{className:`flex min-w-0 flex-col gap-1.5`,children:[p,m,h]}),t[23]=p,t[24]=m,t[25]=h,t[26]=g):g=t[26],g}function te({label:e,children:t,cols:n=2}){return(0,P.jsxs)(`div`,{className:`flex min-w-0 flex-col gap-1.5`,children:[(0,P.jsx)(`span`,{className:`text-[.88rem] font-semibold`,children:e}),(0,P.jsx)(`div`,{role:`radiogroup`,className:`grid gap-2 ${n===1?`grid-cols-1`:n===4?`grid-cols-2 sm:grid-cols-4`:`grid-cols-2`}`,children:t})]})}function Y({children:e,className:t=``,...n}){return(0,P.jsxs)(`label`,{className:`flex min-h-12 cursor-pointer items-center gap-2 rounded-[10px] border-[1.5px] border-ps-line px-3 py-1.5 text-[.92rem] font-semibold has-[:checked]:border-ps-accent has-[:checked]:bg-ps-soft has-[:checked]:text-ps-softink ${t}`,children:[(0,P.jsx)(`input`,{className:`h-[18px] w-[18px] flex-none accent-[#4FD1C0]`,...n}),(0,P.jsx)(`span`,{children:e})]})}function X(e){let t=(0,d.c)(8),{n,title:r,children:i}=e,a;t[0]===n?a=t[1]:(a=(0,P.jsx)(`i`,{className:`grid h-[30px] w-[30px] place-items-center rounded-full bg-ps-brand text-[.95rem] text-ps-onbrand not-italic`,children:n}),t[0]=n,t[1]=a);let o;t[2]!==a||t[3]!==r?(o=(0,P.jsxs)(`div`,{className:`flex items-center gap-2.5 text-[1.2rem] ${x}`,children:[a,r]}),t[2]=a,t[3]=r,t[4]=o):o=t[4];let s;return t[5]!==i||t[6]!==o?(s=(0,P.jsxs)(`div`,{className:`flex min-w-0 flex-col gap-3 rounded-2xl border border-ps-line bg-ps-surface p-4 sm:p-[22px]`,children:[o,i]}),t[5]=i,t[6]=o,t[7]=s):s=t[7],s}function Z(e){let t=(0,d.c)(10),{head:n,rows:r,small:i}=e,a=`w-full border-collapse tabular-nums ${i?``:`min-w-[560px] max-sm:min-w-0`}`,o;t[0]===n?o=t[1]:(o=n.map(ne),t[0]=n,t[1]=o);let s;t[2]===o?s=t[3]:(s=(0,P.jsx)(`thead`,{children:(0,P.jsx)(`tr`,{children:o})}),t[2]=o,t[3]=s);let c;t[4]===r?c=t[5]:(c=(0,P.jsx)(`tbody`,{children:r}),t[4]=r,t[5]=c);let l;return t[6]!==a||t[7]!==s||t[8]!==c?(l=(0,P.jsxs)(`table`,{className:a,children:[s,c]}),t[6]=a,t[7]=s,t[8]=c,t[9]=l):l=t[9],l}function ne(e,t){return(0,P.jsx)(`th`,{className:`${w} ${t?`text-right`:``}`,children:e},e)}function re(e){let n=(0,d.c)(274),{config:r,booking:i,error:a,paymentConfirmed:o}=e,s;n[0]===r?s=n[1]:(s=K(r),n[0]=r,n[1]=s);let c=s,{breakdown:l,codNote:p}=c,{towns:_,routes:v,general:y,elec:x,constants:S}=r,{base10:C,perKg:w,maxKg:T,dropOffFee:D}=S,[O,A]=(0,u.useState)(``),M;n[2]===Symbol.for(`react.memo_cache_sentinel`)?(M={sname:``,sphone:``,hand:`drop`,point:`cbd|Stanbank House, Moi Avenue, CBD`,addr:``,count:`1`,same:!1,rname:``,rphone:``,rtown:`mount|Nyeri`,what:``,worth:``,kind:`g`,size:`2`,kg:`15`,item:`acc`,pack:!1,paynum:``,cod:``},n[2]=M):M=n[2];let{data:N,setData:F,errors:I,processing:L,post:R}=t(M),z;n[3]===F?z=n[4]:(z=(e,t)=>F(e,t),n[3]=F,n[4]=z);let B=z,V;n[5]===F?V=n[6]:(V=e=>t=>F(e,t.target.value),n[5]=F,n[6]=V);let H=V,G;n[7]!==N||n[8]!==c?(G=c.price(N),n[7]=N,n[8]=c,n[9]=G):G=n[9];let Z=G,ne=W(N.cod),re;n[10]===R?re=n[11]:(re=e=>{e?.preventDefault(),R(`/parcels`,{preserveScroll:!0,onSuccess:ce})},n[10]=R,n[11]=re);let oe=re,le;n[12]===i?le=n[13]:(le=async()=>{if(i)try{await navigator.clipboard.writeText(i.receipt),A(`Copied`),setTimeout(()=>A(``),2e3)}catch{A(`Could not copy. Use the share button instead.`)}},n[12]=i,n[13]=le);let ue=le,de;n[14]===Symbol.for(`react.memo_cache_sentinel`)?(de={code:``},n[14]=de):de=n[14];let Q=t(de),fe;n[15]!==i||n[16]!==Q?(fe=e=>{e.preventDefault(),i&&Q.post(`/parcels/${i.tracking_no}/confirm-payment`,{preserveScroll:!0,onSuccess:()=>Q.reset()})},n[15]=i,n[16]=Q,n[17]=fe):fe=n[17];let pe=fe,me;if(n[18]!==v||n[19]!==_){let e;n[21]===v?e=n[22]:(e=e=>{let[t,n]=e;return(0,P.jsx)(`optgroup`,{label:v[t],children:n.map(e=>(0,P.jsx)(`option`,{value:`${t}|${e}`,children:e},e))},t)},n[21]=v,n[22]=e),me=_.map(e),n[18]=v,n[19]=_,n[20]=me}else me=n[20];let he=me,ge=q,_e=f,$;n[23]===Symbol.for(`react.memo_cache_sentinel`)?($=(0,P.jsx)(ee,{eyebrow:`Send with us`,title:`Send a parcel`,text:`Anyone can send. Tell us who it is from, who it is for and what it is. It takes about a minute.`}),n[23]=$):$=n[23];let ve=N.sname,ye;n[24]===H?ye=n[25]:(ye=H(`sname`),n[24]=H,n[25]=ye);let be;n[26]!==N.sname||n[27]!==I.sname||n[28]!==ye?(be=(0,P.jsx)(J,{id:`s-name`,label:`Your name or business`,autoComplete:`name`,value:ve,onChange:ye,error:I.sname}),n[26]=N.sname,n[27]=I.sname,n[28]=ye,n[29]=be):be=n[29];let xe=N.sphone,Se;n[30]===H?Se=n[31]:(Se=H(`sphone`),n[30]=H,n[31]=Se);let Ce;n[32]!==N.sphone||n[33]!==I.sphone||n[34]!==Se?(Ce=(0,P.jsx)(J,{id:`s-phone`,label:`Your phone number`,type:`tel`,placeholder:`07XX XXX XXX`,autoComplete:`tel`,value:xe,onChange:Se,error:I.sphone}),n[32]=N.sphone,n[33]=I.sphone,n[34]=Se,n[35]=Ce):Ce=n[35];let we=N.hand===`drop`,Te;n[36]===B?Te=n[37]:(Te=()=>B(`hand`,`drop`),n[36]=B,n[37]=Te);let Ee;n[38]!==we||n[39]!==Te?(Ee=(0,P.jsx)(Y,{type:`radio`,name:`hand`,checked:we,onChange:Te,children:`I will bring it to you`}),n[38]=we,n[39]=Te,n[40]=Ee):Ee=n[40];let De=N.hand===`collect`,Oe;n[41]===B?Oe=n[42]:(Oe=()=>B(`hand`,`collect`),n[41]=B,n[42]=Oe);let ke;n[43]===Symbol.for(`react.memo_cache_sentinel`)?(ke=(0,P.jsx)(`b`,{children:`free`}),n[43]=ke):ke=n[43];let Ae;n[44]!==De||n[45]!==Oe?(Ae=(0,P.jsxs)(Y,{type:`radio`,name:`hand`,checked:De,onChange:Oe,children:[`Come and pick it up from my CBD shop,`,` `,ke]}),n[44]=De,n[45]=Oe,n[46]=Ae):Ae=n[46];let je;n[47]!==Ee||n[48]!==Ae?(je=(0,P.jsxs)(te,{label:`How do we get your parcel?`,cols:1,children:[Ee,Ae]}),n[47]=Ee,n[48]=Ae,n[49]=je):je=n[49];let Me=Z.mode===`collect`,Ne=N.point,Pe;n[50]===H?Pe=n[51]:(Pe=H(`point`),n[50]=H,n[51]=Pe);let Fe=I.point,Ie;n[52]===Symbol.for(`react.memo_cache_sentinel`)?(Ie=(0,P.jsx)(`optgroup`,{label:`Nairobi CBD`,children:(0,P.jsx)(`option`,{value:`cbd|Stanbank House, Moi Avenue, CBD`,children:`Stanbank House, Moi Avenue, CBD (free)`})}),n[52]=Ie):Ie=n[52];let Le;if(n[53]!==r.satellites||n[54]!==D){let e;n[56]===D?e=n[57]:(e=e=>(0,P.jsxs)(`option`,{value:`out|${e} agent`,children:[e,` agent (`,U(D),`)`]},e),n[56]=D,n[57]=e),Le=r.satellites.map(e),n[53]=r.satellites,n[54]=D,n[55]=Le}else Le=n[55];let Re;n[58]===Le?Re=n[59]:(Re=(0,P.jsx)(`optgroup`,{label:`Around Nairobi`,children:Le}),n[58]=Le,n[59]=Re);let ze;n[60]!==N.point||n[61]!==I.point||n[62]!==Me||n[63]!==Pe||n[64]!==Re?(ze=(0,P.jsxs)(J,{select:!0,id:`s-point`,label:`Where will you drop it?`,hint:`Bring it by 7pm.`,hidden:Me,value:Ne,onChange:Pe,error:Fe,children:[Ie,Re]}),n[60]=N.point,n[61]=I.point,n[62]=Me,n[63]=Pe,n[64]=Re,n[65]=ze):ze=n[65];let Be=Z.mode!==`collect`,Ve=N.addr,He;n[66]===H?He=n[67]:(He=H(`addr`),n[66]=H,n[67]=He);let Ue;n[68]!==N.addr||n[69]!==I.addr||n[70]!==Be||n[71]!==He?(Ue=(0,P.jsx)(J,{id:`s-addr`,label:`Where is your shop?`,placeholder:`Building, floor, shop number and street`,hidden:Be,hint:`Have it ready for the rider, who waits up to 5 minutes.`,value:Ve,onChange:He,error:I.addr}),n[68]=N.addr,n[69]=I.addr,n[70]=Be,n[71]=He,n[72]=Ue):Ue=n[72];let We=!(Z.mode===`out`&&Z.share),Ge;n[73]===D?Ge=n[74]:(Ge=U(D),n[73]=D,n[74]=Ge);let Ke=`The ${Ge} agent drop-off fee is paid once for all parcels today.`,qe=N.count,Je;n[75]===H?Je=n[76]:(Je=H(`count`),n[75]=H,n[76]=Je);let Ye;n[77]!==N.count||n[78]!==I.count||n[79]!==We||n[80]!==Ke||n[81]!==Je?(Ye=(0,P.jsx)(J,{id:`s-count`,label:`How many parcels today?`,inputMode:`numeric`,autoComplete:`off`,hidden:We,hint:Ke,value:qe,onChange:Je,error:I.count}),n[77]=N.count,n[78]=I.count,n[79]=We,n[80]=Ke,n[81]=Je,n[82]=Ye):Ye=n[82];let Xe;n[83]!==N.same||n[84]!==Z.mode||n[85]!==Z.n||n[86]!==Z.share||n[87]!==B?(Xe=Z.mode===`out`&&Z.share&&Z.n>=2&&(0,P.jsx)(Y,{type:`checkbox`,checked:N.same,onChange:e=>B(`same`,e.target.checked),children:`I already paid this on another parcel today`}),n[83]=N.same,n[84]=Z.mode,n[85]=Z.n,n[86]=Z.share,n[87]=B,n[88]=Xe):Xe=n[88];let Ze;n[89]!==be||n[90]!==Ce||n[91]!==je||n[92]!==ze||n[93]!==Ue||n[94]!==Ye||n[95]!==Xe?(Ze=(0,P.jsxs)(X,{n:`1`,title:`Sender`,children:[be,Ce,je,ze,Ue,Ye,Xe]}),n[89]=be,n[90]=Ce,n[91]=je,n[92]=ze,n[93]=Ue,n[94]=Ye,n[95]=Xe,n[96]=Ze):Ze=n[96];let Qe=N.rname,$e;n[97]===H?$e=n[98]:($e=H(`rname`),n[97]=H,n[98]=$e);let et;n[99]!==N.rname||n[100]!==I.rname||n[101]!==$e?(et=(0,P.jsx)(J,{id:`r-name`,label:`Recipient's name`,value:Qe,onChange:$e,error:I.rname}),n[99]=N.rname,n[100]=I.rname,n[101]=$e,n[102]=et):et=n[102];let tt=N.rphone,nt;n[103]===H?nt=n[104]:(nt=H(`rphone`),n[103]=H,n[104]=nt);let rt;n[105]!==N.rphone||n[106]!==I.rphone||n[107]!==nt?(rt=(0,P.jsx)(J,{id:`r-phone`,label:`Recipient's phone number`,type:`tel`,placeholder:`07XX XXX XXX`,hint:`We text the collection code to this number.`,value:tt,onChange:nt,error:I.rphone}),n[105]=N.rphone,n[106]=I.rphone,n[107]=nt,n[108]=rt):rt=n[108];let it=N.rtown,at;n[109]===H?at=n[110]:(at=H(`rtown`),n[109]=H,n[110]=at);let ot;n[111]!==N.rtown||n[112]!==I.rtown||n[113]!==at||n[114]!==he?(ot=(0,P.jsx)(J,{select:!0,id:`r-town`,label:`Destination town`,value:it,onChange:at,error:I.rtown,children:he}),n[111]=N.rtown,n[112]=I.rtown,n[113]=at,n[114]=he,n[115]=ot):ot=n[115];let st;n[116]===Symbol.for(`react.memo_cache_sentinel`)?(st=(0,P.jsx)(`p`,{className:`rounded-[10px] bg-ps-soft px-3.5 py-3 text-[.92rem] font-semibold text-ps-softink`,children:`Collect at our pickup station in your nearest town, using the SMS code.`}),n[116]=st):st=n[116];let ct;n[117]!==et||n[118]!==rt||n[119]!==ot?(ct=(0,P.jsxs)(X,{n:`2`,title:`Recipient`,children:[et,rt,ot,st]}),n[117]=et,n[118]=rt,n[119]=ot,n[120]=ct):ct=n[120];let lt=N.what,ut;n[121]===H?ut=n[122]:(ut=H(`what`),n[121]=H,n[122]=ut);let dt;n[123]!==N.what||n[124]!==I.what||n[125]!==ut?(dt=(0,P.jsx)(J,{id:`p-what`,label:`What is inside?`,placeholder:`e.g. clothes, phone, documents`,value:lt,onChange:ut,error:I.what}),n[123]=N.what,n[124]=I.what,n[125]=ut,n[126]=dt):dt=n[126];let ft=N.worth,pt;n[127]===H?pt=n[128]:(pt=H(`worth`),n[127]=H,n[128]=pt);let mt;n[129]!==N.worth||n[130]!==I.worth||n[131]!==pt?(mt=(0,P.jsx)(J,{id:`p-worth`,label:`Estimated worth of the parcel (KSh)`,inputMode:`numeric`,placeholder:`e.g. 5,000`,autoComplete:`off`,hint:`What the contents would cost to replace.`,value:ft,onChange:pt,error:I.worth}),n[129]=N.worth,n[130]=I.worth,n[131]=pt,n[132]=mt):mt=n[132];let ht=N.kind===`g`,gt;n[133]===B?gt=n[134]:(gt=()=>B(`kind`,`g`),n[133]=B,n[134]=gt);let _t;n[135]!==ht||n[136]!==gt?(_t=(0,P.jsx)(Y,{type:`radio`,name:`kind`,checked:ht,onChange:gt,children:`General`}),n[135]=ht,n[136]=gt,n[137]=_t):_t=n[137];let vt=N.kind===`e`,yt;n[138]===B?yt=n[139]:(yt=()=>B(`kind`,`e`),n[138]=B,n[139]=yt);let bt;n[140]!==vt||n[141]!==yt?(bt=(0,P.jsx)(Y,{type:`radio`,name:`kind`,checked:vt,onChange:yt,children:`Electronics`}),n[140]=vt,n[141]=yt,n[142]=bt):bt=n[142];let xt;n[143]!==_t||n[144]!==bt?(xt=(0,P.jsxs)(te,{label:`What kind of parcel?`,children:[_t,bt]}),n[143]=_t,n[144]=bt,n[145]=xt):xt=n[145];let St=N.kind===`e`,Ct=N.size,wt;n[146]===H?wt=n[147]:(wt=H(`size`),n[146]=H,n[147]=wt);let Tt=I.size,Et;n[148]===y?Et=n[149]:(Et=y.map(se),n[148]=y,n[149]=Et);let Dt;n[150]!==N.size||n[151]!==I.size||n[152]!==St||n[153]!==wt||n[154]!==Et?(Dt=(0,P.jsx)(J,{select:!0,id:`p-size`,label:`Weight`,hidden:St,value:Ct,onChange:wt,error:Tt,children:Et}),n[150]=N.size,n[151]=I.size,n[152]=St,n[153]=wt,n[154]=Et,n[155]=Dt):Dt=n[155];let Ot=N.kind===`e`||N.size!==`kg`,kt=`KSh ${C} for the first 10 kg, then KSh ${w} for every extra kg. Up to ${T} kg.`,At=N.kg,jt;n[156]===H?jt=n[157]:(jt=H(`kg`),n[156]=H,n[157]=jt);let Mt;n[158]!==N.kg||n[159]!==I.kg||n[160]!==Ot||n[161]!==kt||n[162]!==jt?(Mt=(0,P.jsx)(J,{id:`p-kg`,label:`How many kg?`,inputMode:`numeric`,autoComplete:`off`,hidden:Ot,hint:kt,value:At,onChange:jt,error:I.kg}),n[158]=N.kg,n[159]=I.kg,n[160]=Ot,n[161]=kt,n[162]=jt,n[163]=Mt):Mt=n[163];let Nt=N.kind!==`e`,Pt=N.item,Ft;n[164]===H?Ft=n[165]:(Ft=H(`item`),n[164]=H,n[165]=Ft);let It=I.item,Lt;n[166]===x?Lt=n[167]:(Lt=x.map(ae),n[166]=x,n[167]=Lt);let Rt;n[168]!==N.item||n[169]!==I.item||n[170]!==Nt||n[171]!==Ft||n[172]!==Lt?(Rt=(0,P.jsx)(J,{select:!0,id:`p-item`,label:`Which item?`,hint:`Priced per item, with fragile handling included.`,hidden:Nt,value:Pt,onChange:Ft,error:It,children:Lt}),n[168]=N.item,n[169]=I.item,n[170]=Nt,n[171]=Ft,n[172]=Lt,n[173]=Rt):Rt=n[173];let zt=!N.pack,Bt;n[174]===B?Bt=n[175]:(Bt=()=>B(`pack`,!1),n[174]=B,n[175]=Bt);let Vt;n[176]!==zt||n[177]!==Bt?(Vt=(0,P.jsx)(Y,{type:`radio`,name:`pack`,checked:zt,onChange:Bt,children:`No, it is packed and ready`}),n[176]=zt,n[177]=Bt,n[178]=Vt):Vt=n[178];let Ht;n[179]===B?Ht=n[180]:(Ht=()=>B(`pack`,!0),n[179]=B,n[180]=Ht);let Ut;n[181]!==N.pack||n[182]!==Ht?(Ut=(0,P.jsx)(Y,{type:`radio`,name:`pack`,checked:N.pack,onChange:Ht,children:`Yes, pack it for me`}),n[181]=N.pack,n[182]=Ht,n[183]=Ut):Ut=n[183];let Wt;n[184]!==Vt||n[185]!==Ut?(Wt=(0,P.jsxs)(te,{label:`Need packaging? We pack it for you at a small fee.`,children:[Vt,Ut]}),n[184]=Vt,n[185]=Ut,n[186]=Wt):Wt=n[186];let Gt;n[187]===Z.item.pack?Gt=n[188]:(Gt=U(Z.item.pack),n[187]=Z.item.pack,n[188]=Gt);let Kt=`Professional packaging for this item is ${Gt}. You only pay if you choose yes.`,qt;n[189]===Kt?qt=n[190]:(qt=(0,P.jsx)(`span`,{className:b,children:Kt}),n[189]=Kt,n[190]=qt);let Jt;n[191]!==Wt||n[192]!==qt?(Jt=(0,P.jsxs)(`div`,{className:`flex flex-col gap-1.5`,children:[Wt,qt]}),n[191]=Wt,n[192]=qt,n[193]=Jt):Jt=n[193];let Yt=N.paynum,Xt;n[194]===H?Xt=n[195]:(Xt=H(`paynum`),n[194]=H,n[195]=Xt);let Zt;n[196]!==N.paynum||n[197]!==I.paynum||n[198]!==Xt?(Zt=(0,P.jsx)(J,{id:`p-paynum`,label:`M-PESA number that will pay`,type:`tel`,placeholder:`07XX XXX XXX`,autoComplete:`off`,hint:`We send the M-PESA payment prompt to this number.`,value:Yt,onChange:Xt,error:I.paynum}),n[196]=N.paynum,n[197]=I.paynum,n[198]=Xt,n[199]=Zt):Zt=n[199];let Qt=N.cod,$t;n[200]===H?$t=n[201]:($t=H(`cod`),n[200]=H,n[201]=$t);let en;n[202]!==N.cod||n[203]!==I.cod||n[204]!==$t?(en=(0,P.jsx)(J,{id:`p-cod`,label:`Cash on Delivery amount (KSh)`,inputMode:`numeric`,placeholder:`Leave empty if already paid`,autoComplete:`off`,hint:`Only if the recipient must pay you for the goods.`,value:Qt,onChange:$t,error:I.cod}),n[202]=N.cod,n[203]=I.cod,n[204]=$t,n[205]=en):en=n[205];let tn;n[206]!==Jt||n[207]!==Zt||n[208]!==en||n[209]!==dt||n[210]!==mt||n[211]!==xt||n[212]!==Dt||n[213]!==Mt||n[214]!==Rt?(tn=(0,P.jsxs)(X,{n:`3`,title:`Parcel`,children:[dt,mt,xt,Dt,Mt,Rt,Jt,Zt,en]}),n[206]=Jt,n[207]=Zt,n[208]=en,n[209]=dt,n[210]=mt,n[211]=xt,n[212]=Dt,n[213]=Mt,n[214]=Rt,n[215]=tn):tn=n[215];let nn;n[216]!==tn||n[217]!==Ze||n[218]!==ct?(nn=(0,P.jsxs)(`div`,{className:`${E} items-start`,children:[Ze,ct,tn]}),n[216]=tn,n[217]=Ze,n[218]=ct,n[219]=nn):nn=n[219];let rn=`${E} items-center rounded-2xl bg-ps-soft p-4 text-ps-softink sm:px-[22px] sm:py-5`,an;n[220]===Symbol.for(`react.memo_cache_sentinel`)?(an=(0,P.jsx)(`span`,{children:`Total to pay`}),n[220]=an):an=n[220];let on;n[221]===Z.total?on=n[222]:(on=U(Z.total),n[221]=Z.total,n[222]=on);let sn;n[223]===on?sn=n[224]:(sn=(0,P.jsx)(`output`,{className:`text-[1.9rem] leading-tight font-extrabold text-ps-brandink tabular-nums`,children:on}),n[223]=on,n[224]=sn);let cn;n[225]!==l||n[226]!==Z?(cn=l(Z),n[225]=l,n[226]=Z,n[227]=cn):cn=n[227];let ln;n[228]===cn?ln=n[229]:(ln=(0,P.jsx)(`p`,{className:`text-[.94rem]`,children:cn}),n[228]=cn,n[229]=ln);let un=p(ne),dn;n[230]===un?dn=n[231]:(dn=(0,P.jsx)(`p`,{className:`text-[.94rem]`,children:un}),n[230]=un,n[231]=dn);let fn=`You earn ${Z.points} Pick&Send points on this parcel.`,pn;n[232]===fn?pn=n[233]:(pn=(0,P.jsx)(`p`,{className:`text-[.94rem] font-bold`,children:fn}),n[232]=fn,n[233]=pn);let mn;n[234]!==an||n[235]!==sn||n[236]!==ln||n[237]!==dn||n[238]!==pn?(mn=(0,P.jsxs)(`div`,{className:`flex flex-col`,children:[an,sn,ln,dn,pn]}),n[234]=an,n[235]=sn,n[236]=ln,n[237]=dn,n[238]=pn,n[239]=mn):mn=n[239];let hn;n[240]===Symbol.for(`react.memo_cache_sentinel`)?(hn=(0,P.jsx)(`span`,{className:j,children:`M-PESA`}),n[240]=hn):hn=n[240];let gn=L?`SENDING…`:Z.total>0?`PAY NOW`:`BOOK NOW`,_n;n[241]!==L||n[242]!==gn?(_n=(0,P.jsxs)(`button`,{type:`submit`,disabled:L,className:`${g} !min-h-[60px] !text-[1.1rem] !font-extrabold disabled:opacity-60`,children:[hn,gn]}),n[241]=L,n[242]=gn,n[243]=_n):_n=n[243];let vn;n[244]===i?vn=n[245]:(vn=i&&(0,P.jsx)(`a`,{className:`inline-flex min-h-[52px] items-center justify-center gap-2.5 rounded-xl border-[1.5px] border-transparent px-6 text-center font-bold no-underline max-sm:w-full !min-h-12 border-ps-wa bg-ps-surface !text-base text-ps-wa max-sm:!px-2 max-sm:!text-[.92rem]`,target:`_blank`,rel:`noopener`,href:i.receiptHref,children:`Share receipt on WhatsApp`}),n[244]=i,n[245]=vn);let yn;n[246]!==_n||n[247]!==vn?(yn=(0,P.jsxs)(`div`,{className:`flex min-w-0 flex-col gap-2.5`,children:[_n,vn]}),n[246]=_n,n[247]=vn,n[248]=yn):yn=n[248];let bn;n[249]!==mn||n[250]!==yn?(bn=(0,P.jsxs)(`div`,{className:rn,"aria-live":`polite`,children:[mn,yn]}),n[249]=mn,n[250]=yn,n[251]=bn):bn=n[251];let xn;n[252]===a?xn=n[253]:(xn=a&&(0,P.jsx)(`p`,{className:`rounded-xl bg-ps-warn px-4 py-3 text-[.94rem] font-semibold text-ps-warnink`,role:`alert`,children:a}),n[252]=a,n[253]=xn);let Sn;n[254]!==i||n[255]!==O||n[256]!==ue||n[257]!==Q||n[258]!==o||n[259]!==pe?(Sn=i&&(0,P.jsxs)(`div`,{id:`send-out`,className:`flex flex-col gap-3 rounded-2xl border-2 border-ps-wa bg-ps-surface p-4 sm:px-[22px] sm:py-5`,children:[(0,P.jsxs)(`div`,{className:`flex flex-col gap-2.5 rounded-[14px] bg-ps-band px-[18px] py-4 text-ps-bandmuted`,children:[(0,P.jsx)(`span`,{className:`text-[.8rem] font-bold uppercase tracking-[.12em] text-ps-key`,children:i.who[0]}),(0,P.jsxs)(`div`,{className:`flex flex-wrap items-center gap-x-4 gap-y-3`,children:[(0,P.jsx)(`span`,{className:`grid h-[52px] w-[52px] flex-none place-items-center rounded-full bg-ps-key font-extrabold text-ps-band`,"aria-hidden":`true`,children:`PS`}),(0,P.jsxs)(`div`,{className:`flex min-w-0 flex-1 basis-[180px] flex-col`,children:[(0,P.jsx)(`b`,{className:`text-white`,children:i.who[1]}),(0,P.jsx)(`span`,{children:i.who[2]})]}),(0,P.jsxs)(`div`,{className:`flex flex-col items-end rounded-[10px] border-[1.5px] border-dashed border-ps-key px-3.5 py-1.5`,children:[(0,P.jsx)(`span`,{className:`text-[.75rem] font-bold tracking-[.08em] uppercase`,children:`Handover code`}),(0,P.jsx)(`b`,{className:`font-mono text-[1.7rem] tracking-[.18em] text-white`,children:i.handover_code})]})]}),(0,P.jsx)(`p`,{className:`text-white`,children:i.who[3]})]}),(0,P.jsxs)(`div`,{className:`flex min-w-0 flex-col gap-3.5`,children:[(0,P.jsxs)(`h3`,{className:`text-[1.3rem] font-extrabold text-ps-brandink`,children:[`Pay `,(0,P.jsx)(`span`,{children:U(i.total)}),` by M-PESA`]}),(0,P.jsxs)(`ol`,{className:`m-0 flex flex-col gap-1.5 pl-[22px]`,children:[(0,P.jsxs)(`li`,{children:[`Open M-PESA, choose`,` `,(0,P.jsx)(`b`,{children:`Lipa na M-PESA`}),`, then`,` `,(0,P.jsx)(`b`,{children:`Buy Goods and Services`}),`.`]}),(0,P.jsxs)(`li`,{children:[`Enter Till number`,` `,(0,P.jsx)(`b`,{className:`font-mono`,children:`[TILL NO.]`}),`.`]}),(0,P.jsxs)(`li`,{children:[`Enter `,(0,P.jsx)(`b`,{children:U(i.total)}),` and your M-PESA PIN.`]})]}),(0,P.jsxs)(`form`,{onSubmit:pe,className:`flex flex-col gap-3`,children:[(0,P.jsx)(J,{id:`pay-code`,label:`M-PESA confirmation code`,placeholder:`e.g. SJK4XY12AB`,autoComplete:`off`,hint:`It is in the M-PESA message you get after paying.`,className:`font-mono uppercase`,value:Q.data.code,onChange:e=>Q.setData(`code`,e.target.value.toUpperCase()),error:Q.errors.code}),(0,P.jsx)(`button`,{type:`submit`,disabled:Q.processing,className:`${m} self-start disabled:opacity-60`,children:Q.processing?`Confirming…`:`Confirm payment`})]}),o&&(0,P.jsx)(`p`,{className:`rounded-[10px] bg-ps-soft px-3.5 py-3 text-[.92rem] font-semibold text-ps-softink`,children:`Payment confirmed. The parcel will leave Nairobi once it is scanned in.`})]}),i.custHref&&(0,P.jsx)(`div`,{className:`flex flex-wrap gap-3`,children:(0,P.jsx)(`a`,{className:h,href:i.custHref,target:`_blank`,rel:`noopener`,children:`Also send the payment request on WhatsApp`})}),(0,P.jsxs)(`div`,{className:`rounded-[14px] border-[1.5px] border-dashed border-ps-line bg-ps-surface2 px-[18px] py-4`,"aria-labelledby":`rcpt-h`,children:[(0,P.jsxs)(`div`,{className:`mb-2.5 flex flex-wrap items-center justify-between gap-2 text-[1.1rem]`,children:[(0,P.jsx)(`b`,{id:`rcpt-h`,className:`text-ps-brandink`,children:`Receipt`}),(0,P.jsx)(`span`,{className:i.paid?k.done:k.wait,children:i.paid?`Paid`:`Awaiting payment code`})]}),(0,P.jsx)(`dl`,{className:`m-0 grid grid-cols-1 gap-x-4 gap-y-1.5 text-[.95rem] sm:grid-cols-[minmax(90px,auto)_1fr]`,children:i.rows.map(ie)})]}),(0,P.jsxs)(`div`,{className:`flex flex-wrap gap-3`,children:[(0,P.jsx)(`a`,{className:g,href:i.receiptHref,target:`_blank`,rel:`noopener`,children:`Share receipt on WhatsApp`}),(0,P.jsx)(`a`,{className:h,href:i.bookingHref,target:`_blank`,rel:`noopener`,children:`Send booking to Pick&Send`}),(0,P.jsx)(`button`,{type:`button`,className:h,onClick:ue,children:`Copy receipt`}),(0,P.jsx)(`span`,{role:`status`,className:`self-center font-semibold`,children:O})]}),(0,P.jsx)(`span`,{className:`text-[.84rem] text-ps-muted`,children:`Share the receipt with the recipient. Send the booking to us on 0718 819 413 and we reply with your tracking number.`})]}),n[254]=i,n[255]=O,n[256]=ue,n[257]=Q,n[258]=o,n[259]=pe,n[260]=Sn):Sn=n[260];let Cn;n[261]!==oe||n[262]!==nn||n[263]!==bn||n[264]!==xn||n[265]!==Sn?(Cn=(0,P.jsxs)(`form`,{noValidate:!0,className:`flex flex-col gap-4`,onSubmit:oe,children:[nn,bn,xn,Sn]}),n[261]=oe,n[262]=nn,n[263]=bn,n[264]=xn,n[265]=Sn,n[266]=Cn):Cn=n[266];let wn;n[267]!==_e||n[268]!==$||n[269]!==Cn?(wn=(0,P.jsxs)(`div`,{className:_e,children:[$,Cn]}),n[267]=_e,n[268]=$,n[269]=Cn,n[270]=wn):wn=n[270];let Tn;return n[271]!==ge||n[272]!==wn?(Tn=(0,P.jsx)(ge,{id:`send`,children:wn}),n[271]=ge,n[272]=wn,n[273]=Tn):Tn=n[273],Tn}function ie(e){let[t,n]=e;return(0,P.jsxs)(`div`,{className:`contents`,children:[(0,P.jsx)(`dt`,{className:`text-ps-muted`,children:t}),(0,P.jsx)(`dd`,{className:`m-0 min-w-0 font-semibold break-words max-sm:mb-2`,children:n})]},t)}function ae(e){return(0,P.jsx)(`optgroup`,{label:e.group,children:e.items.map(oe)},e.group)}function oe(e){return(0,P.jsx)(`option`,{value:e.id,children:e.label},e.id)}function se(e){return(0,P.jsx)(`option`,{value:e.id,children:e.label},e.id)}function ce(){document.getElementById(`send-out`)?.scrollIntoView({block:`nearest`})}function le(e){let n=(0,d.c)(70),{config:r,supply:i}=e,{towns:a,routes:o}=r,s;n[0]===Symbol.for(`react.memo_cache_sentinel`)?(s={name:``,phone:``,town:`mount|Nyeri`,what:``,from:``,sphone:``,often:`Once`},n[0]=s):s=n[0];let c=t(s),{data:l,errors:u,processing:p,post:h}=c,_;n[1]===c?_=n[2]:(_=(e,t)=>c.setData(e,t),n[1]=c,n[2]=_);let y=_,b;n[3]===h?b=n[4]:(b=e=>{e.preventDefault(),h(`/supplies`,{preserveScroll:!0})},n[3]=h,n[4]=b);let S=b,w;if(n[5]!==o||n[6]!==a){let e;n[8]===o?e=n[9]:(e=e=>{let[t,n]=e;return(0,P.jsx)(`optgroup`,{label:o[t],children:n.map(e=>(0,P.jsx)(`option`,{value:`${t}|${e}`,children:e},e))},t)},n[8]=o,n[9]=e),w=a.map(e),n[5]=o,n[6]=a,n[7]=w}else w=n[7];let T=w,E;n[10]===Symbol.for(`react.memo_cache_sentinel`)?(E=(0,P.jsx)(ee,{dark:!0,className:`mb-6`,eyebrow:`Live outside Nairobi?`,title:`Get your Nairobi supplies through Pick&Send`,text:`Stock for your shop, spare parts, a phone you bought online. Tell us where to pick it and we bring it to your town, once or on a schedule.`}),n[10]=E):E=n[10];let O;n[11]===Symbol.for(`react.memo_cache_sentinel`)?(O=(0,P.jsxs)(`div`,{children:[E,(0,P.jsxs)(`ul`,{className:C,children:[(0,P.jsxs)(`li`,{children:[(0,P.jsx)(`b`,{children:`We pick from shops in the Nairobi CBD.`}),` One collection fee covers everything from that supplier.`]}),(0,P.jsxs)(`li`,{children:[(0,P.jsx)(`b`,{children:`Daily, weekly or monthly.`}),` Set it once and your supplies keep coming.`]}),(0,P.jsxs)(`li`,{children:[(0,P.jsx)(`b`,{children:`You pay the normal picked-up price`}),` by M-PESA and collect with your SMS code.`]})]})]}),n[11]=O):O=n[11];let k;n[12]===Symbol.for(`react.memo_cache_sentinel`)?(k=(0,P.jsx)(`h3`,{className:`text-[1.25rem] ${x}`,children:`Ask us to pick for you`}),n[12]=k):k=n[12];let A;n[13]===y?A=n[14]:(A=e=>y(`name`,e.target.value),n[13]=y,n[14]=A);let j;n[15]!==l.name||n[16]!==u.name||n[17]!==A?(j=(0,P.jsx)(J,{id:`u-name`,label:`Your name`,autoComplete:`name`,value:l.name,onChange:A,error:u.name}),n[15]=l.name,n[16]=u.name,n[17]=A,n[18]=j):j=n[18];let M;n[19]===y?M=n[20]:(M=e=>y(`phone`,e.target.value),n[19]=y,n[20]=M);let N;n[21]!==l.phone||n[22]!==u.phone||n[23]!==M?(N=(0,P.jsx)(J,{id:`u-phone`,label:`Your phone number`,type:`tel`,placeholder:`07XX XXX XXX`,autoComplete:`tel`,value:l.phone,onChange:M,error:u.phone}),n[21]=l.phone,n[22]=u.phone,n[23]=M,n[24]=N):N=n[24];let F;n[25]===y?F=n[26]:(F=e=>y(`town`,e.target.value),n[25]=y,n[26]=F);let I;n[27]!==l.town||n[28]!==u.town||n[29]!==F||n[30]!==T?(I=(0,P.jsx)(J,{select:!0,id:`u-town`,label:`Your town`,value:l.town,onChange:F,error:u.town,children:T}),n[27]=l.town,n[28]=u.town,n[29]=F,n[30]=T,n[31]=I):I=n[31];let L;n[32]===y?L=n[33]:(L=e=>y(`what`,e.target.value),n[32]=y,n[33]=L);let R;n[34]!==l.what||n[35]!==u.what||n[36]!==L?(R=(0,P.jsx)(J,{id:`u-what`,label:`What should we pick?`,placeholder:`e.g. 2 cartons of cosmetics`,value:l.what,onChange:L,error:u.what}),n[34]=l.what,n[35]=u.what,n[36]=L,n[37]=R):R=n[37];let z;n[38]===y?z=n[39]:(z=e=>y(`from`,e.target.value),n[38]=y,n[39]=z);let B;n[40]!==l.from||n[41]!==u.from||n[42]!==z?(B=(0,P.jsx)(J,{id:`u-from`,label:`Where do we pick it?`,placeholder:`Shop or supplier name, building and street`,value:l.from,onChange:z,error:u.from}),n[40]=l.from,n[41]=u.from,n[42]=z,n[43]=B):B=n[43];let V;n[44]===y?V=n[45]:(V=e=>y(`sphone`,e.target.value),n[44]=y,n[45]=V);let H;n[46]!==l.sphone||n[47]!==u.sphone||n[48]!==V?(H=(0,P.jsx)(J,{id:`u-sphone`,label:`Supplier's phone number`,type:`tel`,placeholder:`Optional`,value:l.sphone,onChange:V,error:u.sphone}),n[46]=l.sphone,n[47]=u.sphone,n[48]=V,n[49]=H):H=n[49];let U;n[50]===Symbol.for(`react.memo_cache_sentinel`)?(U=[`Once`,`Daily`,`Weekly`,`Monthly`],n[50]=U):U=n[50];let W;n[51]!==l.often||n[52]!==y?(W=(0,P.jsx)(te,{label:`How often?`,cols:4,children:U.map(e=>(0,P.jsx)(Y,{type:`radio`,name:`often`,checked:l.often===e,onChange:()=>y(`often`,e),children:e},e))}),n[51]=l.often,n[52]=y,n[53]=W):W=n[53];let G=p?`Sending…`:`Request my pickup`,K;n[54]!==p||n[55]!==G?(K=(0,P.jsx)(`button`,{className:m,type:`submit`,disabled:p,children:G}),n[54]=p,n[55]=G,n[56]=K):K=n[56];let X;n[57]===i?X=n[58]:(X=i&&(0,P.jsxs)(`div`,{className:`flex flex-col gap-3 rounded-2xl border-2 border-ps-wa bg-ps-surface p-4 sm:px-[22px] sm:py-5`,children:[(0,P.jsx)(`b`,{children:`Send this to us on WhatsApp: 0718 819 413`}),(0,P.jsx)(`pre`,{className:`m-0 rounded-[10px] bg-ps-surface2 p-3.5 font-sans text-[.96rem] whitespace-pre-wrap select-all`,children:i.text}),(0,P.jsx)(`a`,{className:g,href:i.waHref,target:`_blank`,rel:`noopener`,children:`Open WhatsApp`}),(0,P.jsx)(`span`,{className:`text-[.84rem] text-ps-muted`,children:`We confirm the price and the pickup time.`})]}),n[57]=i,n[58]=X);let Z;return n[59]!==S||n[60]!==N||n[61]!==I||n[62]!==R||n[63]!==B||n[64]!==H||n[65]!==W||n[66]!==K||n[67]!==X||n[68]!==j?(Z=(0,P.jsx)(q,{id:`supplies`,tone:`band`,children:(0,P.jsxs)(`div`,{className:`${f} ${D} items-start`,children:[O,(0,P.jsxs)(`form`,{className:v,noValidate:!0,onSubmit:S,children:[k,j,N,I,R,B,H,W,K,X]})]})}),n[59]=S,n[60]=N,n[61]=I,n[62]=R,n[63]=B,n[64]=H,n[65]=W,n[66]=K,n[67]=X,n[68]=j,n[69]=Z):Z=n[69],Z}function ue(e){let n=(0,d.c)(18),{user:r,merchant:i,flash:a}=e,o=r?.is_merchant?r:null,s;n[0]===Symbol.for(`react.memo_cache_sentinel`)?(s={phone:``,code:``},n[0]=s):s=n[0];let c=t(s),l=a?.otp_sent===!0,u;n[1]===c?u=n[2]:(u=e=>{e.preventDefault(),c.post(`/merchant/otp`,{preserveScroll:!0})},n[1]=c,n[2]=u);let p=u,y;n[3]===c?y=n[4]:(y=e=>{e.preventDefault(),c.post(`/merchant/verify`,{preserveScroll:!0})},n[3]=c,n[4]=y);let C=y,w=fe,E=Q,O;n[5]===Symbol.for(`react.memo_cache_sentinel`)?(O=(0,P.jsx)(ee,{eyebrow:`Merchants`,title:`Your orders and your money in one place`,text:`Sell with Cash on Delivery to customers across Kenya. Log in to see every order and your wallet.`}),n[5]=O):O=n[5];let k;return n[6]!==a?.withdrawn||n[7]!==i?.orders||n[8]!==i?.points||n[9]!==i?.waiting||n[10]!==i?.wallet||n[11]!==i?.withdrawn_month||n[12]!==o||n[13]!==c||n[14]!==p||n[15]!==l||n[16]!==C?(k=(0,P.jsx)(q,{id:`merchants`,tone:`tint`,children:(0,P.jsxs)(`div`,{className:f,children:[O,o?(0,P.jsxs)(`div`,{className:`rounded-[18px] border border-ps-line bg-ps-surface p-4 sm:p-6`,children:[(0,P.jsxs)(`div`,{className:`mb-[18px] flex flex-wrap items-center justify-between gap-3`,children:[(0,P.jsxs)(`div`,{children:[(0,P.jsx)(`span`,{className:_,children:`Signed in`}),(0,P.jsx)(`h3`,{className:`text-[1.3rem] ${x}`,children:o.business_name??o.name})]}),(0,P.jsx)(`button`,{type:`button`,className:`${h} max-sm:!w-auto`,onClick:w,children:`Log out`})]}),(0,P.jsx)(`div`,{className:T,children:[[`Wallet, ready to withdraw`,U(i?.wallet??0),null,!0],[`Waiting for customers to collect`,U(i?.waiting??0),null,!1],[`Withdrawn this month`,U(i?.withdrawn_month??0),null,!1],[`Pick&Send points`,String(i?.points??0),`Worth KSh 1 off each on delivery`,!1]].map(e=>{let[t,n,r,o]=e;return(0,P.jsxs)(`div`,{className:`flex min-w-0 flex-col gap-1.5 rounded-[14px] border p-[18px] ${o?`border-transparent bg-ps-soft`:`border-ps-line`}`,children:[(0,P.jsx)(`span`,{className:`text-[.9rem] font-semibold ${o?`text-ps-softink`:`text-ps-muted`}`,children:t}),(0,P.jsx)(`b`,{className:`text-[1.7rem] leading-tight font-extrabold text-ps-brandink tabular-nums`,children:n}),r&&(0,P.jsx)(`span`,{className:`text-[.84rem] text-ps-muted`,children:r}),o&&(0,P.jsxs)(P.Fragment,{children:[(0,P.jsxs)(`button`,{type:`button`,className:`${g} self-start`,onClick:E,disabled:(i?.wallet??0)<=0,children:[(0,P.jsx)(`span`,{className:`rounded-[5px] bg-ps-onwa px-2 py-[3px] text-[.75rem] font-extrabold tracking-[.04em] whitespace-nowrap text-ps-wa`,children:`M-PESA`}),`Withdraw`]}),a?.withdrawn&&(0,P.jsx)(`span`,{className:`text-[.84rem] text-ps-muted`,role:`status`,children:`Withdrawal sent to your M-PESA.`})]})]},t)})}),(0,P.jsx)(`h3`,{className:`mt-[22px] mb-2.5 text-[1.3rem] ${x}`,children:`Orders`}),(0,P.jsx)(`div`,{className:`overflow-x-auto rounded-[14px] border border-ps-line bg-ps-surface`,children:(0,P.jsx)(Z,{head:[`Tracking no.`,`Recipient`,`Town`,`Status`,`COD`],rows:(i?.orders??[]).map(de)})})]}):(0,P.jsxs)(`div`,{className:`${D} items-start`,children:[(0,P.jsxs)(`ul`,{className:S,children:[(0,P.jsxs)(`li`,{children:[(0,P.jsx)(`b`,{children:`Your customer pays our M-PESA Till,`}),` never the agent and never in cash.`]}),(0,P.jsxs)(`li`,{children:[(0,P.jsx)(`b`,{children:`Released only when`}),` the code matches and the payment is confirmed.`]}),(0,P.jsxs)(`li`,{children:[(0,P.jsx)(`b`,{children:`Money in your wallet instantly,`}),` less 1.6%. Withdraw to M-PESA any time.`]}),(0,P.jsxs)(`li`,{children:[(0,P.jsx)(`b`,{children:`Free pickup from your CBD shop,`}),` however many parcels you send.`]}),(0,P.jsxs)(`li`,{children:[(0,P.jsx)(`b`,{children:`Not collected in 7 days?`}),` The parcel comes back to you. A return fee applies.`]})]}),(0,P.jsxs)(`form`,{className:v,onSubmit:l?C:p,children:[(0,P.jsx)(`h3`,{className:`text-[1.25rem] ${x}`,children:`Merchant log in`}),(0,P.jsx)(J,{id:`m-phone`,label:`M-PESA phone number`,type:`tel`,placeholder:`07XX XXX XXX`,autoComplete:`tel`,value:c.data.phone,onChange:e=>c.setData(`phone`,e.target.value),error:c.errors.phone}),l&&(0,P.jsx)(J,{id:`m-code`,label:`6-digit code we sent you`,inputMode:`numeric`,value:c.data.code,onChange:e=>c.setData(`code`,e.target.value),error:c.errors.code}),(0,P.jsx)(`button`,{className:m,type:`submit`,disabled:c.processing,children:c.processing?`Sending…`:l?`Verify and log in`:`Send code`}),(0,P.jsx)(`span`,{className:b,children:`We text you a code each time. No password to remember.`})]})]})]})}),n[6]=a?.withdrawn,n[7]=i?.orders,n[8]=i?.points,n[9]=i?.waiting,n[10]=i?.wallet,n[11]=i?.withdrawn_month,n[12]=o,n[13]=c,n[14]=p,n[15]=l,n[16]=C,n[17]=k):k=n[17],k}function de(e){return(0,P.jsxs)(`tr`,{className:`group`,children:[(0,P.jsx)(`td`,{className:`border-b border-ps-line px-4 py-[13px] font-mono group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,children:e.tracking_no}),(0,P.jsx)(`td`,{className:`border-b border-ps-line px-4 py-[13px] group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,children:e.recipient_name}),(0,P.jsx)(`td`,{className:`border-b border-ps-line px-4 py-[13px] group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,children:e.town}),(0,P.jsx)(`td`,{className:`border-b border-ps-line px-4 py-[13px] group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,children:(0,P.jsx)(`span`,{className:k[e.status===`at_pickup`?`wait`:e.status===`in_transit`?`move`:`done`],children:e.status})}),(0,P.jsx)(`td`,{className:`border-b border-ps-line px-4 py-[13px] text-right group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,children:U(e.cod_amount)})]},e.tracking_no)}function Q(){return a.post(`/merchant/withdraw`,{},{preserveScroll:!0})}function fe(){return a.post(`/merchant/logout`,{},{preserveScroll:!0})}function pe(e){let t=(0,d.c)(41),{config:n}=e,{general:r,elec:i,satellites:a,constants:o}=n,{base10:s,perKg:c,maxKg:l,dropOffFee:u}=o,p;t[0]!==s||t[1]!==c?(p=e=>e<=10?s:s+(e-10)*c,t[0]=s,t[1]=c,t[2]=p):p=t[2];let h=p,g,v;t[3]===Symbol.for(`react.memo_cache_sentinel`)?(g=[`Bring it to our CBD point`,`Free`],v=[`We pick up from your CBD shop`,`Free`],t[3]=g,t[4]=v):(g=t[3],v=t[4]);let y;t[5]===u?y=t[6]:(y=U(u),t[5]=u,t[6]=y);let b;t[7]===a?b=t[8]:(b=a.join(`, `),t[7]=a,t[8]=b);let S=`From ${y}, at ${b}`,C;t[9]===S?C=t[10]:(C=(0,P.jsx)(ee,{eyebrow:`Pricing`,title:`From KSh 199, one price to every town`,text:`The same price to Mombasa, Meru, Eldoret or Kisumu.`,children:(0,P.jsx)(`div`,{className:`mb-2 grid grid-cols-[repeat(auto-fit,minmax(min(260px,100%),1fr))] gap-3`,children:[g,v,[`Bring it to our agent in a Nairobi satellite town`,S]].map(_e)})}),t[9]=S,t[10]=C);let w;t[11]===Symbol.for(`react.memo_cache_sentinel`)?(w=(0,P.jsx)(`h3`,{className:`mt-[26px] mb-2.5 text-[1.15rem] ${x}`,children:`General parcels`}),t[11]=w):w=t[11];let T;t[12]===Symbol.for(`react.memo_cache_sentinel`)?(T=[`Weight`,`Delivery price (KSh)`],t[12]=T):T=t[12];let E;if(t[13]!==s||t[14]!==r||t[15]!==c){let e;t[17]!==s||t[18]!==c?(e=e=>(0,P.jsxs)(`tr`,{className:`group ${e.perKg?`bg-ps-soft text-ps-softink`:``}`,children:[(0,P.jsx)(`td`,{className:`border-b border-ps-line px-4 py-[13px] font-semibold group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,children:e.label}),(0,P.jsx)(`td`,{className:`border-b border-ps-line px-4 py-[13px] text-right group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,children:e.perKg?`${H(s)} + ${c} per extra kg`:H(e.p)})]},e.id),t[17]=s,t[18]=c,t[19]=e):e=t[19],E=r.map(e),t[13]=s,t[14]=r,t[15]=c,t[16]=E}else E=t[16];let D;t[20]===E?D=t[21]:(D=(0,P.jsx)(`div`,{className:`overflow-x-auto rounded-[14px] border border-ps-line bg-ps-surface`,children:(0,P.jsx)(Z,{head:T,rows:E})}),t[20]=E,t[21]=D);let O;t[22]===h?O=t[23]:(O=U(h(15)),t[22]=h,t[23]=O);let k=`Example: 15 kg is ${O}. Parcels above 10 kg and big appliances carry their own collection fee. Over ${l} kg, ask us for a quote.`,j;t[24]===k?j=t[25]:(j=(0,P.jsx)(`p`,{className:`mt-2.5 text-[.92rem] text-ps-muted`,children:k}),t[24]=k,t[25]=j);let M,N;t[26]===Symbol.for(`react.memo_cache_sentinel`)?(M=(0,P.jsx)(`h3`,{className:`mt-[26px] mb-2.5 text-[1.15rem] ${x}`,children:`Electronics and appliances`}),N=(0,P.jsx)(`p`,{className:`mb-2.5 text-[.92rem] text-ps-muted`,children:`Tap a group to see its prices. CBD pickup is free for anything a rider can carry.`}),t[26]=M,t[27]=N):(M=t[26],N=t[27]);let F;t[28]===i?F=t[29]:(F=i.map(me),t[28]=i,t[29]=F);let I;t[30]===F?I=t[31]:(I=(0,P.jsx)(`div`,{className:`flex max-w-[46rem] flex-col gap-2.5`,children:F}),t[30]=F,t[31]=I);let L;t[32]===Symbol.for(`react.memo_cache_sentinel`)?(L=(0,P.jsx)(`a`,{className:`${m} mt-[18px]`,href:`#send`,children:`Get my exact price`}),t[32]=L):L=t[32];let R;t[33]===Symbol.for(`react.memo_cache_sentinel`)?(R=(0,P.jsxs)(`ul`,{className:`${A} mt-4`,children:[(0,P.jsx)(`li`,{children:`Packaging only if you ask, from KSh 30`}),(0,P.jsx)(`li`,{children:`Cash on Delivery: 1.6% of what we collect`}),(0,P.jsx)(`li`,{children:(0,P.jsx)(`b`,{className:`text-ps-ink`,children:`Bulk items: get a quote, call or WhatsApp 0718 819 413`})})]}),t[33]=R):R=t[33];let z;t[34]===Symbol.for(`react.memo_cache_sentinel`)?(z=(0,P.jsxs)(`div`,{children:[(0,P.jsx)(`span`,{className:_,children:`Pick&Send points`}),(0,P.jsx)(`h3`,{className:`mt-1 text-[1.35rem] font-extrabold text-ps-brandink`,children:`Every parcel earns you points`})]}),t[34]=z):z=t[34];let B;t[35]===Symbol.for(`react.memo_cache_sentinel`)?(B=(0,P.jsxs)(`div`,{className:`mt-7 grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] items-center gap-[18px] rounded-2xl bg-ps-soft p-4 text-ps-softink sm:px-6 sm:py-[22px]`,children:[z,(0,P.jsxs)(`ul`,{className:`m-0 flex flex-col gap-1.5 pl-5`,children:[(0,P.jsxs)(`li`,{children:[(0,P.jsx)(`b`,{children:`Earn 2 points`}),` for every KSh 100 you spend on delivery.`]}),(0,P.jsxs)(`li`,{children:[(0,P.jsx)(`b`,{children:`1 point is KSh 1 off`}),` your next parcel.`]}),(0,P.jsxs)(`li`,{children:[(0,P.jsx)(`b`,{children:`Use them from 100 points.`}),` They are saved under your phone number.`]})]})]}),t[35]=B):B=t[35];let V;return t[36]!==D||t[37]!==j||t[38]!==I||t[39]!==C?(V=(0,P.jsx)(q,{id:`pricing`,children:(0,P.jsxs)(`div`,{className:f,children:[C,w,D,j,M,N,I,L,R,B]})}),t[36]=D,t[37]=j,t[38]=I,t[39]=C,t[40]=V):V=t[40],V}function me(e){return(0,P.jsxs)(`details`,{className:`rounded-xl border border-ps-line bg-ps-surface px-[18px]`,children:[(0,P.jsxs)(`summary`,{className:`flex min-h-[52px] cursor-pointer items-center justify-between gap-3 font-bold`,children:[e.group.replace(`, by weight`,``),(0,P.jsx)(`span`,{className:`font-semibold whitespace-nowrap text-ps-muted`,children:`from ${U(Math.min(...e.items.map(ge)))}`})]}),(0,P.jsx)(`div`,{className:`mb-2.5 [&_td]:!px-2 [&_td]:!py-2.5 [&_td:first-child]:!pl-0 [&_td:last-child]:!pr-0 [&_th]:!px-2 [&_th]:!py-2.5 [&_th:first-child]:!pl-0 [&_th:last-child]:!pr-0`,children:(0,P.jsx)(Z,{small:!0,head:[`Item`,`Delivery`,`CBD pickup`],rows:e.items.map(he)})})]},e.group)}function he(e){return(0,P.jsxs)(`tr`,{className:`group`,children:[(0,P.jsx)(`td`,{className:`border-b border-ps-line px-4 py-[13px] group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,children:e.label}),(0,P.jsx)(`td`,{className:`border-b border-ps-line px-4 py-[13px] text-right group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,children:H(e.p)}),(0,P.jsx)(`td`,{className:`border-b border-ps-line px-4 py-[13px] text-right group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,children:e.pu<=100?`Free`:H(e.pu+50)})]},e.id)}function ge(e){return e.p}function _e(e){let[t,n]=e;return(0,P.jsxs)(`div`,{className:`flex flex-col gap-0.5 rounded-xl border border-ps-line bg-ps-surface px-4 py-3.5`,children:[(0,P.jsx)(`b`,{className:`text-ps-brandink`,children:t}),(0,P.jsx)(`span`,{className:`text-[.9rem] text-ps-muted`,children:n})]},t)}var $=`relative pb-4 pl-8 last:pb-0 before:absolute before:left-0 before:top-[3px] before:h-[18px] before:w-[18px] before:rounded-full after:absolute after:-bottom-[3px] after:left-2 after:top-[21px] after:w-0.5 last:after:hidden`,ve={"":`${$} before:bg-ps-accent after:bg-ps-accent`,now:`${$} before:border-[5px] before:border-ps-brand before:bg-ps-surface after:bg-ps-line`,next:`${$} before:border-2 before:border-ps-muted before:bg-ps-surface after:bg-ps-line`};function ye(){let[e,t]=(0,u.useState)(``),[n,r]=(0,u.useState)(null),[i,a]=(0,u.useState)(``),[o,s]=(0,u.useState)(!1);return(0,P.jsx)(q,{id:`track`,tone:`tint`,children:(0,P.jsxs)(`div`,{className:`${f} flex flex-col gap-4`,children:[(0,P.jsx)(ee,{eyebrow:`Track a parcel`,title:`Every step is a scan`,text:`Enter your tracking number to see where your parcel is.`}),(0,P.jsxs)(`form`,{className:`flex flex-wrap items-end gap-2.5`,onSubmit:async t=>{t.preventDefault(),a(``),r(null);let n=e.trim();if(!n){a(`Enter a tracking number.`);return}s(!0);try{let e=await fetch(`/track/${encodeURIComponent(n)}`,{headers:{Accept:`application/json`}});e.ok?r(await e.json()):a(`We could not find that number. Check it and try again.`)}catch{a(`Network error. Please try again.`)}finally{s(!1)}},children:[(0,P.jsx)(`div`,{className:`min-w-0 flex-[1_1_220px]`,children:(0,P.jsx)(J,{id:`t-no`,label:`Tracking number`,autoComplete:`off`,className:`font-mono uppercase`,placeholder:`e.g. PS27010873`,value:e,onChange:e=>t(e.target.value.toUpperCase())})}),(0,P.jsx)(`button`,{className:`${m} max-sm:w-full`,type:`submit`,disabled:o,children:o?`Searching…`:`Track`})]}),i&&(0,P.jsx)(`p`,{className:`rounded-xl bg-ps-warn px-4 py-3 text-[.94rem] font-semibold text-ps-warnink`,children:i}),n&&(0,P.jsxs)(`div`,{className:`rounded-[18px] border border-ps-line bg-ps-surface p-4 sm:p-[22px]`,children:[(0,P.jsxs)(`span`,{className:`text-[.8rem] font-bold uppercase tracking-[.12em] text-ps-accent`,children:[`Parcel `,n.tracking_no]}),(0,P.jsxs)(`h3`,{className:`mb-1 text-[1.2rem] font-extrabold text-ps-brandink`,children:[`Status: `,n.status,` · `,n.town]}),(0,P.jsxs)(`p`,{className:`text-ps-muted`,children:[`For `,n.recipient_name,n.cod_amount>0&&` · Pay ${U(n.cod_amount)} by M-PESA at collection`,`.`]}),(0,P.jsx)(`ol`,{className:`m-0 mt-4 list-none p-0`,children:n.events.map((e,t)=>(0,P.jsxs)(`li`,{className:ve[t===n.events.length-1?`now`:``],children:[(0,P.jsx)(`b`,{className:`block`,children:e.label}),(0,P.jsxs)(`span`,{className:`text-[.9rem] text-ps-muted`,children:[e.description,` ·`,` `,new Date(e.happened_at).toLocaleString()]})]},t))})]})]})})}function be(e){let t=(0,d.c)(20),{wa:n}=e,r;t[0]===Symbol.for(`react.memo_cache_sentinel`)?(r=(0,P.jsx)(ee,{dark:!0,className:`mb-3.5`,eyebrow:`Community`,title:`Join the movement on WhatsApp`,text:`Book a parcel without leaving WhatsApp, and hear our news first. It is free to join and you can leave any time.`}),t[0]=r):r=t[0];let i;t[1]===Symbol.for(`react.memo_cache_sentinel`)?(i=(0,P.jsxs)(`div`,{children:[r,(0,P.jsxs)(`ul`,{className:C,children:[(0,P.jsxs)(`li`,{children:[(0,P.jsx)(`b`,{children:`The group is for booking.`}),` Drop your parcel sending request there and we book it for you.`]}),(0,P.jsxs)(`li`,{children:[(0,P.jsx)(`b`,{children:`The channel is for updates:`}),` new towns, pickup stations, offers and any delays.`]}),(0,P.jsxs)(`li`,{children:[(0,P.jsx)(`b`,{children:`Prefer a private chat?`}),` Message us directly and we book it the same way.`]})]})]}),t[1]=i):i=t[1];let a;t[2]===Symbol.for(`react.memo_cache_sentinel`)?(a=(0,P.jsx)(`h3`,{className:`text-[1.25rem] ${x}`,children:`Pick how you want to join`}),t[2]=a):a=t[2];let o;t[3]===n?o=t[4]:(o=N(n,`Hi Pick&Send, please add me to your WhatsApp group. I want to join the movement.`),t[3]=n,t[4]=o);let s;t[5]===o?s=t[6]:(s=(0,P.jsx)(`a`,{className:g,target:`_blank`,rel:`noopener`,href:o,children:`Join the group`}),t[5]=o,t[6]=s);let c;t[7]===n?c=t[8]:(c=N(n,`Hi Pick&Send, please send me the link to your WhatsApp channel for updates.`),t[7]=n,t[8]=c);let l;t[9]===c?l=t[10]:(l=(0,P.jsx)(`a`,{className:h,target:`_blank`,rel:`noopener`,href:c,children:`Follow the channel for updates`}),t[9]=c,t[10]=l);let u;t[11]===n?u=t[12]:(u=N(n,`Hi Pick&Send, please book a parcel for me.
+Name: ${e.name.trim()}, ${e.phone.trim()}\nSend to: Pick&Send pickup station, ${t.town} (${t.route})\nPick: ${e.what.trim()}\nFrom: ${e.from.trim()}${e.sphone.trim() ? `, ` + e.sphone.trim() : ``}\nHow often: ${e.often}`;
+    }
+    return {
+        price: c,
+        breakdown: l,
+        codNote: u,
+        buildBooking: f,
+        validate: p,
+        supplyText: m,
+        pickTown: o,
+        kgPrice: i,
+        kgPu: a,
+    };
+}
+function q(e) {
+    let t = (0, d.c)(4),
+        { id: n, tone: r, children: i } = e,
+        a = `scroll-mt-[76px] py-10 md:py-[60px] ${r === `tint` ? `bg-ps-surface2` : r === `band` ? `bg-ps-band text-ps-bandmuted` : ``}`,
+        o;
+    return (
+        t[0] !== i || t[1] !== n || t[2] !== a
+            ? ((o = (0, P.jsx)(`section`, {
+                  id: n,
+                  className: a,
+                  children: i,
+              })),
+              (t[0] = i),
+              (t[1] = n),
+              (t[2] = a),
+              (t[3] = o))
+            : (o = t[3]),
+        o
+    );
+}
+function ee({
+    eyebrow: e,
+    title: t,
+    text: n,
+    dark: r,
+    className: i = `mb-6`,
+    children: a,
+}) {
+    return (0, P.jsxs)(`div`, {
+        className: `flex flex-col gap-2 ${i}`,
+        children: [
+            (0, P.jsx)(`span`, {
+                className: r ? _.replace(`text-ps-accent`, `text-ps-key`) : _,
+                children: e,
+            }),
+            (0, P.jsx)(`h2`, {
+                className: `text-[clamp(1.7rem,3.4vw,2.4rem)] leading-[1.1] font-extrabold tracking-[-.03em] ${r ? `text-white` : `text-ps-brandink`}`,
+                children: t,
+            }),
+            n &&
+                (0, P.jsx)(`p`, {
+                    className: `max-w-[40rem] ${r ? `text-ps-bandmuted` : `text-ps-muted`}`,
+                    children: n,
+                }),
+            a,
+        ],
+    });
+}
+function J(e) {
+    let t = (0, d.c)(27),
+        n,
+        r,
+        i,
+        a,
+        o,
+        s,
+        c,
+        l,
+        u;
+    if (
+        (t[0] === e
+            ? ((n = t[1]),
+              (r = t[2]),
+              (i = t[3]),
+              (a = t[4]),
+              (o = t[5]),
+              (s = t[6]),
+              (c = t[7]),
+              (l = t[8]),
+              (u = t[9]))
+            : (({
+                  id: s,
+                  label: c,
+                  hint: o,
+                  error: i,
+                  hidden: a,
+                  select: u,
+                  children: n,
+                  className: r,
+                  ...l
+              } = e),
+              (t[0] = e),
+              (t[1] = n),
+              (t[2] = r),
+              (t[3] = i),
+              (t[4] = a),
+              (t[5] = o),
+              (t[6] = s),
+              (t[7] = c),
+              (t[8] = l),
+              (t[9] = u)),
+        a)
+    )
+        return null;
+    let f = typeof i == `string` && i ? i : ``,
+        p;
+    t[10] !== s || t[11] !== c
+        ? ((p = (0, P.jsx)(`label`, {
+              htmlFor: s,
+              className: `text-[.88rem] font-semibold`,
+              children: c,
+          })),
+          (t[10] = s),
+          (t[11] = c),
+          (t[12] = p))
+        : (p = t[12]);
+    let m;
+    t[13] !== n ||
+    t[14] !== r ||
+    t[15] !== f ||
+    t[16] !== s ||
+    t[17] !== l ||
+    t[18] !== u
+        ? ((m = u
+              ? (0, P.jsx)(`select`, {
+                    id: s,
+                    className: `${y} ${f ? `border-ps-warn` : ``}`,
+                    ...l,
+                    children: n,
+                })
+              : (0, P.jsx)(`input`, {
+                    id: s,
+                    className: `${y} ${f ? `border-ps-warn` : ``} ${r ?? ``}`,
+                    'aria-invalid': !!f,
+                    ...l,
+                })),
+          (t[13] = n),
+          (t[14] = r),
+          (t[15] = f),
+          (t[16] = s),
+          (t[17] = l),
+          (t[18] = u),
+          (t[19] = m))
+        : (m = t[19]);
+    let h;
+    t[20] !== f || t[21] !== o
+        ? ((h = f
+              ? (0, P.jsx)(`span`, {
+                    className: `text-[.84rem] font-semibold text-ps-warnink`,
+                    children: f,
+                })
+              : o &&
+                (0, P.jsx)(`span`, {
+                    className: `text-[.84rem] text-ps-muted`,
+                    children: o,
+                })),
+          (t[20] = f),
+          (t[21] = o),
+          (t[22] = h))
+        : (h = t[22]);
+    let g;
+    return (
+        t[23] !== p || t[24] !== m || t[25] !== h
+            ? ((g = (0, P.jsxs)(`div`, {
+                  className: `flex min-w-0 flex-col gap-1.5`,
+                  children: [p, m, h],
+              })),
+              (t[23] = p),
+              (t[24] = m),
+              (t[25] = h),
+              (t[26] = g))
+            : (g = t[26]),
+        g
+    );
+}
+function te({ label: e, children: t, cols: n = 2 }) {
+    return (0, P.jsxs)(`div`, {
+        className: `flex min-w-0 flex-col gap-1.5`,
+        children: [
+            (0, P.jsx)(`span`, {
+                className: `text-[.88rem] font-semibold`,
+                children: e,
+            }),
+            (0, P.jsx)(`div`, {
+                role: `radiogroup`,
+                className: `grid gap-2 ${n === 1 ? `grid-cols-1` : n === 4 ? `grid-cols-2 sm:grid-cols-4` : `grid-cols-2`}`,
+                children: t,
+            }),
+        ],
+    });
+}
+function Y({ children: e, className: t = ``, ...n }) {
+    return (0, P.jsxs)(`label`, {
+        className: `flex min-h-12 cursor-pointer items-center gap-2 rounded-[10px] border-[1.5px] border-ps-line px-3 py-1.5 text-[.92rem] font-semibold has-[:checked]:border-ps-accent has-[:checked]:bg-ps-soft has-[:checked]:text-ps-softink ${t}`,
+        children: [
+            (0, P.jsx)(`input`, {
+                className: `h-[18px] w-[18px] flex-none accent-[#4FD1C0]`,
+                ...n,
+            }),
+            (0, P.jsx)(`span`, { children: e }),
+        ],
+    });
+}
+function X(e) {
+    let t = (0, d.c)(8),
+        { n, title: r, children: i } = e,
+        a;
+    t[0] === n
+        ? (a = t[1])
+        : ((a = (0, P.jsx)(`i`, {
+              className: `grid h-[30px] w-[30px] place-items-center rounded-full bg-ps-brand text-[.95rem] text-ps-onbrand not-italic`,
+              children: n,
+          })),
+          (t[0] = n),
+          (t[1] = a));
+    let o;
+    t[2] !== a || t[3] !== r
+        ? ((o = (0, P.jsxs)(`div`, {
+              className: `flex items-center gap-2.5 text-[1.2rem] ${x}`,
+              children: [a, r],
+          })),
+          (t[2] = a),
+          (t[3] = r),
+          (t[4] = o))
+        : (o = t[4]);
+    let s;
+    return (
+        t[5] !== i || t[6] !== o
+            ? ((s = (0, P.jsxs)(`div`, {
+                  className: `flex min-w-0 flex-col gap-3 rounded-2xl border border-ps-line bg-ps-surface p-4 sm:p-[22px]`,
+                  children: [o, i],
+              })),
+              (t[5] = i),
+              (t[6] = o),
+              (t[7] = s))
+            : (s = t[7]),
+        s
+    );
+}
+function Z(e) {
+    let t = (0, d.c)(10),
+        { head: n, rows: r, small: i } = e,
+        a = `w-full border-collapse tabular-nums ${i ? `` : `min-w-[560px] max-sm:min-w-0`}`,
+        o;
+    t[0] === n ? (o = t[1]) : ((o = n.map(ne)), (t[0] = n), (t[1] = o));
+    let s;
+    t[2] === o
+        ? (s = t[3])
+        : ((s = (0, P.jsx)(`thead`, {
+              children: (0, P.jsx)(`tr`, { children: o }),
+          })),
+          (t[2] = o),
+          (t[3] = s));
+    let c;
+    t[4] === r
+        ? (c = t[5])
+        : ((c = (0, P.jsx)(`tbody`, { children: r })), (t[4] = r), (t[5] = c));
+    let l;
+    return (
+        t[6] !== a || t[7] !== s || t[8] !== c
+            ? ((l = (0, P.jsxs)(`table`, { className: a, children: [s, c] })),
+              (t[6] = a),
+              (t[7] = s),
+              (t[8] = c),
+              (t[9] = l))
+            : (l = t[9]),
+        l
+    );
+}
+function ne(e, t) {
+    return (0, P.jsx)(
+        `th`,
+        { className: `${w} ${t ? `text-right` : ``}`, children: e },
+        e,
+    );
+}
+function re(e) {
+    let n = (0, d.c)(274),
+        { config: r, booking: i, error: a, paymentConfirmed: o } = e,
+        s;
+    n[0] === r ? (s = n[1]) : ((s = K(r)), (n[0] = r), (n[1] = s));
+    let c = s,
+        { breakdown: l, codNote: p } = c,
+        { towns: _, routes: v, general: y, elec: x, constants: S } = r,
+        { base10: C, perKg: w, maxKg: T, dropOffFee: D } = S,
+        [O, A] = (0, u.useState)(``),
+        M;
+    n[2] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((M = {
+              sname: ``,
+              sphone: ``,
+              hand: `drop`,
+              point: `cbd|Stanbank House, Moi Avenue, CBD`,
+              addr: ``,
+              count: `1`,
+              same: !1,
+              rname: ``,
+              rphone: ``,
+              rtown: `mount|Nyeri`,
+              what: ``,
+              worth: ``,
+              kind: `g`,
+              size: `2`,
+              kg: `15`,
+              item: `acc`,
+              pack: !1,
+              paynum: ``,
+              cod: ``,
+          }),
+          (n[2] = M))
+        : (M = n[2]);
+    let { data: N, setData: F, errors: I, processing: L, post: R } = t(M),
+        z;
+    n[3] === F ? (z = n[4]) : ((z = (e, t) => F(e, t)), (n[3] = F), (n[4] = z));
+    let B = z,
+        V;
+    n[5] === F
+        ? (V = n[6])
+        : ((V = (e) => (t) => F(e, t.target.value)), (n[5] = F), (n[6] = V));
+    let H = V,
+        G;
+    n[7] !== N || n[8] !== c
+        ? ((G = c.price(N)), (n[7] = N), (n[8] = c), (n[9] = G))
+        : (G = n[9]);
+    let Z = G,
+        ne = W(N.cod),
+        re;
+    n[10] === R
+        ? (re = n[11])
+        : ((re = (e) => {
+              (e?.preventDefault(),
+                  R(`/parcels`, { preserveScroll: !0, onSuccess: ce }));
+          }),
+          (n[10] = R),
+          (n[11] = re));
+    let oe = re,
+        le;
+    n[12] === i
+        ? (le = n[13])
+        : ((le = async () => {
+              if (i)
+                  try {
+                      (await navigator.clipboard.writeText(i.receipt),
+                          A(`Copied`),
+                          setTimeout(() => A(``), 2e3));
+                  } catch {
+                      A(`Could not copy. Use the share button instead.`);
+                  }
+          }),
+          (n[12] = i),
+          (n[13] = le));
+    let ue = le,
+        de;
+    n[14] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((de = { code: `` }), (n[14] = de))
+        : (de = n[14]);
+    let Q = t(de),
+        fe;
+    n[15] !== i || n[16] !== Q
+        ? ((fe = (e) => {
+              (e.preventDefault(),
+                  i &&
+                      Q.post(`/parcels/${i.tracking_no}/confirm-payment`, {
+                          preserveScroll: !0,
+                          onSuccess: () => Q.reset(),
+                      }));
+          }),
+          (n[15] = i),
+          (n[16] = Q),
+          (n[17] = fe))
+        : (fe = n[17]);
+    let pe = fe,
+        me;
+    if (n[18] !== v || n[19] !== _) {
+        let e;
+        (n[21] === v
+            ? (e = n[22])
+            : ((e = (e) => {
+                  let [t, n] = e;
+                  return (0, P.jsx)(
+                      `optgroup`,
+                      {
+                          label: v[t],
+                          children: n.map((e) =>
+                              (0, P.jsx)(
+                                  `option`,
+                                  { value: `${t}|${e}`, children: e },
+                                  e,
+                              ),
+                          ),
+                      },
+                      t,
+                  );
+              }),
+              (n[21] = v),
+              (n[22] = e)),
+            (me = _.map(e)),
+            (n[18] = v),
+            (n[19] = _),
+            (n[20] = me));
+    } else me = n[20];
+    let he = me,
+        ge = q,
+        _e = f,
+        $;
+    n[23] === Symbol.for(`react.memo_cache_sentinel`)
+        ? (($ = (0, P.jsx)(ee, {
+              eyebrow: `Send with us`,
+              title: `Send a parcel`,
+              text: `Anyone can send. Tell us who it is from, who it is for and what it is. It takes about a minute.`,
+          })),
+          (n[23] = $))
+        : ($ = n[23]);
+    let ve = N.sname,
+        ye;
+    n[24] === H ? (ye = n[25]) : ((ye = H(`sname`)), (n[24] = H), (n[25] = ye));
+    let be;
+    n[26] !== N.sname || n[27] !== I.sname || n[28] !== ye
+        ? ((be = (0, P.jsx)(J, {
+              id: `s-name`,
+              label: `Your name or business`,
+              autoComplete: `name`,
+              value: ve,
+              onChange: ye,
+              error: I.sname,
+          })),
+          (n[26] = N.sname),
+          (n[27] = I.sname),
+          (n[28] = ye),
+          (n[29] = be))
+        : (be = n[29]);
+    let xe = N.sphone,
+        Se;
+    n[30] === H
+        ? (Se = n[31])
+        : ((Se = H(`sphone`)), (n[30] = H), (n[31] = Se));
+    let Ce;
+    n[32] !== N.sphone || n[33] !== I.sphone || n[34] !== Se
+        ? ((Ce = (0, P.jsx)(J, {
+              id: `s-phone`,
+              label: `Your phone number`,
+              type: `tel`,
+              placeholder: `07XX XXX XXX`,
+              autoComplete: `tel`,
+              value: xe,
+              onChange: Se,
+              error: I.sphone,
+          })),
+          (n[32] = N.sphone),
+          (n[33] = I.sphone),
+          (n[34] = Se),
+          (n[35] = Ce))
+        : (Ce = n[35]);
+    let we = N.hand === `drop`,
+        Te;
+    n[36] === B
+        ? (Te = n[37])
+        : ((Te = () => B(`hand`, `drop`)), (n[36] = B), (n[37] = Te));
+    let Ee;
+    n[38] !== we || n[39] !== Te
+        ? ((Ee = (0, P.jsx)(Y, {
+              type: `radio`,
+              name: `hand`,
+              checked: we,
+              onChange: Te,
+              children: `I will bring it to you`,
+          })),
+          (n[38] = we),
+          (n[39] = Te),
+          (n[40] = Ee))
+        : (Ee = n[40]);
+    let De = N.hand === `collect`,
+        Oe;
+    n[41] === B
+        ? (Oe = n[42])
+        : ((Oe = () => B(`hand`, `collect`)), (n[41] = B), (n[42] = Oe));
+    let ke;
+    n[43] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((ke = (0, P.jsx)(`b`, { children: `free` })), (n[43] = ke))
+        : (ke = n[43]);
+    let Ae;
+    n[44] !== De || n[45] !== Oe
+        ? ((Ae = (0, P.jsxs)(Y, {
+              type: `radio`,
+              name: `hand`,
+              checked: De,
+              onChange: Oe,
+              children: [`Come and pick it up from my CBD shop,`, ` `, ke],
+          })),
+          (n[44] = De),
+          (n[45] = Oe),
+          (n[46] = Ae))
+        : (Ae = n[46]);
+    let je;
+    n[47] !== Ee || n[48] !== Ae
+        ? ((je = (0, P.jsxs)(te, {
+              label: `How do we get your parcel?`,
+              cols: 1,
+              children: [Ee, Ae],
+          })),
+          (n[47] = Ee),
+          (n[48] = Ae),
+          (n[49] = je))
+        : (je = n[49]);
+    let Me = Z.mode === `collect`,
+        Ne = N.point,
+        Pe;
+    n[50] === H ? (Pe = n[51]) : ((Pe = H(`point`)), (n[50] = H), (n[51] = Pe));
+    let Fe = I.point,
+        Ie;
+    n[52] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((Ie = (0, P.jsx)(`optgroup`, {
+              label: `Nairobi CBD`,
+              children: (0, P.jsx)(`option`, {
+                  value: `cbd|Stanbank House, Moi Avenue, CBD`,
+                  children: `Stanbank House, Moi Avenue, CBD (free)`,
+              }),
+          })),
+          (n[52] = Ie))
+        : (Ie = n[52]);
+    let Le;
+    if (n[53] !== r.satellites || n[54] !== D) {
+        let e;
+        (n[56] === D
+            ? (e = n[57])
+            : ((e = (e) =>
+                  (0, P.jsxs)(
+                      `option`,
+                      {
+                          value: `out|${e} agent`,
+                          children: [e, ` agent (`, U(D), `)`],
+                      },
+                      e,
+                  )),
+              (n[56] = D),
+              (n[57] = e)),
+            (Le = r.satellites.map(e)),
+            (n[53] = r.satellites),
+            (n[54] = D),
+            (n[55] = Le));
+    } else Le = n[55];
+    let Re;
+    n[58] === Le
+        ? (Re = n[59])
+        : ((Re = (0, P.jsx)(`optgroup`, {
+              label: `Around Nairobi`,
+              children: Le,
+          })),
+          (n[58] = Le),
+          (n[59] = Re));
+    let ze;
+    n[60] !== N.point ||
+    n[61] !== I.point ||
+    n[62] !== Me ||
+    n[63] !== Pe ||
+    n[64] !== Re
+        ? ((ze = (0, P.jsxs)(J, {
+              select: !0,
+              id: `s-point`,
+              label: `Where will you drop it?`,
+              hint: `Bring it by 7pm.`,
+              hidden: Me,
+              value: Ne,
+              onChange: Pe,
+              error: Fe,
+              children: [Ie, Re],
+          })),
+          (n[60] = N.point),
+          (n[61] = I.point),
+          (n[62] = Me),
+          (n[63] = Pe),
+          (n[64] = Re),
+          (n[65] = ze))
+        : (ze = n[65]);
+    let Be = Z.mode !== `collect`,
+        Ve = N.addr,
+        He;
+    n[66] === H ? (He = n[67]) : ((He = H(`addr`)), (n[66] = H), (n[67] = He));
+    let Ue;
+    n[68] !== N.addr || n[69] !== I.addr || n[70] !== Be || n[71] !== He
+        ? ((Ue = (0, P.jsx)(J, {
+              id: `s-addr`,
+              label: `Where is your shop?`,
+              placeholder: `Building, floor, shop number and street`,
+              hidden: Be,
+              hint: `Have it ready for the rider, who waits up to 5 minutes.`,
+              value: Ve,
+              onChange: He,
+              error: I.addr,
+          })),
+          (n[68] = N.addr),
+          (n[69] = I.addr),
+          (n[70] = Be),
+          (n[71] = He),
+          (n[72] = Ue))
+        : (Ue = n[72]);
+    let We = !(Z.mode === `out` && Z.share),
+        Ge;
+    n[73] === D ? (Ge = n[74]) : ((Ge = U(D)), (n[73] = D), (n[74] = Ge));
+    let Ke = `The ${Ge} agent drop-off fee is paid once for all parcels today.`,
+        qe = N.count,
+        Je;
+    n[75] === H ? (Je = n[76]) : ((Je = H(`count`)), (n[75] = H), (n[76] = Je));
+    let Ye;
+    n[77] !== N.count ||
+    n[78] !== I.count ||
+    n[79] !== We ||
+    n[80] !== Ke ||
+    n[81] !== Je
+        ? ((Ye = (0, P.jsx)(J, {
+              id: `s-count`,
+              label: `How many parcels today?`,
+              inputMode: `numeric`,
+              autoComplete: `off`,
+              hidden: We,
+              hint: Ke,
+              value: qe,
+              onChange: Je,
+              error: I.count,
+          })),
+          (n[77] = N.count),
+          (n[78] = I.count),
+          (n[79] = We),
+          (n[80] = Ke),
+          (n[81] = Je),
+          (n[82] = Ye))
+        : (Ye = n[82]);
+    let Xe;
+    n[83] !== N.same ||
+    n[84] !== Z.mode ||
+    n[85] !== Z.n ||
+    n[86] !== Z.share ||
+    n[87] !== B
+        ? ((Xe =
+              Z.mode === `out` &&
+              Z.share &&
+              Z.n >= 2 &&
+              (0, P.jsx)(Y, {
+                  type: `checkbox`,
+                  checked: N.same,
+                  onChange: (e) => B(`same`, e.target.checked),
+                  children: `I already paid this on another parcel today`,
+              })),
+          (n[83] = N.same),
+          (n[84] = Z.mode),
+          (n[85] = Z.n),
+          (n[86] = Z.share),
+          (n[87] = B),
+          (n[88] = Xe))
+        : (Xe = n[88]);
+    let Ze;
+    n[89] !== be ||
+    n[90] !== Ce ||
+    n[91] !== je ||
+    n[92] !== ze ||
+    n[93] !== Ue ||
+    n[94] !== Ye ||
+    n[95] !== Xe
+        ? ((Ze = (0, P.jsxs)(X, {
+              n: `1`,
+              title: `Sender`,
+              children: [be, Ce, je, ze, Ue, Ye, Xe],
+          })),
+          (n[89] = be),
+          (n[90] = Ce),
+          (n[91] = je),
+          (n[92] = ze),
+          (n[93] = Ue),
+          (n[94] = Ye),
+          (n[95] = Xe),
+          (n[96] = Ze))
+        : (Ze = n[96]);
+    let Qe = N.rname,
+        $e;
+    n[97] === H ? ($e = n[98]) : (($e = H(`rname`)), (n[97] = H), (n[98] = $e));
+    let et;
+    n[99] !== N.rname || n[100] !== I.rname || n[101] !== $e
+        ? ((et = (0, P.jsx)(J, {
+              id: `r-name`,
+              label: `Recipient's name`,
+              value: Qe,
+              onChange: $e,
+              error: I.rname,
+          })),
+          (n[99] = N.rname),
+          (n[100] = I.rname),
+          (n[101] = $e),
+          (n[102] = et))
+        : (et = n[102]);
+    let tt = N.rphone,
+        nt;
+    n[103] === H
+        ? (nt = n[104])
+        : ((nt = H(`rphone`)), (n[103] = H), (n[104] = nt));
+    let rt;
+    n[105] !== N.rphone || n[106] !== I.rphone || n[107] !== nt
+        ? ((rt = (0, P.jsx)(J, {
+              id: `r-phone`,
+              label: `Recipient's phone number`,
+              type: `tel`,
+              placeholder: `07XX XXX XXX`,
+              hint: `We text the collection code to this number.`,
+              value: tt,
+              onChange: nt,
+              error: I.rphone,
+          })),
+          (n[105] = N.rphone),
+          (n[106] = I.rphone),
+          (n[107] = nt),
+          (n[108] = rt))
+        : (rt = n[108]);
+    let it = N.rtown,
+        at;
+    n[109] === H
+        ? (at = n[110])
+        : ((at = H(`rtown`)), (n[109] = H), (n[110] = at));
+    let ot;
+    n[111] !== N.rtown || n[112] !== I.rtown || n[113] !== at || n[114] !== he
+        ? ((ot = (0, P.jsx)(J, {
+              select: !0,
+              id: `r-town`,
+              label: `Destination town`,
+              value: it,
+              onChange: at,
+              error: I.rtown,
+              children: he,
+          })),
+          (n[111] = N.rtown),
+          (n[112] = I.rtown),
+          (n[113] = at),
+          (n[114] = he),
+          (n[115] = ot))
+        : (ot = n[115]);
+    let st;
+    n[116] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((st = (0, P.jsx)(`p`, {
+              className: `rounded-[10px] bg-ps-soft px-3.5 py-3 text-[.92rem] font-semibold text-ps-softink`,
+              children: `Collect at our pickup station in your nearest town, using the SMS code.`,
+          })),
+          (n[116] = st))
+        : (st = n[116]);
+    let ct;
+    n[117] !== et || n[118] !== rt || n[119] !== ot
+        ? ((ct = (0, P.jsxs)(X, {
+              n: `2`,
+              title: `Recipient`,
+              children: [et, rt, ot, st],
+          })),
+          (n[117] = et),
+          (n[118] = rt),
+          (n[119] = ot),
+          (n[120] = ct))
+        : (ct = n[120]);
+    let lt = N.what,
+        ut;
+    n[121] === H
+        ? (ut = n[122])
+        : ((ut = H(`what`)), (n[121] = H), (n[122] = ut));
+    let dt;
+    n[123] !== N.what || n[124] !== I.what || n[125] !== ut
+        ? ((dt = (0, P.jsx)(J, {
+              id: `p-what`,
+              label: `What is inside?`,
+              placeholder: `e.g. clothes, phone, documents`,
+              value: lt,
+              onChange: ut,
+              error: I.what,
+          })),
+          (n[123] = N.what),
+          (n[124] = I.what),
+          (n[125] = ut),
+          (n[126] = dt))
+        : (dt = n[126]);
+    let ft = N.worth,
+        pt;
+    n[127] === H
+        ? (pt = n[128])
+        : ((pt = H(`worth`)), (n[127] = H), (n[128] = pt));
+    let mt;
+    n[129] !== N.worth || n[130] !== I.worth || n[131] !== pt
+        ? ((mt = (0, P.jsx)(J, {
+              id: `p-worth`,
+              label: `Estimated worth of the parcel (KSh)`,
+              inputMode: `numeric`,
+              placeholder: `e.g. 5,000`,
+              autoComplete: `off`,
+              hint: `What the contents would cost to replace.`,
+              value: ft,
+              onChange: pt,
+              error: I.worth,
+          })),
+          (n[129] = N.worth),
+          (n[130] = I.worth),
+          (n[131] = pt),
+          (n[132] = mt))
+        : (mt = n[132]);
+    let ht = N.kind === `g`,
+        gt;
+    n[133] === B
+        ? (gt = n[134])
+        : ((gt = () => B(`kind`, `g`)), (n[133] = B), (n[134] = gt));
+    let _t;
+    n[135] !== ht || n[136] !== gt
+        ? ((_t = (0, P.jsx)(Y, {
+              type: `radio`,
+              name: `kind`,
+              checked: ht,
+              onChange: gt,
+              children: `General`,
+          })),
+          (n[135] = ht),
+          (n[136] = gt),
+          (n[137] = _t))
+        : (_t = n[137]);
+    let vt = N.kind === `e`,
+        yt;
+    n[138] === B
+        ? (yt = n[139])
+        : ((yt = () => B(`kind`, `e`)), (n[138] = B), (n[139] = yt));
+    let bt;
+    n[140] !== vt || n[141] !== yt
+        ? ((bt = (0, P.jsx)(Y, {
+              type: `radio`,
+              name: `kind`,
+              checked: vt,
+              onChange: yt,
+              children: `Electronics`,
+          })),
+          (n[140] = vt),
+          (n[141] = yt),
+          (n[142] = bt))
+        : (bt = n[142]);
+    let xt;
+    n[143] !== _t || n[144] !== bt
+        ? ((xt = (0, P.jsxs)(te, {
+              label: `What kind of parcel?`,
+              children: [_t, bt],
+          })),
+          (n[143] = _t),
+          (n[144] = bt),
+          (n[145] = xt))
+        : (xt = n[145]);
+    let St = N.kind === `e`,
+        Ct = N.size,
+        wt;
+    n[146] === H
+        ? (wt = n[147])
+        : ((wt = H(`size`)), (n[146] = H), (n[147] = wt));
+    let Tt = I.size,
+        Et;
+    n[148] === y
+        ? (Et = n[149])
+        : ((Et = y.map(se)), (n[148] = y), (n[149] = Et));
+    let Dt;
+    n[150] !== N.size ||
+    n[151] !== I.size ||
+    n[152] !== St ||
+    n[153] !== wt ||
+    n[154] !== Et
+        ? ((Dt = (0, P.jsx)(J, {
+              select: !0,
+              id: `p-size`,
+              label: `Weight`,
+              hidden: St,
+              value: Ct,
+              onChange: wt,
+              error: Tt,
+              children: Et,
+          })),
+          (n[150] = N.size),
+          (n[151] = I.size),
+          (n[152] = St),
+          (n[153] = wt),
+          (n[154] = Et),
+          (n[155] = Dt))
+        : (Dt = n[155]);
+    let Ot = N.kind === `e` || N.size !== `kg`,
+        kt = `KSh ${C} for the first 10 kg, then KSh ${w} for every extra kg. Up to ${T} kg.`,
+        At = N.kg,
+        jt;
+    n[156] === H
+        ? (jt = n[157])
+        : ((jt = H(`kg`)), (n[156] = H), (n[157] = jt));
+    let Mt;
+    n[158] !== N.kg ||
+    n[159] !== I.kg ||
+    n[160] !== Ot ||
+    n[161] !== kt ||
+    n[162] !== jt
+        ? ((Mt = (0, P.jsx)(J, {
+              id: `p-kg`,
+              label: `How many kg?`,
+              inputMode: `numeric`,
+              autoComplete: `off`,
+              hidden: Ot,
+              hint: kt,
+              value: At,
+              onChange: jt,
+              error: I.kg,
+          })),
+          (n[158] = N.kg),
+          (n[159] = I.kg),
+          (n[160] = Ot),
+          (n[161] = kt),
+          (n[162] = jt),
+          (n[163] = Mt))
+        : (Mt = n[163]);
+    let Nt = N.kind !== `e`,
+        Pt = N.item,
+        Ft;
+    n[164] === H
+        ? (Ft = n[165])
+        : ((Ft = H(`item`)), (n[164] = H), (n[165] = Ft));
+    let It = I.item,
+        Lt;
+    n[166] === x
+        ? (Lt = n[167])
+        : ((Lt = x.map(ae)), (n[166] = x), (n[167] = Lt));
+    let Rt;
+    n[168] !== N.item ||
+    n[169] !== I.item ||
+    n[170] !== Nt ||
+    n[171] !== Ft ||
+    n[172] !== Lt
+        ? ((Rt = (0, P.jsx)(J, {
+              select: !0,
+              id: `p-item`,
+              label: `Which item?`,
+              hint: `Priced per item, with fragile handling included.`,
+              hidden: Nt,
+              value: Pt,
+              onChange: Ft,
+              error: It,
+              children: Lt,
+          })),
+          (n[168] = N.item),
+          (n[169] = I.item),
+          (n[170] = Nt),
+          (n[171] = Ft),
+          (n[172] = Lt),
+          (n[173] = Rt))
+        : (Rt = n[173]);
+    let zt = !N.pack,
+        Bt;
+    n[174] === B
+        ? (Bt = n[175])
+        : ((Bt = () => B(`pack`, !1)), (n[174] = B), (n[175] = Bt));
+    let Vt;
+    n[176] !== zt || n[177] !== Bt
+        ? ((Vt = (0, P.jsx)(Y, {
+              type: `radio`,
+              name: `pack`,
+              checked: zt,
+              onChange: Bt,
+              children: `No, it is packed and ready`,
+          })),
+          (n[176] = zt),
+          (n[177] = Bt),
+          (n[178] = Vt))
+        : (Vt = n[178]);
+    let Ht;
+    n[179] === B
+        ? (Ht = n[180])
+        : ((Ht = () => B(`pack`, !0)), (n[179] = B), (n[180] = Ht));
+    let Ut;
+    n[181] !== N.pack || n[182] !== Ht
+        ? ((Ut = (0, P.jsx)(Y, {
+              type: `radio`,
+              name: `pack`,
+              checked: N.pack,
+              onChange: Ht,
+              children: `Yes, pack it for me`,
+          })),
+          (n[181] = N.pack),
+          (n[182] = Ht),
+          (n[183] = Ut))
+        : (Ut = n[183]);
+    let Wt;
+    n[184] !== Vt || n[185] !== Ut
+        ? ((Wt = (0, P.jsxs)(te, {
+              label: `Need packaging? We pack it for you at a small fee.`,
+              children: [Vt, Ut],
+          })),
+          (n[184] = Vt),
+          (n[185] = Ut),
+          (n[186] = Wt))
+        : (Wt = n[186]);
+    let Gt;
+    n[187] === Z.item.pack
+        ? (Gt = n[188])
+        : ((Gt = U(Z.item.pack)), (n[187] = Z.item.pack), (n[188] = Gt));
+    let Kt = `Professional packaging for this item is ${Gt}. You only pay if you choose yes.`,
+        qt;
+    n[189] === Kt
+        ? (qt = n[190])
+        : ((qt = (0, P.jsx)(`span`, { className: b, children: Kt })),
+          (n[189] = Kt),
+          (n[190] = qt));
+    let Jt;
+    n[191] !== Wt || n[192] !== qt
+        ? ((Jt = (0, P.jsxs)(`div`, {
+              className: `flex flex-col gap-1.5`,
+              children: [Wt, qt],
+          })),
+          (n[191] = Wt),
+          (n[192] = qt),
+          (n[193] = Jt))
+        : (Jt = n[193]);
+    let Yt = N.paynum,
+        Xt;
+    n[194] === H
+        ? (Xt = n[195])
+        : ((Xt = H(`paynum`)), (n[194] = H), (n[195] = Xt));
+    let Zt;
+    n[196] !== N.paynum || n[197] !== I.paynum || n[198] !== Xt
+        ? ((Zt = (0, P.jsx)(J, {
+              id: `p-paynum`,
+              label: `M-PESA number that will pay`,
+              type: `tel`,
+              placeholder: `07XX XXX XXX`,
+              autoComplete: `off`,
+              hint: `We send the M-PESA payment prompt to this number.`,
+              value: Yt,
+              onChange: Xt,
+              error: I.paynum,
+          })),
+          (n[196] = N.paynum),
+          (n[197] = I.paynum),
+          (n[198] = Xt),
+          (n[199] = Zt))
+        : (Zt = n[199]);
+    let Qt = N.cod,
+        $t;
+    n[200] === H
+        ? ($t = n[201])
+        : (($t = H(`cod`)), (n[200] = H), (n[201] = $t));
+    let en;
+    n[202] !== N.cod || n[203] !== I.cod || n[204] !== $t
+        ? ((en = (0, P.jsx)(J, {
+              id: `p-cod`,
+              label: `Cash on Delivery amount (KSh)`,
+              inputMode: `numeric`,
+              placeholder: `Leave empty if already paid`,
+              autoComplete: `off`,
+              hint: `Only if the recipient must pay you for the goods.`,
+              value: Qt,
+              onChange: $t,
+              error: I.cod,
+          })),
+          (n[202] = N.cod),
+          (n[203] = I.cod),
+          (n[204] = $t),
+          (n[205] = en))
+        : (en = n[205]);
+    let tn;
+    n[206] !== Jt ||
+    n[207] !== Zt ||
+    n[208] !== en ||
+    n[209] !== dt ||
+    n[210] !== mt ||
+    n[211] !== xt ||
+    n[212] !== Dt ||
+    n[213] !== Mt ||
+    n[214] !== Rt
+        ? ((tn = (0, P.jsxs)(X, {
+              n: `3`,
+              title: `Parcel`,
+              children: [dt, mt, xt, Dt, Mt, Rt, Jt, Zt, en],
+          })),
+          (n[206] = Jt),
+          (n[207] = Zt),
+          (n[208] = en),
+          (n[209] = dt),
+          (n[210] = mt),
+          (n[211] = xt),
+          (n[212] = Dt),
+          (n[213] = Mt),
+          (n[214] = Rt),
+          (n[215] = tn))
+        : (tn = n[215]);
+    let nn;
+    n[216] !== tn || n[217] !== Ze || n[218] !== ct
+        ? ((nn = (0, P.jsxs)(`div`, {
+              className: `${E} items-start`,
+              children: [Ze, ct, tn],
+          })),
+          (n[216] = tn),
+          (n[217] = Ze),
+          (n[218] = ct),
+          (n[219] = nn))
+        : (nn = n[219]);
+    let rn = `${E} items-center rounded-2xl bg-ps-soft p-4 text-ps-softink sm:px-[22px] sm:py-5`,
+        an;
+    n[220] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((an = (0, P.jsx)(`span`, { children: `Total to pay` })),
+          (n[220] = an))
+        : (an = n[220]);
+    let on;
+    n[221] === Z.total
+        ? (on = n[222])
+        : ((on = U(Z.total)), (n[221] = Z.total), (n[222] = on));
+    let sn;
+    n[223] === on
+        ? (sn = n[224])
+        : ((sn = (0, P.jsx)(`output`, {
+              className: `text-[1.9rem] leading-tight font-extrabold text-ps-brandink tabular-nums`,
+              children: on,
+          })),
+          (n[223] = on),
+          (n[224] = sn));
+    let cn;
+    n[225] !== l || n[226] !== Z
+        ? ((cn = l(Z)), (n[225] = l), (n[226] = Z), (n[227] = cn))
+        : (cn = n[227]);
+    let ln;
+    n[228] === cn
+        ? (ln = n[229])
+        : ((ln = (0, P.jsx)(`p`, { className: `text-[.94rem]`, children: cn })),
+          (n[228] = cn),
+          (n[229] = ln));
+    let un = p(ne),
+        dn;
+    n[230] === un
+        ? (dn = n[231])
+        : ((dn = (0, P.jsx)(`p`, { className: `text-[.94rem]`, children: un })),
+          (n[230] = un),
+          (n[231] = dn));
+    let fn = `You earn ${Z.points} Pick&Send points on this parcel.`,
+        pn;
+    n[232] === fn
+        ? (pn = n[233])
+        : ((pn = (0, P.jsx)(`p`, {
+              className: `text-[.94rem] font-bold`,
+              children: fn,
+          })),
+          (n[232] = fn),
+          (n[233] = pn));
+    let mn;
+    n[234] !== an ||
+    n[235] !== sn ||
+    n[236] !== ln ||
+    n[237] !== dn ||
+    n[238] !== pn
+        ? ((mn = (0, P.jsxs)(`div`, {
+              className: `flex flex-col`,
+              children: [an, sn, ln, dn, pn],
+          })),
+          (n[234] = an),
+          (n[235] = sn),
+          (n[236] = ln),
+          (n[237] = dn),
+          (n[238] = pn),
+          (n[239] = mn))
+        : (mn = n[239]);
+    let hn;
+    n[240] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((hn = (0, P.jsx)(`span`, { className: j, children: `M-PESA` })),
+          (n[240] = hn))
+        : (hn = n[240]);
+    let gn = L ? `SENDING…` : Z.total > 0 ? `PAY NOW` : `BOOK NOW`,
+        _n;
+    n[241] !== L || n[242] !== gn
+        ? ((_n = (0, P.jsxs)(`button`, {
+              type: `submit`,
+              disabled: L,
+              className: `${g} !min-h-[60px] !text-[1.1rem] !font-extrabold disabled:opacity-60`,
+              children: [hn, gn],
+          })),
+          (n[241] = L),
+          (n[242] = gn),
+          (n[243] = _n))
+        : (_n = n[243]);
+    let vn;
+    n[244] === i
+        ? (vn = n[245])
+        : ((vn =
+              i &&
+              (0, P.jsx)(`a`, {
+                  className: `inline-flex min-h-[52px] items-center justify-center gap-2.5 rounded-xl border-[1.5px] border-transparent px-6 text-center font-bold no-underline max-sm:w-full !min-h-12 border-ps-wa bg-ps-surface !text-base text-ps-wa max-sm:!px-2 max-sm:!text-[.92rem]`,
+                  target: `_blank`,
+                  rel: `noopener`,
+                  href: i.receiptHref,
+                  children: `Share receipt on WhatsApp`,
+              })),
+          (n[244] = i),
+          (n[245] = vn));
+    let yn;
+    n[246] !== _n || n[247] !== vn
+        ? ((yn = (0, P.jsxs)(`div`, {
+              className: `flex min-w-0 flex-col gap-2.5`,
+              children: [_n, vn],
+          })),
+          (n[246] = _n),
+          (n[247] = vn),
+          (n[248] = yn))
+        : (yn = n[248]);
+    let bn;
+    n[249] !== mn || n[250] !== yn
+        ? ((bn = (0, P.jsxs)(`div`, {
+              className: rn,
+              'aria-live': `polite`,
+              children: [mn, yn],
+          })),
+          (n[249] = mn),
+          (n[250] = yn),
+          (n[251] = bn))
+        : (bn = n[251]);
+    let xn;
+    n[252] === a
+        ? (xn = n[253])
+        : ((xn =
+              a &&
+              (0, P.jsx)(`p`, {
+                  className: `rounded-xl bg-ps-warn px-4 py-3 text-[.94rem] font-semibold text-ps-warnink`,
+                  role: `alert`,
+                  children: a,
+              })),
+          (n[252] = a),
+          (n[253] = xn));
+    let Sn;
+    n[254] !== i ||
+    n[255] !== O ||
+    n[256] !== ue ||
+    n[257] !== Q ||
+    n[258] !== o ||
+    n[259] !== pe
+        ? ((Sn =
+              i &&
+              (0, P.jsxs)(`div`, {
+                  id: `send-out`,
+                  className: `flex flex-col gap-3 rounded-2xl border-2 border-ps-wa bg-ps-surface p-4 sm:px-[22px] sm:py-5`,
+                  children: [
+                      (0, P.jsxs)(`div`, {
+                          className: `flex flex-col gap-2.5 rounded-[14px] bg-ps-band px-[18px] py-4 text-ps-bandmuted`,
+                          children: [
+                              (0, P.jsx)(`span`, {
+                                  className: `text-[.8rem] font-bold uppercase tracking-[.12em] text-ps-key`,
+                                  children: i.who[0],
+                              }),
+                              (0, P.jsxs)(`div`, {
+                                  className: `flex flex-wrap items-center gap-x-4 gap-y-3`,
+                                  children: [
+                                      (0, P.jsx)(`span`, {
+                                          className: `grid h-[52px] w-[52px] flex-none place-items-center rounded-full bg-ps-key font-extrabold text-ps-band`,
+                                          'aria-hidden': `true`,
+                                          children: `PS`,
+                                      }),
+                                      (0, P.jsxs)(`div`, {
+                                          className: `flex min-w-0 flex-1 basis-[180px] flex-col`,
+                                          children: [
+                                              (0, P.jsx)(`b`, {
+                                                  className: `text-white`,
+                                                  children: i.who[1],
+                                              }),
+                                              (0, P.jsx)(`span`, {
+                                                  children: i.who[2],
+                                              }),
+                                          ],
+                                      }),
+                                      (0, P.jsxs)(`div`, {
+                                          className: `flex flex-col items-end rounded-[10px] border-[1.5px] border-dashed border-ps-key px-3.5 py-1.5`,
+                                          children: [
+                                              (0, P.jsx)(`span`, {
+                                                  className: `text-[.75rem] font-bold tracking-[.08em] uppercase`,
+                                                  children: `Handover code`,
+                                              }),
+                                              (0, P.jsx)(`b`, {
+                                                  className: `font-mono text-[1.7rem] tracking-[.18em] text-white`,
+                                                  children: i.handover_code,
+                                              }),
+                                          ],
+                                      }),
+                                  ],
+                              }),
+                              (0, P.jsx)(`p`, {
+                                  className: `text-white`,
+                                  children: i.who[3],
+                              }),
+                          ],
+                      }),
+                      (0, P.jsxs)(`div`, {
+                          className: `flex min-w-0 flex-col gap-3.5`,
+                          children: [
+                              (0, P.jsxs)(`h3`, {
+                                  className: `text-[1.3rem] font-extrabold text-ps-brandink`,
+                                  children: [
+                                      `Pay `,
+                                      (0, P.jsx)(`span`, {
+                                          children: U(i.total),
+                                      }),
+                                      ` by M-PESA`,
+                                  ],
+                              }),
+                              (0, P.jsxs)(`ol`, {
+                                  className: `m-0 flex flex-col gap-1.5 pl-[22px]`,
+                                  children: [
+                                      (0, P.jsxs)(`li`, {
+                                          children: [
+                                              `Open M-PESA, choose`,
+                                              ` `,
+                                              (0, P.jsx)(`b`, {
+                                                  children: `Lipa na M-PESA`,
+                                              }),
+                                              `, then`,
+                                              ` `,
+                                              (0, P.jsx)(`b`, {
+                                                  children: `Buy Goods and Services`,
+                                              }),
+                                              `.`,
+                                          ],
+                                      }),
+                                      (0, P.jsxs)(`li`, {
+                                          children: [
+                                              `Enter Till number`,
+                                              ` `,
+                                              (0, P.jsx)(`b`, {
+                                                  className: `font-mono`,
+                                                  children: `[TILL NO.]`,
+                                              }),
+                                              `.`,
+                                          ],
+                                      }),
+                                      (0, P.jsxs)(`li`, {
+                                          children: [
+                                              `Enter `,
+                                              (0, P.jsx)(`b`, {
+                                                  children: U(i.total),
+                                              }),
+                                              ` and your M-PESA PIN.`,
+                                          ],
+                                      }),
+                                  ],
+                              }),
+                              (0, P.jsxs)(`form`, {
+                                  onSubmit: pe,
+                                  className: `flex flex-col gap-3`,
+                                  children: [
+                                      (0, P.jsx)(J, {
+                                          id: `pay-code`,
+                                          label: `M-PESA confirmation code`,
+                                          placeholder: `e.g. SJK4XY12AB`,
+                                          autoComplete: `off`,
+                                          hint: `It is in the M-PESA message you get after paying.`,
+                                          className: `font-mono uppercase`,
+                                          value: Q.data.code,
+                                          onChange: (e) =>
+                                              Q.setData(
+                                                  `code`,
+                                                  e.target.value.toUpperCase(),
+                                              ),
+                                          error: Q.errors.code,
+                                      }),
+                                      (0, P.jsx)(`button`, {
+                                          type: `submit`,
+                                          disabled: Q.processing,
+                                          className: `${m} self-start disabled:opacity-60`,
+                                          children: Q.processing
+                                              ? `Confirming…`
+                                              : `Confirm payment`,
+                                      }),
+                                  ],
+                              }),
+                              o &&
+                                  (0, P.jsx)(`p`, {
+                                      className: `rounded-[10px] bg-ps-soft px-3.5 py-3 text-[.92rem] font-semibold text-ps-softink`,
+                                      children: `Payment confirmed. The parcel will leave Nairobi once it is scanned in.`,
+                                  }),
+                          ],
+                      }),
+                      i.custHref &&
+                          (0, P.jsx)(`div`, {
+                              className: `flex flex-wrap gap-3`,
+                              children: (0, P.jsx)(`a`, {
+                                  className: h,
+                                  href: i.custHref,
+                                  target: `_blank`,
+                                  rel: `noopener`,
+                                  children: `Also send the payment request on WhatsApp`,
+                              }),
+                          }),
+                      (0, P.jsxs)(`div`, {
+                          className: `rounded-[14px] border-[1.5px] border-dashed border-ps-line bg-ps-surface2 px-[18px] py-4`,
+                          'aria-labelledby': `rcpt-h`,
+                          children: [
+                              (0, P.jsxs)(`div`, {
+                                  className: `mb-2.5 flex flex-wrap items-center justify-between gap-2 text-[1.1rem]`,
+                                  children: [
+                                      (0, P.jsx)(`b`, {
+                                          id: `rcpt-h`,
+                                          className: `text-ps-brandink`,
+                                          children: `Receipt`,
+                                      }),
+                                      (0, P.jsx)(`span`, {
+                                          className: i.paid ? k.done : k.wait,
+                                          children: i.paid
+                                              ? `Paid`
+                                              : `Awaiting payment code`,
+                                      }),
+                                  ],
+                              }),
+                              (0, P.jsx)(`dl`, {
+                                  className: `m-0 grid grid-cols-1 gap-x-4 gap-y-1.5 text-[.95rem] sm:grid-cols-[minmax(90px,auto)_1fr]`,
+                                  children: i.rows.map(ie),
+                              }),
+                          ],
+                      }),
+                      (0, P.jsxs)(`div`, {
+                          className: `flex flex-wrap gap-3`,
+                          children: [
+                              (0, P.jsx)(`a`, {
+                                  className: g,
+                                  href: i.receiptHref,
+                                  target: `_blank`,
+                                  rel: `noopener`,
+                                  children: `Share receipt on WhatsApp`,
+                              }),
+                              (0, P.jsx)(`a`, {
+                                  className: h,
+                                  href: i.bookingHref,
+                                  target: `_blank`,
+                                  rel: `noopener`,
+                                  children: `Send booking to Pick&Send`,
+                              }),
+                              (0, P.jsx)(`button`, {
+                                  type: `button`,
+                                  className: h,
+                                  onClick: ue,
+                                  children: `Copy receipt`,
+                              }),
+                              (0, P.jsx)(`span`, {
+                                  role: `status`,
+                                  className: `self-center font-semibold`,
+                                  children: O,
+                              }),
+                          ],
+                      }),
+                      (0, P.jsx)(`span`, {
+                          className: `text-[.84rem] text-ps-muted`,
+                          children: `Share the receipt with the recipient. Send the booking to us on 0718 819 413 and we reply with your tracking number.`,
+                      }),
+                  ],
+              })),
+          (n[254] = i),
+          (n[255] = O),
+          (n[256] = ue),
+          (n[257] = Q),
+          (n[258] = o),
+          (n[259] = pe),
+          (n[260] = Sn))
+        : (Sn = n[260]);
+    let Cn;
+    n[261] !== oe ||
+    n[262] !== nn ||
+    n[263] !== bn ||
+    n[264] !== xn ||
+    n[265] !== Sn
+        ? ((Cn = (0, P.jsxs)(`form`, {
+              noValidate: !0,
+              className: `flex flex-col gap-4`,
+              onSubmit: oe,
+              children: [nn, bn, xn, Sn],
+          })),
+          (n[261] = oe),
+          (n[262] = nn),
+          (n[263] = bn),
+          (n[264] = xn),
+          (n[265] = Sn),
+          (n[266] = Cn))
+        : (Cn = n[266]);
+    let wn;
+    n[267] !== _e || n[268] !== $ || n[269] !== Cn
+        ? ((wn = (0, P.jsxs)(`div`, { className: _e, children: [$, Cn] })),
+          (n[267] = _e),
+          (n[268] = $),
+          (n[269] = Cn),
+          (n[270] = wn))
+        : (wn = n[270]);
+    let Tn;
+    return (
+        n[271] !== ge || n[272] !== wn
+            ? ((Tn = (0, P.jsx)(ge, { id: `send`, children: wn })),
+              (n[271] = ge),
+              (n[272] = wn),
+              (n[273] = Tn))
+            : (Tn = n[273]),
+        Tn
+    );
+}
+function ie(e) {
+    let [t, n] = e;
+    return (0, P.jsxs)(
+        `div`,
+        {
+            className: `contents`,
+            children: [
+                (0, P.jsx)(`dt`, { className: `text-ps-muted`, children: t }),
+                (0, P.jsx)(`dd`, {
+                    className: `m-0 min-w-0 font-semibold break-words max-sm:mb-2`,
+                    children: n,
+                }),
+            ],
+        },
+        t,
+    );
+}
+function ae(e) {
+    return (0, P.jsx)(
+        `optgroup`,
+        { label: e.group, children: e.items.map(oe) },
+        e.group,
+    );
+}
+function oe(e) {
+    return (0, P.jsx)(`option`, { value: e.id, children: e.label }, e.id);
+}
+function se(e) {
+    return (0, P.jsx)(`option`, { value: e.id, children: e.label }, e.id);
+}
+function ce() {
+    document.getElementById(`send-out`)?.scrollIntoView({ block: `nearest` });
+}
+function le(e) {
+    let n = (0, d.c)(70),
+        { config: r, supply: i } = e,
+        { towns: a, routes: o } = r,
+        s;
+    n[0] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((s = {
+              name: ``,
+              phone: ``,
+              town: `mount|Nyeri`,
+              what: ``,
+              from: ``,
+              sphone: ``,
+              often: `Once`,
+          }),
+          (n[0] = s))
+        : (s = n[0]);
+    let c = t(s),
+        { data: l, errors: u, processing: p, post: h } = c,
+        _;
+    n[1] === c
+        ? (_ = n[2])
+        : ((_ = (e, t) => c.setData(e, t)), (n[1] = c), (n[2] = _));
+    let y = _,
+        b;
+    n[3] === h
+        ? (b = n[4])
+        : ((b = (e) => {
+              (e.preventDefault(), h(`/supplies`, { preserveScroll: !0 }));
+          }),
+          (n[3] = h),
+          (n[4] = b));
+    let S = b,
+        w;
+    if (n[5] !== o || n[6] !== a) {
+        let e;
+        (n[8] === o
+            ? (e = n[9])
+            : ((e = (e) => {
+                  let [t, n] = e;
+                  return (0, P.jsx)(
+                      `optgroup`,
+                      {
+                          label: o[t],
+                          children: n.map((e) =>
+                              (0, P.jsx)(
+                                  `option`,
+                                  { value: `${t}|${e}`, children: e },
+                                  e,
+                              ),
+                          ),
+                      },
+                      t,
+                  );
+              }),
+              (n[8] = o),
+              (n[9] = e)),
+            (w = a.map(e)),
+            (n[5] = o),
+            (n[6] = a),
+            (n[7] = w));
+    } else w = n[7];
+    let T = w,
+        E;
+    n[10] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((E = (0, P.jsx)(ee, {
+              dark: !0,
+              className: `mb-6`,
+              eyebrow: `Live outside Nairobi?`,
+              title: `Get your Nairobi supplies through Pick&Send`,
+              text: `Stock for your shop, spare parts, a phone you bought online. Tell us where to pick it and we bring it to your town, once or on a schedule.`,
+          })),
+          (n[10] = E))
+        : (E = n[10]);
+    let O;
+    n[11] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((O = (0, P.jsxs)(`div`, {
+              children: [
+                  E,
+                  (0, P.jsxs)(`ul`, {
+                      className: C,
+                      children: [
+                          (0, P.jsxs)(`li`, {
+                              children: [
+                                  (0, P.jsx)(`b`, {
+                                      children: `We pick from shops in the Nairobi CBD.`,
+                                  }),
+                                  ` One collection fee covers everything from that supplier.`,
+                              ],
+                          }),
+                          (0, P.jsxs)(`li`, {
+                              children: [
+                                  (0, P.jsx)(`b`, {
+                                      children: `Daily, weekly or monthly.`,
+                                  }),
+                                  ` Set it once and your supplies keep coming.`,
+                              ],
+                          }),
+                          (0, P.jsxs)(`li`, {
+                              children: [
+                                  (0, P.jsx)(`b`, {
+                                      children: `You pay the normal picked-up price`,
+                                  }),
+                                  ` by M-PESA and collect with your SMS code.`,
+                              ],
+                          }),
+                      ],
+                  }),
+              ],
+          })),
+          (n[11] = O))
+        : (O = n[11]);
+    let k;
+    n[12] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((k = (0, P.jsx)(`h3`, {
+              className: `text-[1.25rem] ${x}`,
+              children: `Ask us to pick for you`,
+          })),
+          (n[12] = k))
+        : (k = n[12]);
+    let A;
+    n[13] === y
+        ? (A = n[14])
+        : ((A = (e) => y(`name`, e.target.value)), (n[13] = y), (n[14] = A));
+    let j;
+    n[15] !== l.name || n[16] !== u.name || n[17] !== A
+        ? ((j = (0, P.jsx)(J, {
+              id: `u-name`,
+              label: `Your name`,
+              autoComplete: `name`,
+              value: l.name,
+              onChange: A,
+              error: u.name,
+          })),
+          (n[15] = l.name),
+          (n[16] = u.name),
+          (n[17] = A),
+          (n[18] = j))
+        : (j = n[18]);
+    let M;
+    n[19] === y
+        ? (M = n[20])
+        : ((M = (e) => y(`phone`, e.target.value)), (n[19] = y), (n[20] = M));
+    let N;
+    n[21] !== l.phone || n[22] !== u.phone || n[23] !== M
+        ? ((N = (0, P.jsx)(J, {
+              id: `u-phone`,
+              label: `Your phone number`,
+              type: `tel`,
+              placeholder: `07XX XXX XXX`,
+              autoComplete: `tel`,
+              value: l.phone,
+              onChange: M,
+              error: u.phone,
+          })),
+          (n[21] = l.phone),
+          (n[22] = u.phone),
+          (n[23] = M),
+          (n[24] = N))
+        : (N = n[24]);
+    let F;
+    n[25] === y
+        ? (F = n[26])
+        : ((F = (e) => y(`town`, e.target.value)), (n[25] = y), (n[26] = F));
+    let I;
+    n[27] !== l.town || n[28] !== u.town || n[29] !== F || n[30] !== T
+        ? ((I = (0, P.jsx)(J, {
+              select: !0,
+              id: `u-town`,
+              label: `Your town`,
+              value: l.town,
+              onChange: F,
+              error: u.town,
+              children: T,
+          })),
+          (n[27] = l.town),
+          (n[28] = u.town),
+          (n[29] = F),
+          (n[30] = T),
+          (n[31] = I))
+        : (I = n[31]);
+    let L;
+    n[32] === y
+        ? (L = n[33])
+        : ((L = (e) => y(`what`, e.target.value)), (n[32] = y), (n[33] = L));
+    let R;
+    n[34] !== l.what || n[35] !== u.what || n[36] !== L
+        ? ((R = (0, P.jsx)(J, {
+              id: `u-what`,
+              label: `What should we pick?`,
+              placeholder: `e.g. 2 cartons of cosmetics`,
+              value: l.what,
+              onChange: L,
+              error: u.what,
+          })),
+          (n[34] = l.what),
+          (n[35] = u.what),
+          (n[36] = L),
+          (n[37] = R))
+        : (R = n[37]);
+    let z;
+    n[38] === y
+        ? (z = n[39])
+        : ((z = (e) => y(`from`, e.target.value)), (n[38] = y), (n[39] = z));
+    let B;
+    n[40] !== l.from || n[41] !== u.from || n[42] !== z
+        ? ((B = (0, P.jsx)(J, {
+              id: `u-from`,
+              label: `Where do we pick it?`,
+              placeholder: `Shop or supplier name, building and street`,
+              value: l.from,
+              onChange: z,
+              error: u.from,
+          })),
+          (n[40] = l.from),
+          (n[41] = u.from),
+          (n[42] = z),
+          (n[43] = B))
+        : (B = n[43]);
+    let V;
+    n[44] === y
+        ? (V = n[45])
+        : ((V = (e) => y(`sphone`, e.target.value)), (n[44] = y), (n[45] = V));
+    let H;
+    n[46] !== l.sphone || n[47] !== u.sphone || n[48] !== V
+        ? ((H = (0, P.jsx)(J, {
+              id: `u-sphone`,
+              label: `Supplier's phone number`,
+              type: `tel`,
+              placeholder: `Optional`,
+              value: l.sphone,
+              onChange: V,
+              error: u.sphone,
+          })),
+          (n[46] = l.sphone),
+          (n[47] = u.sphone),
+          (n[48] = V),
+          (n[49] = H))
+        : (H = n[49]);
+    let U;
+    n[50] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((U = [`Once`, `Daily`, `Weekly`, `Monthly`]), (n[50] = U))
+        : (U = n[50]);
+    let W;
+    n[51] !== l.often || n[52] !== y
+        ? ((W = (0, P.jsx)(te, {
+              label: `How often?`,
+              cols: 4,
+              children: U.map((e) =>
+                  (0, P.jsx)(
+                      Y,
+                      {
+                          type: `radio`,
+                          name: `often`,
+                          checked: l.often === e,
+                          onChange: () => y(`often`, e),
+                          children: e,
+                      },
+                      e,
+                  ),
+              ),
+          })),
+          (n[51] = l.often),
+          (n[52] = y),
+          (n[53] = W))
+        : (W = n[53]);
+    let G = p ? `Sending…` : `Request my pickup`,
+        K;
+    n[54] !== p || n[55] !== G
+        ? ((K = (0, P.jsx)(`button`, {
+              className: m,
+              type: `submit`,
+              disabled: p,
+              children: G,
+          })),
+          (n[54] = p),
+          (n[55] = G),
+          (n[56] = K))
+        : (K = n[56]);
+    let X;
+    n[57] === i
+        ? (X = n[58])
+        : ((X =
+              i &&
+              (0, P.jsxs)(`div`, {
+                  className: `flex flex-col gap-3 rounded-2xl border-2 border-ps-wa bg-ps-surface p-4 sm:px-[22px] sm:py-5`,
+                  children: [
+                      (0, P.jsx)(`b`, {
+                          children: `Send this to us on WhatsApp: 0718 819 413`,
+                      }),
+                      (0, P.jsx)(`pre`, {
+                          className: `m-0 rounded-[10px] bg-ps-surface2 p-3.5 font-sans text-[.96rem] whitespace-pre-wrap select-all`,
+                          children: i.text,
+                      }),
+                      (0, P.jsx)(`a`, {
+                          className: g,
+                          href: i.waHref,
+                          target: `_blank`,
+                          rel: `noopener`,
+                          children: `Open WhatsApp`,
+                      }),
+                      (0, P.jsx)(`span`, {
+                          className: `text-[.84rem] text-ps-muted`,
+                          children: `We confirm the price and the pickup time.`,
+                      }),
+                  ],
+              })),
+          (n[57] = i),
+          (n[58] = X));
+    let Z;
+    return (
+        n[59] !== S ||
+        n[60] !== N ||
+        n[61] !== I ||
+        n[62] !== R ||
+        n[63] !== B ||
+        n[64] !== H ||
+        n[65] !== W ||
+        n[66] !== K ||
+        n[67] !== X ||
+        n[68] !== j
+            ? ((Z = (0, P.jsx)(q, {
+                  id: `supplies`,
+                  tone: `band`,
+                  children: (0, P.jsxs)(`div`, {
+                      className: `${f} ${D} items-start`,
+                      children: [
+                          O,
+                          (0, P.jsxs)(`form`, {
+                              className: v,
+                              noValidate: !0,
+                              onSubmit: S,
+                              children: [k, j, N, I, R, B, H, W, K, X],
+                          }),
+                      ],
+                  }),
+              })),
+              (n[59] = S),
+              (n[60] = N),
+              (n[61] = I),
+              (n[62] = R),
+              (n[63] = B),
+              (n[64] = H),
+              (n[65] = W),
+              (n[66] = K),
+              (n[67] = X),
+              (n[68] = j),
+              (n[69] = Z))
+            : (Z = n[69]),
+        Z
+    );
+}
+function ue(e) {
+    let n = (0, d.c)(18),
+        { user: r, merchant: i, flash: a } = e,
+        o = r?.is_merchant ? r : null,
+        s;
+    n[0] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((s = { phone: ``, code: `` }), (n[0] = s))
+        : (s = n[0]);
+    let c = t(s),
+        l = a?.otp_sent === !0,
+        u;
+    n[1] === c
+        ? (u = n[2])
+        : ((u = (e) => {
+              (e.preventDefault(),
+                  c.post(`/merchant/otp`, { preserveScroll: !0 }));
+          }),
+          (n[1] = c),
+          (n[2] = u));
+    let p = u,
+        y;
+    n[3] === c
+        ? (y = n[4])
+        : ((y = (e) => {
+              (e.preventDefault(),
+                  c.post(`/merchant/verify`, { preserveScroll: !0 }));
+          }),
+          (n[3] = c),
+          (n[4] = y));
+    let C = y,
+        w = fe,
+        E = Q,
+        O;
+    n[5] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((O = (0, P.jsx)(ee, {
+              eyebrow: `Merchants`,
+              title: `Your orders and your money in one place`,
+              text: `Sell with Cash on Delivery to customers across Kenya. Log in to see every order and your wallet.`,
+          })),
+          (n[5] = O))
+        : (O = n[5]);
+    let k;
+    return (
+        n[6] !== a?.withdrawn ||
+        n[7] !== i?.orders ||
+        n[8] !== i?.points ||
+        n[9] !== i?.waiting ||
+        n[10] !== i?.wallet ||
+        n[11] !== i?.withdrawn_month ||
+        n[12] !== o ||
+        n[13] !== c ||
+        n[14] !== p ||
+        n[15] !== l ||
+        n[16] !== C
+            ? ((k = (0, P.jsx)(q, {
+                  id: `merchants`,
+                  tone: `tint`,
+                  children: (0, P.jsxs)(`div`, {
+                      className: f,
+                      children: [
+                          O,
+                          o
+                              ? (0, P.jsxs)(`div`, {
+                                    className: `rounded-[18px] border border-ps-line bg-ps-surface p-4 sm:p-6`,
+                                    children: [
+                                        (0, P.jsxs)(`div`, {
+                                            className: `mb-[18px] flex flex-wrap items-center justify-between gap-3`,
+                                            children: [
+                                                (0, P.jsxs)(`div`, {
+                                                    children: [
+                                                        (0, P.jsx)(`span`, {
+                                                            className: _,
+                                                            children: `Signed in`,
+                                                        }),
+                                                        (0, P.jsx)(`h3`, {
+                                                            className: `text-[1.3rem] ${x}`,
+                                                            children:
+                                                                o.business_name ??
+                                                                o.name,
+                                                        }),
+                                                    ],
+                                                }),
+                                                (0, P.jsx)(`button`, {
+                                                    type: `button`,
+                                                    className: `${h} max-sm:!w-auto`,
+                                                    onClick: w,
+                                                    children: `Log out`,
+                                                }),
+                                            ],
+                                        }),
+                                        (0, P.jsx)(`div`, {
+                                            className: T,
+                                            children: [
+                                                [
+                                                    `Wallet, ready to withdraw`,
+                                                    U(i?.wallet ?? 0),
+                                                    null,
+                                                    !0,
+                                                ],
+                                                [
+                                                    `Waiting for customers to collect`,
+                                                    U(i?.waiting ?? 0),
+                                                    null,
+                                                    !1,
+                                                ],
+                                                [
+                                                    `Withdrawn this month`,
+                                                    U(i?.withdrawn_month ?? 0),
+                                                    null,
+                                                    !1,
+                                                ],
+                                                [
+                                                    `Pick&Send points`,
+                                                    String(i?.points ?? 0),
+                                                    `Worth KSh 1 off each on delivery`,
+                                                    !1,
+                                                ],
+                                            ].map((e) => {
+                                                let [t, n, r, o] = e;
+                                                return (0, P.jsxs)(
+                                                    `div`,
+                                                    {
+                                                        className: `flex min-w-0 flex-col gap-1.5 rounded-[14px] border p-[18px] ${o ? `border-transparent bg-ps-soft` : `border-ps-line`}`,
+                                                        children: [
+                                                            (0, P.jsx)(`span`, {
+                                                                className: `text-[.9rem] font-semibold ${o ? `text-ps-softink` : `text-ps-muted`}`,
+                                                                children: t,
+                                                            }),
+                                                            (0, P.jsx)(`b`, {
+                                                                className: `text-[1.7rem] leading-tight font-extrabold text-ps-brandink tabular-nums`,
+                                                                children: n,
+                                                            }),
+                                                            r &&
+                                                                (0, P.jsx)(
+                                                                    `span`,
+                                                                    {
+                                                                        className: `text-[.84rem] text-ps-muted`,
+                                                                        children:
+                                                                            r,
+                                                                    },
+                                                                ),
+                                                            o &&
+                                                                (0, P.jsxs)(
+                                                                    P.Fragment,
+                                                                    {
+                                                                        children:
+                                                                            [
+                                                                                (0,
+                                                                                P.jsxs)(
+                                                                                    `button`,
+                                                                                    {
+                                                                                        type: `button`,
+                                                                                        className: `${g} self-start`,
+                                                                                        onClick:
+                                                                                            E,
+                                                                                        disabled:
+                                                                                            (i?.wallet ??
+                                                                                                0) <=
+                                                                                            0,
+                                                                                        children:
+                                                                                            [
+                                                                                                (0,
+                                                                                                P.jsx)(
+                                                                                                    `span`,
+                                                                                                    {
+                                                                                                        className: `rounded-[5px] bg-ps-onwa px-2 py-[3px] text-[.75rem] font-extrabold tracking-[.04em] whitespace-nowrap text-ps-wa`,
+                                                                                                        children: `M-PESA`,
+                                                                                                    },
+                                                                                                ),
+                                                                                                `Withdraw`,
+                                                                                            ],
+                                                                                    },
+                                                                                ),
+                                                                                a?.withdrawn &&
+                                                                                    (0,
+                                                                                    P.jsx)(
+                                                                                        `span`,
+                                                                                        {
+                                                                                            className: `text-[.84rem] text-ps-muted`,
+                                                                                            role: `status`,
+                                                                                            children: `Withdrawal sent to your M-PESA.`,
+                                                                                        },
+                                                                                    ),
+                                                                            ],
+                                                                    },
+                                                                ),
+                                                        ],
+                                                    },
+                                                    t,
+                                                );
+                                            }),
+                                        }),
+                                        (0, P.jsx)(`h3`, {
+                                            className: `mt-[22px] mb-2.5 text-[1.3rem] ${x}`,
+                                            children: `Orders`,
+                                        }),
+                                        (0, P.jsx)(`div`, {
+                                            className: `overflow-x-auto rounded-[14px] border border-ps-line bg-ps-surface`,
+                                            children: (0, P.jsx)(Z, {
+                                                head: [
+                                                    `Tracking no.`,
+                                                    `Recipient`,
+                                                    `Town`,
+                                                    `Status`,
+                                                    `COD`,
+                                                ],
+                                                rows: (i?.orders ?? []).map(de),
+                                            }),
+                                        }),
+                                    ],
+                                })
+                              : (0, P.jsxs)(`div`, {
+                                    className: `${D} items-start`,
+                                    children: [
+                                        (0, P.jsxs)(`ul`, {
+                                            className: S,
+                                            children: [
+                                                (0, P.jsxs)(`li`, {
+                                                    children: [
+                                                        (0, P.jsx)(`b`, {
+                                                            children: `Your customer pays our M-PESA Till,`,
+                                                        }),
+                                                        ` never the agent and never in cash.`,
+                                                    ],
+                                                }),
+                                                (0, P.jsxs)(`li`, {
+                                                    children: [
+                                                        (0, P.jsx)(`b`, {
+                                                            children: `Released only when`,
+                                                        }),
+                                                        ` the code matches and the payment is confirmed.`,
+                                                    ],
+                                                }),
+                                                (0, P.jsxs)(`li`, {
+                                                    children: [
+                                                        (0, P.jsx)(`b`, {
+                                                            children: `Money in your wallet instantly,`,
+                                                        }),
+                                                        ` less 1.6%. Withdraw to M-PESA any time.`,
+                                                    ],
+                                                }),
+                                                (0, P.jsxs)(`li`, {
+                                                    children: [
+                                                        (0, P.jsx)(`b`, {
+                                                            children: `Free pickup from your CBD shop,`,
+                                                        }),
+                                                        ` however many parcels you send.`,
+                                                    ],
+                                                }),
+                                                (0, P.jsxs)(`li`, {
+                                                    children: [
+                                                        (0, P.jsx)(`b`, {
+                                                            children: `Not collected in 7 days?`,
+                                                        }),
+                                                        ` The parcel comes back to you. A return fee applies.`,
+                                                    ],
+                                                }),
+                                            ],
+                                        }),
+                                        (0, P.jsxs)(`form`, {
+                                            className: v,
+                                            onSubmit: l ? C : p,
+                                            children: [
+                                                (0, P.jsx)(`h3`, {
+                                                    className: `text-[1.25rem] ${x}`,
+                                                    children: `Merchant log in`,
+                                                }),
+                                                (0, P.jsx)(J, {
+                                                    id: `m-phone`,
+                                                    label: `M-PESA phone number`,
+                                                    type: `tel`,
+                                                    placeholder: `07XX XXX XXX`,
+                                                    autoComplete: `tel`,
+                                                    value: c.data.phone,
+                                                    onChange: (e) =>
+                                                        c.setData(
+                                                            `phone`,
+                                                            e.target.value,
+                                                        ),
+                                                    error: c.errors.phone,
+                                                }),
+                                                l &&
+                                                    (0, P.jsx)(J, {
+                                                        id: `m-code`,
+                                                        label: `6-digit code we sent you`,
+                                                        inputMode: `numeric`,
+                                                        value: c.data.code,
+                                                        onChange: (e) =>
+                                                            c.setData(
+                                                                `code`,
+                                                                e.target.value,
+                                                            ),
+                                                        error: c.errors.code,
+                                                    }),
+                                                (0, P.jsx)(`button`, {
+                                                    className: m,
+                                                    type: `submit`,
+                                                    disabled: c.processing,
+                                                    children: c.processing
+                                                        ? `Sending…`
+                                                        : l
+                                                          ? `Verify and log in`
+                                                          : `Send code`,
+                                                }),
+                                                (0, P.jsx)(`span`, {
+                                                    className: b,
+                                                    children: `We text you a code each time. No password to remember.`,
+                                                }),
+                                            ],
+                                        }),
+                                    ],
+                                }),
+                      ],
+                  }),
+              })),
+              (n[6] = a?.withdrawn),
+              (n[7] = i?.orders),
+              (n[8] = i?.points),
+              (n[9] = i?.waiting),
+              (n[10] = i?.wallet),
+              (n[11] = i?.withdrawn_month),
+              (n[12] = o),
+              (n[13] = c),
+              (n[14] = p),
+              (n[15] = l),
+              (n[16] = C),
+              (n[17] = k))
+            : (k = n[17]),
+        k
+    );
+}
+function de(e) {
+    return (0, P.jsxs)(
+        `tr`,
+        {
+            className: `group`,
+            children: [
+                (0, P.jsx)(`td`, {
+                    className: `border-b border-ps-line px-4 py-[13px] font-mono group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,
+                    children: e.tracking_no,
+                }),
+                (0, P.jsx)(`td`, {
+                    className: `border-b border-ps-line px-4 py-[13px] group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,
+                    children: e.recipient_name,
+                }),
+                (0, P.jsx)(`td`, {
+                    className: `border-b border-ps-line px-4 py-[13px] group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,
+                    children: e.town,
+                }),
+                (0, P.jsx)(`td`, {
+                    className: `border-b border-ps-line px-4 py-[13px] group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,
+                    children: (0, P.jsx)(`span`, {
+                        className:
+                            k[
+                                e.status === `at_pickup`
+                                    ? `wait`
+                                    : e.status === `in_transit`
+                                      ? `move`
+                                      : `done`
+                            ],
+                        children: e.status,
+                    }),
+                }),
+                (0, P.jsx)(`td`, {
+                    className: `border-b border-ps-line px-4 py-[13px] text-right group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,
+                    children: U(e.cod_amount),
+                }),
+            ],
+        },
+        e.tracking_no,
+    );
+}
+function Q() {
+    return a.post(`/merchant/withdraw`, {}, { preserveScroll: !0 });
+}
+function fe() {
+    return a.post(`/merchant/logout`, {}, { preserveScroll: !0 });
+}
+function pe(e) {
+    let t = (0, d.c)(41),
+        { config: n } = e,
+        { general: r, elec: i, satellites: a, constants: o } = n,
+        { base10: s, perKg: c, maxKg: l, dropOffFee: u } = o,
+        p;
+    t[0] !== s || t[1] !== c
+        ? ((p = (e) => (e <= 10 ? s : s + (e - 10) * c)),
+          (t[0] = s),
+          (t[1] = c),
+          (t[2] = p))
+        : (p = t[2]);
+    let h = p,
+        g,
+        v;
+    t[3] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((g = [`Bring it to our CBD point`, `Free`]),
+          (v = [`We pick up from your CBD shop`, `Free`]),
+          (t[3] = g),
+          (t[4] = v))
+        : ((g = t[3]), (v = t[4]));
+    let y;
+    t[5] === u ? (y = t[6]) : ((y = U(u)), (t[5] = u), (t[6] = y));
+    let b;
+    t[7] === a ? (b = t[8]) : ((b = a.join(`, `)), (t[7] = a), (t[8] = b));
+    let S = `From ${y}, at ${b}`,
+        C;
+    t[9] === S
+        ? (C = t[10])
+        : ((C = (0, P.jsx)(ee, {
+              eyebrow: `Pricing`,
+              title: `From KSh 199, one price to every town`,
+              text: `The same price to Mombasa, Meru, Eldoret or Kisumu.`,
+              children: (0, P.jsx)(`div`, {
+                  className: `mb-2 grid grid-cols-[repeat(auto-fit,minmax(min(260px,100%),1fr))] gap-3`,
+                  children: [
+                      g,
+                      v,
+                      [`Bring it to our agent in a Nairobi satellite town`, S],
+                  ].map(_e),
+              }),
+          })),
+          (t[9] = S),
+          (t[10] = C));
+    let w;
+    t[11] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((w = (0, P.jsx)(`h3`, {
+              className: `mt-[26px] mb-2.5 text-[1.15rem] ${x}`,
+              children: `General parcels`,
+          })),
+          (t[11] = w))
+        : (w = t[11]);
+    let T;
+    t[12] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((T = [`Weight`, `Delivery price (KSh)`]), (t[12] = T))
+        : (T = t[12]);
+    let E;
+    if (t[13] !== s || t[14] !== r || t[15] !== c) {
+        let e;
+        (t[17] !== s || t[18] !== c
+            ? ((e = (e) =>
+                  (0, P.jsxs)(
+                      `tr`,
+                      {
+                          className: `group ${e.perKg ? `bg-ps-soft text-ps-softink` : ``}`,
+                          children: [
+                              (0, P.jsx)(`td`, {
+                                  className: `border-b border-ps-line px-4 py-[13px] font-semibold group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,
+                                  children: e.label,
+                              }),
+                              (0, P.jsx)(`td`, {
+                                  className: `border-b border-ps-line px-4 py-[13px] text-right group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,
+                                  children: e.perKg
+                                      ? `${H(s)} + ${c} per extra kg`
+                                      : H(e.p),
+                              }),
+                          ],
+                      },
+                      e.id,
+                  )),
+              (t[17] = s),
+              (t[18] = c),
+              (t[19] = e))
+            : (e = t[19]),
+            (E = r.map(e)),
+            (t[13] = s),
+            (t[14] = r),
+            (t[15] = c),
+            (t[16] = E));
+    } else E = t[16];
+    let D;
+    t[20] === E
+        ? (D = t[21])
+        : ((D = (0, P.jsx)(`div`, {
+              className: `overflow-x-auto rounded-[14px] border border-ps-line bg-ps-surface`,
+              children: (0, P.jsx)(Z, { head: T, rows: E }),
+          })),
+          (t[20] = E),
+          (t[21] = D));
+    let O;
+    t[22] === h ? (O = t[23]) : ((O = U(h(15))), (t[22] = h), (t[23] = O));
+    let k = `Example: 15 kg is ${O}. Parcels above 10 kg and big appliances carry their own collection fee. Over ${l} kg, ask us for a quote.`,
+        j;
+    t[24] === k
+        ? (j = t[25])
+        : ((j = (0, P.jsx)(`p`, {
+              className: `mt-2.5 text-[.92rem] text-ps-muted`,
+              children: k,
+          })),
+          (t[24] = k),
+          (t[25] = j));
+    let M, N;
+    t[26] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((M = (0, P.jsx)(`h3`, {
+              className: `mt-[26px] mb-2.5 text-[1.15rem] ${x}`,
+              children: `Electronics and appliances`,
+          })),
+          (N = (0, P.jsx)(`p`, {
+              className: `mb-2.5 text-[.92rem] text-ps-muted`,
+              children: `Tap a group to see its prices. CBD pickup is free for anything a rider can carry.`,
+          })),
+          (t[26] = M),
+          (t[27] = N))
+        : ((M = t[26]), (N = t[27]));
+    let F;
+    t[28] === i ? (F = t[29]) : ((F = i.map(me)), (t[28] = i), (t[29] = F));
+    let I;
+    t[30] === F
+        ? (I = t[31])
+        : ((I = (0, P.jsx)(`div`, {
+              className: `flex max-w-[46rem] flex-col gap-2.5`,
+              children: F,
+          })),
+          (t[30] = F),
+          (t[31] = I));
+    let L;
+    t[32] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((L = (0, P.jsx)(`a`, {
+              className: `${m} mt-[18px]`,
+              href: `#send`,
+              children: `Get my exact price`,
+          })),
+          (t[32] = L))
+        : (L = t[32]);
+    let R;
+    t[33] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((R = (0, P.jsxs)(`ul`, {
+              className: `${A} mt-4`,
+              children: [
+                  (0, P.jsx)(`li`, {
+                      children: `Packaging only if you ask, from KSh 30`,
+                  }),
+                  (0, P.jsx)(`li`, {
+                      children: `Cash on Delivery: 1.6% of what we collect`,
+                  }),
+                  (0, P.jsx)(`li`, {
+                      children: (0, P.jsx)(`b`, {
+                          className: `text-ps-ink`,
+                          children: `Bulk items: get a quote, call or WhatsApp 0718 819 413`,
+                      }),
+                  }),
+              ],
+          })),
+          (t[33] = R))
+        : (R = t[33]);
+    let z;
+    t[34] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((z = (0, P.jsxs)(`div`, {
+              children: [
+                  (0, P.jsx)(`span`, {
+                      className: _,
+                      children: `Pick&Send points`,
+                  }),
+                  (0, P.jsx)(`h3`, {
+                      className: `mt-1 text-[1.35rem] font-extrabold text-ps-brandink`,
+                      children: `Every parcel earns you points`,
+                  }),
+              ],
+          })),
+          (t[34] = z))
+        : (z = t[34]);
+    let B;
+    t[35] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((B = (0, P.jsxs)(`div`, {
+              className: `mt-7 grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] items-center gap-[18px] rounded-2xl bg-ps-soft p-4 text-ps-softink sm:px-6 sm:py-[22px]`,
+              children: [
+                  z,
+                  (0, P.jsxs)(`ul`, {
+                      className: `m-0 flex flex-col gap-1.5 pl-5`,
+                      children: [
+                          (0, P.jsxs)(`li`, {
+                              children: [
+                                  (0, P.jsx)(`b`, {
+                                      children: `Earn 2 points`,
+                                  }),
+                                  ` for every KSh 100 you spend on delivery.`,
+                              ],
+                          }),
+                          (0, P.jsxs)(`li`, {
+                              children: [
+                                  (0, P.jsx)(`b`, {
+                                      children: `1 point is KSh 1 off`,
+                                  }),
+                                  ` your next parcel.`,
+                              ],
+                          }),
+                          (0, P.jsxs)(`li`, {
+                              children: [
+                                  (0, P.jsx)(`b`, {
+                                      children: `Use them from 100 points.`,
+                                  }),
+                                  ` They are saved under your phone number.`,
+                              ],
+                          }),
+                      ],
+                  }),
+              ],
+          })),
+          (t[35] = B))
+        : (B = t[35]);
+    let V;
+    return (
+        t[36] !== D || t[37] !== j || t[38] !== I || t[39] !== C
+            ? ((V = (0, P.jsx)(q, {
+                  id: `pricing`,
+                  children: (0, P.jsxs)(`div`, {
+                      className: f,
+                      children: [C, w, D, j, M, N, I, L, R, B],
+                  }),
+              })),
+              (t[36] = D),
+              (t[37] = j),
+              (t[38] = I),
+              (t[39] = C),
+              (t[40] = V))
+            : (V = t[40]),
+        V
+    );
+}
+function me(e) {
+    return (0, P.jsxs)(
+        `details`,
+        {
+            className: `rounded-xl border border-ps-line bg-ps-surface px-[18px]`,
+            children: [
+                (0, P.jsxs)(`summary`, {
+                    className: `flex min-h-[52px] cursor-pointer items-center justify-between gap-3 font-bold`,
+                    children: [
+                        e.group.replace(`, by weight`, ``),
+                        (0, P.jsx)(`span`, {
+                            className: `font-semibold whitespace-nowrap text-ps-muted`,
+                            children: `from ${U(Math.min(...e.items.map(ge)))}`,
+                        }),
+                    ],
+                }),
+                (0, P.jsx)(`div`, {
+                    className: `mb-2.5 [&_td]:!px-2 [&_td]:!py-2.5 [&_td:first-child]:!pl-0 [&_td:last-child]:!pr-0 [&_th]:!px-2 [&_th]:!py-2.5 [&_th:first-child]:!pl-0 [&_th:last-child]:!pr-0`,
+                    children: (0, P.jsx)(Z, {
+                        small: !0,
+                        head: [`Item`, `Delivery`, `CBD pickup`],
+                        rows: e.items.map(he),
+                    }),
+                }),
+            ],
+        },
+        e.group,
+    );
+}
+function he(e) {
+    return (0, P.jsxs)(
+        `tr`,
+        {
+            className: `group`,
+            children: [
+                (0, P.jsx)(`td`, {
+                    className: `border-b border-ps-line px-4 py-[13px] group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,
+                    children: e.label,
+                }),
+                (0, P.jsx)(`td`, {
+                    className: `border-b border-ps-line px-4 py-[13px] text-right group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,
+                    children: H(e.p),
+                }),
+                (0, P.jsx)(`td`, {
+                    className: `border-b border-ps-line px-4 py-[13px] text-right group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]`,
+                    children: e.pu <= 100 ? `Free` : H(e.pu + 50),
+                }),
+            ],
+        },
+        e.id,
+    );
+}
+function ge(e) {
+    return e.p;
+}
+function _e(e) {
+    let [t, n] = e;
+    return (0, P.jsxs)(
+        `div`,
+        {
+            className: `flex flex-col gap-0.5 rounded-xl border border-ps-line bg-ps-surface px-4 py-3.5`,
+            children: [
+                (0, P.jsx)(`b`, { className: `text-ps-brandink`, children: t }),
+                (0, P.jsx)(`span`, {
+                    className: `text-[.9rem] text-ps-muted`,
+                    children: n,
+                }),
+            ],
+        },
+        t,
+    );
+}
+var $ = `relative pb-4 pl-8 last:pb-0 before:absolute before:left-0 before:top-[3px] before:h-[18px] before:w-[18px] before:rounded-full after:absolute after:-bottom-[3px] after:left-2 after:top-[21px] after:w-0.5 last:after:hidden`,
+    ve = {
+        '': `${$} before:bg-ps-accent after:bg-ps-accent`,
+        now: `${$} before:border-[5px] before:border-ps-brand before:bg-ps-surface after:bg-ps-line`,
+        next: `${$} before:border-2 before:border-ps-muted before:bg-ps-surface after:bg-ps-line`,
+    };
+function ye() {
+    let [e, t] = (0, u.useState)(``),
+        [n, r] = (0, u.useState)(null),
+        [i, a] = (0, u.useState)(``),
+        [o, s] = (0, u.useState)(!1);
+    return (0, P.jsx)(q, {
+        id: `track`,
+        tone: `tint`,
+        children: (0, P.jsxs)(`div`, {
+            className: `${f} flex flex-col gap-4`,
+            children: [
+                (0, P.jsx)(ee, {
+                    eyebrow: `Track a parcel`,
+                    title: `Every step is a scan`,
+                    text: `Enter your tracking number to see where your parcel is.`,
+                }),
+                (0, P.jsxs)(`form`, {
+                    className: `flex flex-wrap items-end gap-2.5`,
+                    onSubmit: async (t) => {
+                        (t.preventDefault(), a(``), r(null));
+                        let n = e.trim();
+                        if (!n) {
+                            a(`Enter a tracking number.`);
+                            return;
+                        }
+                        s(!0);
+                        try {
+                            let e = await fetch(
+                                `/track/${encodeURIComponent(n)}`,
+                                { headers: { Accept: `application/json` } },
+                            );
+                            e.ok
+                                ? r(await e.json())
+                                : a(
+                                      `We could not find that number. Check it and try again.`,
+                                  );
+                        } catch {
+                            a(`Network error. Please try again.`);
+                        } finally {
+                            s(!1);
+                        }
+                    },
+                    children: [
+                        (0, P.jsx)(`div`, {
+                            className: `min-w-0 flex-[1_1_220px]`,
+                            children: (0, P.jsx)(J, {
+                                id: `t-no`,
+                                label: `Tracking number`,
+                                autoComplete: `off`,
+                                className: `font-mono uppercase`,
+                                placeholder: `e.g. PS27010873`,
+                                value: e,
+                                onChange: (e) =>
+                                    t(e.target.value.toUpperCase()),
+                            }),
+                        }),
+                        (0, P.jsx)(`button`, {
+                            className: `${m} max-sm:w-full`,
+                            type: `submit`,
+                            disabled: o,
+                            children: o ? `Searching…` : `Track`,
+                        }),
+                    ],
+                }),
+                i &&
+                    (0, P.jsx)(`p`, {
+                        className: `rounded-xl bg-ps-warn px-4 py-3 text-[.94rem] font-semibold text-ps-warnink`,
+                        children: i,
+                    }),
+                n &&
+                    (0, P.jsxs)(`div`, {
+                        className: `rounded-[18px] border border-ps-line bg-ps-surface p-4 sm:p-[22px]`,
+                        children: [
+                            (0, P.jsxs)(`span`, {
+                                className: `text-[.8rem] font-bold uppercase tracking-[.12em] text-ps-accent`,
+                                children: [`Parcel `, n.tracking_no],
+                            }),
+                            (0, P.jsxs)(`h3`, {
+                                className: `mb-1 text-[1.2rem] font-extrabold text-ps-brandink`,
+                                children: [`Status: `, n.status, ` · `, n.town],
+                            }),
+                            (0, P.jsxs)(`p`, {
+                                className: `text-ps-muted`,
+                                children: [
+                                    `For `,
+                                    n.recipient_name,
+                                    n.cod_amount > 0 &&
+                                        ` · Pay ${U(n.cod_amount)} by M-PESA at collection`,
+                                    `.`,
+                                ],
+                            }),
+                            (0, P.jsx)(`ol`, {
+                                className: `m-0 mt-4 list-none p-0`,
+                                children: n.events.map((e, t) =>
+                                    (0, P.jsxs)(
+                                        `li`,
+                                        {
+                                            className:
+                                                ve[
+                                                    t === n.events.length - 1
+                                                        ? `now`
+                                                        : ``
+                                                ],
+                                            children: [
+                                                (0, P.jsx)(`b`, {
+                                                    className: `block`,
+                                                    children: e.label,
+                                                }),
+                                                (0, P.jsxs)(`span`, {
+                                                    className: `text-[.9rem] text-ps-muted`,
+                                                    children: [
+                                                        e.description,
+                                                        ` ·`,
+                                                        ` `,
+                                                        new Date(
+                                                            e.happened_at,
+                                                        ).toLocaleString(),
+                                                    ],
+                                                }),
+                                            ],
+                                        },
+                                        t,
+                                    ),
+                                ),
+                            }),
+                        ],
+                    }),
+            ],
+        }),
+    });
+}
+function be(e) {
+    let t = (0, d.c)(20),
+        { wa: n } = e,
+        r;
+    t[0] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((r = (0, P.jsx)(ee, {
+              dark: !0,
+              className: `mb-3.5`,
+              eyebrow: `Community`,
+              title: `Join the movement on WhatsApp`,
+              text: `Book a parcel without leaving WhatsApp, and hear our news first. It is free to join and you can leave any time.`,
+          })),
+          (t[0] = r))
+        : (r = t[0]);
+    let i;
+    t[1] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((i = (0, P.jsxs)(`div`, {
+              children: [
+                  r,
+                  (0, P.jsxs)(`ul`, {
+                      className: C,
+                      children: [
+                          (0, P.jsxs)(`li`, {
+                              children: [
+                                  (0, P.jsx)(`b`, {
+                                      children: `The group is for booking.`,
+                                  }),
+                                  ` Drop your parcel sending request there and we book it for you.`,
+                              ],
+                          }),
+                          (0, P.jsxs)(`li`, {
+                              children: [
+                                  (0, P.jsx)(`b`, {
+                                      children: `The channel is for updates:`,
+                                  }),
+                                  ` new towns, pickup stations, offers and any delays.`,
+                              ],
+                          }),
+                          (0, P.jsxs)(`li`, {
+                              children: [
+                                  (0, P.jsx)(`b`, {
+                                      children: `Prefer a private chat?`,
+                                  }),
+                                  ` Message us directly and we book it the same way.`,
+                              ],
+                          }),
+                      ],
+                  }),
+              ],
+          })),
+          (t[1] = i))
+        : (i = t[1]);
+    let a;
+    t[2] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((a = (0, P.jsx)(`h3`, {
+              className: `text-[1.25rem] ${x}`,
+              children: `Pick how you want to join`,
+          })),
+          (t[2] = a))
+        : (a = t[2]);
+    let o;
+    t[3] === n
+        ? (o = t[4])
+        : ((o = N(
+              n,
+              `Hi Pick&Send, please add me to your WhatsApp group. I want to join the movement.`,
+          )),
+          (t[3] = n),
+          (t[4] = o));
+    let s;
+    t[5] === o
+        ? (s = t[6])
+        : ((s = (0, P.jsx)(`a`, {
+              className: g,
+              target: `_blank`,
+              rel: `noopener`,
+              href: o,
+              children: `Join the group`,
+          })),
+          (t[5] = o),
+          (t[6] = s));
+    let c;
+    t[7] === n
+        ? (c = t[8])
+        : ((c = N(
+              n,
+              `Hi Pick&Send, please send me the link to your WhatsApp channel for updates.`,
+          )),
+          (t[7] = n),
+          (t[8] = c));
+    let l;
+    t[9] === c
+        ? (l = t[10])
+        : ((l = (0, P.jsx)(`a`, {
+              className: h,
+              target: `_blank`,
+              rel: `noopener`,
+              href: c,
+              children: `Follow the channel for updates`,
+          })),
+          (t[9] = c),
+          (t[10] = l));
+    let u;
+    t[11] === n
+        ? (u = t[12])
+        : ((u = N(
+              n,
+              `Hi Pick&Send, please book a parcel for me.
 
 From (name and phone):
 Pickup or drop-off:
@@ -16,4 +3730,411 @@ To (name and phone):
 Destination town:
 What is inside and weight:
 Estimated worth:
-M-PESA number paying:`),t[11]=n,t[12]=u);let p;t[13]===u?p=t[14]:(p=(0,P.jsx)(`a`,{className:h,target:`_blank`,rel:`noopener`,href:u,children:`Book a parcel on WhatsApp`}),t[13]=u,t[14]=p);let m;t[15]===Symbol.for(`react.memo_cache_sentinel`)?(m=(0,P.jsx)(`span`,{className:b,children:`Call or WhatsApp 0718 819 413. We never ask for your M-PESA PIN.`}),t[15]=m):m=t[15];let _;return t[16]!==s||t[17]!==l||t[18]!==p?(_=(0,P.jsx)(q,{id:`community`,tone:`band`,children:(0,P.jsxs)(`div`,{className:`${f} ${D} items-start`,children:[i,(0,P.jsxs)(`div`,{className:v,children:[a,s,l,p,m]})]})}),t[16]=s,t[17]=l,t[18]=p,t[19]=_):_=t[19],_}function xe(e){let t=(0,d.c)(5),{config:n}=e,{faq:r}=n,i;t[0]===Symbol.for(`react.memo_cache_sentinel`)?(i=(0,P.jsx)(ee,{eyebrow:`Questions`,title:`What people ask first`}),t[0]=i):i=t[0];let a;t[1]===r?a=t[2]:(a=r.map(Se),t[1]=r,t[2]=a);let o;return t[3]===a?o=t[4]:(o=(0,P.jsx)(q,{id:`faq`,children:(0,P.jsxs)(`div`,{className:f,children:[i,(0,P.jsx)(`div`,{className:`flex max-w-[46rem] flex-col gap-2.5`,children:a})]})}),t[3]=a,t[4]=o),o}function Se(e,t){let[n,r]=e;return(0,P.jsxs)(`details`,{open:t===0,className:`rounded-xl border border-ps-line bg-ps-surface px-[18px]`,children:[(0,P.jsx)(`summary`,{className:`flex min-h-[52px] cursor-pointer items-center font-bold`,children:n}),(0,P.jsx)(`p`,{className:`pb-4 text-ps-muted`,children:r})]},n)}function Ce(e){let t=(0,d.c)(18),{wa:n}=e,r,i;t[0]===Symbol.for(`react.memo_cache_sentinel`)?(r=(0,P.jsxs)(`div`,{children:[(0,P.jsx)(I,{onBand:!0,size:`text-[1.4rem]`}),(0,P.jsx)(`br`,{}),`Parcels from Nairobi to towns across Kenya.`]}),i=(0,P.jsx)(`b`,{children:`Visit us`}),t[0]=r,t[1]=i):(r=t[0],i=t[1]);let a,o;t[2]===Symbol.for(`react.memo_cache_sentinel`)?(a=(0,P.jsxs)(`div`,{children:[i,`Stanbank House, Moi Avenue, Nairobi CBD`,(0,P.jsx)(`br`,{}),`P.O. Box 25079-00100 GPO Nairobi`]}),o=(0,P.jsx)(`b`,{children:`Talk to us`}),t[2]=a,t[3]=o):(a=t[2],o=t[3]);let s=`https://wa.me/${n}`,c;t[4]===s?c=t[5]:(c=(0,P.jsx)(`a`,{href:s,children:`0718 819 413`}),t[4]=s,t[5]=c);let l,u,p;t[6]===Symbol.for(`react.memo_cache_sentinel`)?(l=(0,P.jsx)(`br`,{}),u=(0,P.jsx)(`a`,{href:`#community`,children:`Join our WhatsApp community`}),p=(0,P.jsx)(`br`,{}),t[6]=l,t[7]=u,t[8]=p):(l=t[6],u=t[7],p=t[8]);let m;t[9]===c?m=t[10]:(m=(0,P.jsxs)(`div`,{children:[o,`Call or WhatsApp`,` `,c,l,u,p,`Nairobi CBD: open 7am to 8pm`]}),t[9]=c,t[10]=m);let h;t[11]===Symbol.for(`react.memo_cache_sentinel`)?(h=(0,P.jsx)(`b`,{children:`Pay`}),t[11]=h):h=t[11];let g;t[12]===Symbol.for(`react.memo_cache_sentinel`)?(g=(0,P.jsxs)(`div`,{children:[h,`M-PESA Till [TILL NO.]`,(0,P.jsx)(`br`,{}),`M-PESA only. No cash, no cards.`]}),t[12]=g):g=t[12];let _;t[13]===m?_=t[14]:(_=(0,P.jsxs)(`div`,{className:`grid grid-cols-[repeat(auto-fit,minmax(min(210px,100%),1fr))] gap-[26px]`,children:[r,a,m,g]}),t[13]=m,t[14]=_);let v;t[15]===Symbol.for(`react.memo_cache_sentinel`)?(v=(0,P.jsx)(`div`,{className:`mt-[26px] border-t border-ps-bandline pt-4 text-[.84rem]`,children:`Neerabup Logistics Ltd trading as Pick&Send · Communications Authority of Kenya licence [LICENCE NO.]`}),t[15]=v):v=t[15];let y;return t[16]===_?y=t[17]:(y=(0,P.jsx)(`footer`,{className:`bg-ps-band pt-11 pb-7 text-[.94rem] text-ps-bandmuted [&_a]:text-white [&_b]:mb-1 [&_b]:block [&_b]:text-white`,children:(0,P.jsxs)(`div`,{className:f,children:[_,v]})}),t[16]=_,t[17]=y),y}function we(e){let t=(0,d.c)(7),{wa:n,typing:r}=e,i;t[0]===n?i=t[1]:(i=N(n,`Hi Pick&Send`),t[0]=n,t[1]=i);let a=`fixed right-3.5 bottom-3.5 z-[6] flex h-10 items-center gap-1.5 rounded-full bg-ps-wa pr-[13px] pl-[11px] text-[.84rem] font-bold text-ps-onwa no-underline shadow-[0_3px_10px_rgba(0,0,0,.22)] transition motion-reduce:transition-none max-sm:h-[42px] max-sm:w-[42px] max-sm:justify-center max-sm:p-0 ${r?`pointer-events-none translate-y-3 opacity-0`:`opacity-90`}`,o,s;t[2]===Symbol.for(`react.memo_cache_sentinel`)?(o=(0,P.jsx)(`svg`,{viewBox:`0 0 24 24`,"aria-hidden":`true`,className:`h-[18px] w-[18px] flex-none fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round]`,children:(0,P.jsx)(`path`,{d:`M4 19.5 5.3 15A8 8 0 1 1 9 18.7z`})}),s=(0,P.jsx)(`span`,{className:`max-sm:hidden`,children:`Chat`}),t[2]=o,t[3]=s):(o=t[2],s=t[3]);let c;return t[4]!==i||t[5]!==a?(c=(0,P.jsxs)(`a`,{href:i,target:`_blank`,rel:`noopener`,"aria-label":`Chat with us on WhatsApp`,className:a,children:[o,s]}),t[4]=i,t[5]=a,t[6]=c):c=t[6],c}function Te(){let e=(0,d.c)(47),{config:t,flash:n,auth:i,merchant:a}=s().props,[o,c]=(0,u.useState)(!1),[l,f]=(0,u.useState)(!1),p=t.wa,m,h;e[0]===Symbol.for(`react.memo_cache_sentinel`)?(m=e=>/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)&&f(!0),h=()=>f(!1),e[0]=m,e[1]=h):(m=e[0],h=e[1]);let g;e[2]===Symbol.for(`react.memo_cache_sentinel`)?(g=(0,P.jsx)(r,{title:`Pick&Send`,children:(0,P.jsx)(`link`,{rel:`stylesheet`,href:`https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap`})}),e[2]=g):g=e[2];let _;e[3]===p?_=e[4]:(_=(0,P.jsx)(F,{wa:p}),e[3]=p,e[4]=_);let v;e[5]===o?v=e[6]:(v=(0,P.jsx)(L,{menu:o,setMenu:c}),e[5]=o,e[6]=v);let y;e[7]===t?y=e[8]:(y=(0,P.jsx)(z,{config:t}),e[7]=t,e[8]=y);let b=n?.booking??null,x=n?.error,S=n?.payment_confirmed,C;e[9]!==t||e[10]!==b||e[11]!==x||e[12]!==S?(C=(0,P.jsx)(re,{config:t,booking:b,error:x,paymentConfirmed:S}),e[9]=t,e[10]=b,e[11]=x,e[12]=S,e[13]=C):C=e[13];let w=n?.supply??null,T;e[14]!==t||e[15]!==w?(T=(0,P.jsx)(le,{config:t,supply:w}),e[14]=t,e[15]=w,e[16]=T):T=e[16];let E=i?.user??null,D;e[17]!==n||e[18]!==a||e[19]!==E?(D=(0,P.jsx)(ue,{user:E,merchant:a,flash:n}),e[17]=n,e[18]=a,e[19]=E,e[20]=D):D=e[20];let O;e[21]===t?O=e[22]:(O=(0,P.jsx)(pe,{config:t}),e[21]=t,e[22]=O);let k;e[23]===Symbol.for(`react.memo_cache_sentinel`)?(k=(0,P.jsx)(ye,{}),e[23]=k):k=e[23];let A;e[24]===p?A=e[25]:(A=(0,P.jsx)(be,{wa:p}),e[24]=p,e[25]=A);let j;e[26]===t?j=e[27]:(j=(0,P.jsx)(xe,{config:t}),e[26]=t,e[27]=j);let M;e[28]!==T||e[29]!==D||e[30]!==O||e[31]!==A||e[32]!==j||e[33]!==y||e[34]!==C?(M=(0,P.jsxs)(`main`,{id:`home`,children:[y,C,T,D,O,k,A,j]}),e[28]=T,e[29]=D,e[30]=O,e[31]=A,e[32]=j,e[33]=y,e[34]=C,e[35]=M):M=e[35];let N;e[36]===p?N=e[37]:(N=(0,P.jsx)(Ce,{wa:p}),e[36]=p,e[37]=N);let I;e[38]!==p||e[39]!==l?(I=(0,P.jsx)(we,{wa:p,typing:l}),e[38]=p,e[39]=l,e[40]=I):I=e[40];let R;return e[41]!==M||e[42]!==N||e[43]!==I||e[44]!==_||e[45]!==v?(R=(0,P.jsxs)(`div`,{className:`min-h-screen scroll-smooth bg-ps-bg font-sans text-base leading-[1.55] text-ps-ink [color-scheme:dark] [&_h1]:text-balance [&_h2]:text-balance [&_h3]:text-balance`,onFocusCapture:m,onBlurCapture:h,children:[g,_,v,M,N,I]}),e[41]=M,e[42]=N,e[43]=I,e[44]=_,e[45]=v,e[46]=R):R=e[46],R}export{Te as default};
+M-PESA number paying:`,
+          )),
+          (t[11] = n),
+          (t[12] = u));
+    let p;
+    t[13] === u
+        ? (p = t[14])
+        : ((p = (0, P.jsx)(`a`, {
+              className: h,
+              target: `_blank`,
+              rel: `noopener`,
+              href: u,
+              children: `Book a parcel on WhatsApp`,
+          })),
+          (t[13] = u),
+          (t[14] = p));
+    let m;
+    t[15] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((m = (0, P.jsx)(`span`, {
+              className: b,
+              children: `Call or WhatsApp 0718 819 413. We never ask for your M-PESA PIN.`,
+          })),
+          (t[15] = m))
+        : (m = t[15]);
+    let _;
+    return (
+        t[16] !== s || t[17] !== l || t[18] !== p
+            ? ((_ = (0, P.jsx)(q, {
+                  id: `community`,
+                  tone: `band`,
+                  children: (0, P.jsxs)(`div`, {
+                      className: `${f} ${D} items-start`,
+                      children: [
+                          i,
+                          (0, P.jsxs)(`div`, {
+                              className: v,
+                              children: [a, s, l, p, m],
+                          }),
+                      ],
+                  }),
+              })),
+              (t[16] = s),
+              (t[17] = l),
+              (t[18] = p),
+              (t[19] = _))
+            : (_ = t[19]),
+        _
+    );
+}
+function xe(e) {
+    let t = (0, d.c)(5),
+        { config: n } = e,
+        { faq: r } = n,
+        i;
+    t[0] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((i = (0, P.jsx)(ee, {
+              eyebrow: `Questions`,
+              title: `What people ask first`,
+          })),
+          (t[0] = i))
+        : (i = t[0]);
+    let a;
+    t[1] === r ? (a = t[2]) : ((a = r.map(Se)), (t[1] = r), (t[2] = a));
+    let o;
+    return (
+        t[3] === a
+            ? (o = t[4])
+            : ((o = (0, P.jsx)(q, {
+                  id: `faq`,
+                  children: (0, P.jsxs)(`div`, {
+                      className: f,
+                      children: [
+                          i,
+                          (0, P.jsx)(`div`, {
+                              className: `flex max-w-[46rem] flex-col gap-2.5`,
+                              children: a,
+                          }),
+                      ],
+                  }),
+              })),
+              (t[3] = a),
+              (t[4] = o)),
+        o
+    );
+}
+function Se(e, t) {
+    let [n, r] = e;
+    return (0, P.jsxs)(
+        `details`,
+        {
+            open: t === 0,
+            className: `rounded-xl border border-ps-line bg-ps-surface px-[18px]`,
+            children: [
+                (0, P.jsx)(`summary`, {
+                    className: `flex min-h-[52px] cursor-pointer items-center font-bold`,
+                    children: n,
+                }),
+                (0, P.jsx)(`p`, {
+                    className: `pb-4 text-ps-muted`,
+                    children: r,
+                }),
+            ],
+        },
+        n,
+    );
+}
+function Ce(e) {
+    let t = (0, d.c)(18),
+        { wa: n } = e,
+        r,
+        i;
+    t[0] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((r = (0, P.jsxs)(`div`, {
+              children: [
+                  (0, P.jsx)(I, { onBand: !0, size: `text-[1.4rem]` }),
+                  (0, P.jsx)(`br`, {}),
+                  `Parcels from Nairobi to towns across Kenya.`,
+              ],
+          })),
+          (i = (0, P.jsx)(`b`, { children: `Visit us` })),
+          (t[0] = r),
+          (t[1] = i))
+        : ((r = t[0]), (i = t[1]));
+    let a, o;
+    t[2] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((a = (0, P.jsxs)(`div`, {
+              children: [
+                  i,
+                  `Stanbank House, Moi Avenue, Nairobi CBD`,
+                  (0, P.jsx)(`br`, {}),
+                  `P.O. Box 25079-00100 GPO Nairobi`,
+              ],
+          })),
+          (o = (0, P.jsx)(`b`, { children: `Talk to us` })),
+          (t[2] = a),
+          (t[3] = o))
+        : ((a = t[2]), (o = t[3]));
+    let s = `https://wa.me/${n}`,
+        c;
+    t[4] === s
+        ? (c = t[5])
+        : ((c = (0, P.jsx)(`a`, { href: s, children: `0718 819 413` })),
+          (t[4] = s),
+          (t[5] = c));
+    let l, u, p;
+    t[6] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((l = (0, P.jsx)(`br`, {})),
+          (u = (0, P.jsx)(`a`, {
+              href: `#community`,
+              children: `Join our WhatsApp community`,
+          })),
+          (p = (0, P.jsx)(`br`, {})),
+          (t[6] = l),
+          (t[7] = u),
+          (t[8] = p))
+        : ((l = t[6]), (u = t[7]), (p = t[8]));
+    let m;
+    t[9] === c
+        ? (m = t[10])
+        : ((m = (0, P.jsxs)(`div`, {
+              children: [
+                  o,
+                  `Call or WhatsApp`,
+                  ` `,
+                  c,
+                  l,
+                  u,
+                  p,
+                  `Nairobi CBD: open 7am to 8pm`,
+              ],
+          })),
+          (t[9] = c),
+          (t[10] = m));
+    let h;
+    t[11] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((h = (0, P.jsx)(`b`, { children: `Pay` })), (t[11] = h))
+        : (h = t[11]);
+    let g;
+    t[12] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((g = (0, P.jsxs)(`div`, {
+              children: [
+                  h,
+                  `M-PESA Till [TILL NO.]`,
+                  (0, P.jsx)(`br`, {}),
+                  `M-PESA only. No cash, no cards.`,
+              ],
+          })),
+          (t[12] = g))
+        : (g = t[12]);
+    let _;
+    t[13] === m
+        ? (_ = t[14])
+        : ((_ = (0, P.jsxs)(`div`, {
+              className: `grid grid-cols-[repeat(auto-fit,minmax(min(210px,100%),1fr))] gap-[26px]`,
+              children: [r, a, m, g],
+          })),
+          (t[13] = m),
+          (t[14] = _));
+    let v;
+    t[15] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((v = (0, P.jsx)(`div`, {
+              className: `mt-[26px] border-t border-ps-bandline pt-4 text-[.84rem]`,
+              children: `Neerabup Logistics Ltd trading as Pick&Send · Communications Authority of Kenya licence [LICENCE NO.]`,
+          })),
+          (t[15] = v))
+        : (v = t[15]);
+    let y;
+    return (
+        t[16] === _
+            ? (y = t[17])
+            : ((y = (0, P.jsx)(`footer`, {
+                  className: `bg-ps-band pt-11 pb-7 text-[.94rem] text-ps-bandmuted [&_a]:text-white [&_b]:mb-1 [&_b]:block [&_b]:text-white`,
+                  children: (0, P.jsxs)(`div`, {
+                      className: f,
+                      children: [_, v],
+                  }),
+              })),
+              (t[16] = _),
+              (t[17] = y)),
+        y
+    );
+}
+function we(e) {
+    let t = (0, d.c)(7),
+        { wa: n, typing: r } = e,
+        i;
+    t[0] === n
+        ? (i = t[1])
+        : ((i = N(n, `Hi Pick&Send`)), (t[0] = n), (t[1] = i));
+    let a = `fixed right-3.5 bottom-3.5 z-[6] flex h-10 items-center gap-1.5 rounded-full bg-ps-wa pr-[13px] pl-[11px] text-[.84rem] font-bold text-ps-onwa no-underline shadow-[0_3px_10px_rgba(0,0,0,.22)] transition motion-reduce:transition-none max-sm:h-[42px] max-sm:w-[42px] max-sm:justify-center max-sm:p-0 ${r ? `pointer-events-none translate-y-3 opacity-0` : `opacity-90`}`,
+        o,
+        s;
+    t[2] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((o = (0, P.jsx)(`svg`, {
+              viewBox: `0 0 24 24`,
+              'aria-hidden': `true`,
+              className: `h-[18px] w-[18px] flex-none fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round]`,
+              children: (0, P.jsx)(`path`, {
+                  d: `M4 19.5 5.3 15A8 8 0 1 1 9 18.7z`,
+              }),
+          })),
+          (s = (0, P.jsx)(`span`, {
+              className: `max-sm:hidden`,
+              children: `Chat`,
+          })),
+          (t[2] = o),
+          (t[3] = s))
+        : ((o = t[2]), (s = t[3]));
+    let c;
+    return (
+        t[4] !== i || t[5] !== a
+            ? ((c = (0, P.jsxs)(`a`, {
+                  href: i,
+                  target: `_blank`,
+                  rel: `noopener`,
+                  'aria-label': `Chat with us on WhatsApp`,
+                  className: a,
+                  children: [o, s],
+              })),
+              (t[4] = i),
+              (t[5] = a),
+              (t[6] = c))
+            : (c = t[6]),
+        c
+    );
+}
+function Te() {
+    let e = (0, d.c)(47),
+        { config: t, flash: n, auth: i, merchant: a } = s().props,
+        [o, c] = (0, u.useState)(!1),
+        [l, f] = (0, u.useState)(!1),
+        p = t.wa,
+        m,
+        h;
+    e[0] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((m = (e) =>
+              /^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName) && f(!0)),
+          (h = () => f(!1)),
+          (e[0] = m),
+          (e[1] = h))
+        : ((m = e[0]), (h = e[1]));
+    let g;
+    e[2] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((g = (0, P.jsx)(r, {
+              title: `Pick&Send`,
+              children: (0, P.jsx)(`link`, {
+                  rel: `stylesheet`,
+                  href: `https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap`,
+              }),
+          })),
+          (e[2] = g))
+        : (g = e[2]);
+    let _;
+    e[3] === p
+        ? (_ = e[4])
+        : ((_ = (0, P.jsx)(F, { wa: p })), (e[3] = p), (e[4] = _));
+    let v;
+    e[5] === o
+        ? (v = e[6])
+        : ((v = (0, P.jsx)(L, { menu: o, setMenu: c })),
+          (e[5] = o),
+          (e[6] = v));
+    let y;
+    e[7] === t
+        ? (y = e[8])
+        : ((y = (0, P.jsx)(z, { config: t })), (e[7] = t), (e[8] = y));
+    let b = n?.booking ?? null,
+        x = n?.error,
+        S = n?.payment_confirmed,
+        C;
+    e[9] !== t || e[10] !== b || e[11] !== x || e[12] !== S
+        ? ((C = (0, P.jsx)(re, {
+              config: t,
+              booking: b,
+              error: x,
+              paymentConfirmed: S,
+          })),
+          (e[9] = t),
+          (e[10] = b),
+          (e[11] = x),
+          (e[12] = S),
+          (e[13] = C))
+        : (C = e[13]);
+    let w = n?.supply ?? null,
+        T;
+    e[14] !== t || e[15] !== w
+        ? ((T = (0, P.jsx)(le, { config: t, supply: w })),
+          (e[14] = t),
+          (e[15] = w),
+          (e[16] = T))
+        : (T = e[16]);
+    let E = i?.user ?? null,
+        D;
+    e[17] !== n || e[18] !== a || e[19] !== E
+        ? ((D = (0, P.jsx)(ue, { user: E, merchant: a, flash: n })),
+          (e[17] = n),
+          (e[18] = a),
+          (e[19] = E),
+          (e[20] = D))
+        : (D = e[20]);
+    let O;
+    e[21] === t
+        ? (O = e[22])
+        : ((O = (0, P.jsx)(pe, { config: t })), (e[21] = t), (e[22] = O));
+    let k;
+    e[23] === Symbol.for(`react.memo_cache_sentinel`)
+        ? ((k = (0, P.jsx)(ye, {})), (e[23] = k))
+        : (k = e[23]);
+    let A;
+    e[24] === p
+        ? (A = e[25])
+        : ((A = (0, P.jsx)(be, { wa: p })), (e[24] = p), (e[25] = A));
+    let j;
+    e[26] === t
+        ? (j = e[27])
+        : ((j = (0, P.jsx)(xe, { config: t })), (e[26] = t), (e[27] = j));
+    let M;
+    e[28] !== T ||
+    e[29] !== D ||
+    e[30] !== O ||
+    e[31] !== A ||
+    e[32] !== j ||
+    e[33] !== y ||
+    e[34] !== C
+        ? ((M = (0, P.jsxs)(`main`, {
+              id: `home`,
+              children: [y, C, T, D, O, k, A, j],
+          })),
+          (e[28] = T),
+          (e[29] = D),
+          (e[30] = O),
+          (e[31] = A),
+          (e[32] = j),
+          (e[33] = y),
+          (e[34] = C),
+          (e[35] = M))
+        : (M = e[35]);
+    let N;
+    e[36] === p
+        ? (N = e[37])
+        : ((N = (0, P.jsx)(Ce, { wa: p })), (e[36] = p), (e[37] = N));
+    let I;
+    e[38] !== p || e[39] !== l
+        ? ((I = (0, P.jsx)(we, { wa: p, typing: l })),
+          (e[38] = p),
+          (e[39] = l),
+          (e[40] = I))
+        : (I = e[40]);
+    let R;
+    return (
+        e[41] !== M || e[42] !== N || e[43] !== I || e[44] !== _ || e[45] !== v
+            ? ((R = (0, P.jsxs)(`div`, {
+                  className: `min-h-screen scroll-smooth bg-ps-bg font-sans text-base leading-[1.55] text-ps-ink [color-scheme:dark] [&_h1]:text-balance [&_h2]:text-balance [&_h3]:text-balance`,
+                  onFocusCapture: m,
+                  onBlurCapture: h,
+                  children: [g, _, v, M, N, I],
+              })),
+              (e[41] = M),
+              (e[42] = N),
+              (e[43] = I),
+              (e[44] = _),
+              (e[45] = v),
+              (e[46] = R))
+            : (R = e[46]),
+        R
+    );
+}
+export { Te as default };

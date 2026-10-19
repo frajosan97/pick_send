@@ -1,6 +1,6 @@
-import { Head, router, useForm } from "@inertiajs/react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Head, router, useForm } from '@inertiajs/react';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogContent,
@@ -8,12 +8,12 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from "@/components/ui/dialog";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Field, TextField } from "@/components/admin/form-field";
-import { confirmDelete, toastError, toastSuccess } from "@/lib/toast";
-import { RowActions } from "@/components/admin/row-actions";
-import { PenIcon, PlusCircle, Trash2 } from "lucide-react";
+} from '@/components/ui/dialog';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Field, TextField } from '@/components/admin/form-field';
+import { confirmDelete, toastError, toastSuccess } from '@/lib/toast';
+import { RowActions } from '@/components/admin/row-actions';
+import { PenIcon, PlusCircle, Trash2 } from 'lucide-react';
 
 type Group = {
     id: number;
@@ -33,8 +33,8 @@ type GroupForm = {
 };
 
 const emptyForm: GroupForm = {
-    name: "",
-    slug: "",
+    name: '',
+    slug: '',
     sort_order: 0,
     is_active: true,
 };
@@ -78,37 +78,37 @@ export default function Index({ groups }: { groups: Group[] }) {
                 closeModal();
                 toastSuccess(
                     editing
-                        ? "Group updated successfully"
-                        : "Group created successfully",
+                        ? 'Group updated successfully'
+                        : 'Group created successfully',
                 );
             },
-            onError: () => toastError("Please fix the errors below"),
+            onError: () => toastError('Please fix the errors below'),
             preserveScroll: true,
         };
 
         if (editing?.id) {
-            put(route("admin.item-groups.update", editing.id), opts);
+            put(route('admin.item-groups.update', editing.id), opts);
         } else {
-            post(route("admin.item-groups.store"), opts);
+            post(route('admin.item-groups.store'), opts);
         }
     };
 
     const destroy = async (id: number) => {
         const ok = await confirmDelete(
-            "Deleting this group will also affect its items. Continue?",
+            'Deleting this group will also affect its items. Continue?',
         );
         if (!ok) return;
-        router.delete(route("admin.item-groups.destroy", id), {
+        router.delete(route('admin.item-groups.destroy', id), {
             preserveScroll: true,
-            onSuccess: () => toastSuccess("Group deleted"),
-            onError: () => toastError("Failed to delete group"),
+            onSuccess: () => toastSuccess('Group deleted'),
+            onError: () => toastError('Failed to delete group'),
         });
     };
 
     return (
         <>
             <Head title="Item Groups" />
-            <div className="p-6 space-y-4">
+            <div className="space-y-4 p-6">
                 <div className="flex items-center justify-between">
                     <h1 className="text-2xl font-semibold">Item Groups</h1>
                     <Button onClick={openCreate}>
@@ -116,16 +116,16 @@ export default function Index({ groups }: { groups: Group[] }) {
                     </Button>
                 </div>
 
-                <div className="rounded-lg border overflow-hidden">
+                <div className="overflow-hidden rounded-lg border">
                     <table className="w-full text-sm">
                         <thead className="bg-muted">
                             <tr>
-                                <th className="text-left p-3">Name</th>
-                                <th className="text-left p-3">Slug</th>
-                                <th className="text-left p-3">Items</th>
-                                <th className="text-left p-3">Sort</th>
-                                <th className="text-left p-3">Active</th>
-                                <th className="text-right p-3">Actions</th>
+                                <th className="p-3 text-left">Name</th>
+                                <th className="p-3 text-left">Slug</th>
+                                <th className="p-3 text-left">Items</th>
+                                <th className="p-3 text-left">Sort</th>
+                                <th className="p-3 text-left">Active</th>
+                                <th className="p-3 text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -148,9 +148,9 @@ export default function Index({ groups }: { groups: Group[] }) {
                                     <td className="p-3">{g.items_count}</td>
                                     <td className="p-3">{g.sort_order}</td>
                                     <td className="p-3">
-                                        {g.is_active ? "Yes" : "No"}
+                                        {g.is_active ? 'Yes' : 'No'}
                                     </td>
-                                    <td className="p-3 text-right space-x-2">
+                                    <td className="space-x-2 p-3 text-right">
                                         <RowActions>
                                             <Button
                                                 size="sm"
@@ -182,12 +182,12 @@ export default function Index({ groups }: { groups: Group[] }) {
                 <DialogContent className="max-w-lg">
                     <DialogHeader>
                         <DialogTitle>
-                            {editing ? "Edit Group" : "New Group"}
+                            {editing ? 'Edit Group' : 'New Group'}
                         </DialogTitle>
                         <DialogDescription>
                             {editing
-                                ? "Update the item group details."
-                                : "Create a new item group."}
+                                ? 'Update the item group details.'
+                                : 'Create a new item group.'}
                         </DialogDescription>
                     </DialogHeader>
 
@@ -196,13 +196,13 @@ export default function Index({ groups }: { groups: Group[] }) {
                             <TextField
                                 value={data.name}
                                 onChange={(v) => {
-                                    setData("name", v);
+                                    setData('name', v);
                                     setData(
-                                        "slug",
+                                        'slug',
                                         v
                                             .toLowerCase()
-                                            .replace(/[^a-z0-9]+/g, "-")
-                                            .replace(/^-|-$/g, ""),
+                                            .replace(/[^a-z0-9]+/g, '-')
+                                            .replace(/^-|-$/g, ''),
                                     );
                                 }}
                             />
@@ -210,21 +210,21 @@ export default function Index({ groups }: { groups: Group[] }) {
                         <Field label="Slug" error={errors.slug}>
                             <TextField
                                 value={data.slug}
-                                onChange={(v) => setData("slug", v)}
+                                onChange={(v) => setData('slug', v)}
                             />
                         </Field>
                         <Field label="Sort Order" error={errors.sort_order}>
                             <TextField
                                 type="number"
                                 value={data.sort_order}
-                                onChange={(v) => setData("sort_order", v)}
+                                onChange={(v) => setData('sort_order', v)}
                             />
                         </Field>
                         <label className="flex items-center gap-2">
                             <Checkbox
                                 checked={data.is_active}
                                 onCheckedChange={(v) =>
-                                    setData("is_active", !!v)
+                                    setData('is_active', !!v)
                                 }
                             />
                             <span>Active</span>
@@ -239,7 +239,7 @@ export default function Index({ groups }: { groups: Group[] }) {
                                 Cancel
                             </Button>
                             <Button type="submit" disabled={processing}>
-                                {processing ? "Saving..." : "Save"}
+                                {processing ? 'Saving...' : 'Save'}
                             </Button>
                         </DialogFooter>
                     </form>

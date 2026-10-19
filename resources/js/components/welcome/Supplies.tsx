@@ -1,9 +1,9 @@
 // src/components/pickandsend/Supplies.tsx
-import { useForm } from "@inertiajs/react";
-import type { Config } from "@/types/config";
-import { Block } from "./Block";
-import { SectionHead } from "./SectionHead";
-import { Choice, Fld, Opt } from "./FormBits";
+import { useForm } from '@inertiajs/react';
+import type { Config } from '@/types/config';
+import { Block } from './Block';
+import { SectionHead } from './SectionHead';
+import { Choice, Fld, Opt } from './FormBits';
 import {
     CARD,
     CHECKS_BAND,
@@ -13,8 +13,8 @@ import {
     PAY,
     PRIMARY,
     WRAP,
-} from "./shared";
-import type { FlashSupply } from "./shared";
+} from './shared';
+import type { FlashSupply } from './shared';
 
 export function Supplies({
     config,
@@ -26,13 +26,13 @@ export function Supplies({
     const { towns: TOWNS, routes: ROUTES } = config;
 
     const supplyForm = useForm({
-        name: "",
-        phone: "",
-        town: "mount|Nyeri",
-        what: "",
-        from: "",
-        sphone: "",
-        often: "Once",
+        name: '',
+        phone: '',
+        town: 'mount|Nyeri',
+        what: '',
+        from: '',
+        sphone: '',
+        often: 'Once',
     });
     const {
         data: s,
@@ -44,7 +44,7 @@ export function Supplies({
 
     const submitSupplies = (e: React.FormEvent) => {
         e.preventDefault();
-        postSupply("/supplies", { preserveScroll: true });
+        postSupply('/supplies', { preserveScroll: true });
     };
 
     const townOptions = TOWNS.map(([r, list]) => (
@@ -92,7 +92,7 @@ export function Supplies({
                         label="Your name"
                         autoComplete="name"
                         value={s.name}
-                        onChange={(e: any) => setS("name", e.target.value)}
+                        onChange={(e: any) => setS('name', e.target.value)}
                         error={sErr.name}
                     />
                     <Fld
@@ -102,7 +102,7 @@ export function Supplies({
                         placeholder="07XX XXX XXX"
                         autoComplete="tel"
                         value={s.phone}
-                        onChange={(e: any) => setS("phone", e.target.value)}
+                        onChange={(e: any) => setS('phone', e.target.value)}
                         error={sErr.phone}
                     />
                     <Fld
@@ -110,7 +110,7 @@ export function Supplies({
                         id="u-town"
                         label="Your town"
                         value={s.town}
-                        onChange={(e: any) => setS("town", e.target.value)}
+                        onChange={(e: any) => setS('town', e.target.value)}
                         error={sErr.town}
                     >
                         {townOptions}
@@ -120,7 +120,7 @@ export function Supplies({
                         label="What should we pick?"
                         placeholder="e.g. 2 cartons of cosmetics"
                         value={s.what}
-                        onChange={(e: any) => setS("what", e.target.value)}
+                        onChange={(e: any) => setS('what', e.target.value)}
                         error={sErr.what}
                     />
                     <Fld
@@ -128,7 +128,7 @@ export function Supplies({
                         label="Where do we pick it?"
                         placeholder="Shop or supplier name, building and street"
                         value={s.from}
-                        onChange={(e: any) => setS("from", e.target.value)}
+                        onChange={(e: any) => setS('from', e.target.value)}
                         error={sErr.from}
                     />
                     <Fld
@@ -137,17 +137,17 @@ export function Supplies({
                         type="tel"
                         placeholder="Optional"
                         value={s.sphone}
-                        onChange={(e: any) => setS("sphone", e.target.value)}
+                        onChange={(e: any) => setS('sphone', e.target.value)}
                         error={sErr.sphone}
                     />
                     <Choice label="How often?" cols={4}>
-                        {["Once", "Daily", "Weekly", "Monthly"].map((o) => (
+                        {['Once', 'Daily', 'Weekly', 'Monthly'].map((o) => (
                             <Opt
                                 key={o}
                                 type="radio"
                                 name="often"
                                 checked={s.often === o}
-                                onChange={() => setS("often", o)}
+                                onChange={() => setS('often', o)}
                             >
                                 {o}
                             </Opt>
@@ -158,7 +158,7 @@ export function Supplies({
                         type="submit"
                         disabled={sSending}
                     >
-                        {sSending ? "Sending…" : "Request my pickup"}
+                        {sSending ? 'Sending…' : 'Request my pickup'}
                     </button>
 
                     {supply && (

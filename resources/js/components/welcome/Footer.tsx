@@ -1,6 +1,6 @@
 // src/components/pickandsend/Footer.tsx
-import { Wordmark } from "./Wordmark";
-import { WRAP } from "./shared";
+import { Wordmark } from './Wordmark';
+import { WRAP } from './shared';
 
 export function Footer({ wa }: { wa: string }) {
     return (
@@ -19,7 +19,7 @@ export function Footer({ wa }: { wa: string }) {
                         P.O. Box 25079-00100 GPO Nairobi
                     </div>
                     <div>
-                        <b>Talk to us</b>Call or WhatsApp{" "}
+                        <b>Talk to us</b>Call or WhatsApp{' '}
                         <a href={`https://wa.me/${wa}`}>0716 983 983</a>
                         <br />
                         <a href="#community">

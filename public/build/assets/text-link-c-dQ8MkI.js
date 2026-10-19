@@ -1,1 +1,14 @@
-import{a as e,t}from"./jsx-runtime-B0kIVEhB.js";import{r as n}from"./wayfinder-ibgkyrwZ.js";var r=t();function i({className:t=``,children:i,...a}){return(0,r.jsx)(e,{className:n(`text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500`,t),...a,children:i})}export{i as t};
+import { a as e, t } from './jsx-runtime-B0kIVEhB.js';
+import { r as n } from './wayfinder-ibgkyrwZ.js';
+var r = t();
+function i({ className: t = ``, children: i, ...a }) {
+    return (0, r.jsx)(e, {
+        className: n(
+            `text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500`,
+            t,
+        ),
+        ...a,
+        children: i,
+    });
+}
+export { i as t };

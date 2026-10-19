@@ -1,15 +1,15 @@
 // resources/js/pages/Admin/Dashboard.tsx
-import { Head, router } from "@inertiajs/react";
-import { useMemo, useState } from "react";
+import { Head, router } from '@inertiajs/react';
+import { useMemo, useState } from 'react';
 import {
     BarChart,
     Donut,
     Funnel,
     Kpi,
     LineChart,
-} from "@/components/admin/charts";
-import { toDateOnly } from "@/lib/date";
-import { densifySeries, type SeriesPoint } from "@/lib/series";
+} from '@/components/admin/charts';
+import { toDateOnly } from '@/lib/date';
+import { densifySeries, type SeriesPoint } from '@/lib/series';
 
 /* ---------- types ---------- */
 type Range = { from: string; to: string };
@@ -65,41 +65,41 @@ type Report = {
     wallet: WalletRow[];
 };
 
-const fmt = (n: number) => "KSh " + Math.round(n).toLocaleString("en-KE");
-const num = (n: number) => Math.round(n).toLocaleString("en-KE");
+const fmt = (n: number) => 'KSh ' + Math.round(n).toLocaleString('en-KE');
+const num = (n: number) => Math.round(n).toLocaleString('en-KE');
 
 const RANGE_LABELS: [string, string][] = [
-    ["today", "Today"],
-    ["7d", "Last 7 days"],
-    ["30d", "Last 30 days"],
-    ["90d", "Last 90 days"],
-    ["mtd", "Month to date"],
-    ["ytd", "Year to date"],
+    ['today', 'Today'],
+    ['7d', 'Last 7 days'],
+    ['30d', 'Last 30 days'],
+    ['90d', 'Last 90 days'],
+    ['mtd', 'Month to date'],
+    ['ytd', 'Year to date'],
 ];
 
 const PAYMENT_PALETTE: Record<string, string> = {
-    delivery: "#4FD1C0",
-    cod: "#E3B04B",
-    withdrawal: "#F08A5D",
-    refund: "#7FB0F5",
-    points: "#A78BFA",
+    delivery: '#4FD1C0',
+    cod: '#E3B04B',
+    withdrawal: '#F08A5D',
+    refund: '#7FB0F5',
+    points: '#A78BFA',
 };
 
 const WALLET_PALETTE: Record<string, string> = {
-    cod_credit: "#4FD1C0",
-    withdrawal: "#F08A5D",
-    points_redeem: "#A78BFA",
+    cod_credit: '#4FD1C0',
+    withdrawal: '#F08A5D',
+    points_redeem: '#A78BFA',
 };
 
 export default function Dashboard({ report }: { report: Report }) {
     const [preset, setPreset] = useState<
-        "today" | "7d" | "30d" | "90d" | "mtd" | "ytd"
-    >("30d");
+        'today' | '7d' | '30d' | '90d' | 'mtd' | 'ytd'
+    >('30d');
 
     const changeRange = (key: string) => {
         setPreset(key as any);
         router.get(
-            "/admin/dashboard",
+            '/admin/dashboard',
             { range: key },
             { preserveScroll: true, preserveState: true },
         );
@@ -134,7 +134,7 @@ export default function Dashboard({ report }: { report: Report }) {
             .map(([label, value]) => ({
                 label,
                 value,
-                color: PAYMENT_PALETTE[label] ?? "#94a3b8",
+                color: PAYMENT_PALETTE[label] ?? '#94a3b8',
             }));
     }, [payments]);
 
@@ -148,7 +148,7 @@ export default function Dashboard({ report }: { report: Report }) {
             .map(([label, value]) => ({
                 label,
                 value,
-                color: WALLET_PALETTE[label] ?? "#94a3b8",
+                color: WALLET_PALETTE[label] ?? '#94a3b8',
             }));
     }, [wallet]);
 
@@ -184,8 +184,8 @@ export default function Dashboard({ report }: { report: Report }) {
                                 onClick={() => changeRange(key)}
                                 className={`rounded-lg border px-3 py-1.5 text-[.82rem] font-semibold transition ${
                                     preset === key
-                                        ? "border-ps-brand bg-ps-brand text-ps-onbrand"
-                                        : "border-sidebar-border bg-card hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                                        ? 'border-ps-brand bg-ps-brand text-ps-onbrand'
+                                        : 'border-sidebar-border bg-card hover:bg-neutral-100 dark:hover:bg-neutral-800'
                                 }`}
                             >
                                 {label}
@@ -266,14 +266,14 @@ export default function Dashboard({ report }: { report: Report }) {
                             labels={labels}
                             series={[
                                 {
-                                    name: "Revenue",
+                                    name: 'Revenue',
                                     values: revenueValues,
-                                    color: "#4FD1C0",
+                                    color: '#4FD1C0',
                                 },
                                 {
-                                    name: "COD",
+                                    name: 'COD',
                                     values: codValues,
-                                    color: "#E3B04B",
+                                    color: '#E3B04B',
                                 },
                             ]}
                         />
@@ -449,7 +449,7 @@ export default function Dashboard({ report }: { report: Report }) {
                                                 >
                                                     {r.status.replace(
                                                         /_/g,
-                                                        " ",
+                                                        ' ',
                                                     )}
                                                     <b className="tabular-nums">
                                                         {r.count}
@@ -478,5 +478,5 @@ export default function Dashboard({ report }: { report: Report }) {
 }
 
 Dashboard.layout = {
-    breadcrumbs: [{ title: "Dashboard", href: "/admin/dashboard" }],
+    breadcrumbs: [{ title: 'Dashboard', href: '/admin/dashboard' }],
 };
