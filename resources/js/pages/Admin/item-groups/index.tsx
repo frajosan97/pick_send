@@ -1,19 +1,21 @@
-import { Head, router, useForm } from '@inertiajs/react';
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { Head, router, useForm } from "@inertiajs/react";
+import { useCallback, useMemo, useState } from "react";
+import SharedDataTable, { Column } from "@/components/admin/data-table";
+import { Button } from "@/components/ui/button";
 import {
     Dialog,
+    DialogBody,
     DialogContent,
     DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from '@/components/ui/dialog';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Field, TextField } from '@/components/admin/form-field';
-import { confirmDelete, toastError, toastSuccess } from '@/lib/toast';
-import { RowActions } from '@/components/admin/row-actions';
-import { PenIcon, PlusCircle, Trash2 } from 'lucide-react';
+} from "@/components/ui/dialog";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Field, TextField } from "@/components/admin/form-field";
+import { confirmDelete, toastError, toastSuccess } from "@/lib/toast";
+import { RowActions } from "@/components/admin/row-actions";
+import { PenIcon, PlusCircle, Trash2 } from "lucide-react";
 
 type Group = {
     id: number;
@@ -33,11 +35,17 @@ type GroupForm = {
 };
 
 const emptyForm: GroupForm = {
-    name: '',
-    slug: '',
+    name: "",
+    slug: "",
     sort_order: 0,
     is_active: true,
 };
+
+const slugify = (v: string) =>
+    v
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
 
 export default function Index({ groups }: { groups: Group[] }) {
     const [open, setOpen] = useState(false);
@@ -46,64 +54,79 @@ export default function Index({ groups }: { groups: Group[] }) {
     const { data, setData, post, put, processing, errors, reset, clearErrors } =
         useForm<GroupForm>(emptyForm);
 
-    const openCreate = () => {
+    const openCreate = useCallback(() => {
         reset();
         clearErrors();
         setEditing(null);
         setOpen(true);
-    };
+    }, [reset, clearErrors]);
 
-    const openEdit = (g: Group) => {
-        clearErrors();
-        setEditing(g);
-        setData({
-            name: g.name,
-            slug: g.slug,
-            sort_order: g.sort_order,
-            is_active: g.is_active,
-        });
-        setOpen(true);
-    };
+    const openEdit = useCallback(
+        (g: Group) => {
+            clearErrors();
+            setEditing(g);
+            setData({
+                name: g.name,
+                slug: g.slug,
+                sort_order: g.sort_order,
+                is_active: g.is_active,
+            });
+            setOpen(true);
+        },
+        [setData, clearErrors],
+    );
 
-    const closeModal = () => {
+    const closeModal = useCallback(() => {
         setOpen(false);
         reset();
         clearErrors();
-    };
+    }, [reset, clearErrors]);
 
-    const submit = (e: React.FormEvent) => {
-        e.preventDefault();
-        const opts = {
-            onSuccess: () => {
-                closeModal();
-                toastSuccess(
-                    editing
-                        ? 'Group updated successfully'
-                        : 'Group created successfully',
-                );
-            },
-            onError: () => toastError('Please fix the errors below'),
-            preserveScroll: true,
-        };
+    const submit = useCallback(
+        (e: React.FormEvent) => {
+            e.preventDefault();
+            const opts = {
+                onSuccess: () => {
+                    closeModal();
+                    toastSuccess(
+                        editing
+                            ? "Group updated successfully"
+                            : "Group created successfully",
+                    );
+                },
+                onError: () => toastError("Please fix the errors below"),
+                preserveScroll: true,
+            };
 
-        if (editing?.id) {
-            put(route('admin.item-groups.update', editing.id), opts);
-        } else {
-            post(route('admin.item-groups.store'), opts);
-        }
-    };
+            if (editing?.id) {
+                put(route("admin.item-groups.update", editing.id), opts);
+            } else {
+                post(route("admin.item-groups.store"), opts);
+            }
+        },
+        [editing, put, post, closeModal],
+    );
 
-    const destroy = async (id: number) => {
+    const destroy = useCallback(async (id: number) => {
         const ok = await confirmDelete(
-            'Deleting this group will also affect its items. Continue?',
+            "Deleting this group will also affect its items. Continue?",
         );
         if (!ok) return;
-        router.delete(route('admin.item-groups.destroy', id), {
+
+        router.delete(route("admin.item-groups.destroy", id), {
             preserveScroll: true,
-            onSuccess: () => toastSuccess('Group deleted'),
-            onError: () => toastError('Failed to delete group'),
+            onSuccess: () => toastSuccess("Group deleted"),
+            onError: () => toastError("Failed to delete group"),
         });
-    };
+    }, []);
+
+    // Sort by "Sort" column (index 3) ascending; defaults come from wrapper
+    const tableOptions = useMemo(
+        () => ({
+            order: [[3, "asc" as const]],
+        }),
+        [],
+    );
 
     return (
         <>
@@ -112,66 +135,95 @@ export default function Index({ groups }: { groups: Group[] }) {
                 <div className="flex items-center justify-between">
                     <h1 className="text-2xl font-semibold">Item Groups</h1>
                     <Button onClick={openCreate}>
-                        <PlusCircle /> New Group
+                        <PlusCircle className="mr-2 h-4 w-4" /> New Group
                     </Button>
                 </div>
 
-                <div className="overflow-hidden rounded-lg border">
-                    <table className="w-full text-sm">
-                        <thead className="bg-muted">
-                            <tr>
-                                <th className="p-3 text-left">Name</th>
-                                <th className="p-3 text-left">Slug</th>
-                                <th className="p-3 text-left">Items</th>
-                                <th className="p-3 text-left">Sort</th>
-                                <th className="p-3 text-left">Active</th>
-                                <th className="p-3 text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {groups.length === 0 && (
-                                <tr>
-                                    <td
-                                        colSpan={6}
-                                        className="p-6 text-center text-muted-foreground"
-                                    >
-                                        No groups yet.
-                                    </td>
-                                </tr>
+                <div className="ps-datatable overflow-hidden rounded-lg border bg-card p-4">
+                    <SharedDataTable
+                        data={groups}
+                        className="display w-full"
+                        options={tableOptions}
+                    >
+                        <Column title="Name" data="name">
+                            {(name: string) => (
+                                <span className="text-sm">{name}</span>
                             )}
-                            {groups.map((g) => (
-                                <tr key={g.id} className="border-t">
-                                    <td className="p-3">{g.name}</td>
-                                    <td className="p-3 font-mono text-xs">
-                                        {g.slug}
-                                    </td>
-                                    <td className="p-3">{g.items_count}</td>
-                                    <td className="p-3">{g.sort_order}</td>
-                                    <td className="p-3">
-                                        {g.is_active ? 'Yes' : 'No'}
-                                    </td>
-                                    <td className="space-x-2 p-3 text-right">
-                                        <RowActions>
-                                            <Button
-                                                size="sm"
-                                                variant="outline"
-                                                onClick={() => openEdit(g)}
-                                            >
-                                                <PenIcon />
-                                            </Button>
-                                            <Button
-                                                size="sm"
-                                                variant="destructive"
-                                                onClick={() => destroy(g.id)}
-                                            >
-                                                <Trash2 />
-                                            </Button>
-                                        </RowActions>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                        </Column>
+
+                        <Column title="Slug" data="slug">
+                            {(slug: string) => (
+                                <span className="font-mono text-xs">
+                                    {slug}
+                                </span>
+                            )}
+                        </Column>
+
+                        <Column title="Items" data="items_count">
+                            {(count: number) => (
+                                <span className="tabular-nums text-sm">
+                                    {count}
+                                </span>
+                            )}
+                        </Column>
+
+                        <Column title="Sort" data="sort_order">
+                            {(sort_order: number) => (
+                                <span className="tabular-nums text-sm">
+                                    {sort_order}
+                                </span>
+                            )}
+                        </Column>
+
+                        <Column title="Active" data="is_active">
+                            {(is_active: boolean) => (
+                                <span
+                                    className={
+                                        is_active
+                                            ? "text-sm text-green-600"
+                                            : "text-sm text-muted-foreground"
+                                    }
+                                >
+                                    {is_active ? "Yes" : "No"}
+                                </span>
+                            )}
+                        </Column>
+
+                        <Column
+                            title="Actions"
+                            data="id"
+                            options={{ orderable: false, searchable: false }}
+                        >
+                            {(id: number, _type: string, row: Group) => (
+                                <RowActions>
+                                    <Button
+                                        size="icon"
+                                        variant="outline"
+                                        className="h-7 w-7"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            openEdit(row);
+                                        }}
+                                        aria-label={`Edit ${row.name}`}
+                                    >
+                                        <PenIcon className="h-3.5 w-3.5" />
+                                    </Button>
+                                    <Button
+                                        size="icon"
+                                        variant="destructive"
+                                        className="h-7 w-7"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            destroy(id);
+                                        }}
+                                        aria-label={`Delete ${row.name}`}
+                                    >
+                                        <Trash2 className="h-3.5 w-3.5" />
+                                    </Button>
+                                </RowActions>
+                            )}
+                        </Column>
+                    </SharedDataTable>
                 </div>
             </div>
 
@@ -182,53 +234,52 @@ export default function Index({ groups }: { groups: Group[] }) {
                 <DialogContent className="max-w-lg">
                     <DialogHeader>
                         <DialogTitle>
-                            {editing ? 'Edit Group' : 'New Group'}
+                            {editing ? "Edit Group" : "New Group"}
                         </DialogTitle>
                         <DialogDescription>
                             {editing
-                                ? 'Update the item group details.'
-                                : 'Create a new item group.'}
+                                ? "Update the item group details."
+                                : "Create a new item group."}
                         </DialogDescription>
                     </DialogHeader>
 
-                    <form onSubmit={submit} className="space-y-4">
-                        <Field label="Name" error={errors.name}>
-                            <TextField
-                                value={data.name}
-                                onChange={(v) => {
-                                    setData('name', v);
-                                    setData(
-                                        'slug',
-                                        v
-                                            .toLowerCase()
-                                            .replace(/[^a-z0-9]+/g, '-')
-                                            .replace(/^-|-$/g, ''),
-                                    );
-                                }}
-                            />
-                        </Field>
-                        <Field label="Slug" error={errors.slug}>
-                            <TextField
-                                value={data.slug}
-                                onChange={(v) => setData('slug', v)}
-                            />
-                        </Field>
-                        <Field label="Sort Order" error={errors.sort_order}>
-                            <TextField
-                                type="number"
-                                value={data.sort_order}
-                                onChange={(v) => setData('sort_order', v)}
-                            />
-                        </Field>
-                        <label className="flex items-center gap-2">
-                            <Checkbox
-                                checked={data.is_active}
-                                onCheckedChange={(v) =>
-                                    setData('is_active', !!v)
-                                }
-                            />
-                            <span>Active</span>
-                        </label>
+                    <form
+                        onSubmit={submit}
+                        className="flex min-h-0 flex-1 flex-col gap-4 overflow-hidden"
+                    >
+                        <DialogBody className="space-y-4">
+                            <Field label="Name" error={errors.name}>
+                                <TextField
+                                    value={data.name}
+                                    onChange={(v) => {
+                                        setData("name", v);
+                                        setData("slug", slugify(v));
+                                    }}
+                                />
+                            </Field>
+                            <Field label="Slug" error={errors.slug}>
+                                <TextField
+                                    value={data.slug}
+                                    onChange={(v) => setData("slug", v)}
+                                />
+                            </Field>
+                            <Field label="Sort Order" error={errors.sort_order}>
+                                <TextField
+                                    type="number"
+                                    value={data.sort_order}
+                                    onChange={(v) => setData("sort_order", v)}
+                                />
+                            </Field>
+                            <label className="flex items-center gap-2">
+                                <Checkbox
+                                    checked={data.is_active}
+                                    onCheckedChange={(v) =>
+                                        setData("is_active", !!v)
+                                    }
+                                />
+                                <span>Active</span>
+                            </label>
+                        </DialogBody>
 
                         <DialogFooter>
                             <Button
@@ -239,7 +290,7 @@ export default function Index({ groups }: { groups: Group[] }) {
                                 Cancel
                             </Button>
                             <Button type="submit" disabled={processing}>
-                                {processing ? 'Saving...' : 'Save'}
+                                {processing ? "Saving..." : "Save"}
                             </Button>
                         </DialogFooter>
                     </form>

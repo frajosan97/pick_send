@@ -1,18 +1,20 @@
-import { Head, router, useForm } from '@inertiajs/react';
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { Head, router, useForm } from "@inertiajs/react";
+import { useCallback, useMemo, useState } from "react";
+import SharedDataTable, { Column } from "@/components/admin/data-table";
+import { Button } from "@/components/ui/button";
 import {
     Dialog,
+    DialogBody,
     DialogContent,
     DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from '@/components/ui/dialog';
-import { Field, TextField } from '@/components/admin/form-field';
-import { confirmDelete, toastError, toastSuccess } from '@/lib/toast';
-import { RowActions } from '@/components/admin/row-actions';
-import { PenIcon, PlusCircle, Trash2 } from 'lucide-react';
+} from "@/components/ui/dialog";
+import { Field, TextField } from "@/components/admin/form-field";
+import { confirmDelete, toastError, toastSuccess } from "@/lib/toast";
+import { RowActions } from "@/components/admin/row-actions";
+import { PenIcon, PlusCircle, Trash2 } from "lucide-react";
 
 type Constant = {
     id: number;
@@ -28,7 +30,7 @@ type ConstantForm = {
     description: string | null;
 };
 
-const emptyForm: ConstantForm = { key: '', value: 0, description: '' };
+const emptyForm: ConstantForm = { key: "", value: 0, description: "" };
 
 export default function Index({ constants }: { constants: Constant[] }) {
     const [open, setOpen] = useState(false);
@@ -37,64 +39,78 @@ export default function Index({ constants }: { constants: Constant[] }) {
     const { data, setData, post, put, processing, errors, reset, clearErrors } =
         useForm<ConstantForm>(emptyForm);
 
-    const openCreate = () => {
+    const openCreate = useCallback(() => {
         reset();
         clearErrors();
         setEditing(null);
         setOpen(true);
-    };
+    }, [reset, clearErrors]);
 
-    const openEdit = (c: Constant) => {
-        clearErrors();
-        setEditing(c);
-        setData({
-            key: c.key,
-            value: c.value,
-            description: c.description ?? '',
-        });
-        setOpen(true);
-    };
+    const openEdit = useCallback(
+        (c: Constant) => {
+            clearErrors();
+            setEditing(c);
+            setData({
+                key: c.key,
+                value: c.value,
+                description: c.description ?? "",
+            });
+            setOpen(true);
+        },
+        [setData, clearErrors],
+    );
 
-    const closeModal = () => {
+    const closeModal = useCallback(() => {
         setOpen(false);
         reset();
         clearErrors();
-    };
+    }, [reset, clearErrors]);
 
-    const submit = (e: React.FormEvent) => {
-        e.preventDefault();
-        const opts = {
-            onSuccess: () => {
-                closeModal();
-                toastSuccess(
-                    editing
-                        ? 'Constant updated successfully'
-                        : 'Constant created successfully',
-                );
-            },
-            onError: () => toastError('Please fix the errors below'),
-            preserveScroll: true,
-        };
+    const submit = useCallback(
+        (e: React.FormEvent) => {
+            e.preventDefault();
+            const opts = {
+                onSuccess: () => {
+                    closeModal();
+                    toastSuccess(
+                        editing
+                            ? "Constant updated successfully"
+                            : "Constant created successfully",
+                    );
+                },
+                onError: () => toastError("Please fix the errors below"),
+                preserveScroll: true,
+            };
 
-        if (editing?.id) {
-            put(route('admin.pricing-constants.update', editing.id), opts);
-        } else {
-            post(route('admin.pricing-constants.store'), opts);
-        }
-    };
+            if (editing?.id) {
+                put(route("admin.pricing-constants.update", editing.id), opts);
+            } else {
+                post(route("admin.pricing-constants.store"), opts);
+            }
+        },
+        [editing, put, post, closeModal],
+    );
 
-    const destroy = async (id: number) => {
+    const destroy = useCallback(async (id: number) => {
         const ok = await confirmDelete(
-            'This constant will be deleted permanently.',
+            "This constant will be deleted permanently.",
         );
         if (!ok) return;
 
-        router.delete(route('admin.pricing-constants.destroy', id), {
+        router.delete(route("admin.pricing-constants.destroy", id), {
             preserveScroll: true,
-            onSuccess: () => toastSuccess('Constant deleted'),
-            onError: () => toastError('Failed to delete constant'),
+            onSuccess: () => toastSuccess("Constant deleted"),
+            onError: () => toastError("Failed to delete constant"),
         });
-    };
+    }, []);
+
+    // Only page-specific option here; defaults come from SharedDataTable
+    const tableOptions = useMemo(
+        () => ({
+            order: [[0, "asc" as const]],
+        }),
+        [],
+    );
 
     return (
         <>
@@ -105,60 +121,73 @@ export default function Index({ constants }: { constants: Constant[] }) {
                         Pricing Constants
                     </h1>
                     <Button onClick={openCreate}>
-                        <PlusCircle /> New Constant
+                        <PlusCircle className="mr-2 h-4 w-4" /> New Constant
                     </Button>
                 </div>
 
-                <div className="overflow-hidden rounded-lg border">
-                    <table className="w-full text-sm">
-                        <thead className="bg-muted">
-                            <tr>
-                                <th className="p-3 text-left">Key</th>
-                                <th className="p-3 text-left">Value</th>
-                                <th className="p-3 text-left">Description</th>
-                                <th className="p-3 text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {constants.length === 0 && (
-                                <tr>
-                                    <td
-                                        colSpan={4}
-                                        className="p-6 text-center text-muted-foreground"
-                                    >
-                                        No constants yet.
-                                    </td>
-                                </tr>
+                <div className="ps-datatable overflow-hidden rounded-lg border bg-card p-4">
+                    <SharedDataTable
+                        data={constants}
+                        className="display w-full"
+                        options={tableOptions}
+                    >
+                        <Column title="Key" data="key">
+                            {(key: string) => (
+                                <span className="font-mono text-sm">{key}</span>
                             )}
-                            {constants.map((c) => (
-                                <tr key={c.id} className="border-t">
-                                    <td className="p-3 font-mono">{c.key}</td>
-                                    <td className="p-3">{c.value}</td>
-                                    <td className="p-3 text-muted-foreground">
-                                        {c.description}
-                                    </td>
-                                    <td className="space-x-2 p-3 text-right">
-                                        <RowActions>
-                                            <Button
-                                                size="sm"
-                                                variant="outline"
-                                                onClick={() => openEdit(c)}
-                                            >
-                                                <PenIcon />
-                                            </Button>
-                                            <Button
-                                                size="sm"
-                                                variant="destructive"
-                                                onClick={() => destroy(c.id)}
-                                            >
-                                                <Trash2 />
-                                            </Button>
-                                        </RowActions>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                        </Column>
+
+                        <Column title="Value" data="value">
+                            {(value: number) => (
+                                <span className="tabular-nums text-sm">
+                                    {value}
+                                </span>
+                            )}
+                        </Column>
+
+                        <Column title="Description" data="description">
+                            {(description: string | null) => (
+                                <span className="text-sm text-muted-foreground">
+                                    {description || "—"}
+                                </span>
+                            )}
+                        </Column>
+
+                        <Column
+                            title="Actions"
+                            data="id"
+                            options={{ orderable: false, searchable: false }}
+                        >
+                            {(id: number, _type: string, row: Constant) => (
+                                <RowActions>
+                                    <Button
+                                        size="icon"
+                                        variant="outline"
+                                        className="h-7 w-7"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            openEdit(row);
+                                        }}
+                                        aria-label={`Edit ${row.key}`}
+                                    >
+                                        <PenIcon className="h-3.5 w-3.5" />
+                                    </Button>
+                                    <Button
+                                        size="icon"
+                                        variant="destructive"
+                                        className="h-7 w-7"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            destroy(id);
+                                        }}
+                                        aria-label={`Delete ${row.key}`}
+                                    >
+                                        <Trash2 className="h-3.5 w-3.5" />
+                                    </Button>
+                                </RowActions>
+                            )}
+                        </Column>
+                    </SharedDataTable>
                 </div>
             </div>
 
@@ -169,35 +198,43 @@ export default function Index({ constants }: { constants: Constant[] }) {
                 <DialogContent className="max-w-lg">
                     <DialogHeader>
                         <DialogTitle>
-                            {editing ? 'Edit Constant' : 'New Constant'}
+                            {editing ? "Edit Constant" : "New Constant"}
                         </DialogTitle>
                         <DialogDescription>
                             {editing
-                                ? 'Update the pricing constant details.'
-                                : 'Create a new pricing constant.'}
+                                ? "Update the pricing constant details."
+                                : "Create a new pricing constant."}
                         </DialogDescription>
                     </DialogHeader>
 
-                    <form onSubmit={submit} className="space-y-4">
-                        <Field label="Key" error={errors.key}>
-                            <TextField
-                                value={data.key}
-                                onChange={(v) => setData('key', v)}
-                            />
-                        </Field>
-                        <Field label="Value" error={errors.value}>
-                            <TextField
-                                type="number"
-                                value={data.value}
-                                onChange={(v) => setData('value', v)}
-                            />
-                        </Field>
-                        <Field label="Description" error={errors.description}>
-                            <TextField
-                                value={data.description ?? ''}
-                                onChange={(v) => setData('description', v)}
-                            />
-                        </Field>
+                    <form
+                        onSubmit={submit}
+                        className="flex min-h-0 flex-1 flex-col gap-4 overflow-hidden"
+                    >
+                        <DialogBody className="space-y-4">
+                            <Field label="Key" error={errors.key}>
+                                <TextField
+                                    value={data.key}
+                                    onChange={(v) => setData("key", v)}
+                                />
+                            </Field>
+                            <Field label="Value" error={errors.value}>
+                                <TextField
+                                    type="number"
+                                    value={data.value}
+                                    onChange={(v) => setData("value", v)}
+                                />
+                            </Field>
+                            <Field
+                                label="Description"
+                                error={errors.description}
+                            >
+                                <TextField
+                                    value={data.description ?? ""}
+                                    onChange={(v) => setData("description", v)}
+                                />
+                            </Field>
+                        </DialogBody>
 
                         <DialogFooter>
                             <Button
@@ -208,7 +245,7 @@ export default function Index({ constants }: { constants: Constant[] }) {
                                 Cancel
                             </Button>
                             <Button type="submit" disabled={processing}>
-                                {processing ? 'Saving...' : 'Save'}
+                                {processing ? "Saving..." : "Save"}
                             </Button>
                         </DialogFooter>
                     </form>
