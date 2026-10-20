@@ -88,69 +88,77 @@ class PaymentService
 
     public function handleCallback(array $callback): ?MpesaTransaction
     {
-        $stk = $callback['Body']['stkCallback'] ?? null;
+        try {
+            $stk = $callback['Body']['stkCallback'] ?? null;
 
-        if (!$stk) {
-            Log::warning('M-PESA callback missing stkCallback', $callback);
-            return null;
-        }
+            if (!$stk) {
+                Log::warning('M-PESA callback missing stkCallback', $callback);
+                return null;
+            }
 
-        $checkoutId = $stk['CheckoutRequestID'] ?? null;
-        $resultCode = (string) ($stk['ResultCode'] ?? '-1');
+            $checkoutId = $stk['CheckoutRequestID'] ?? null;
+            $resultCode = (string) ($stk['ResultCode'] ?? '-1');
 
-        if (!$checkoutId) {
-            Log::warning('M-PESA callback missing CheckoutRequestID', $stk);
-            return null;
-        }
+            if (!$checkoutId) {
+                Log::warning('M-PESA callback missing CheckoutRequestID', $stk);
+                return null;
+            }
 
-        $tx = MpesaTransaction::where('checkout_request_id', $checkoutId)
-            ->where('type', 'stk')
-            ->first();
+            $tx = MpesaTransaction::where('checkout_request_id', $checkoutId)
+                ->where('type', 'stk')
+                ->first();
 
-        if (!$tx) {
-            Log::warning('M-PESA callback for unknown checkout', [
-                'checkout' => $checkoutId,
+            if (!$tx) {
+                Log::warning('M-PESA callback for unknown checkout', [
+                    'checkout' => $checkoutId,
+                ]);
+                return null;
+            }
+
+            // Idempotency: Safaricom retries callbacks. Ignore duplicates.
+            if (
+                in_array($tx->status, ['completed', 'failed'], true)
+                && $tx->completed_at !== null
+            ) {
+                Log::info('M-PESA duplicate callback ignored', [
+                    'checkout' => $checkoutId,
+                    'status' => $tx->status,
+                ]);
+                return $tx;
+            }
+
+            $meta = collect($stk['CallbackMetadata']['Item'] ?? [])
+                ->keyBy('Name')
+                ->map(fn($item) => $item['Value'] ?? null);
+
+            $success = $resultCode === '0';
+
+            $tx->update([
+                'status' => $success ? 'completed' : 'failed',
+                'result_code' => $resultCode,
+                'result_desc' => $stk['ResultDesc'] ?? null,
+                'mpesa_receipt_number' => $meta['MpesaReceiptNumber']
+                    ?? $tx->mpesa_receipt_number,
+                'callback_payload' => $callback,
+                'completed_at' => $success ? now() : null,
             ]);
-            return null;
-        }
 
-        // Idempotency: Safaricom retries callbacks. Ignore duplicates.
-        if (
-            in_array($tx->status, ['completed', 'failed'], true)
-            && $tx->completed_at !== null
-        ) {
-            Log::info('M-PESA duplicate callback ignored', [
-                'checkout' => $checkoutId,
-                'status' => $tx->status,
-            ]);
+            $tx = $tx->fresh();
+
+            if ($success) {
+                $this->applyPaymentSuccess($tx);
+            } else {
+                $this->applyPaymentFailure($tx);
+            }
+
             return $tx;
+        } catch (\Exception $e) {
+            Log::error('M-PESA callback error', [
+                'callback' => $callback,
+                'error' => $e->getMessage(),
+            ]);
+            return null;
         }
-
-        $meta = collect($stk['CallbackMetadata']['Item'] ?? [])
-            ->keyBy('Name')
-            ->map(fn($item) => $item['Value'] ?? null);
-
-        $success = $resultCode === '0';
-
-        $tx->update([
-            'status' => $success ? 'completed' : 'failed',
-            'result_code' => $resultCode,
-            'result_desc' => $stk['ResultDesc'] ?? null,
-            'mpesa_receipt_number' => $meta['MpesaReceiptNumber']
-                ?? $tx->mpesa_receipt_number,
-            'callback_payload' => $callback,
-            'completed_at' => $success ? now() : null,
-        ]);
-
-        $tx = $tx->fresh();
-
-        if ($success) {
-            $this->applyPaymentSuccess($tx);
-        } else {
-            $this->applyPaymentFailure($tx);
-        }
-
-        return $tx;
     }
 
     public function recordMpesaCodeClaim(Parcel $parcel, string $code): void
