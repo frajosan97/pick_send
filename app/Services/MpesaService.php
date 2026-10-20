@@ -107,7 +107,7 @@ class MpesaService
     | Initiates STK push to customer's phone for deposit payment processing
     */
     public function stkPush(
-        string $phone,
+        $phone,
         float $amount,
         string $reference,
         string $description
@@ -136,7 +136,7 @@ class MpesaService
             'PhoneNumber' => $phone,
             'CallBackURL' => $this->stkCallbackUrl,
             'AccountReference' => $reference ?? substr($phone, -9),
-            'TransactionDesc' => $description
+            'TransactionDesc' => $description ?? 'Pick and Send delivery',
         ];
 
         $response = Http::withToken($token)
@@ -164,7 +164,7 @@ class MpesaService
     | Processes Business to Customer payment for user withdrawals
     */
     public function processB2C(
-        string $phone,
+        $phone,
         float $amount,
         ?string $transactionId = null
     ): array {

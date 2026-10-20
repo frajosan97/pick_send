@@ -214,7 +214,7 @@ class PaymentService
             phone: $phone,
             amount: $dueNow,
             reference: $parcel->tracking_no,
-            description: 'Pick&Send delivery ' . $parcel->tracking_no,
+            description: 'Pick and Send delivery ' . $parcel->tracking_no,
         );
 
         // MpesaService returns stdClass — normalise to array once.
