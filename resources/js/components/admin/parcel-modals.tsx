@@ -448,7 +448,7 @@ export function CashCodModal({
                             </p>
                         )}
                     </DialogBody>
-                    <DialogFooter>
+                    <DialogFooter className="gap-2 pt-4">
                         <Button
                             type="button"
                             variant="outline"
