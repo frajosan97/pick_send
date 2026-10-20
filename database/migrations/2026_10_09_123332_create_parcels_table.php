@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('parcels', function (Blueprint $table) {
             $table->id();
-            $table->string('tracking_no')->unique();       // PS27010873
+            $table->string('tracking_no')->unique();        // PS27010873
             $table->string('handover_code', 4)->nullable(); // 4-digit pickup code
 
             // sender
@@ -19,8 +19,8 @@ return new class extends Migration {
             $table->enum('handover_mode', ['drop', 'collect', 'out']);
             $table->string('drop_point')->nullable();
             $table->string('pickup_address')->nullable();
-            $table->unsignedSmallInteger('parcel_count')->default(1); // for "how many today"
-            $table->boolean('shared_drop_fee')->default(false);       // already paid today
+            $table->unsignedSmallInteger('parcel_count')->default(1);
+            $table->boolean('shared_drop_fee')->default(false);
 
             // recipient
             $table->foreignId('recipient_id')->nullable()->constrained()->nullOnDelete();
@@ -32,9 +32,9 @@ return new class extends Migration {
             $table->string('contents_description');
             $table->decimal('estimated_worth', 12, 2)->default(0);
             $table->enum('kind', ['general', 'electronics']);
-            $table->string('weight_code')->nullable();      // general tier code
+            $table->string('weight_code')->nullable();
             $table->decimal('weight_kg', 8, 2)->nullable();
-            $table->string('electronic_code')->nullable();  // item code
+            $table->string('electronic_code')->nullable();
             $table->boolean('needs_packaging')->default(false);
 
             // money
@@ -46,18 +46,16 @@ return new class extends Migration {
             $table->enum('payment_option', [
                 'prepaid',
                 'cod_fee',
-                'cod_full'
+                'cod_full',
             ])->default('prepaid');
             $table->unsignedInteger('amount_due_now')->default(0);
-            $table->unsignedInteger('amount_paid')->default(0);
-            $table->string('mpesa_code')->nullable()->change();
+            $table->unsignedInteger('amount_paid')->default(0); // derived
             $table->unsignedInteger('total')->default(0);
             $table->unsignedInteger('points_earned')->default(0);
 
-            // payment
+            // payment hints (receipt lives on payments.mpesa_code)
             $table->string('payer_phone')->nullable();
-            $table->string('mpesa_code')->nullable();
-            $table->timestamp('paid_at')->nullable();
+            $table->timestamp('paid_at')->nullable(); // derived
 
             // status
             $table->enum('status', [
@@ -71,7 +69,7 @@ return new class extends Migration {
                 'at_pickup',
                 'collected',
                 'returned',
-                'cancelled'
+                'cancelled',
             ])->default('draft');
 
             $table->timestamps();
@@ -80,7 +78,6 @@ return new class extends Migration {
             $table->index(['recipient_phone', 'status']);
             $table->index('status');
             $table->index('sender_phone');
-            $table->index('tracking_no');
             $table->index('created_at');
         });
 

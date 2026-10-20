@@ -17,6 +17,10 @@ class PaymentService
     ) {
     }
 
+    /* -----------------------------------------------------------------
+     | Pricing helpers
+     | ----------------------------------------------------------------- */
+
     public function amountDueNow(string $option, int $total, int $cod): int
     {
         return match ($option) {
@@ -28,6 +32,10 @@ class PaymentService
             ),
         };
     }
+
+    /* -----------------------------------------------------------------
+     | Entry point — create/reuse payments, fire STK if needed
+     | ----------------------------------------------------------------- */
 
     public function initiateForParcel(Parcel $parcel, string $option): array
     {
@@ -52,29 +60,40 @@ class PaymentService
                 : Parcel::STATUS_PAYMENT_ON_DELIVERY,
         ])->save();
 
-        // Only create a delivery payment row when there is something to pay.
+        // Reuse the existing pending delivery payment if one exists —
+        // prevents duplicate rows when a retry hits this method twice.
         $delivery = null;
         if ($dueNow > 0) {
-            $delivery = Payment::create([
-                'parcel_id' => $parcel->id,
-                'user_id' => $parcel->sender_id,
-                'type' => 'delivery',
-                'amount' => $dueNow,
-                'phone' => $parcel->payer_phone ?: $parcel->sender_phone,
-                'status' => 'pending',
-                'confirmed_at' => null,
-            ]);
+            $delivery = Payment::firstOrCreate(
+                [
+                    'parcel_id' => $parcel->id,
+                    'type' => 'delivery',
+                    'status' => 'pending',
+                ],
+                [
+                    'user_id' => $parcel->sender_id,
+                    'amount' => $dueNow,
+                    'phone' => $parcel->payer_phone ?: $parcel->sender_phone,
+                    'reference' => $parcel->tracking_no,
+                    'confirmed_at' => null,
+                ]
+            );
         }
 
         if ($codOutstanding > 0) {
-            Payment::create([
-                'parcel_id' => $parcel->id,
-                'user_id' => $parcel->sender_id,
-                'type' => 'cod',
-                'amount' => $codOutstanding,
-                'phone' => $parcel->recipient_phone,
-                'status' => 'pending',
-            ]);
+            Payment::firstOrCreate(
+                [
+                    'parcel_id' => $parcel->id,
+                    'type' => 'cod',
+                    'status' => 'pending',
+                ],
+                [
+                    'user_id' => $parcel->sender_id,
+                    'amount' => $codOutstanding,
+                    'phone' => $parcel->recipient_phone,
+                    'reference' => $parcel->tracking_no,
+                ]
+            );
         }
 
         if ($dueNow <= 0) {
@@ -85,6 +104,10 @@ class PaymentService
 
         return $this->fireStkFor($parcel, $delivery, $dueNow);
     }
+
+    /* -----------------------------------------------------------------
+     | Callback — safely idempotent, resolves the parent payment
+     | ----------------------------------------------------------------- */
 
     public function handleCallback(array $callback): ?MpesaTransaction
     {
@@ -104,21 +127,22 @@ class PaymentService
                 return null;
             }
 
-            $tx = MpesaTransaction::where('checkout_request_id', $checkoutId)
-                ->where('type', 'stk')
+            $tx = MpesaTransaction::query()
+                ->stk()
+                ->where('checkout_request_id', $checkoutId)
                 ->first();
 
             if (!$tx) {
-                Log::warning('M-PESA callback for unknown checkout', [
-                    'checkout' => $checkoutId,
-                ]);
+                // Orphan callback — persist it for reconciliation instead of dropping.
+                $this->persistOrphanCallback($stk, $callback);
                 return null;
             }
 
-            // Idempotency: Safaricom retries callbacks. Ignore duplicates.
+            // Idempotency: Safaricom retries callbacks. callback_payload is set
+            // exactly once, on first successful processing (success OR failure).
             if (
-                in_array($tx->status, ['completed', 'failed'], true)
-                && $tx->completed_at !== null
+                $tx->callback_payload !== null
+                && in_array($tx->status, ['completed', 'failed'], true)
             ) {
                 Log::info('M-PESA duplicate callback ignored', [
                     'checkout' => $checkoutId,
@@ -145,33 +169,53 @@ class PaymentService
 
             $tx = $tx->fresh();
 
-            if ($success) {
-                $this->applyPaymentSuccess($tx);
-            } else {
-                $this->applyPaymentFailure($tx);
-            }
+            $success
+                ? $this->applyPaymentSuccess($tx)
+                : $this->applyPaymentFailure($tx);
 
             return $tx;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             Log::error('M-PESA callback error', [
                 'callback' => $callback,
                 'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
             ]);
             return null;
         }
     }
 
+    /* -----------------------------------------------------------------
+     | Manual receipt claim
+     | ----------------------------------------------------------------- */
+
     public function recordMpesaCodeClaim(Parcel $parcel, string $code): void
     {
         $code = strtoupper(trim($code));
 
-        $payment = Payment::where('parcel_id', $parcel->id)
+        /** @var Payment|null $payment */
+        $payment = Payment::query()
+            ->where('parcel_id', $parcel->id)
             ->where('type', 'delivery')
             ->where('status', 'pending')
             ->latest()
             ->first();
 
         if (!$payment) {
+            return;
+        }
+
+        // Don't stomp a claim while a live STK transaction is in flight —
+        // otherwise a user who pays manually *and* accepts the prompt ends
+        // up with two competing receipts on the same Payment.
+        $liveStk = $payment->mpesaTransactions()
+            ->whereIn('status', ['pending'])
+            ->exists();
+
+        if ($liveStk) {
+            Log::info('M-PESA manual claim deferred — STK still pending', [
+                'payment_id' => $payment->id,
+                'code' => $code,
+            ]);
             return;
         }
 
@@ -189,9 +233,14 @@ class PaymentService
         ]);
     }
 
+    /* -----------------------------------------------------------------
+     | Rollup — recompute denormalised parcel money state
+     | ----------------------------------------------------------------- */
+
     public function recalculateParcel(Parcel $parcel): void
     {
-        $paid = (int) Payment::where('parcel_id', $parcel->id)
+        $paid = (int) Payment::query()
+            ->where('parcel_id', $parcel->id)
             ->where('status', 'success')
             ->whereIn('type', ['delivery', 'cod'])
             ->sum('amount');
@@ -202,15 +251,24 @@ class PaymentService
         $parcel->markPaidState($paid, $fullyPaid);
     }
 
+    /* -----------------------------------------------------------------
+     | STK push
+     | ----------------------------------------------------------------- */
+
     private function fireStkFor(
         Parcel $parcel,
         Payment $delivery,
         int $dueNow
     ): array {
         $phone = $parcel->payer_phone ?: $parcel->sender_phone;
+        $e164 = formatPhoneNumber($phone);
 
+        // Create the transaction **already linked** to the payment.
+        // This is what makes applyPaymentSuccess() crash-proof: no more
+        // `payments.mpesa_transaction_id` reverse lookup.
         $tx = MpesaTransaction::create([
-            'phone' => formatPhoneNumber($phone),
+            'payment_id' => $delivery->id,
+            'phone' => $e164,
             'amount' => $dueNow,
             'reference' => $parcel->tracking_no,
             'description' => 'Pick&Send delivery ' . $parcel->tracking_no,
@@ -218,20 +276,42 @@ class PaymentService
             'type' => 'stk',
         ]);
 
-        $response = $this->mpesa->stkPush(
-            phone: $phone,
-            amount: $dueNow,
-            reference: $parcel->tracking_no,
-            description: 'Pick and Send delivery ' . $parcel->tracking_no,
-        );
+        try {
+            $response = $this->mpesa->stkPush(
+                phone: $phone,
+                amount: $dueNow,
+                reference: $parcel->tracking_no,
+                description: 'Pick and Send delivery ' . $parcel->tracking_no,
+            );
+        } catch (\Throwable $e) {
+            $tx->update([
+                'status' => 'failed',
+                'result_desc' => 'STK transport error: ' . $e->getMessage(),
+                'completed_at' => now(),
+            ]);
 
-        // MpesaService returns stdClass — normalise to array once.
-        $resp = is_object($response) ? (array) $response : (array) $response;
+            $this->notifier->paymentInitFailed($phone, $parcel);
+
+            Log::error('STK push transport error', [
+                'parcel' => $parcel->id,
+                'tx' => $tx->id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return [
+                'mpesa_tx' => $tx->fresh(),
+                'error' => 'We could not send the M-PESA prompt automatically. '
+                    . 'Please pay manually using the instructions below.',
+            ];
+        }
+
+        $resp = (array) $response;
 
         if (!($resp['success'] ?? false)) {
             $tx->update([
                 'status' => 'failed',
                 'result_desc' => $resp['message'] ?? 'STK Push was not accepted',
+                'completed_at' => now(),
             ]);
 
             $this->notifier->paymentInitFailed($phone, $parcel);
@@ -249,16 +329,11 @@ class PaymentService
             'checkout_request_id' => $transaction['CheckoutRequestID'] ?? null,
             'merchant_request_id' => $transaction['MerchantRequestID'] ?? null,
             'request_payload' => [
-                'phone' => formatPhoneNumber($phone),
+                'phone' => $e164,
                 'amount' => $dueNow,
                 'reference' => $parcel->tracking_no,
                 'description' => 'Pick&Send delivery ' . $parcel->tracking_no,
             ],
-        ]);
-
-        $delivery->update([
-            'mpesa_transaction_id' => $tx->id,
-            'reference' => $parcel->tracking_no,
         ]);
 
         $this->notifier->paymentPromptSent($phone, $parcel);
@@ -269,20 +344,54 @@ class PaymentService
         ];
     }
 
-    private function applyPaymentSuccess(MpesaTransaction $tx): void
-    {
-        // 1) Match by mpesa_transaction_id (STK flow).
-        $payment = Payment::where('mpesa_transaction_id', $tx->id)->first();
+    /* -----------------------------------------------------------------
+     | Payment resolution (shared by success & failure)
+     | ----------------------------------------------------------------- */
 
-        // 2) Fallback: manual code claim with the same receipt.
-        if (!$payment && $tx->mpesa_receipt_number) {
-            $payment = Payment::where('mpesa_code', $tx->mpesa_receipt_number)
+    /**
+     * Resolve the Payment a completed/failed M-PESA transaction belongs to.
+     *
+     * Priority:
+     *   1. explicit FK            (STK flow — how fireStkFor() created it)
+     *   2. manual receipt claim   (user typed a code; callback later matched)
+     *   3. reference+phone+amount (orphan C2B reconciled manually)
+     */
+    private function resolvePayment(MpesaTransaction $tx): ?Payment
+    {
+        if ($tx->payment_id) {
+            return $tx->payment;   // belongsTo — null if deleted
+        }
+
+        if ($tx->mpesa_receipt_number) {
+            $claimed = Payment::query()
+                ->where('mpesa_code', $tx->mpesa_receipt_number)
                 ->where('status', 'pending')
                 ->first();
+
+            if ($claimed) {
+                return $claimed;
+            }
         }
+
+        return Payment::query()
+            ->where('reference', $tx->reference)
+            ->where('phone', $tx->phone)
+            ->where('amount', $tx->amount)
+            ->where('status', 'pending')
+            ->first();
+    }
+
+    /* -----------------------------------------------------------------
+     | Success / failure handlers
+     | ----------------------------------------------------------------- */
+
+    private function applyPaymentSuccess(MpesaTransaction $tx): void
+    {
+        $payment = $this->resolvePayment($tx);
 
         if (!$payment) {
             Log::warning('M-PESA success with no matching payment', [
+                'tx' => $tx->id,
                 'checkout' => $tx->checkout_request_id,
                 'reference' => $tx->reference,
                 'receipt' => $tx->mpesa_receipt_number,
@@ -293,14 +402,17 @@ class PaymentService
         DB::transaction(function () use ($payment, $tx) {
             $payment->update([
                 'mpesa_code' => $tx->mpesa_receipt_number,
-                'mpesa_transaction_id' => $tx->id,
                 'amount' => (int) $tx->amount,
                 'status' => 'success',
                 'confirmed_at' => now(),
             ]);
 
-            $parcel = $payment->parcel;
+            // Back-fill the FK for the fallback paths (manual claim / C2B).
+            if ($tx->payment_id !== $payment->id) {
+                $tx->update(['payment_id' => $payment->id]);
+            }
 
+            $parcel = $payment->parcel;
             if (!$parcel) {
                 return;
             }
@@ -330,24 +442,17 @@ class PaymentService
 
     private function applyPaymentFailure(MpesaTransaction $tx): void
     {
-        // Match by transaction id, or by the claimed receipt (manual claim path).
-        $payment = Payment::where('mpesa_transaction_id', $tx->id)
-            ->where('status', 'pending')
-            ->first();
-
-        if (!$payment && $tx->mpesa_receipt_number) {
-            $payment = Payment::where('mpesa_code', $tx->mpesa_receipt_number)
-                ->where('status', 'pending')
-                ->first();
-        }
+        $payment = $this->resolvePayment($tx);
 
         if (!$payment) {
             return;
         }
 
+        // NOTE: we do **not** null out `mpesa_code` here anymore. If a receipt
+        // was stored by recordMpesaCodeClaim() and then a *different* STK for
+        // the same payment fails, wiping the code would destroy the claim.
         $payment->update([
             'status' => 'failed',
-            'mpesa_code' => null,
             'confirmed_at' => null,
         ]);
 
@@ -358,5 +463,40 @@ class PaymentService
                 $tx->result_desc ?? 'Payment failed'
             );
         }
+    }
+
+    /* -----------------------------------------------------------------
+     | Orphan callback persistence
+     | ----------------------------------------------------------------- */
+
+    private function persistOrphanCallback(array $stk, array $callback): void
+    {
+        $meta = collect($stk['CallbackMetadata']['Item'] ?? [])
+            ->keyBy('Name')
+            ->map(fn($item) => $item['Value'] ?? null);
+
+        $success = (string) ($stk['ResultCode'] ?? '-1') === '0';
+
+        MpesaTransaction::create([
+            'payment_id' => null,     // ← unlinked; admin reconciles
+            'checkout_request_id' => $stk['CheckoutRequestID'] ?? null,
+            'merchant_request_id' => $stk['MerchantRequestID'] ?? null,
+            'mpesa_receipt_number' => $meta['MpesaReceiptNumber'] ?? null,
+            'phone' => isset($meta['PhoneNumber'])
+                ? (string) $meta['PhoneNumber']
+                : 'unknown',
+            'amount' => (int) ($meta['Amount'] ?? 0),
+            'status' => $success ? 'completed' : 'failed',
+            'result_code' => (string) ($stk['ResultCode'] ?? '-1'),
+            'result_desc' => $stk['ResultDesc'] ?? null,
+            'type' => 'stk',
+            'callback_payload' => $callback,
+            'completed_at' => $success ? now() : null,
+        ]);
+
+        Log::warning('M-PESA orphan callback persisted for reconciliation', [
+            'checkout' => $stk['CheckoutRequestID'] ?? null,
+            'receipt' => $meta['MpesaReceiptNumber'] ?? null,
+        ]);
     }
 }

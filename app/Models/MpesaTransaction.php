@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
@@ -16,16 +17,17 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  *   - always filter by type='stk' when we mean "our STK pushes";
  *   - never delete rows (mark failed/completed instead);
  *   - never assume we own the whole table.
+ *
+ * Relation to payments:
+ *   One payment → many mpesa_transactions (retries, manual claims, C2B).
+ *   The FK lives here (`payment_id`), not on payments.
  */
 class MpesaTransaction extends Model
 {
-    /**
-     * Resolved from config in the constructor so the package's env
-     * override (MPESA_DB_TABLE) is honoured.
-     */
     protected $table;
 
     protected $fillable = [
+        'payment_id',
         'merchant_request_id',
         'checkout_request_id',
         'mpesa_receipt_number',
@@ -60,6 +62,19 @@ class MpesaTransaction extends Model
 
     /* ---------- relationships ---------- */
 
+    /**
+     * The payment this M-PESA attempt/confirmation belongs to.
+     *
+     * Nullable: unsolicited C2B confirmations, B2C reversals, or the
+     * very first STK push that failed before a Payment row was created
+     * may exist without a payment. PaymentService back-fills it once
+     * the transaction is matched.
+     */
+    public function payment(): BelongsTo
+    {
+        return $this->belongsTo(Payment::class);
+    }
+
     public function payer(): MorphTo
     {
         return $this->morphTo();
@@ -87,6 +102,14 @@ class MpesaTransaction extends Model
         return $q->where('type', 'stk');
     }
 
+    /**
+     * Only transactions already linked to a payment.
+     */
+    public function scopeLinked($q)
+    {
+        return $q->whereNotNull('payment_id');
+    }
+
     /* ---------- helpers ---------- */
 
     public function isPending(): bool
@@ -102,5 +125,10 @@ class MpesaTransaction extends Model
     public function isFailed(): bool
     {
         return $this->status === 'failed';
+    }
+
+    public function isLinked(): bool
+    {
+        return $this->payment_id !== null;
     }
 }

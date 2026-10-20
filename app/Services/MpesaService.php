@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\MpesaTransaction;
-use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -216,49 +215,5 @@ class MpesaService
             'success' => false,
             'message' => 'Error initiating B2C, please try again!',
         ];
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | B2C TRANSACTION DATA EXTRACTION
-    |--------------------------------------------------------------------------
-    | Extracts transaction ID, amount, phone number, name, and status from B2C result callback
-    */
-    public function extractTransactionData(array $response): array
-    {
-        $data = [
-            'transaction_id' => '',
-            'amount' => 0,
-            'phone_number' => '',
-            'name' => '',
-            'status' => 'failed'
-        ];
-
-        if (!isset($response['Result']['ResultParameters']['ResultParameter'])) {
-            return $data;
-        }
-
-        $parameters = $response['Result']['ResultParameters']['ResultParameter'];
-        $resultCode = $response['Result']['ResultCode'] ?? 1;
-
-        $data['status'] = $resultCode == 0 ? 'success' : 'failed';
-
-        foreach ($parameters as $parameter) {
-            switch ($parameter['Key']) {
-                case 'TransactionReceipt':
-                    $data['transaction_id'] = $parameter['Value'];
-                    break;
-                case 'TransactionAmount':
-                    $data['amount'] = (float) $parameter['Value'];
-                    break;
-                case 'ReceiverPartyPublicName':
-                    $receiverInfo = explode(' - ', $parameter['Value']);
-                    $data['phone_number'] = $receiverInfo[0] ?? '';
-                    $data['name'] = $receiverInfo[1] ?? '';
-                    break;
-            }
-        }
-
-        return $data;
     }
 }
