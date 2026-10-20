@@ -1,7 +1,5 @@
 <?php
 
-// app/Http/Controllers/aController.php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -13,7 +11,9 @@ use Inertia\Response;
 
 class DashboardController extends Controller
 {
-    public function __construct(private AdminReportService $reports) {}
+    public function __construct(private AdminReportService $reports)
+    {
+    }
 
     public function index(Request $request): Response
     {
@@ -24,7 +24,6 @@ class DashboardController extends Controller
         ]);
     }
 
-    /** Optional JSON endpoint if you want AJAX refresh without a full reload. */
     public function json(Request $request)
     {
         [$from, $to] = $this->range($request);
@@ -32,22 +31,67 @@ class DashboardController extends Controller
         return response()->json($this->reports->payload($from, $to));
     }
 
+    /**
+     * Resolve the requested window into [from, to], already normalised
+     * to start-of-day / end-of-day in app.timezone.
+     */
     private function range(Request $request): array
     {
+        $tz = config('app.timezone');
         $preset = $request->string('range', '30d')->toString();
 
-        return match ($preset) {
-            'today' => [today(), today()],
-            '7d' => [today()->subDays(6), today()],
-            '30d' => [today()->subDays(29), today()],
-            '90d' => [today()->subDays(89), today()],
-            'mtd' => [today()->startOfMonth(), today()],
-            'ytd' => [today()->startOfYear(), today()],
-            'custom' => [
-                Carbon::parse($request->input('from', today()->subDays(29)->toDateString())),
-                Carbon::parse($request->input('to', today()->toDateString())),
+        [$from, $to] = match ($preset) {
+            'today' => [now($tz)->startOfDay(), now($tz)->endOfDay()],
+
+            '7d' => [
+                now($tz)->subDays(6)->startOfDay(),
+                now($tz)->endOfDay(),
             ],
-            default => [today()->subDays(29), today()],
+
+            '30d' => [
+                now($tz)->subDays(29)->startOfDay(),
+                now($tz)->endOfDay(),
+            ],
+
+            '90d' => [
+                now($tz)->subDays(89)->startOfDay(),
+                now($tz)->endOfDay(),
+            ],
+
+            'mtd' => [now($tz)->startOfMonth(), now($tz)->endOfDay()],
+
+            'ytd' => [now($tz)->startOfYear(), now($tz)->endOfDay()],
+
+            'custom' => [
+                Carbon::parse(
+                    $request->input('from', today()->subDays(29)->toDateString()),
+                    $tz
+                )->startOfDay(),
+                Carbon::parse(
+                    $request->input('to', today()->toDateString()),
+                    $tz
+                )->endOfDay(),
+            ],
+
+            default => [
+                now($tz)->subDays(29)->startOfDay(),
+                now($tz)->endOfDay(),
+            ],
         };
+
+        // Reversed window → swap.
+        if ($from->greaterThan($to)) {
+            [$from, $to] = [
+                $to->copy()->startOfDay(),
+                $from->copy()->endOfDay(),
+            ];
+        }
+
+        // Cap absurdly wide ranges (protects the daily-series loop).
+        if ($from->diffInDays($to) > 366) {
+            $from = $to->copy()->subDays(366)->startOfDay();
+        }
+
+        return [$from, $to];
     }
 }

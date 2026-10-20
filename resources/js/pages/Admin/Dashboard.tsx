@@ -1,34 +1,40 @@
 // resources/js/pages/Admin/Dashboard.tsx
-import { Head, router } from '@inertiajs/react';
-import { useMemo, useState } from 'react';
+import { Head, router, usePage } from "@inertiajs/react";
+import { useMemo, useState } from "react";
 import {
     BarChart,
     Donut,
     Funnel,
     Kpi,
     LineChart,
-} from '@/components/admin/charts';
-import { toDateOnly } from '@/lib/date';
-import { densifySeries, type SeriesPoint } from '@/lib/series';
+} from "@/components/admin/charts";
+import { toDateOnly } from "@/lib/date";
+import { densifySeries, type SeriesPoint } from "@/lib/series";
 
 /* ---------- types ---------- */
 type Range = { from: string; to: string };
+
 type Kpis = {
     parcels_total: number;
     parcels_paid: number;
     parcels_delivered: number;
     parcels_returned: number;
     parcels_in_flight: number;
-    revenue: number;
+
+    // New names from AdminReportService
+    booked_revenue: number;
     collected: number;
+    collected_delivery: number;
     cod_collected: number;
     cod_fees: number;
     pack_fees: number;
+
     new_users: number;
     new_merchants: number;
     wallet_liability: number;
     points_outstanding: number;
 };
+
 type TownRow = {
     town: string;
     route: string;
@@ -51,7 +57,13 @@ type PaymentRow = {
     amount: number;
 };
 type SupplyRow = { frequency: string; status: string; count: number };
-type WalletRow = { type: string; count: number; amount: number };
+type WalletRow = {
+    type: string;
+    count: number;
+    credits: number;
+    debits: number;
+    net: number;
+};
 
 type Report = {
     range: Range;
@@ -65,41 +77,44 @@ type Report = {
     wallet: WalletRow[];
 };
 
-const fmt = (n: number) => 'KSh ' + Math.round(n).toLocaleString('en-KE');
-const num = (n: number) => Math.round(n).toLocaleString('en-KE');
+type RangeKey = "today" | "7d" | "30d" | "90d" | "mtd" | "ytd";
 
-const RANGE_LABELS: [string, string][] = [
-    ['today', 'Today'],
-    ['7d', 'Last 7 days'],
-    ['30d', 'Last 30 days'],
-    ['90d', 'Last 90 days'],
-    ['mtd', 'Month to date'],
-    ['ytd', 'Year to date'],
+const fmt = (n: number) => "KSh " + Math.round(n).toLocaleString("en-KE");
+const num = (n: number) => Math.round(n).toLocaleString("en-KE");
+
+const RANGE_LABELS: [RangeKey, string][] = [
+    ["today", "Today"],
+    ["7d", "Last 7 days"],
+    ["30d", "Last 30 days"],
+    ["90d", "Last 90 days"],
+    ["mtd", "Month to date"],
+    ["ytd", "Year to date"],
 ];
 
 const PAYMENT_PALETTE: Record<string, string> = {
-    delivery: '#4FD1C0',
-    cod: '#E3B04B',
-    withdrawal: '#F08A5D',
-    refund: '#7FB0F5',
-    points: '#A78BFA',
+    delivery: "#4FD1C0",
+    cod: "#E3B04B",
 };
 
 const WALLET_PALETTE: Record<string, string> = {
-    cod_credit: '#4FD1C0',
-    withdrawal: '#F08A5D',
-    points_redeem: '#A78BFA',
+    cod_credit: "#4FD1C0",
+    withdrawal: "#F08A5D",
+    points_redeem: "#A78BFA",
 };
 
-export default function Dashboard({ report }: { report: Report }) {
-    const [preset, setPreset] = useState<
-        'today' | '7d' | '30d' | '90d' | 'mtd' | 'ytd'
-    >('30d');
+export default function Dashboard({
+    report,
+    preset: initialPreset,
+}: {
+    report: Report;
+    preset?: RangeKey;
+}) {
+    const [preset, setPreset] = useState<RangeKey>(initialPreset ?? "30d");
 
-    const changeRange = (key: string) => {
-        setPreset(key as any);
+    const changeRange = (key: RangeKey) => {
+        setPreset(key);
         router.get(
-            '/admin/dashboard',
+            "/admin/dashboard",
             { range: key },
             { preserveScroll: true, preserveState: true },
         );
@@ -119,10 +134,10 @@ export default function Dashboard({ report }: { report: Report }) {
         [report.series, report.range.from, report.range.to],
     );
 
-    const labels = useMemo(() => series.map((s) => s.date), [series]);
-    const parcelValues = useMemo(() => series.map((s) => s.parcels), [series]);
-    const revenueValues = useMemo(() => series.map((s) => s.revenue), [series]);
-    const codValues = useMemo(() => series.map((s) => s.cod), [series]);
+    const labels = series.map((s) => s.date);
+    const parcelValues = series.map((s) => s.parcels);
+    const bookedRevenueValues = series.map((s) => s.booked_revenue);
+    const collectedValues = series.map((s) => s.collected);
 
     const paymentDonut = useMemo(() => {
         const map = new Map<string, number>();
@@ -134,21 +149,26 @@ export default function Dashboard({ report }: { report: Report }) {
             .map(([label, value]) => ({
                 label,
                 value,
-                color: PAYMENT_PALETTE[label] ?? '#94a3b8',
+                color: PAYMENT_PALETTE[label] ?? "#94a3b8",
             }));
     }, [payments]);
 
+    /**
+     * Wallet donut: use absolute `net` so credits and debits don't cancel.
+     * If you want to show gross flows instead, add a second Donut with
+     * credits/debits per type.
+     */
     const walletDonut = useMemo(() => {
         const map = new Map<string, number>();
         wallet.forEach((w) =>
-            map.set(w.type, (map.get(w.type) ?? 0) + Math.abs(w.amount)),
+            map.set(w.type, (map.get(w.type) ?? 0) + Math.abs(w.net)),
         );
         return [...map.entries()]
             .sort((a, b) => b[1] - a[1])
             .map(([label, value]) => ({
                 label,
                 value,
-                color: WALLET_PALETTE[label] ?? '#94a3b8',
+                color: WALLET_PALETTE[label] ?? "#94a3b8",
             }));
     }, [wallet]);
 
@@ -184,8 +204,8 @@ export default function Dashboard({ report }: { report: Report }) {
                                 onClick={() => changeRange(key)}
                                 className={`rounded-lg border px-3 py-1.5 text-[.82rem] font-semibold transition ${
                                     preset === key
-                                        ? 'border-ps-brand bg-ps-brand text-ps-onbrand'
-                                        : 'border-sidebar-border bg-card hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                                        ? "border-ps-brand bg-ps-brand text-ps-onbrand"
+                                        : "border-sidebar-border bg-card hover:bg-neutral-100 dark:hover:bg-neutral-800"
                                 }`}
                             >
                                 {label}
@@ -200,23 +220,21 @@ export default function Dashboard({ report }: { report: Report }) {
                 {/* primary KPIs */}
                 <div className="grid auto-rows-min gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     <Kpi
-                        label="Revenue (paid parcels)"
-                        value={fmt(kpis.revenue)}
+                        label="Booked revenue"
+                        value={fmt(kpis.booked_revenue)}
                         hint={`${num(kpis.parcels_paid)} paid · ${num(kpis.parcels_total)} booked`}
-                        trend={revenueValues}
+                        trend={bookedRevenueValues}
                         tone="brand"
                     />
                     <Kpi
                         label="Collected (M-PESA)"
                         value={fmt(kpis.collected)}
-                        hint={`COD collected ${fmt(kpis.cod_collected)}`}
-                        // removed trend: no matching daily series exists
+                        hint={`Delivery ${fmt(kpis.collected_delivery)} · COD ${fmt(kpis.cod_collected)}`}
                     />
                     <Kpi
                         label="In flight"
                         value={num(kpis.parcels_in_flight)}
                         hint={`${num(kpis.parcels_delivered)} delivered · ${num(kpis.parcels_returned)} returned`}
-                        // removed trend: stock, not a flow
                     />
                     <Kpi
                         label="Wallet liability"
@@ -260,20 +278,20 @@ export default function Dashboard({ report }: { report: Report }) {
                     </div>
                     <div className="rounded-xl border border-sidebar-border/70 bg-card p-4 dark:border-sidebar-border">
                         <h3 className="mb-3 text-[1rem] font-bold">
-                            Revenue vs COD
+                            Booked revenue vs collected
                         </h3>
                         <LineChart
                             labels={labels}
                             series={[
                                 {
-                                    name: 'Revenue',
-                                    values: revenueValues,
-                                    color: '#4FD1C0',
+                                    name: "Booked",
+                                    values: bookedRevenueValues,
+                                    color: "#4FD1C0",
                                 },
                                 {
-                                    name: 'COD',
-                                    values: codValues,
-                                    color: '#E3B04B',
+                                    name: "Collected",
+                                    values: collectedValues,
+                                    color: "#E3B04B",
                                 },
                             ]}
                         />
@@ -419,7 +437,7 @@ export default function Dashboard({ report }: { report: Report }) {
                 <div className="grid gap-4 lg:grid-cols-2">
                     <div className="rounded-xl border border-sidebar-border/70 bg-card p-4 dark:border-sidebar-border">
                         <h3 className="mb-3 text-[1rem] font-bold">
-                            Wallet activity
+                            Wallet activity (net)
                         </h3>
                         {walletDonut.length ? (
                             <Donut data={walletDonut} />
@@ -449,7 +467,7 @@ export default function Dashboard({ report }: { report: Report }) {
                                                 >
                                                     {r.status.replace(
                                                         /_/g,
-                                                        ' ',
+                                                        " ",
                                                     )}
                                                     <b className="tabular-nums">
                                                         {r.count}
@@ -478,5 +496,5 @@ export default function Dashboard({ report }: { report: Report }) {
 }
 
 Dashboard.layout = {
-    breadcrumbs: [{ title: 'Dashboard', href: '/admin/dashboard' }],
+    breadcrumbs: [{ title: "Dashboard", href: "/admin/dashboard" }],
 };
