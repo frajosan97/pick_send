@@ -105,6 +105,15 @@ class PaymentService
         return $this->fireStkFor($parcel, $delivery, $dueNow);
     }
 
+    public function retryStkFor(Parcel $parcel, Payment $payment): array
+    {
+        if ($payment->type !== 'delivery' || $payment->status !== 'pending') {
+            return ['mpesa_tx' => null, 'error' => 'Only pending delivery payments can be retried.'];
+        }
+
+        return $this->fireStkFor($parcel, $payment, (int) $payment->amount);
+    }
+
     /* -----------------------------------------------------------------
      | Callback — safely idempotent, resolves the parent payment
      | ----------------------------------------------------------------- */
@@ -498,5 +507,61 @@ class PaymentService
             'checkout' => $stk['CheckoutRequestID'] ?? null,
             'receipt' => $meta['MpesaReceiptNumber'] ?? null,
         ]);
+    }
+
+    public function recordCashCod(
+        Parcel $parcel,
+        int $amountReceived,
+        int $staffId,
+        ?string $note = null,
+    ): Payment {
+        if (
+            !in_array($parcel->payment_option, [
+                Parcel::PAYMENT_COD_FEE,
+                Parcel::PAYMENT_COD_FULL,
+            ], true)
+        ) {
+            throw new \DomainException('This parcel is not a COD parcel.');
+        }
+
+        $codPayment = $parcel->payments()
+            ->where('type', 'cod')
+            ->where('status', 'pending')
+            ->latest()
+            ->first();
+
+        if (!$codPayment) {
+            throw new \DomainException('No pending COD payment for this parcel.');
+        }
+
+        if ($amountReceived < (int) $codPayment->amount) {
+            throw new \DomainException(sprintf(
+                'Amount received (%d) is less than the COD amount (%d).',
+                $amountReceived,
+                $codPayment->amount,
+            ));
+        }
+
+        return DB::transaction(function () use ($parcel, $codPayment, $amountReceived, $staffId, $note, ) {
+            $codPayment->update([
+                'amount' => $amountReceived,   // may equal expected; overpay allowed
+                'status' => 'success',
+                'confirmed_at' => now(),
+                // mpesa_code stays null → this is how we know it was cash
+            ]);
+
+            $this->recalculateParcel($parcel);
+
+            $parcel->events()->create([
+                'status' => 'cash_cod',
+                'label' => 'Cash on Delivery received',
+                'description' => $note
+                    ?? sprintf('KSh %s collected by staff #%d', number_format($amountReceived), $staffId),
+                'staff_id' => $staffId,
+                'happened_at' => now(),
+            ]);
+
+            return $codPayment->fresh();
+        });
     }
 }

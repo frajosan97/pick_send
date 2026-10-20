@@ -95,4 +95,19 @@ class Payment extends Model
     {
         return $this->mpesaTransactions()->latest()->first();
     }
+
+    public function method(): string
+    {
+        if ($this->mpesa_code) {
+            return 'mpesa';
+        }
+
+        return match ($this->type) {
+            'cod' => 'cash',
+            'withdrawal',
+            'refund',
+            'points' => 'wallet',
+            default => 'other',
+        };
+    }
 }

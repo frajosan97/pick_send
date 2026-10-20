@@ -1,0 +1,1 @@
+function e(e){return e==null?`—`:`KSh `+Math.round(e).toLocaleString(`en-KE`)}function t(e){return e==null?`—`:Math.round(e).toLocaleString(`en-KE`)}export{t as n,e as t};

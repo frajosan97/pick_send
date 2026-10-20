@@ -1,5 +1,5 @@
 // resources/js/components/app-sidebar.tsx
-import { Link } from '@inertiajs/react';
+import { Link } from "@inertiajs/react";
 import {
     LayoutGrid,
     Settings,
@@ -9,11 +9,22 @@ import {
     Package,
     Map,
     HelpCircle,
-} from 'lucide-react';
-import AppLogo from '@/components/app-logo';
-import { NavFooter } from '@/components/nav-footer';
-import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
+    Smartphone,
+    Users,
+    Store,
+    UserCircle,
+    ShieldCheck,
+    Wallet,
+    Banknote,
+    Receipt,
+    Sparkles,
+    Boxes,
+    MapPin,
+} from "lucide-react";
+import AppLogo from "@/components/app-logo";
+import { NavFooter } from "@/components/nav-footer";
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
 import {
     Sidebar,
     SidebarContent,
@@ -22,39 +33,96 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-} from '@/components/ui/sidebar';
-import type { NavItem } from '@/types';
-import { dashboard } from '@/routes';
+} from "@/components/ui/sidebar";
+import type { NavItem } from "@/types";
+import { dashboard } from "@/routes";
 
 const mainNavItems: NavItem[] = [
     {
-        title: 'Dashboard',
+        title: "Dashboard",
         href: dashboard(),
         icon: LayoutGrid,
     },
     {
-        title: 'Settings',
-        href: '/admin',
+        title: "Parcels",
+        href: "/admin/parcels",
+        icon: Package,
+    },
+    {
+        title: "Payments",
+        href: "/admin/payments",
+        icon: Coins,
+    },
+    {
+        title: "M-PESA",
+        href: "/admin/mpesa",
+        icon: Smartphone,
+    },
+    {
+        title: "Users",
+        href: "/admin/users",
+        icon: Users,
+        children: [
+            { title: "Merchants", href: "/admin/users/merchants", icon: Store },
+            {
+                title: "Recipients",
+                href: "/admin/users/recipients",
+                icon: UserCircle,
+            },
+            { title: "Staff", href: "/admin/users/staff", icon: ShieldCheck },
+        ],
+    },
+    {
+        title: "Wallets",
+        href: "/admin/wallets",
+        icon: Wallet,
+        children: [
+            { title: "Balances", href: "/admin/wallets", icon: Wallet },
+            {
+                title: "Withdrawals",
+                href: "/admin/wallets/withdrawals",
+                icon: Banknote,
+            },
+            {
+                title: "Transactions",
+                href: "/admin/wallets/transactions",
+                icon: Receipt,
+            },
+        ],
+    },
+    {
+        title: "Points",
+        href: "/admin/points",
+        icon: Sparkles,
+    },
+    {
+        title: "Supply Requests",
+        href: "/admin/supply-requests",
+        icon: Boxes,
+    },
+    {
+        title: "Settings",
+        href: "/admin",
         icon: Settings,
         children: [
             {
-                title: 'Pricing Constants',
-                href: '/admin/pricing-constants',
+                title: "Pricing Constants",
+                href: "/admin/pricing-constants",
                 icon: Coins,
             },
             {
-                title: 'General Prices',
-                href: '/admin/general-prices',
+                title: "General Prices",
+                href: "/admin/general-prices",
                 icon: Tags,
             },
             {
-                title: 'Item Groups',
-                href: '/admin/item-groups',
+                title: "Item Groups",
+                href: "/admin/item-groups",
                 icon: FolderTree,
             },
-            { title: 'Items', href: '/admin/items', icon: Package },
-            { title: 'Routes', href: '/admin/routes', icon: Map },
-            { title: 'FAQs', href: '/admin/faqs', icon: HelpCircle },
+            { title: "Items", href: "/admin/items", icon: Package },
+            { title: "Routes", href: "/admin/routes", icon: Map },
+            { title: "FAQs", href: "/admin/faqs", icon: HelpCircle },
         ],
     },
 ];

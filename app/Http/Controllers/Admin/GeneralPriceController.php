@@ -13,7 +13,7 @@ class GeneralPriceController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('admin/general-prices/index', [
+        return Inertia::render('admin/settings/general-prices', [
             'prices' => GeneralPrice::orderBy('sort_order')->get(),
         ]);
     }

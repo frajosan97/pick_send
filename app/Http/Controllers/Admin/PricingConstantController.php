@@ -14,7 +14,7 @@ class PricingConstantController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('admin/pricing-constants/index', [
+        return Inertia::render('admin/settings/pricing-constants', [
             'constants' => PricingConstant::orderBy('key')->get(),
         ]);
     }

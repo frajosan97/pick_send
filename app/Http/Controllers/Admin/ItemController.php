@@ -14,7 +14,7 @@ class ItemController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('admin/items/index', [
+        return Inertia::render('admin/settings/items', [
             'items' => Item::with('group')->orderBy('sort_order')->get(),
             'groups' => ItemGroup::orderBy('name')->get(['id', 'name']),
         ]);

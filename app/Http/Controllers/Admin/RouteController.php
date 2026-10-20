@@ -13,7 +13,7 @@ class RouteController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('admin/routes/index', [
+        return Inertia::render('admin/settings/routes', [
             'routes' => Route::with('towns')->withCount('towns')->orderBy('name')->get(),
         ]);
     }

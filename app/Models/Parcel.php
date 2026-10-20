@@ -37,13 +37,75 @@ class Parcel extends Model
     public const STATUS_RETURNED = 'returned';
     public const STATUS_CANCELLED = 'cancelled';
 
+    // ADDED: alias so NotificationService::parcelStatusChanged() can use
+    // STATUS_DELIVERED without a fatal "undefined constant".
+    // "Delivered" and "collected" are the same terminal success state here.
+    public const STATUS_DELIVERED = self::STATUS_COLLECTED;
+
     // Statuses that may NOT be modified by generic update calls —
     // they represent money/lifecycle state and only services move them.
+    // FIXED: added RETURNED and CANCELLED (both are money-affecting).
     public const PROTECTED_STATUSES = [
         self::STATUS_PAID,
         self::STATUS_PAYMENT_ON_DELIVERY,
         self::STATUS_AWAITING_PAYMENT,
         self::STATUS_COLLECTED,
+        self::STATUS_RETURNED,   // ADDED
+        self::STATUS_CANCELLED,  // ADDED
+    ];
+
+    // ADDED: legal transitions. Any status may move to CANCELLED or RETURNED;
+    // the forward path is enforced to stop illegal jumps (draft → collected, etc.).
+    // Admin overrides can bypass this via transitionTo($status, force: true).
+    public const TRANSITIONS = [
+        self::STATUS_DRAFT => [
+            self::STATUS_BOOKED,
+            self::STATUS_AWAITING_PAYMENT,
+            self::STATUS_CANCELLED,
+        ],
+        self::STATUS_BOOKED => [
+            self::STATUS_AWAITING_PAYMENT,
+            self::STATUS_PAYMENT_ON_DELIVERY,
+            self::STATUS_RECEIVED,
+            self::STATUS_CANCELLED,
+        ],
+        self::STATUS_AWAITING_PAYMENT => [
+            self::STATUS_PAID,
+            self::STATUS_PAYMENT_ON_DELIVERY,
+            self::STATUS_CANCELLED,
+        ],
+        self::STATUS_PAYMENT_ON_DELIVERY => [
+            self::STATUS_PAID,
+            self::STATUS_RECEIVED,
+            self::STATUS_CANCELLED,
+        ],
+        self::STATUS_PAID => [
+            self::STATUS_RECEIVED,
+            self::STATUS_IN_TRANSIT,
+            self::STATUS_CANCELLED,
+            self::STATUS_RETURNED,
+        ],
+        self::STATUS_RECEIVED => [
+            self::STATUS_IN_TRANSIT,
+            self::STATUS_RETURNED,
+            self::STATUS_CANCELLED,
+        ],
+        self::STATUS_IN_TRANSIT => [
+            self::STATUS_AT_PICKUP,
+            self::STATUS_COLLECTED,
+            self::STATUS_RETURNED,
+            self::STATUS_CANCELLED,
+        ],
+        self::STATUS_AT_PICKUP => [
+            self::STATUS_COLLECTED,
+            self::STATUS_RETURNED,
+            self::STATUS_CANCELLED,
+        ],
+        self::STATUS_COLLECTED => [
+            self::STATUS_RETURNED, // e.g. refund path
+        ],
+        self::STATUS_RETURNED => [],
+        self::STATUS_CANCELLED => [],
     ];
 
     /**
@@ -112,8 +174,8 @@ class Parcel extends Model
         'cod_fee' => 'integer',
         'total' => 'integer',
         'points_earned' => 'integer',
-        'amount_due_now' => 'integer',  // added by migration
-        'amount_paid' => 'integer',  // added by migration
+        'amount_due_now' => 'integer',
+        'amount_paid' => 'integer',
 
         // booleans
         'needs_packaging' => 'boolean',
@@ -130,6 +192,8 @@ class Parcel extends Model
     protected $appends = [
         'is_paid',
         'is_cod',
+        'is_collected', // ADDED: symmetric with is_paid
+        'is_terminal',  // ADDED: handy for admin list guards
         'balance_due',
     ];
 
@@ -196,6 +260,16 @@ class Parcel extends Model
         return $q->whereNull('paid_at');
     }
 
+    public function scopeDraft($q) // ADDED
+    {
+        return $q->where('status', self::STATUS_DRAFT);
+    }
+
+    public function scopeBooked($q) // ADDED
+    {
+        return $q->where('status', self::STATUS_BOOKED);
+    }
+
     public function scopeAwaitingPayment($q)
     {
         return $q->where('status', self::STATUS_AWAITING_PAYMENT);
@@ -206,9 +280,49 @@ class Parcel extends Model
         return $q->where('status', self::STATUS_PAYMENT_ON_DELIVERY);
     }
 
-    public function scopeAwaitingCollection($q)
+    public function scopeInTransit($q) // ADDED
+    {
+        return $q->where('status', self::STATUS_IN_TRANSIT);
+    }
+
+    public function scopeAtPickup($q) // ADDED (renamed from awaitingCollection)
     {
         return $q->where('status', self::STATUS_AT_PICKUP);
+    }
+
+    /**
+     * FIXED: kept as a thin alias so existing call sites don't break.
+     * The scope name now matches the state it filters.
+     *
+     * @deprecated Use scopeAtPickup() instead.
+     */
+    public function scopeAwaitingCollection($q)
+    {
+        return $this->scopeAtPickup($q);
+    }
+
+    public function scopeCollected($q) // ADDED
+    {
+        return $q->where('status', self::STATUS_COLLECTED);
+    }
+
+    public function scopeReturned($q) // ADDED
+    {
+        return $q->where('status', self::STATUS_RETURNED);
+    }
+
+    public function scopeCancelled($q) // ADDED
+    {
+        return $q->where('status', self::STATUS_CANCELLED);
+    }
+
+    public function scopeTerminal($q) // ADDED
+    {
+        return $q->whereIn('status', [
+            self::STATUS_COLLECTED,
+            self::STATUS_RETURNED,
+            self::STATUS_CANCELLED,
+        ]);
     }
 
     public function scopeForMerchant($q, int $userId)
@@ -243,6 +357,62 @@ class Parcel extends Model
         ], true);
     }
 
+    // ADDED: status helper accessors, symmetric with isPaid()/isCod().
+    public function isDraft(): bool
+    {
+        return $this->status === self::STATUS_DRAFT;
+    }
+
+    public function isBooked(): bool
+    {
+        return $this->status === self::STATUS_BOOKED;
+    }
+
+    public function isReceived(): bool
+    {
+        return $this->status === self::STATUS_RECEIVED;
+    }
+
+    public function isInTransit(): bool
+    {
+        return $this->status === self::STATUS_IN_TRANSIT;
+    }
+
+    public function isAtPickup(): bool
+    {
+        return $this->status === self::STATUS_AT_PICKUP;
+    }
+
+    public function isCollected(): bool
+    {
+        // Alias accepted too, since STATUS_DELIVERED === STATUS_COLLECTED.
+        return $this->status === self::STATUS_COLLECTED;
+    }
+
+    public function isDelivered(): bool // ADDED: matches NotificationService vocabulary
+    {
+        return $this->isCollected();
+    }
+
+    public function isReturned(): bool
+    {
+        return $this->status === self::STATUS_RETURNED;
+    }
+
+    public function isCancelled(): bool
+    {
+        return $this->status === self::STATUS_CANCELLED;
+    }
+
+    public function isTerminal(): bool
+    {
+        return in_array($this->status, [
+            self::STATUS_COLLECTED,
+            self::STATUS_RETURNED,
+            self::STATUS_CANCELLED,
+        ], true);
+    }
+
     public function balanceDue(): int
     {
         return max(0, (int) $this->total - (int) $this->amount_paid);
@@ -257,6 +427,16 @@ class Parcel extends Model
     public function getIsCodAttribute(): bool
     {
         return $this->isCod();
+    }
+
+    public function getIsCollectedAttribute(): bool // ADDED
+    {
+        return $this->isCollected();
+    }
+
+    public function getIsTerminalAttribute(): bool // ADDED
+    {
+        return $this->isTerminal();
     }
 
     public function getBalanceDueAttribute(): int
@@ -285,15 +465,29 @@ class Parcel extends Model
     /**
      * Move the lifecycle status. Called ONLY by BookingService / admin UI.
      *
+     * FIXED: now validates the transition against self::TRANSITIONS,
+     * not just "the status exists in the map".
+     *
      * @internal
+     * @param  bool  $force  Bypass the transition map (admin override).
      */
-    public function transitionTo(string $status): void
+    public function transitionTo(string $status, bool $force = false): void
     {
-        if (
-            !in_array($status, self::PROTECTED_STATUSES, true)
-            && !array_key_exists($status, $this->statusMap())
-        ) {
+        if (!array_key_exists($status, $this->statusMap())) {
             throw new \InvalidArgumentException("Unknown parcel status: {$status}");
+        }
+
+        if ($status === $this->status) {
+            return; // no-op
+        }
+
+        if (!$force) {
+            $allowed = self::TRANSITIONS[$this->status] ?? [];
+            if (!in_array($status, $allowed, true)) {
+                throw new \InvalidArgumentException(
+                    "Cannot move parcel from {$this->status} to {$status}."
+                );
+            }
         }
 
         $this->forceFill(['status' => $status])->save();
@@ -317,6 +511,14 @@ class Parcel extends Model
             self::STATUS_RETURNED => 'Returned',
             self::STATUS_CANCELLED => 'Cancelled',
         ];
+    }
+
+    /**
+     * Statuses the current state may legally move to (for dropdowns).
+     */
+    public function nextStatuses(): array
+    {
+        return self::TRANSITIONS[$this->status] ?? [];
     }
 
     // ─────────────────────────────────────────────────────────────

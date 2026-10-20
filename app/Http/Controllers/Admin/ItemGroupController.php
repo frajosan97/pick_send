@@ -13,7 +13,7 @@ class ItemGroupController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('admin/item-groups/index', [
+        return Inertia::render('admin/settings/item-groups', [
             'groups' => ItemGroup::withCount('items')->orderBy('sort_order')->get(),
         ]);
     }

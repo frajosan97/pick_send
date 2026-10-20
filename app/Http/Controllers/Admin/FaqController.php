@@ -13,7 +13,7 @@ class FaqController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('admin/faqs/index', [
+        return Inertia::render('admin/settings/faqs', [
             'faqs' => Faq::orderBy('sort_order')->get(),
         ]);
     }
