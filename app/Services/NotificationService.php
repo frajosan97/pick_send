@@ -12,6 +12,10 @@ class NotificationService
     ) {
     }
 
+    /* =================================================================
+     | CORE
+     | ================================================================= */
+
     public function notify(?string $mobile, string $smsBody): void
     {
         if (!$mobile) {
@@ -22,14 +26,27 @@ class NotificationService
         $this->safe(fn() => $this->sms->sendSms($mobile, $smsBody), 'sms', $mobile);
     }
 
+    /**
+     * Pick the phone most relevant to the current event.
+     *
+     *   'sender'    — booking, cancellation, return, admin override
+     *   'recipient' — in transit, at pickup, delivered, cash received
+     *
+     * Falls back to the other party so an SMS is never silently dropped.
+     */
+    private function mobileFor(Parcel $parcel, string $prefer = 'recipient'): ?string
+    {
+        return $prefer === 'sender'
+            ? ($parcel->sender_phone ?? $parcel->recipient_phone)
+            : ($parcel->recipient_phone ?? $parcel->sender_phone);
+    }
+
     /* =================================================================
-     |  PARCEL LIFECYCLE
-     * =================================================================*/
+     | PARCEL LIFECYCLE
+     | ================================================================= */
 
     public function parcelBooked(Parcel $parcel): void
     {
-        $mobile = $parcel->sender_phone ?? $parcel->recipient_phone;
-
         $paymentLine = match ($parcel->payment_option) {
             Parcel::PAYMENT_PREPAID => "Pay KES {$parcel->amount_due_now} by M-PESA to complete the booking.",
             Parcel::PAYMENT_COD_FEE => "Pay KES {$parcel->amount_due_now} delivery fee by M-PESA. "
@@ -39,7 +56,7 @@ class NotificationService
         };
 
         $this->notify(
-            $mobile,
+            $this->mobileFor($parcel, 'sender'),
             "Your parcel {$parcel->tracking_no} has been booked. {$paymentLine} "
             . "Handover code: {$parcel->handover_code}."
         );
@@ -48,25 +65,28 @@ class NotificationService
     /**
      * Confirmed payment. $reference is the M-PESA receipt, cash ref, etc.
      * $method is 'M-PESA', 'Cash', ...
+     *
+     * $reference may be empty when the payment channel doesn't produce a
+     * receipt (e.g. admin override). The message degrades gracefully.
      */
-    public function parcelPaid(Parcel $parcel, string $reference, string $method = 'M-PESA'): void
+    public function parcelPaid(Parcel $parcel, string $reference = '', string $method = 'M-PESA'): void
     {
-        $mobile = $parcel->sender_phone ?? $parcel->recipient_phone;
+        $tail = $reference !== ''
+            ? " {$method}: {$reference}."
+            : '';
 
         $body = $parcel->isPaid()
-            ? "Payment received in full for parcel {$parcel->tracking_no}. {$method}: {$reference}. Thank you!"
+            ? "Payment received in full for parcel {$parcel->tracking_no}.{$tail} Thank you!"
             : "Delivery payment received for parcel {$parcel->tracking_no}. "
-            . "The recipient will pay KES {$parcel->balanceDue()} on delivery. {$method}: {$reference}.";
+            . "The recipient will pay KES {$parcel->balanceDue()} on delivery.{$tail}";
 
-        $this->notify($mobile, $body);
+        $this->notify($this->mobileFor($parcel, 'sender'), $body);
     }
 
     public function parcelMarkedPaidByAdmin(Parcel $parcel): void
     {
-        $mobile = $parcel->sender_phone ?? $parcel->recipient_phone;
-
         $this->notify(
-            $mobile,
+            $this->mobileFor($parcel, 'sender'),
             "Payment for parcel {$parcel->tracking_no} has been confirmed by our team. "
             . "You will be notified as it moves forward. Thank you."
         );
@@ -74,18 +94,19 @@ class NotificationService
 
     public function parcelPaymentVerifying(Parcel $parcel, string $reference): void
     {
-        $mobile = $parcel->sender_phone ?? $parcel->recipient_phone;
-
         $this->notify(
-            $mobile,
+            $this->mobileFor($parcel, 'sender'),
             "We received M-PESA code {$reference} for parcel {$parcel->tracking_no}. "
             . "It is being verified and you will be notified once confirmed."
         );
     }
 
+    /**
+     * $amountReceived is the amount APPLIED to the parcel (may be less
+     * than what the customer handed over if the balance was smaller).
+     */
     public function parcelCashReceived(Parcel $parcel, int $amountReceived): void
     {
-        $mobile = $parcel->recipient_phone ?? $parcel->sender_phone;
         $balance = $parcel->balanceDue();
 
         $body = $balance > 0
@@ -93,15 +114,13 @@ class NotificationService
             . "Remaining balance: KES {$balance}."
             : "Cash payment of KES {$amountReceived} received in full for parcel {$parcel->tracking_no}. Thank you!";
 
-        $this->notify($mobile, $body);
+        $this->notify($this->mobileFor($parcel, 'recipient'), $body);
     }
 
     public function parcelInTransit(Parcel $parcel): void
     {
-        $mobile = $parcel->recipient_phone ?? $parcel->sender_phone;
-
         $this->notify(
-            $mobile,
+            $this->mobileFor($parcel, 'recipient'),
             "Parcel {$parcel->tracking_no} is now in transit. "
             . 'Track: ' . route('parcels.show', $parcel->tracking_no)
         );
@@ -109,35 +128,31 @@ class NotificationService
 
     public function parcelAtPickup(Parcel $parcel): void
     {
-        $mobile = $parcel->recipient_phone ?? $parcel->sender_phone;
-
         $this->notify(
-            $mobile,
+            $this->mobileFor($parcel, 'recipient'),
             "Parcel {$parcel->tracking_no} is ready for collection. "
             . "Bring handover code {$parcel->handover_code}."
         );
     }
 
     /**
-     * Terminal success state. STATUS_DELIVERED is an alias for STATUS_COLLECTED.
+     * Terminal success state. Note: the schema uses STATUS_COLLECTED for
+     * "parcel has been picked up by the recipient". There is no
+     * STATUS_DELIVERED constant.
      */
-    public function parcelDelivered(Parcel $parcel): void
+    public function parcelCollected(Parcel $parcel): void
     {
-        $mobile = $parcel->recipient_phone ?? $parcel->sender_phone;
-
         $this->notify(
-            $mobile,
-            "Parcel {$parcel->tracking_no} has been delivered. "
-            . "Handover code: {$parcel->handover_code}."
+            $this->mobileFor($parcel, 'recipient'),
+            "Parcel {$parcel->tracking_no} has been collected. "
+            . "Thank you for using Pick & Send."
         );
     }
 
     public function parcelReturned(Parcel $parcel): void
     {
-        $mobile = $parcel->sender_phone ?? $parcel->recipient_phone;
-
         $this->notify(
-            $mobile,
+            $this->mobileFor($parcel, 'sender'),
             "Parcel {$parcel->tracking_no} is being returned. "
             . "Please contact support for details."
         );
@@ -145,10 +160,8 @@ class NotificationService
 
     public function parcelCancelled(Parcel $parcel): void
     {
-        $mobile = $parcel->sender_phone ?? $parcel->recipient_phone;
-
         $this->notify(
-            $mobile,
+            $this->mobileFor($parcel, 'sender'),
             "Parcel {$parcel->tracking_no} has been cancelled. "
             . "If a payment was made, a refund will be processed."
         );
@@ -161,20 +174,19 @@ class NotificationService
     public function parcelStatusChanged(Parcel $parcel, string $status): bool
     {
         return match ($status) {
-            Parcel::STATUS_IN_TRANSIT => tap(true, fn() => $this->parcelInTransit($parcel)),
-            Parcel::STATUS_AT_PICKUP => tap(true, fn() => $this->parcelAtPickup($parcel)),
-            Parcel::STATUS_DELIVERED => tap(true, fn() => $this->parcelDelivered($parcel)),
-            Parcel::STATUS_RETURNED => tap(true, fn() => $this->parcelReturned($parcel)),
-            Parcel::STATUS_CANCELLED => tap(true, fn() => $this->parcelCancelled($parcel)),
-                // Admin-set 'paid' has no real reference — use override message.
-            Parcel::STATUS_PAID => tap(true, fn() => $this->parcelMarkedPaidByAdmin($parcel)),
+            Parcel::STATUS_IN_TRANSIT => $this->tapTrue(fn() => $this->parcelInTransit($parcel)),
+            Parcel::STATUS_AT_PICKUP => $this->tapTrue(fn() => $this->parcelAtPickup($parcel)),
+            Parcel::STATUS_COLLECTED => $this->tapTrue(fn() => $this->parcelCollected($parcel)),
+            Parcel::STATUS_RETURNED => $this->tapTrue(fn() => $this->parcelReturned($parcel)),
+            Parcel::STATUS_CANCELLED => $this->tapTrue(fn() => $this->parcelCancelled($parcel)),
+            Parcel::STATUS_PAID => $this->tapTrue(fn() => $this->parcelMarkedPaidByAdmin($parcel)),
             default => false,
         };
     }
 
     /* =================================================================
-     |  PAYMENT PROMPTS / FAILURES
-     * =================================================================*/
+     | PAYMENT PROMPTS / FAILURES
+     | ================================================================= */
 
     public function paymentPromptSent(string $mobile, Parcel $parcel): void
     {
@@ -201,6 +213,20 @@ class NotificationService
             "Payment for parcel {$parcel->tracking_no} was not completed. "
             . "Reason: {$reason}. Please try again."
         );
+    }
+
+    /* =================================================================
+     | HELPERS
+     | ================================================================= */
+
+    /**
+     * Run a void closure and return true. Keeps parcelStatusChanged()
+     * branch arms one-liners without the noisy `tap(true, ...)`.
+     */
+    private function tapTrue(callable $fn): bool
+    {
+        $fn();
+        return true;
     }
 
     protected function safe(callable $fn, string $channel, string $mobile): void
