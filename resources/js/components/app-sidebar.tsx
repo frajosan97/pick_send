@@ -9,7 +9,6 @@ import {
     Package,
     Map,
     HelpCircle,
-    Smartphone,
     Users,
     Store,
     UserCircle,
@@ -19,7 +18,6 @@ import {
     Receipt,
     Sparkles,
     Boxes,
-    MapPin,
 } from "lucide-react";
 import AppLogo from "@/components/app-logo";
 import { NavFooter } from "@/components/nav-footer";
@@ -52,11 +50,6 @@ const mainNavItems: NavItem[] = [
         title: "Payments",
         href: "/admin/payments",
         icon: Coins,
-    },
-    {
-        title: "M-PESA",
-        href: "/admin/mpesa",
-        icon: Smartphone,
     },
     {
         title: "Users",
