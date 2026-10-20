@@ -2,49 +2,28 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-/**
- * Transport-layer record for a single M-PESA request.
- *
- * Backed by `mpesa_transactions` (the FelixMuhoro\Mpesa package's table,
- * overridable via config('mpesa.database.table')).
- *
- * Because the package also writes to this table, we:
- *   - tag our own rows with type='stk';
- *   - always filter by type='stk' when we mean "our STK pushes";
- *   - never delete rows (mark failed/completed instead);
- *   - never assume we own the whole table.
- *
- * Relation to payments:
- *   One payment → many mpesa_transactions (retries, manual claims, C2B).
- *   The FK lives here (`payment_id`), not on payments.
- */
 class MpesaTransaction extends Model
 {
-    protected $table;
+    use HasFactory;
 
-    protected $fillable = [
-        'payment_id',
-        'merchant_request_id',
-        'checkout_request_id',
-        'mpesa_receipt_number',
-        'phone',
-        'amount',
-        'reference',
-        'description',
-        'status',
-        'result_code',
-        'result_desc',
-        'type',
-        'request_payload',
-        'callback_payload',
-        'payer_type',
-        'payer_id',
-        'completed_at',
-    ];
+    /* Type */
+    public const TYPE_STK = 'stk';
+    public const TYPE_C2B = 'c2b';
+    public const TYPE_B2C = 'b2c';
+    public const TYPE_REVERSAL = 'reversal';
+
+    /* Status */
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_COMPLETED = 'completed';
+    public const STATUS_FAILED = 'failed';
+
+    protected $guarded = [];
 
     protected $casts = [
         'amount' => 'integer',
@@ -53,82 +32,75 @@ class MpesaTransaction extends Model
         'completed_at' => 'datetime',
     ];
 
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-
-        $this->table = config('mpesa.database.table', 'mpesa_transactions');
-    }
-
-    /* ---------- relationships ---------- */
+    /* -----------------------------------------------------------------
+     | Relationships
+     | ----------------------------------------------------------------- */
 
     /**
-     * The payment this M-PESA attempt/confirmation belongs to.
-     *
-     * Nullable: unsolicited C2B confirmations, B2C reversals, or the
-     * very first STK push that failed before a Payment row was created
-     * may exist without a payment. PaymentService back-fills it once
-     * the transaction is matched.
+     * The payment this receipt settles. NULL until reconciled.
+     * DB: UNIQUE(payment_id) — a payment can only ever receive one tx.
      */
     public function payment(): BelongsTo
     {
         return $this->belongsTo(Payment::class);
     }
 
+    /** The payer entity (user, parcel, etc.) when known. */
     public function payer(): MorphTo
     {
         return $this->morphTo();
     }
 
-    /* ---------- scopes ---------- */
+    /* -----------------------------------------------------------------
+     | Scopes
+     | ----------------------------------------------------------------- */
 
-    public function scopePending($q)
+    public function scopeStk(Builder $q): Builder
     {
-        return $q->where('status', 'pending');
+        return $q->where('type', self::TYPE_STK);
     }
 
-    public function scopeCompleted($q)
+    public function scopeC2b(Builder $q): Builder
     {
-        return $q->where('status', 'completed');
+        return $q->where('type', self::TYPE_C2B);
     }
 
-    public function scopeFailed($q)
+    public function scopePending(Builder $q): Builder
     {
-        return $q->where('status', 'failed');
+        return $q->where('status', self::STATUS_PENDING);
     }
 
-    public function scopeStk($q)
+    public function scopeCompleted(Builder $q): Builder
     {
-        return $q->where('type', 'stk');
+        return $q->where('status', self::STATUS_COMPLETED);
     }
 
-    /**
-     * Only transactions already linked to a payment.
-     */
-    public function scopeLinked($q)
+    public function scopeOrphan(Builder $q): Builder
     {
-        return $q->whereNotNull('payment_id');
+        return $q->whereNull('payment_id');
     }
 
-    /* ---------- helpers ---------- */
+    /* -----------------------------------------------------------------
+     | Helpers
+     | ----------------------------------------------------------------- */
+
+    public function isOrphan(): bool
+    {
+        return $this->payment_id === null;
+    }
 
     public function isPending(): bool
     {
-        return $this->status === 'pending';
+        return $this->status === self::STATUS_PENDING;
     }
 
     public function isCompleted(): bool
     {
-        return $this->status === 'completed';
+        return $this->status === self::STATUS_COMPLETED;
     }
 
     public function isFailed(): bool
     {
-        return $this->status === 'failed';
-    }
-
-    public function isLinked(): bool
-    {
-        return $this->payment_id !== null;
+        return $this->status === self::STATUS_FAILED;
     }
 }

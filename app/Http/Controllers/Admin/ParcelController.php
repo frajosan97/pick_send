@@ -37,7 +37,7 @@ class ParcelController extends Controller
             ->when($f['from'], fn($q) => $q->where('created_at', '>=', $f['from']))
             ->when($f['to'], fn($q) => $q->where('created_at', '<=', $f['to']))
             ->orderBy($f['sort'], $f['dir'])
-            ->limit(1000)  // DataTables handles client-side paging
+            ->limit(1000)
             ->get()
             ->map(fn(Parcel $p) => [
                 'id' => $p->id,
@@ -53,6 +53,7 @@ class ParcelController extends Controller
                 'amount_paid' => (int) $p->amount_paid,
                 'balance_due' => $p->balanceDue(),
                 'is_paid' => $p->isPaid(),
+                'points_earned' => (int) $p->points_earned,
                 'created_at' => $p->created_at?->toIso8601String(),
                 'paid_at' => $p->paid_at?->toIso8601String(),
             ])
@@ -88,7 +89,7 @@ class ParcelController extends Controller
             'town:id,name,route_id',
             'town.route:id,slug,name',
             'payments' => fn($q) => $q->orderByDesc('created_at'),
-            'payments.mpesaTransactions' => fn($q) => $q->orderByDesc('created_at'),
+            'payments.mpesaTransaction',   // single tx per payment
             'events' => fn($q) => $q->orderByDesc('happened_at'),
             'events.staff:id,name',
         ]);
@@ -152,34 +153,33 @@ class ParcelController extends Controller
                 ],
 
                 'payments' => $parcel->payments->map(function (Payment $pay) {
-                    $method = $pay->method();
+                    $tx = $pay->mpesaTransaction;
                     return [
                         'id' => $pay->id,
                         'type' => $pay->type,
-                        'method' => $method,
+                        'method' => $pay->method(),
+                        'channel' => $pay->channel,
                         'amount' => (int) $pay->amount,
                         'status' => $pay->status,
-                        'mpesa_code' => $pay->mpesa_code,
+                        'mpesa_code' => $tx?->mpesa_receipt_number,
                         'reference' => $pay->reference,
                         'phone' => $pay->phone,
                         'confirmed_at' => $pay->confirmed_at?->toIso8601String(),
                         'created_at' => $pay->created_at?->toIso8601String(),
-                        'mpesa_transactions' => $method === 'mpesa'
-                            ? $pay->mpesaTransactions->map(fn($tx) => [
-                                'id' => $tx->id,
-                                'status' => $tx->status,
-                                'type' => $tx->type,
-                                'amount' => (int) $tx->amount,
-                                'phone' => $tx->phone,
-                                'checkout_request_id' => $tx->checkout_request_id,
-                                'merchant_request_id' => $tx->merchant_request_id,
-                                'mpesa_receipt_number' => $tx->mpesa_receipt_number,
-                                'result_code' => $tx->result_code,
-                                'result_desc' => $tx->result_desc,
-                                'completed_at' => $tx->completed_at?->toIso8601String(),
-                                'created_at' => $tx->created_at?->toIso8601String(),
-                            ])->values()->all()
-                            : null,
+                        'mpesa_transaction' => $tx ? [
+                            'id' => $tx->id,
+                            'status' => $tx->status,
+                            'type' => $tx->type,
+                            'amount' => (int) $tx->amount,
+                            'phone' => $tx->phone,
+                            'checkout_request_id' => $tx->checkout_request_id,
+                            'merchant_request_id' => $tx->merchant_request_id,
+                            'mpesa_receipt_number' => $tx->mpesa_receipt_number,
+                            'result_code' => $tx->result_code,
+                            'result_desc' => $tx->result_desc,
+                            'completed_at' => $tx->completed_at?->toIso8601String(),
+                            'created_at' => $tx->created_at?->toIso8601String(),
+                        ] : null,
                     ];
                 })->values()->all(),
 

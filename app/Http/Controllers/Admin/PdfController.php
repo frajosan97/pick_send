@@ -10,7 +10,13 @@ use Illuminate\Http\Response;
 
 class PdfController extends Controller
 {
-    public function download(Request $request, Parcel $parcel): Response
+    /**
+     * Relationships required by reports/parcels/pdf.blade.php.
+     *
+     * NOTE: `payments.mpesaTransaction` is singular — one receipt max per
+     * payment, enforced at DB level (UNIQUE(payment_id)).
+     */
+    private function payload(Parcel $parcel, string $mode): array
     {
         $parcel->load([
             'sender:id,name,business_name,phone',
@@ -18,37 +24,27 @@ class PdfController extends Controller
             'town:id,name,route_id',
             'town.route:id,slug,name',
             'payments' => fn($q) => $q->orderByDesc('created_at'),
-            'payments.mpesaTransactions' => fn($q) => $q->orderByDesc('created_at'),
+            'payments.mpesaTransaction',       // singular — one receipt max
             'events' => fn($q) => $q->orderByDesc('happened_at'),
             'events.staff:id,name',
         ]);
 
-        $pdf = Pdf::loadView('reports.parcels.pdf', [
+        return [
             'parcel' => $parcel,
-            'mode' => 'pdf',
+            'mode' => $mode,
             'generatedAt' => now(),
-        ]);
+        ];
+    }
+
+    public function download(Request $request, Parcel $parcel): Response
+    {
+        $pdf = Pdf::loadView('reports.parcels.pdf', $this->payload($parcel, 'pdf'));
 
         return $pdf->download("{$parcel->tracking_no}.pdf");
     }
 
     public function print(Request $request, Parcel $parcel): Response
     {
-        $parcel->load([
-            'sender:id,name,business_name,phone',
-            'recipient:id,name,phone',
-            'town:id,name,route_id',
-            'town.route:id,slug,name',
-            'payments' => fn($q) => $q->orderByDesc('created_at'),
-            'payments.mpesaTransactions' => fn($q) => $q->orderByDesc('created_at'),
-            'events' => fn($q) => $q->orderByDesc('happened_at'),
-            'events.staff:id,name',
-        ]);
-
-        return response()->view('reports.parcels.pdf', [
-            'parcel' => $parcel,
-            'mode' => 'print',
-            'generatedAt' => now(),
-        ]);
+        return response()->view('reports.parcels.pdf', $this->payload($parcel, 'print'));
     }
 }

@@ -550,14 +550,18 @@
                 <tbody>
                     @foreach ($parcel->payments as $pay)
                         @php
-                            $method = $pay->method();
-                            $pillClass = match ($pay->status) {
+                            $tx = $pay->mpesaTransaction;      // singular receipt
+                            $method = $pay->method();          // 'mpesa' | 'cash'
+                            $receipt = $tx?->mpesa_receipt_number;
+
+                            $statusPill = match ($pay->status) {
                                 'success' => 'pill-success',
                                 'pending' => 'pill-pending',
                                 'failed' => 'pill-failed',
                                 default => 'pill-other',
                             };
-                            $methodClass = match ($method) {
+
+                            $methodPill = match ($method) {
                                 'mpesa' => 'pill-mpesa',
                                 'cash' => 'pill-cash',
                                 'wallet' => 'pill-wallet',
@@ -567,10 +571,14 @@
                         <tr>
                             <td>{{ $pay->created_at?->format('d M H:i') ?? '—' }}</td>
                             <td>{{ strtoupper($pay->type) }}</td>
-                            <td><span class="pill {{ $methodClass }}">{{ strtoupper($method) }}</span></td>
-                            <td><span class="pill {{ $pillClass }}">{{ strtoupper($pay->status) }}</span></td>
+                            <td>
+                                <span class="pill {{ $methodPill }}">{{ strtoupper($method) }}</span>
+                            </td>
+                            <td>
+                                <span class="pill {{ $statusPill }}">{{ strtoupper($pay->status) }}</span>
+                            </td>
                             <td class="num">KSh {{ number_format((int) $pay->amount) }}</td>
-                            <td class="mono">{{ $pay->mpesa_code ?? $pay->reference ?? '—' }}</td>
+                            <td class="mono">{{ $receipt ?? $pay->reference ?? '—' }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -606,38 +614,38 @@
     {{-- ================= PDF page footer (Dompdf only) ================= --}}
     @if ($mode === 'pdf')
         <script type="text/php">
-                    if (isset($pdf)) {
-                        $text = 'Generated '
-                            . $generatedAt->format('d M Y')
-                            . ' · '
-                            . $generatedAt->format('H:i')
-                            . ' · Pick & Send · '
-                            . $parcel->tracking_no;
+                        if (isset($pdf)) {
+                            $text = 'Generated '
+                                . $generatedAt->format('d M Y')
+                                . ' · '
+                                . $generatedAt->format('H:i')
+                                . ' · Pick & Send · '
+                                . $parcel->tracking_no;
 
-                        $font = $fontMetrics->get_font('Helvetica', 'normal');
-                        $size = 8;
-                        $color = [0.36, 0.42, 0.51];
-                        $y = $pdf->get_height() - 28;
+                            $font = $fontMetrics->get_font('Helvetica', 'normal');
+                            $size = 8;
+                            $color = [0.36, 0.42, 0.51];
+                            $y = $pdf->get_height() - 28;
 
-                        $pdf->page_text(
-                            40,
-                            $y,
-                            $text,
-                            $font,
-                            $size,
-                            $color
-                        );
+                            $pdf->page_text(
+                                40,
+                                $y,
+                                $text,
+                                $font,
+                                $size,
+                                $color
+                            );
 
-                        $pdf->page_text(
-                            $pdf->get_width() - 100,
-                            $y,
-                            'Page {PAGE_NUM} of {PAGE_COUNT}',
-                            $font,
-                            $size,
-                            $color
-                        );
-                    }
-                </script>
+                            $pdf->page_text(
+                                $pdf->get_width() - 100,
+                                $y,
+                                'Page {PAGE_NUM} of {PAGE_COUNT}',
+                                $font,
+                                $size,
+                                $color
+                            );
+                        }
+                    </script>
     @endif
 
 </body>

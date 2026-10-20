@@ -1,6 +1,7 @@
 // src/components/pickandsend/SendParcel.tsx
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useForm } from "@inertiajs/react";
+import { toast } from "sonner";
 import type { Config } from "@/types/config";
 import { fmt, makePricing, toNum } from "@/lib/pricing";
 import { Block } from "./Block";
@@ -21,6 +22,49 @@ import {
     WRAP,
 } from "./shared";
 import type { FlashBooking, PaymentOption } from "./shared";
+
+/**
+ * Payment options that require an M-PESA number at booking time.
+ * cod_full does not — the recipient pays everything at the door.
+ */
+const MPESA_REQUIRED_OPTIONS: ReadonlySet<PaymentOption> = new Set([
+    "prepaid",
+    "cod_fee",
+]);
+
+/**
+ * Payment options that require a Cash-on-Delivery amount.
+ */
+const COD_REQUIRED_OPTIONS: ReadonlySet<PaymentOption> = new Set([
+    "cod_fee",
+    "cod_full",
+]);
+
+function firstErrorMessage(errors: Record<string, string>): string {
+    const first = Object.values(errors)[0];
+    return typeof first === "string" && first.length
+        ? first
+        : "Please check the form — some fields need attention.";
+}
+
+/**
+ * Safely coerce booking.rows into an array of [label, value] pairs.
+ * The backend may omit `rows` on some flash paths (e.g. cod_full
+ * summaries built without payment lines), and undefined/null entries
+ * would otherwise crash the destructure in .map(([k, v]) => …).
+ */
+function normaliseRows(
+    rows: FlashBooking["rows"] | undefined | null,
+): Array<[string, string]> {
+    if (!Array.isArray(rows)) return [];
+    return rows.reduce<Array<[string, string]>>((acc, row, i) => {
+        if (!Array.isArray(row) || row.length < 2) return acc;
+        const [k, v] = row;
+        if (k === undefined || k === null) return acc;
+        acc.push([String(k), v == null ? "" : String(v)]);
+        return acc;
+    }, []);
+}
 
 export function SendParcel({
     config,
@@ -89,11 +133,17 @@ export function SendParcel({
         errors: fErr,
         processing: sending,
         post: postParcel,
+        clearErrors,
     } = parcelForm;
 
-    const set = (k: keyof typeof f, v: any) => setF(k as any, v);
-    const on = (k: keyof typeof f) => (e: any) =>
-        setF(k as any, e.target.value);
+    const set = useCallback(
+        (k: keyof typeof f, v: any) => setF(k as any, v),
+        [setF],
+    );
+    const on = useCallback(
+        (k: keyof typeof f) => (e: any) => setF(k as any, e.target.value),
+        [setF],
+    );
 
     const p = useMemo(() => pricing.price(f), [f, pricing]);
     const cod = toNum(f.cod);
@@ -111,17 +161,60 @@ export function SendParcel({
         }
     }, [f.payment_option, total, cod]);
 
-    const codRequired =
-        f.payment_option === "cod_fee" || f.payment_option === "cod_full";
+    const needsMpesaNumber = MPESA_REQUIRED_OPTIONS.has(f.payment_option);
+    const codRequired = COD_REQUIRED_OPTIONS.has(f.payment_option);
+
+    // Centralised payment-option switch:
+    //  - clears the M-PESA number when switching to cod_full (nobody
+    //    pays via M-PESA now, and the server will null it anyway);
+    //  - clears the COD amount when switching to prepaid (the server
+    //    rejects prepaid + cod);
+    //  - clears stale validation errors on the fields we just touched
+    //    so the user doesn't keep seeing a red border on a hidden field.
+    const choosePaymentOption = useCallback(
+        (option: PaymentOption) => {
+            setF("payment_option", option);
+            if (option === "cod_full") {
+                setF("paynum", "");
+                clearErrors("paynum");
+            }
+            if (option === "prepaid") {
+                setF("cod", "");
+                clearErrors("cod");
+            }
+            if (option !== "cod_full") {
+                clearErrors("paynum");
+            }
+        },
+        [setF, clearErrors],
+    );
 
     const submitSend = (e?: React.FormEvent) => {
         e?.preventDefault();
+
+        // Track what actually happened so onFinish can distinguish
+        // validation failure, success and a hard server/network
+        // exception (which never fires onError).
+        let outcome: "success" | "error" | "exception" = "exception";
+
         postParcel("/parcels", {
             preserveScroll: true,
+            onError: (errors) => {
+                outcome = "error";
+                toast.error(firstErrorMessage(errors));
+            },
             onSuccess: () => {
+                outcome = "success";
                 document
                     .getElementById("send-out")
                     ?.scrollIntoView({ block: "nearest" });
+            },
+            onFinish: () => {
+                if (outcome === "exception") {
+                    toast.error(
+                        "Something went wrong on our side. Please try again.",
+                    );
+                }
             },
         });
     };
@@ -146,9 +239,24 @@ export function SendParcel({
     const submitPay = (e: React.FormEvent) => {
         e.preventDefault();
         if (!booking) return;
+
+        let outcome: "success" | "error" | "exception" = "exception";
+
         payForm.post(`/parcels/${booking.parcel.tracking_no}/confirm-payment`, {
             preserveScroll: true,
-            onSuccess: () => payForm.reset(),
+            onError: (errors) => {
+                outcome = "error";
+                toast.error(firstErrorMessage(errors));
+            },
+            onSuccess: () => {
+                outcome = "success";
+                payForm.reset();
+            },
+            onFinish: () => {
+                if (outcome === "exception") {
+                    toast.error("Could not submit the code. Please try again.");
+                }
+            },
         });
     };
 
@@ -161,6 +269,21 @@ export function SendParcel({
             ))}
         </optgroup>
     ));
+
+    // Safe rows used in the receipt render. Computed once per render,
+    // memoised so the .map below doesn't allocate twice.
+    const receiptRows = useMemo(() => normaliseRows(booking?.rows), [booking]);
+
+    // Dynamic copy for the M-PESA field so the sender understands who
+    // it is for in each mode.
+    const paynumLabel =
+        f.payment_option === "cod_fee"
+            ? "Your M-PESA number (to pay the delivery fee)"
+            : "M-PESA number that will pay";
+    const paynumHint =
+        f.payment_option === "cod_fee"
+            ? "We send the delivery-fee prompt to this number. The recipient pays for the goods on delivery."
+            : "We send the M-PESA payment prompt to this number.";
 
     return (
         <Block id="send">
@@ -421,43 +544,12 @@ export function SendParcel({
 
                     {/* ─── Payment method ─────────────────────────── */}
                     <Part n="4" title="Payment">
-                        <Fld
-                            id="p-paynum"
-                            label="M-PESA number that will pay"
-                            type="tel"
-                            placeholder="07XX XXX XXX"
-                            autoComplete="off"
-                            hint="We send the M-PESA payment prompt to this number."
-                            value={f.paynum}
-                            onChange={on("paynum")}
-                            error={fErr.paynum}
-                        />
-                        <Fld
-                            id="p-cod"
-                            label="Cash on Delivery amount (KSh)"
-                            inputMode="numeric"
-                            placeholder={
-                                codRequired ? "e.g. 5,000" : "Not applicable"
-                            }
-                            autoComplete="off"
-                            hidden={f.payment_option === "prepaid"}
-                            hint={
-                                f.payment_option === "cod_fee"
-                                    ? "The amount the recipient pays you for the goods on delivery."
-                                    : "The full amount the recipient pays at the door (goods + delivery)."
-                            }
-                            value={f.cod}
-                            onChange={on("cod")}
-                            error={fErr.cod}
-                        />
                         <Choice label="How would you like to pay?" cols={1}>
                             <Opt
                                 type="radio"
                                 name="payment_option"
                                 checked={f.payment_option === "prepaid"}
-                                onChange={() =>
-                                    set("payment_option", "prepaid")
-                                }
+                                onChange={() => choosePaymentOption("prepaid")}
                             >
                                 Pay the full amount now via M-PESA
                             </Opt>
@@ -465,9 +557,7 @@ export function SendParcel({
                                 type="radio"
                                 name="payment_option"
                                 checked={f.payment_option === "cod_fee"}
-                                onChange={() =>
-                                    set("payment_option", "cod_fee")
-                                }
+                                onChange={() => choosePaymentOption("cod_fee")}
                             >
                                 Pay the delivery fee now, recipient pays the
                                 goods on delivery (COD)
@@ -476,14 +566,54 @@ export function SendParcel({
                                 type="radio"
                                 name="payment_option"
                                 checked={f.payment_option === "cod_full"}
-                                onChange={() =>
-                                    set("payment_option", "cod_full")
-                                }
+                                onChange={() => choosePaymentOption("cod_full")}
                             >
                                 Recipient pays everything on delivery (no M-PESA
                                 now)
                             </Opt>
                         </Choice>
+
+                        {/* M-PESA number: only rendered when something is
+                            actually due now. cod_full hides it entirely. */}
+                        {needsMpesaNumber && (
+                            <Fld
+                                id="p-paynum"
+                                label={paynumLabel}
+                                type="tel"
+                                placeholder="07XX XXX XXX"
+                                autoComplete="off"
+                                hint={paynumHint}
+                                value={f.paynum}
+                                onChange={on("paynum")}
+                                error={fErr.paynum}
+                            />
+                        )}
+
+                        {/* COD amount: only rendered for the two COD modes. */}
+                        {codRequired && (
+                            <Fld
+                                id="p-cod"
+                                label="Cash on Delivery amount (KSh)"
+                                inputMode="numeric"
+                                placeholder="e.g. 5,000"
+                                autoComplete="off"
+                                hint={
+                                    f.payment_option === "cod_fee"
+                                        ? "The amount the recipient pays you for the goods on delivery."
+                                        : "The full amount the recipient pays at the door (goods + delivery)."
+                                }
+                                value={f.cod}
+                                onChange={on("cod")}
+                                error={fErr.cod}
+                            />
+                        )}
+
+                        {f.payment_option === "cod_full" && (
+                            <p className="rounded-[10px] bg-ps-soft px-3.5 py-3 text-[.92rem] font-semibold text-ps-softink">
+                                No M-PESA number is needed — the recipient pays
+                                the full amount at the door.
+                            </p>
+                        )}
                     </Part>
 
                     {/* ─── Summary + submit ───────────────────────── */}
@@ -564,7 +694,7 @@ export function SendParcel({
                                         "text-ps-key",
                                     )}
                                 >
-                                    {booking.who[0]}
+                                    {booking.who?.[0] ?? "Booked"}
                                 </span>
                                 <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
                                     <span
@@ -575,20 +705,23 @@ export function SendParcel({
                                     </span>
                                     <div className="flex min-w-0 flex-1 basis-[180px] flex-col">
                                         <b className="text-white">
-                                            {booking.who[1]}
+                                            {booking.who?.[1] ?? ""}
                                         </b>
-                                        <span>{booking.who[2]}</span>
+                                        <span>{booking.who?.[2] ?? ""}</span>
                                     </div>
                                     <div className="flex flex-col items-end rounded-[10px] border-[1.5px] border-dashed border-ps-key px-3.5 py-1.5">
                                         <span className="text-[.75rem] font-bold tracking-[.08em] uppercase">
                                             Handover code
                                         </span>
                                         <b className="font-mono text-[1.7rem] tracking-[.18em] text-white">
-                                            {booking.parcel.handover_code}
+                                            {booking.parcel?.handover_code ??
+                                                "—"}
                                         </b>
                                     </div>
                                 </div>
-                                <p className="text-white">{booking.who[3]}</p>
+                                <p className="text-white">
+                                    {booking.who?.[3] ?? ""}
+                                </p>
                             </div>
 
                             {booking.amount_due_now > 0 && (
@@ -605,7 +738,7 @@ export function SendParcel({
                                         <p className="rounded-[10px] bg-ps-soft px-3.5 py-3 text-[.92rem] font-semibold text-ps-softink">
                                             We sent an M-PESA prompt to{" "}
                                             <b>
-                                                {booking.parcel.payer_phone ??
+                                                {booking.parcel?.payer_phone ??
                                                     "your phone"}
                                             </b>
                                             . Enter your PIN to pay{" "}
@@ -614,74 +747,81 @@ export function SendParcel({
                                         </p>
                                     )}
 
-                                    {showManualCode && (
-                                        <>
-                                            <p className="rounded-[10px] bg-ps-soft px-3.5 py-3 text-[.92rem] font-semibold text-ps-softink">
-                                                The automatic prompt did not go
-                                                through. Pay manually using the
-                                                steps below, then paste the
-                                                M-PESA code.
-                                            </p>
-                                            <ol className="m-0 flex flex-col gap-1.5 pl-[22px]">
-                                                <li>
-                                                    Open M-PESA, choose{" "}
-                                                    <b>Lipa na M-PESA</b>, then{" "}
-                                                    <b>
-                                                        Buy Goods and Services
-                                                    </b>
-                                                    .
-                                                </li>
-                                                <li>
-                                                    Enter Till number{" "}
-                                                    <b className="font-mono">
-                                                        [TILL NO.]
-                                                    </b>
-                                                    .
-                                                </li>
-                                                <li>
-                                                    Enter{" "}
-                                                    <b>
-                                                        {fmt(
-                                                            booking.amount_due_now,
-                                                        )}
-                                                    </b>{" "}
-                                                    and your M-PESA PIN.
-                                                </li>
-                                            </ol>
-                                            <form
-                                                onSubmit={submitPay}
-                                                className="flex flex-col gap-3"
-                                            >
-                                                <Fld
-                                                    id="pay-code"
-                                                    label="M-PESA confirmation code"
-                                                    placeholder="e.g. SJK4XY12AB"
-                                                    autoComplete="off"
-                                                    hint="It is in the M-PESA message you get after paying."
-                                                    className="font-mono uppercase"
-                                                    value={payForm.data.code}
-                                                    onChange={(e: any) =>
-                                                        payForm.setData(
-                                                            "code",
-                                                            e.target.value.toUpperCase(),
-                                                        )
-                                                    }
-                                                    error={payForm.errors.code}
-                                                />
-                                                <button
-                                                    type="submit"
-                                                    disabled={
-                                                        payForm.processing
-                                                    }
-                                                    className={`${PRIMARY} self-start disabled:opacity-60`}
+                                    {showManualCode &&
+                                        booking.parcel?.tracking_no && (
+                                            <>
+                                                <p className="rounded-[10px] bg-ps-soft px-3.5 py-3 text-[.92rem] font-semibold text-ps-softink">
+                                                    The automatic prompt did not
+                                                    go through. Pay manually
+                                                    using the steps below, then
+                                                    paste the M-PESA code.
+                                                </p>
+                                                <ol className="m-0 flex flex-col gap-1.5 pl-[22px]">
+                                                    <li>
+                                                        Open M-PESA, choose{" "}
+                                                        <b>Lipa na M-PESA</b>,
+                                                        then{" "}
+                                                        <b>
+                                                            Buy Goods and
+                                                            Services
+                                                        </b>
+                                                        .
+                                                    </li>
+                                                    <li>
+                                                        Enter Till number{" "}
+                                                        <b className="font-mono">
+                                                            [TILL NO.]
+                                                        </b>
+                                                        .
+                                                    </li>
+                                                    <li>
+                                                        Enter{" "}
+                                                        <b>
+                                                            {fmt(
+                                                                booking.amount_due_now,
+                                                            )}
+                                                        </b>{" "}
+                                                        and your M-PESA PIN.
+                                                    </li>
+                                                </ol>
+                                                <form
+                                                    onSubmit={submitPay}
+                                                    className="flex flex-col gap-3"
                                                 >
-                                                    {payForm.processing
-                                                        ? "Sending…"
-                                                        : "Submit code for verification"}
-                                                </button>
-                                            </form>
-                                        </>
-                                    )}
+                                                    <Fld
+                                                        id="pay-code"
+                                                        label="M-PESA confirmation code"
+                                                        placeholder="e.g. SJK4XY12AB"
+                                                        autoComplete="off"
+                                                        hint="It is in the M-PESA message you get after paying."
+                                                        className="font-mono uppercase"
+                                                        value={
+                                                            payForm.data.code
+                                                        }
+                                                        onChange={(e: any) =>
+                                                            payForm.setData(
+                                                                "code",
+                                                                e.target.value.toUpperCase(),
+                                                            )
+                                                        }
+                                                        error={
+                                                            payForm.errors.code
+                                                        }
+                                                    />
+                                                    <button
+                                                        type="submit"
+                                                        disabled={
+                                                            payForm.processing
+                                                        }
+                                                        className={`${PRIMARY} self-start disabled:opacity-60`}
+                                                    >
+                                                        {payForm.processing
+                                                            ? "Sending…"
+                                                            : "Submit code for verification"}
+                                                    </button>
+                                                </form>
+                                            </>
+                                        )}
                                 </div>
                             )}
 
@@ -737,16 +877,30 @@ export function SendParcel({
                                     </span>
                                 </div>
                                 <dl className="m-0 grid grid-cols-1 gap-x-4 gap-y-1.5 text-[.95rem] sm:grid-cols-[minmax(90px,auto)_1fr]">
-                                    {booking.rows.map(([k, v]) => (
-                                        <div key={k} className="contents">
+                                    {receiptRows.length === 0 ? (
+                                        <div className="contents">
                                             <dt className="text-ps-muted">
-                                                {k}
+                                                Status
                                             </dt>
                                             <dd className="m-0 min-w-0 font-semibold break-words max-sm:mb-2">
-                                                {v}
+                                                Booking recorded.
                                             </dd>
                                         </div>
-                                    ))}
+                                    ) : (
+                                        receiptRows.map(([k, v], i) => (
+                                            <div
+                                                key={`${k}-${i}`}
+                                                className="contents"
+                                            >
+                                                <dt className="text-ps-muted">
+                                                    {k}
+                                                </dt>
+                                                <dd className="m-0 min-w-0 font-semibold break-words max-sm:mb-2">
+                                                    {v}
+                                                </dd>
+                                            </div>
+                                        ))
+                                    )}
                                 </dl>
                             </div>
 

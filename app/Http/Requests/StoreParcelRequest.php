@@ -14,6 +14,34 @@ class StoreParcelRequest extends FormRequest
         return true;
     }
 
+    /**
+     * Normalise the payload BEFORE validation runs.
+     *
+     * The frontend clears paynum to "" when the user picks cod_full
+     * (nobody pays via M-PESA at booking time). But `nullable` only
+     * skips validation for null, not for "". An empty string still
+     * hits the regex rule and fails, which is why the user was
+     * seeing "The paynum field is required" / regex errors on a
+     * hidden field.
+     *
+     * Coercing "" -> null here means:
+     *   - cod_full  + paynum ""  -> null -> requiredIf false -> passes
+     *   - prepaid   + paynum ""  -> null -> requiredIf true  -> fails (correct)
+     *   - prepaid   + paynum set -> untouched -> passes
+     */
+    protected function prepareForValidation(): void
+    {
+        if ($this->input('paynum') === '') {
+            $this->merge(['paynum' => null]);
+        }
+
+        // cod_full never carries an M-PESA number; drop any stale
+        // value a client might still submit.
+        if ($this->input('payment_option') === Parcel::PAYMENT_COD_FULL) {
+            $this->merge(['paynum' => null]);
+        }
+    }
+
     public function rules(): array
     {
         return [
@@ -41,7 +69,19 @@ class StoreParcelRequest extends FormRequest
             'pack' => ['boolean'],
 
             // ── payment ─────────────────────────────────────────────
-            'paynum' => ['required', 'string', 'regex:/^0?7\d{8}$|^2547\d{8}$/'],
+            // paynum is only required when some amount is due now,
+            // i.e. prepaid or cod_fee. For cod_full nobody pays via
+            // M-PESA at booking time, so the number is not needed.
+            'paynum' => [
+                Rule::requiredIf(fn() => in_array(
+                    $this->input('payment_option'),
+                    [Parcel::PAYMENT_PREPAID, Parcel::PAYMENT_COD_FEE],
+                    true
+                )),
+                'nullable',
+                'string',
+                'regex:/^0?7\d{8}$|^2547\d{8}$/',
+            ],
             'cod' => ['nullable', 'numeric', 'min:0', 'max:1000000'],
 
             // The one field that drives everything downstream.
@@ -135,7 +175,14 @@ class StoreParcelRequest extends FormRequest
             'pack' => (bool) $this->input('pack', false),
 
             // payment
-            'paynum' => $this->input('paynum'),
+            // Normalise paynum to null for cod_full so nothing
+            // downstream accidentally treats an empty string as a
+            // real phone number. (prepareForValidation() already
+            // handles this, but keeping it here as defence-in-depth
+            // if payload() is called from elsewhere.)
+            'paynum' => $this->input('payment_option') === Parcel::PAYMENT_COD_FULL
+                ? null
+                : ($this->filled('paynum') ? $this->input('paynum') : null),
             'cod' => (int) round((float) $this->input('cod', 0)),
             'payment_option' => $this->input('payment_option'),
         ];

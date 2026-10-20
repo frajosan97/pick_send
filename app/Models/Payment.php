@@ -2,33 +2,58 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Payment extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-    protected $fillable = [
-        'parcel_id',
-        'user_id',
-        'type',
-        'amount',
-        'mpesa_code',
-        'phone',
-        'reference',
-        'status',
-        'confirmed_at',
-    ];
+    /* -----------------------------------------------------------------
+     | Type  (must match the `payments.type` enum)
+     | ----------------------------------------------------------------- */
+
+    public const TYPE_DELIVERY = 'delivery';
+    public const TYPE_COD = 'cod';
+    public const TYPE_WITHDRAWAL = 'withdrawal';
+    public const TYPE_REFUND = 'refund';
+    public const TYPE_POINTS = 'points';
+
+    /* -----------------------------------------------------------------
+     | Status  (must match the `payments.status` enum)
+     | ----------------------------------------------------------------- */
+
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_SUCCESS = 'success';
+    public const STATUS_FAILED = 'failed';
+
+    /* -----------------------------------------------------------------
+     | Channel  (must match the `payments.channel` enum)
+     | ----------------------------------------------------------------- */
+
+    public const CHANNEL_PENDING = 'pending';
+    public const CHANNEL_MPESA = 'mpesa';
+    public const CHANNEL_CASH = 'cash';
+    public const CHANNEL_WALLET = 'wallet';
+    public const CHANNEL_MANUAL = 'manual';
+
+    /* -----------------------------------------------------------------
+     | Attributes
+     | ----------------------------------------------------------------- */
+
+    protected $guarded = [];
 
     protected $casts = [
         'amount' => 'integer',
         'confirmed_at' => 'datetime',
     ];
 
-    /* ---------- relationships ---------- */
+    /* -----------------------------------------------------------------
+     | Relationships
+     | ----------------------------------------------------------------- */
 
     public function parcel(): BelongsTo
     {
@@ -41,73 +66,83 @@ class Payment extends Model
     }
 
     /**
-     * Every M-PESA attempt / confirmation tied to this payment.
-     * A payment may have several (failed STK + retry, manual code claim,
-     * C2B confirmation, etc.).
+     * The single M-PESA transaction attached to this payment.
+     *
+     * The DB enforces UNIQUE(payment_id) on mpesa_transactions, so this
+     * returns at most one row. `latestOfMany()` is defence-in-depth for
+     * legacy data.
      */
-    public function mpesaTransactions(): HasMany
+    public function mpesaTransaction(): HasOne
     {
-        return $this->hasMany(MpesaTransaction::class);
+        return $this->hasOne(MpesaTransaction::class)->latestOfMany();
     }
 
-    /* ---------- scopes ---------- */
+    /* -----------------------------------------------------------------
+     | Status helpers
+     | ----------------------------------------------------------------- */
 
-    public function scopePending($q)
+    public function isSettled(): bool
     {
-        return $q->where('status', 'pending');
+        return $this->status === self::STATUS_SUCCESS;
     }
-
-    public function scopeSuccess($q)
-    {
-        return $q->where('status', 'success');
-    }
-
-    public function scopeFailed($q)
-    {
-        return $q->where('status', 'failed');
-    }
-
-    public function scopeOfType($q, string $type)
-    {
-        return $q->where('type', $type);
-    }
-
-    /* ---------- helpers ---------- */
 
     public function isPending(): bool
     {
-        return $this->status === 'pending';
+        return $this->status === self::STATUS_PENDING;
     }
-    public function isSuccessful(): bool
-    {
-        return $this->status === 'success';
-    }
+
     public function isFailed(): bool
     {
-        return $this->status === 'failed';
+        return $this->status === self::STATUS_FAILED;
+    }
+
+    /* -----------------------------------------------------------------
+     | Money-source helpers
+     | ----------------------------------------------------------------- */
+
+    /**
+     * True if this payment was settled via M-PESA.
+     *
+     * Three-tier check (cheapest first):
+     *   1. denormalised `channel` column — the fast path, set by
+     *      PaymentService::attachReceipt() at finalisation.
+     *   2. preloaded `mpesaTransaction` relation — hit when the caller
+     *      eager-loaded it (e.g. admin show, PDF view).
+     *   3. linked transaction via exists() — the safety net for legacy
+     *      rows whose channel was never stamped.
+     */
+    public function isMpesa(): bool
+    {
+        if ($this->channel === self::CHANNEL_MPESA) {
+            return true;
+        }
+
+        if ($this->relationLoaded('mpesaTransaction')) {
+            return $this->mpesaTransaction !== null;
+        }
+
+        return $this->mpesaTransaction()->exists();
     }
 
     /**
-     * The most recent M-PESA transaction for this payment, if any.
-     * Useful for showing "last attempt" in the UI.
+     * Coarse "how was this paid" label — what the UI shows.
+     * Only 'mpesa' or 'cash'; wallet/manual collapse into 'cash'.
      */
-    public function latestTransaction(): ?MpesaTransaction
-    {
-        return $this->mpesaTransactions()->latest()->first();
-    }
-
     public function method(): string
     {
-        if ($this->mpesa_code) {
-            return 'mpesa';
+        return $this->isMpesa() ? 'mpesa' : 'cash';
+    }
+
+    /**
+     * Human-facing receipt number, if any.
+     * Fast when the relation is loaded; hits the DB otherwise.
+     */
+    public function receiptNumber(): ?string
+    {
+        if ($this->relationLoaded('mpesaTransaction')) {
+            return $this->mpesaTransaction?->mpesa_receipt_number;
         }
 
-        return match ($this->type) {
-            'cod' => 'cash',
-            'withdrawal',
-            'refund',
-            'points' => 'wallet',
-            default => 'other',
-        };
+        return $this->mpesaTransaction()->value('mpesa_receipt_number');
     }
 }

@@ -6,7 +6,9 @@ use App\Models\Parcel;
 use App\Models\ParcelEvent;
 use App\Models\Town;
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class BookingService
 {
@@ -14,13 +16,19 @@ class BookingService
     {
     }
 
+    /* =================================================================
+     | CREATE
+     | ================================================================= */
+
     public function create(array $data, array $price, ?User $sender = null): Parcel
     {
         return DB::transaction(function () use ($data, $price, $sender) {
             [, $townName] = array_pad(explode('|', $data['rtown']), 2, null);
             $town = Town::where('name', $townName)->firstOrFail();
 
-            $parcel = Parcel::create([
+            $cod = (int) ($data['cod'] ?? 0);
+
+            $parcel = $this->createWithUniqueCodes([
                 'sender_id' => $sender?->id,
                 'sender_name' => $data['sname'],
                 'sender_phone' => formatPhoneNumber($data['sphone']),
@@ -42,14 +50,14 @@ class BookingService
                 'delivery_fee' => $price['base'],
                 'pack_fee' => $price['pack'],
                 'drop_off_fee' => $price['mode'] === 'out' ? $price['coll'] : 0,
-                'cod_amount' => (int) ($data['cod'] ?? 0),
+                'cod_amount' => $cod,
                 'cod_fee' => (int) round(
-                    ((int) ($data['cod'] ?? 0))
-                    * $this->pricing->buildConfig()['constants']['codFeeRate']
+                    $cod * $this->pricing->buildConfig()['constants']['codFeeRate']
                 ),
                 'total' => $price['total'],
-                'points_earned' => $price['points'],
+                'points_earned' => 0, // awarded by PointsService when paid
                 'payer_phone' => formatPhoneNumber($data['paynum']),
+                // tracking_no & handover_code are injected by createWithUniqueCodes()
             ]);
 
             ParcelEvent::create([
@@ -64,10 +72,104 @@ class BookingService
         });
     }
 
+    /* =================================================================
+     | UNIQUE CODE GENERATION
+     | ================================================================= */
+
     /**
-     * Parcel-scoped snapshot for the frontend flash.
-     * Mirrors FlashParcelSummary in src/components/pickandsend/shared.tsx.
+     * Insert the parcel, generating tracking_no and handover_code, and
+     * retrying up to 5 times if the unique index on tracking_no rejects
+     * a value (astronomically rare, but free to handle).
      */
+    private function createWithUniqueCodes(array $attributes): Parcel
+    {
+        $attempts = 0;
+        $maxAttempts = 5;
+
+        while (true) {
+            $attempts++;
+
+            try {
+                return Parcel::create(array_merge($attributes, [
+                    'tracking_no' => $this->generateTrackingNo(),
+                    'handover_code' => $this->generateHandoverCode(),
+                ]));
+            } catch (QueryException $e) {
+                if (!$this->isDuplicateEntry($e) || $attempts >= $maxAttempts) {
+                    throw $e;
+                }
+
+                Log::warning('Parcel code collision, retrying', [
+                    'attempt' => $attempts,
+                    'message' => $e->getMessage(),
+                ]);
+            }
+        }
+    }
+
+    private function isDuplicateEntry(QueryException $e): bool
+    {
+        // MySQL: 1062, PostgreSQL: 23505, SQLite: 19
+        return in_array($e->errorInfo[1] ?? null, [1062, 23505, 19], true)
+            || str_contains($e->getMessage(), 'Duplicate entry');
+    }
+
+    /**
+     * PS + YYMMDD + 5 random digits, e.g. "PS26102004231".
+     * 100_000 slots per calendar day.
+     */
+    private function generateTrackingNo(): string
+    {
+        return sprintf(
+            'PS%s%05d',
+            now()->format('ymd'),
+            random_int(0, 99999),
+        );
+    }
+
+    /**
+     * 4-digit pickup code, unique among ACTIVE parcels only. A collected
+     * or cancelled parcel's code is free to be reused.
+     *
+     * Uses a bounded loop so that in the extreme (all 10k active codes
+     * taken) it still returns something rather than hanging.
+     */
+    private function generateHandoverCode(): string
+    {
+        for ($i = 0; $i < 10; $i++) {
+            $code = str_pad((string) random_int(0, 9999), 4, '0', STR_PAD_LEFT);
+
+            if (!$this->handoverCodeTaken($code)) {
+                return $code;
+            }
+        }
+
+        // Last-ditch fallback: widen to 6 digits. Should never trigger
+        // in practice (10,000 active parcels at once is unrealistic).
+        return str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+    }
+
+    private function handoverCodeTaken(string $code): bool
+    {
+        return Parcel::query()
+            ->where('handover_code', $code)
+            ->whereIn('status', [
+                Parcel::STATUS_DRAFT,
+                Parcel::STATUS_BOOKED,
+                Parcel::STATUS_AWAITING_PAYMENT,
+                Parcel::STATUS_PAYMENT_ON_DELIVERY,
+                Parcel::STATUS_PAID,
+                Parcel::STATUS_RECEIVED,
+                Parcel::STATUS_IN_TRANSIT,
+                Parcel::STATUS_AT_PICKUP,
+            ])
+            ->exists();
+    }
+
+    /* =================================================================
+     | SUMMARY / RECEIPT
+     | ================================================================= */
+
     public function summary(Parcel $parcel): array
     {
         return [
@@ -88,8 +190,6 @@ class BookingService
         ];
     }
 
-    /* -------- Receipt payload builders -------- */
-
     public function receiptRows(Parcel $parcel): array
     {
         return [
@@ -104,7 +204,12 @@ class BookingService
             ['To', $parcel->recipient_name . ', ' . $parcel->recipient_phone],
             ['Collect at', 'Pick&Send pickup station, ' . $parcel->town->name],
             ['Parcel', $parcel->contents_description],
-            ['Packaging', $parcel->pack_fee > 0 ? 'Packed, ' . $this->fmt($parcel->pack_fee) : 'Not needed'],
+            [
+                'Packaging',
+                $parcel->pack_fee > 0
+                ? 'Packed, ' . $this->fmt($parcel->pack_fee)
+                : 'Not needed',
+            ],
             [
                 'Cash on Delivery',
                 $parcel->cod_amount > 0
@@ -121,7 +226,8 @@ class BookingService
     public function receiptText(Parcel $parcel): string
     {
         $lines = collect($this->receiptRows($parcel))
-            ->map(fn($r) => $r[0] . ': ' . $r[1])->implode("\n");
+            ->map(fn($r) => $r[0] . ': ' . $r[1])
+            ->implode("\n");
 
         return "PICK&SEND RECEIPT\n" . $lines
             . "\n\nThe recipient gets an SMS code when the parcel is ready to collect.\nQuestions: call 0718 819 413";

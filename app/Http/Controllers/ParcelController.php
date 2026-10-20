@@ -31,39 +31,32 @@ class ParcelController extends Controller
             return $this->booking->create($data, $price, $request->user());
         });
 
-        $init = $this->payments->initiateForParcel(
-            parcel: $parcel,
-            option: $data['payment_option'],
-        );
+        // Prime intent only — no Payment rows yet.
+        $this->payments->primeBooking($parcel, $data['payment_option']);
+
+        $init = $this->initiatePayment($parcel, $data['payment_option']);
 
         $this->notifier->parcelBooked($parcel->fresh());
 
+        $message = $init['error']
+            ? "Booking created, but we couldn't send the M-PESA prompt. {$init['error']}"
+            : $this->statusMessage($parcel, $init);
+
         return back()
             ->with('booking', [
-                'parcel' => $this->booking->summary($parcel),
+                'parcel' => $this->booking->summary($parcel->fresh()),
                 'total' => (int) $parcel->total,
                 'amount_due_now' => (int) $parcel->amount_due_now,
                 'amount_paid' => (int) $parcel->amount_paid,
                 'payment_option' => $parcel->payment_option,
                 'stk_sent' => $init['mpesa_tx'] !== null,
-                'paid' => $parcel->isPaid(),
+                'paid' => $parcel->fresh()->isPaid(),
             ])
             ->with('stk_error', $init['error'])
-            ->with('status', $this->statusMessage($parcel, $init));
+            ->with('status', $message)
+            ->with($this->toast($init['error'] ? 'error' : 'success', $message));
     }
 
-    /**
-     * Manual fallback: recipient pays via Paybill and pastes the code.
-     *
-     * The controller does NOT touch payments directly. A user-typed
-     * code is a claim, not proof — PaymentService records it via
-     * recordMpesaCodeClaim(), which is the ONLY method that writes to
-     * payments from user input, and which also writes a ParcelEvent
-     * so the timeline shows the claim.
-     *
-     * Verification against Safaricom's Transaction Status API happens
-     * out-of-band; only a verified match calls markPaymentSuccess().
-     */
     public function confirmPayment(Request $request, string $tracking): RedirectResponse
     {
         $validated = $request->validate([
@@ -74,21 +67,29 @@ class ParcelController extends Controller
 
         $this->payments->recordMpesaCodeClaim($parcel, $validated['code']);
 
-        return back()->with(
-            'status',
-            'Code received. We will verify it against M-PESA shortly and update your receipt.'
-        );
+        return back()
+            ->with('status', 'Code received. We will verify it against M-PESA shortly and update your receipt.')
+            ->with($this->toast('success', 'Code received. We will verify it against M-PESA shortly.'));
     }
 
     public function show(string $tracking)
     {
         $parcel = Parcel::where('tracking_no', $tracking)
-            ->with(['events', 'town', 'sender', 'payments'])
+            ->with(['events.staff', 'town', 'sender', 'payments.mpesaTransaction'])
             ->firstOrFail();
 
         return inertia('Parcel/Show', [
             'parcel' => $this->booking->summary($parcel),
         ]);
+    }
+
+    private function initiatePayment(Parcel $parcel, string $option): array
+    {
+        if ($option === Parcel::PAYMENT_COD_FULL) {
+            return ['mpesa_tx' => null, 'error' => null];
+        }
+
+        return $this->payments->initiateForParcel($parcel, $option);
     }
 
     private function statusMessage(Parcel $parcel, array $init): string
@@ -103,5 +104,10 @@ class ParcelController extends Controller
             Parcel::PAYMENT_COD_FULL => 'Booking created. The recipient will pay the full amount on delivery.',
             default => 'Booking created.',
         };
+    }
+
+    private function toast(string $type, string $message): array
+    {
+        return ['toast' => ['type' => $type, 'message' => $message]];
     }
 }

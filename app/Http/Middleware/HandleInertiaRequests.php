@@ -43,13 +43,12 @@ class HandleInertiaRequests extends Middleware
             ],
             'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
 
-            // Flash messages — read once per request via closures so the
-            // session bag is consulted lazily (after redirect handlers run).
             'flash' => [
-                'success' => fn() => $request->session()->get('success'),
+                'toast' => fn() => $request->session()->get('toast'),
+                'status' => fn() => $request->session()->get('status'),
+                'booking' => fn() => $request->session()->get('booking'),
+                'stk_error' => fn() => $request->session()->get('stk_error'),
                 'error' => fn() => $request->session()->get('error'),
-                'info' => fn() => $request->session()->get('info'),
-                'warning' => fn() => $request->session()->get('warning'),
             ],
         ];
     }
