@@ -24,6 +24,7 @@ class MpesaCallbackController extends Controller
     {
         try {
             $payload = $request->all();
+            Log::channel('mpesa')->info('STK Callback Received', $payload);
 
             if (empty($payload['Body']['stkCallback'])) {
                 Log::warning('M-Pesa STK callback missing Body.stkCallback', $payload);
