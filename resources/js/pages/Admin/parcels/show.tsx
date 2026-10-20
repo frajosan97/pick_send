@@ -568,21 +568,24 @@ export default function Show({ parcel, statuses, statsCardData }: Props) {
                         </div>
                     </div>
 
-                    {/* right: actions — grid-wrapped */}
-                    <div className="flex flex-wrap items-center gap-2 lg:justify-end">
-                        {canCollectCash && (
-                            <Button
-                                size="sm"
-                                onClick={() => setModal({ kind: "cash-cod" })}
-                                disabled={actionsDisabled}
-                            >
-                                <HandCoins className="mr-1 h-4 w-4" />
-                                Record COD
-                            </Button>
-                        )}
+                    {/* right: actions — 2 rows */}
+                    <div className="flex flex-col items-stretch gap-2 lg:items-end">
+                        {/* Row 1: Primary actions */}
+                        <div className="flex flex-wrap items-center gap-2 lg:justify-end">
+                            {canCollectCash && (
+                                <Button
+                                    size="sm"
+                                    onClick={() =>
+                                        setModal({ kind: "cash-cod" })
+                                    }
+                                    disabled={actionsDisabled}
+                                >
+                                    <HandCoins />
+                                    COD
+                                </Button>
+                            )}
 
-                        {!isFullyPaid && (
-                            <>
+                            {!isFullyPaid && (
                                 <Button
                                     size="sm"
                                     variant="destructive"
@@ -591,67 +594,68 @@ export default function Show({ parcel, statuses, statsCardData }: Props) {
                                     }
                                     disabled={actionsDisabled}
                                 >
-                                    <Banknote className="mr-1 h-4 w-4" />
+                                    <Banknote />
                                     Mark paid
                                 </Button>
-                                <span className="mx-1 hidden h-5 w-px bg-sidebar-border/70 lg:block" />
-                            </>
-                        )}
+                            )}
 
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setModal({ kind: "claim" })}
-                            disabled={actionsDisabled}
-                        >
-                            <PenLine className="mr-1 h-4 w-4" />
-                            Reconcile
-                        </Button>
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setModal({ kind: "transition" })}
-                            disabled={actionsDisabled}
-                        >
-                            <Link2 className="mr-1 h-4 w-4" />
-                            Status
-                        </Button>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setModal({ kind: "claim" })}
+                                disabled={actionsDisabled}
+                            >
+                                <PenLine />
+                                Reconcile
+                            </Button>
 
-                        <span className="mx-1 hidden h-5 w-px bg-sidebar-border/70 lg:block" />
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setModal({ kind: "transition" })}
+                                disabled={actionsDisabled}
+                            >
+                                <Link2 />
+                                Status
+                            </Button>
+                        </div>
 
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            className="h-8 w-8"
-                            onClick={handleDownloadPdf}
-                            disabled={actionsDisabled}
-                            title="Download PDF"
-                            aria-label="Download PDF"
-                        >
-                            <FileDown className="h-4 w-4" />
-                        </Button>
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            className="h-8 w-8"
-                            onClick={handlePrint}
-                            disabled={actionsDisabled}
-                            title="Print"
-                            aria-label="Print"
-                        >
-                            <Printer className="h-4 w-4" />
-                        </Button>
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            className="h-8 w-8 text-rose-600 hover:bg-rose-50 hover:text-rose-700 dark:text-rose-400 dark:hover:bg-rose-950/50"
-                            onClick={handleDelete}
-                            disabled={actionsDisabled}
-                            title="Delete parcel"
-                            aria-label="Delete parcel"
-                        >
-                            <Trash2 className="h-4 w-4" />
-                        </Button>
+                        {/* Row 2: Icon actions */}
+                        <div className="flex items-center gap-2 lg:justify-end">
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-8 w-8"
+                                onClick={handleDownloadPdf}
+                                disabled={actionsDisabled}
+                                title="Download PDF"
+                                aria-label="Download PDF"
+                            >
+                                <FileDown className="h-4 w-4" />
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-8 w-8"
+                                onClick={handlePrint}
+                                disabled={actionsDisabled}
+                                title="Print"
+                                aria-label="Print"
+                            >
+                                <Printer className="h-4 w-4" />
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-8 w-8 text-rose-600 hover:bg-rose-50 hover:text-rose-700 dark:text-rose-400 dark:hover:bg-rose-950/50"
+                                onClick={handleDelete}
+                                disabled={actionsDisabled}
+                                title="Delete parcel"
+                                aria-label="Delete parcel"
+                            >
+                                <Trash2 className="h-4 w-4" />
+                            </Button>
+                        </div>
                     </div>
                 </div>
 
