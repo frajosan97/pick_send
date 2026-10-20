@@ -13,7 +13,7 @@ class TrackingController extends Controller
             ->with(['events', 'town'])
             ->first();
 
-        if (! $parcel) {
+        if (!$parcel) {
             return response()->json(['error' => 'not_found'], 404);
         }
 
@@ -23,7 +23,7 @@ class TrackingController extends Controller
             'town' => $parcel->town->name,
             'recipient_name' => $parcel->recipient_name,
             'cod_amount' => $parcel->cod_amount,
-            'events' => $parcel->events->map(fn ($e) => [
+            'events' => $parcel->events->map(fn($e) => [
                 'label' => $e->label,
                 'description' => $e->description,
                 'happened_at' => $e->happened_at->toIso8601String(),

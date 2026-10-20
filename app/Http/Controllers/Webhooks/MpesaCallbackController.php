@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Webhooks;
 
 use App\Http\Controllers\Controller;
-use App\Models\Payment;
 use App\Services\PaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class MpesaCallbackController extends Controller
 {
@@ -17,40 +17,28 @@ class MpesaCallbackController extends Controller
 
     /**
      * STK Push callback — Lipa Na M-Pesa.
-     * Safaricom expects a JSON body with ResultCode + ResultDesc, and a 200 status.
+     * Safaricom expects ResultCode + ResultDesc + HTTP 200.
+     * We always ACK; retries only make duplicate work.
      */
     public function stk(Request $request)
     {
-        $data = $request->input('Body.stkCallback');
+        try {
+            $payload = $request->all();
 
-        if (!$data) {
-            Log::warning('M-Pesa STK callback missing Body.stkCallback', $request->all());
-            return $this->ack();
-        }
+            if (empty($payload['Body']['stkCallback'])) {
+                Log::warning('M-Pesa STK callback missing Body.stkCallback', $payload);
+                return $this->ack();
+            }
 
-        $checkoutRequestId = $data['CheckoutRequestID'] ?? null;
-        $resultCode = $data['ResultCode'] ?? null;
-        $resultDesc = $data['ResultDesc'] ?? null;
-
-        // Find the pending payment created when we initiated the STK push
-        $payment = Payment::where('checkout_request_id', $checkoutRequestId)->first();
-
-        if (!$payment) {
-            Log::warning('M-Pesa STK callback for unknown CheckoutRequestID', [
-                'checkout_request_id' => $checkoutRequestId,
+            DB::transaction(function () use ($payload) {
+                $this->payments->handleCallback($payload);
+            });
+        } catch (\Throwable $e) {
+            // Never let Safaricom retry forever on our bug.
+            Log::error('M-Pesa STK callback processing failed', [
+                'error' => $e->getMessage(),
+                'payload' => $request->all(),
             ]);
-            return $this->ack();
-        }
-
-        if ($resultCode === 0) {
-            // Success — extract the receipt from CallbackMetadata
-            $meta = collect($data['CallbackMetadata']['Item'] ?? []);
-            $receipt = $meta->firstWhere('Name', 'MpesaReceiptNumber')['Value'] ?? null;
-            $amount = $meta->firstWhere('Name', 'Amount')['Value'] ?? null;
-
-            $this->payments->recordStkSuccess($payment, $receipt, $amount);
-        } else {
-            $this->payments->recordStkFailure($payment, $resultDesc);
         }
 
         return $this->ack();
@@ -61,22 +49,20 @@ class MpesaCallbackController extends Controller
      */
     public function b2cResult(Request $request)
     {
-        $result = $request->input('Result');
+        try {
+            $result = $request->input('Result');
 
-        if (!$result) {
-            return $this->ack();
+            if ($result) {
+                Log::info('M-Pesa B2C result', [
+                    'conversation_id' => $result['ConversationID'] ?? null,
+                    'result_code' => $result['ResultCode'] ?? null,
+                ]);
+            }
+        } catch (\Throwable $e) {
+            Log::error('M-Pesa B2C result handler failed', [
+                'error' => $e->getMessage(),
+            ]);
         }
-
-        $conversationId = $result['ConversationID'] ?? null;
-        $resultCode = $result['ResultCode'] ?? null;
-
-        // Look up the withdrawal by conversation_id (stored when we initiated B2C)
-        // $this->payments->recordB2CResult($conversationId, $resultCode, $result);
-
-        Log::info('M-Pesa B2C result', [
-            'conversation_id' => $conversationId,
-            'result_code' => $resultCode,
-        ]);
 
         return $this->ack();
     }
@@ -89,8 +75,6 @@ class MpesaCallbackController extends Controller
 
     public function c2bValidation(Request $request)
     {
-        // Return Accept/Reject to Safaricom. For most apps, always accept
-        // (validation is for cases like validating account numbers).
         return response()->json([
             'ResultCode' => 0,
             'ResultDesc' => 'Accepted',
@@ -99,15 +83,10 @@ class MpesaCallbackController extends Controller
 
     public function c2bConfirmation(Request $request)
     {
-        // Customer paid via Paybill/Till outside of STK Push.
-        // Save and reconcile here.
         Log::info('M-Pesa C2B confirmation', $request->all());
         return $this->ack();
     }
 
-    /**
-     * Standard ack — Safaricom expects this shape.
-     */
     protected function ack(): \Illuminate\Http\JsonResponse
     {
         return response()->json([

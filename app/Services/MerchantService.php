@@ -100,12 +100,12 @@ class MerchantService
 
         $wallet->debit($amount, 'withdrawal', 'M-PESA payout');
 
-        $result = $this->mpesa->b2c(
+        $result = $this->mpesa->processB2C(
             phone: $merchant->phone,
             amount: $amount
         );
 
-        if (!$result['success']) {
+        if (!$result['success'] ?? false) {
             $wallet->credit($amount, 'withdrawal_refund', 'B2C failed');
             throw new \RuntimeException('Withdrawal failed: ' . ($result['error'] ?? 'Unknown error'));
         }

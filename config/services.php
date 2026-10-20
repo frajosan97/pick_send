@@ -46,11 +46,24 @@ return [
         'partner_id' => env('SMS_PARTNER_ID'),
     ],
 
-    'whatsapp' => [
-        'base_url' => env('WHATSAPP_BASE_URL', 'https://graph.facebook.com/v25.0'),
-        'token' => env('WHATSAPP_TOKEN'),
-        'phone_number_id' => env('WHATSAPP_PHONE_NUMBER_ID'),
-        'waba_id' => env('WHATSAPP_MESSAGING_ACCOUNT_ID'),
+    'mpesa' => [
+        'env' => env('MPESA_ENV', 'sandbox'),
+        'consumer_key' => env('MPESA_CONSUMER_KEY'),
+        'consumer_secret' => env('MPESA_CONSUMER_SECRET'),
+        'passkey' => env('MPESA_PASSKEY'),
+        'shortcode' => env('MPESA_SHORTCODE'),
+        'shortcode_type' => env('MPESA_SHORTCODE_TYPE', 'Paybill'),
+        'initiator_name' => env('MPESA_INITIATOR_NAME'),
+        'initiator_password' => env('MPESA_INITIATOR_PASSWORD', ''),
+        'b2c_shortcode' => env('MPESA_B2C_SHORTCODE'),
+        'b2c_command_id' => env('MPESA_B2C_COMMAND_ID', 'BusinessPayment'),
+        'b2c_security_credential' => env('MPESA_B2C_SECURITY_CREDENTIAL'),
+        'callback_url' => env('MPESA_CALLBACK_URL'),
+        'confirmation_url' => env('MPESA_CONFIRMATION_URL'),
+        'validation_url' => env('MPESA_VALIDATION_URL'),
+        'result_url' => env('MPESA_RESULT_URL'),
+        'queue_timeout_url' => env('MPESA_QUEUE_TIMEOUT_URL'),
+        'version' => env('MPESA_C2B_VERSION', 'v1'),
     ],
 
 ];

@@ -34,8 +34,7 @@ class PricingService
         return $this->config = Cache::remember(
             self::CACHE_KEY,
             self::TTL,
-            fn () => [
-                'wa' => config('services.pick_and_send.whatsapp'),
+            fn() => [
                 'constants' => $this->constants(),
                 'routes' => $this->routes(),
                 'towns' => $this->towns(),
@@ -92,7 +91,7 @@ class PricingService
         return Route::active()
             ->where('slug', '!=', 'nairobi')
             ->with([
-                'towns' => fn ($q) => $q
+                'towns' => fn($q) => $q
                     ->where('is_satellite', false)
                     ->where('is_active', true)
                     ->orderBy('sort_order')
@@ -100,7 +99,7 @@ class PricingService
             ])
             ->orderBy('sort_order')
             ->get()
-            ->map(fn (Route $r) => [$r->slug, $r->towns->pluck('name')->all()])
+            ->map(fn(Route $r) => [$r->slug, $r->towns->pluck('name')->all()])
             ->all();
     }
 
@@ -112,7 +111,7 @@ class PricingService
     private function general(): array
     {
         return GeneralPrice::active()->orderBy('sort_order')->get()
-            ->map(fn ($g) => [
+            ->map(fn($g) => [
                 'id' => $g->code,
                 'label' => $g->label,
                 'p' => (int) $g->price,
@@ -127,15 +126,15 @@ class PricingService
     {
         return ItemGroup::active()
             ->with([
-                'items' => fn ($q) => $q
+                'items' => fn($q) => $q
                     ->where('is_active', true)
                     ->orderBy('sort_order'),
             ])
             ->orderBy('sort_order')
             ->get()
-            ->map(fn (ItemGroup $g) => [
+            ->map(fn(ItemGroup $g) => [
                 'group' => $g->name,
-                'items' => $g->items->map(fn ($i) => [
+                'items' => $g->items->map(fn($i) => [
                     'id' => $i->code,
                     'label' => $i->label,
                     'p' => (int) $i->price,
@@ -150,7 +149,7 @@ class PricingService
     private function faq(): array
     {
         return Faq::published()->get(['question', 'answer'])
-            ->map(fn ($f) => [$f->question, $f->answer])
+            ->map(fn($f) => [$f->question, $f->answer])
             ->all();
     }
 
@@ -200,7 +199,7 @@ class PricingService
         if ($elec) {
             $it = $this->findItem((string) ($f['item'] ?? ''));
 
-            if (! $it) {
+            if (!$it) {
                 return $this->emptyPrice(elec: true, mode: $mode);
             }
         } else {
@@ -214,7 +213,7 @@ class PricingService
                 );
 
                 $it = [
-                    'label' => $kg.' kg',
+                    'label' => $kg . ' kg',
                     'p' => (int) $C['base10'] + (int) $C['perKg'] * ($kg - 10),
                     'pack' => (int) $tier['pack'],
                     'pu' => $this->kgPu($kg),
@@ -225,7 +224,7 @@ class PricingService
         }
 
         /* ---------- packaging ---------- */
-        $pack = ! empty($f['pack']) ? (int) $it['pack'] : 0;
+        $pack = !empty($f['pack']) ? (int) $it['pack'] : 0;
 
         /* ---------- point / mode / fee ---------- */
         [, $point] = array_pad(explode('|', (string) ($f['point'] ?? '')), 2, '');
@@ -241,7 +240,7 @@ class PricingService
         $n = max(1, (int) preg_replace('/\D/', '', (string) ($f['count'] ?? 1)) ?: 1);
         $free5 = $mode === 'collect' && $share;
 
-        $coll = ($free5 || ($mode !== 'drop' && $share && $n > 1 && ! empty($f['same'])))
+        $coll = ($free5 || ($mode !== 'drop' && $share && $n > 1 && !empty($f['same'])))
             ? 0
             : $fee;
 
@@ -316,17 +315,17 @@ class PricingService
 
         $feeText = match (true) {
             $m === 'drop' => ', drop-off free',
-            $p['coll'] > 0 => ' + '.
-                ($m === 'collect' ? 'pickup ' : 'agent drop-off ').
+            $p['coll'] > 0 => ' + ' .
+                ($m === 'collect' ? 'pickup ' : 'agent drop-off ') .
                 $this->fmt($p['coll']),
             $p['free5'] => ', CBD pickup free',
             default => ', already paid today',
         };
 
-        return $p['item']['label'].' delivery '.$this->fmt($p['base'])
-            .$feeText
-            .($p['pack'] ? ' + packaging '.$this->fmt($p['pack']) : '')
-            .'.';
+        return $p['item']['label'] . ' delivery ' . $this->fmt($p['base'])
+            . $feeText
+            . ($p['pack'] ? ' + packaging ' . $this->fmt($p['pack']) : '')
+            . '.';
     }
 
     /* =================================================================
@@ -372,6 +371,6 @@ class PricingService
     /** KSh formatter — matches frontend `fmt()`. */
     public function fmt(float|int $n): string
     {
-        return 'KSh '.number_format(round($n));
+        return 'KSh ' . number_format(round($n));
     }
 }

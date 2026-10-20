@@ -6,10 +6,13 @@ use App\Models\User;
 use App\Services\MerchantService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MerchantController extends Controller
 {
-    public function __construct(private MerchantService $merchants) {}
+    public function __construct(private MerchantService $merchants)
+    {
+    }
 
     public function requestOtp(Request $request): RedirectResponse
     {
@@ -26,22 +29,30 @@ class MerchantController extends Controller
             'code' => ['required', 'digits:6'],
         ]);
 
-        if (! $this->merchants->verifyOtp($data['phone'], $data['code'])) {
+        if (!$this->merchants->verifyOtp($data['phone'], $data['code'])) {
             return back()->withErrors(['code' => 'Wrong or expired code.']);
         }
 
         $user = User::firstOrCreate(
             ['phone' => $data['phone']],
-            ['name' => 'Merchant', 'type' => 'merchant', 'password' => bcrypt(str()->random(20))],
+            [
+                'name' => 'Merchant',
+                'type' => 'merchant',
+                'password' => bcrypt(str()->random(20)),
+            ],
         );
-        auth()->login($user);
+
+        Auth::login($user);
+        $request->session()->regenerate();
 
         return back();
     }
 
-    public function logout(): RedirectResponse
+    public function logout(Request $request): RedirectResponse
     {
-        auth()->logout();
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return back();
     }

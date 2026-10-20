@@ -13,9 +13,53 @@ class Parcel extends Model
 {
     use HasFactory, SoftDeletes;
 
+    // ─── Payment options (mirror of the DB enum) ──────────────────
+    public const PAYMENT_PREPAID = 'prepaid';
+    public const PAYMENT_COD_FEE = 'cod_fee';
+    public const PAYMENT_COD_FULL = 'cod_full';
+
+    public const PAYMENT_OPTIONS = [
+        self::PAYMENT_PREPAID,
+        self::PAYMENT_COD_FEE,
+        self::PAYMENT_COD_FULL,
+    ];
+
+    // ─── Status values (mirror of the DB enum) ────────────────────
+    public const STATUS_DRAFT = 'draft';
+    public const STATUS_BOOKED = 'booked';
+    public const STATUS_AWAITING_PAYMENT = 'awaiting_payment';
+    public const STATUS_PAYMENT_ON_DELIVERY = 'payment_on_delivery';
+    public const STATUS_PAID = 'paid';
+    public const STATUS_RECEIVED = 'received';
+    public const STATUS_IN_TRANSIT = 'in_transit';
+    public const STATUS_AT_PICKUP = 'at_pickup';
+    public const STATUS_COLLECTED = 'collected';
+    public const STATUS_RETURNED = 'returned';
+    public const STATUS_CANCELLED = 'cancelled';
+
+    // Statuses that may NOT be modified by generic update calls —
+    // they represent money/lifecycle state and only services move them.
+    public const PROTECTED_STATUSES = [
+        self::STATUS_PAID,
+        self::STATUS_PAYMENT_ON_DELIVERY,
+        self::STATUS_AWAITING_PAYMENT,
+        self::STATUS_COLLECTED,
+    ];
+
+    /**
+     * Mass-assignable.
+     *
+     * NOTE: we deliberately do NOT include `mpesa_code`, `amount_paid`,
+     * `paid_at`, `total`, or `status` here. Those are derived or owned
+     * by PaymentService / BookingService and must never be set from
+     * a controller or a form.
+     */
     protected $fillable = [
+        // identity (auto-generated, but setter-friendly for tests)
         'tracking_no',
         'handover_code',
+
+        // sender
         'sender_id',
         'sender_name',
         'sender_phone',
@@ -24,10 +68,14 @@ class Parcel extends Model
         'pickup_address',
         'parcel_count',
         'shared_drop_fee',
+
+        // recipient
         'recipient_id',
         'recipient_name',
         'recipient_phone',
         'town_id',
+
+        // contents
         'contents_description',
         'estimated_worth',
         'kind',
@@ -35,6 +83,8 @@ class Parcel extends Model
         'weight_kg',
         'electronic_code',
         'needs_packaging',
+
+        // money (pricing snapshot — set once by PricingService)
         'delivery_fee',
         'pack_fee',
         'drop_off_fee',
@@ -42,21 +92,51 @@ class Parcel extends Model
         'cod_fee',
         'total',
         'points_earned',
+
+        // payment intent (set by PaymentService, not by forms)
+        'payment_option',
         'payer_phone',
-        'mpesa_code',
-        'paid_at',
-        'status',
     ];
 
     protected $casts = [
+        // decimals
         'estimated_worth' => 'decimal:2',
         'weight_kg' => 'decimal:2',
+
+        // integers (MySQL returns these as strings without a cast)
+        'parcel_count' => 'integer',
+        'delivery_fee' => 'integer',
+        'pack_fee' => 'integer',
+        'drop_off_fee' => 'integer',
+        'cod_amount' => 'integer',
+        'cod_fee' => 'integer',
+        'total' => 'integer',
+        'points_earned' => 'integer',
+        'amount_due_now' => 'integer',  // added by migration
+        'amount_paid' => 'integer',  // added by migration
+
+        // booleans
         'needs_packaging' => 'boolean',
         'shared_drop_fee' => 'boolean',
+
+        // dates
         'paid_at' => 'datetime',
     ];
 
-    /* ---------- relationships ---------- */
+    /**
+     * Fields the model itself derives — exposed to JSON/form layers
+     * automatically so views don't recompute them.
+     */
+    protected $appends = [
+        'is_paid',
+        'is_cod',
+        'balance_due',
+    ];
+
+    // ─────────────────────────────────────────────────────────────
+    // Relationships
+    // ─────────────────────────────────────────────────────────────
+
     public function sender(): BelongsTo
     {
         return $this->belongsTo(User::class, 'sender_id');
@@ -82,6 +162,16 @@ class Parcel extends Model
         return $this->hasMany(Payment::class);
     }
 
+    public function deliveryPayment(): HasOne
+    {
+        return $this->hasOne(Payment::class)->where('type', 'delivery');
+    }
+
+    public function codPayment(): HasOne
+    {
+        return $this->hasOne(Payment::class)->where('type', 'cod');
+    }
+
     public function merchantOrder(): HasOne
     {
         return $this->hasOne(MerchantOrder::class);
@@ -92,48 +182,182 @@ class Parcel extends Model
         return $this->hasMany(PointLedger::class);
     }
 
-    /* ---------- scopes ---------- */
+    // ─────────────────────────────────────────────────────────────
+    // Scopes
+    // ─────────────────────────────────────────────────────────────
+
     public function scopePaid($q)
     {
         return $q->whereNotNull('paid_at');
     }
 
+    public function scopeUnpaid($q)
+    {
+        return $q->whereNull('paid_at');
+    }
+
+    public function scopeAwaitingPayment($q)
+    {
+        return $q->where('status', self::STATUS_AWAITING_PAYMENT);
+    }
+
+    public function scopePaymentOnDelivery($q)
+    {
+        return $q->where('status', self::STATUS_PAYMENT_ON_DELIVERY);
+    }
+
     public function scopeAwaitingCollection($q)
     {
-        return $q->where('status', 'at_pickup');
+        return $q->where('status', self::STATUS_AT_PICKUP);
     }
 
-    public function scopeForMerchant($q, int $id)
+    public function scopeForMerchant($q, int $userId)
     {
-        return $q->where('sender_id', $id);
+        return $q->where('sender_id', $userId);
     }
 
-    /* ---------- helpers ---------- */
+    public function scopeForRecipient($q, string $phone)
+    {
+        return $q->where('recipient_phone', $phone);
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // Derived state (also used by $appends)
+    // ─────────────────────────────────────────────────────────────
+
     public function isPaid(): bool
     {
-        return ! is_null($this->paid_at);
+        return $this->paid_at !== null;
     }
 
     public function isCollectable(): bool
     {
-        return $this->status === 'at_pickup';
+        return $this->status === self::STATUS_AT_PICKUP;
     }
 
-    /* ---------- boot: auto-generate tracking + handover ---------- */
+    public function isCod(): bool
+    {
+        return in_array($this->payment_option, [
+            self::PAYMENT_COD_FEE,
+            self::PAYMENT_COD_FULL,
+        ], true);
+    }
+
+    public function balanceDue(): int
+    {
+        return max(0, (int) $this->total - (int) $this->amount_paid);
+    }
+
+    // Accessors for $appends
+    public function getIsPaidAttribute(): bool
+    {
+        return $this->isPaid();
+    }
+
+    public function getIsCodAttribute(): bool
+    {
+        return $this->isCod();
+    }
+
+    public function getBalanceDueAttribute(): int
+    {
+        return $this->balanceDue();
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // Guarded mutators (used only by services, never by forms)
+    // ─────────────────────────────────────────────────────────────
+
+    /**
+     * Mark the cached "paid" state. Called ONLY by PaymentService.
+     *
+     * @internal
+     */
+    public function markPaidState(int $amountPaid, bool $fullyPaid): void
+    {
+        $this->forceFill([
+            'amount_paid' => $amountPaid,
+            'paid_at' => $fullyPaid ? now() : null,
+            'status' => $fullyPaid ? self::STATUS_PAID : $this->status,
+        ])->save();
+    }
+
+    /**
+     * Move the lifecycle status. Called ONLY by BookingService / admin UI.
+     *
+     * @internal
+     */
+    public function transitionTo(string $status): void
+    {
+        if (
+            !in_array($status, self::PROTECTED_STATUSES, true)
+            && !array_key_exists($status, $this->statusMap())
+        ) {
+            throw new \InvalidArgumentException("Unknown parcel status: {$status}");
+        }
+
+        $this->forceFill(['status' => $status])->save();
+    }
+
+    /**
+     * Allowed statuses — useful for admin dropdowns.
+     */
+    public function statusMap(): array
+    {
+        return [
+            self::STATUS_DRAFT => 'Draft',
+            self::STATUS_BOOKED => 'Booked',
+            self::STATUS_AWAITING_PAYMENT => 'Awaiting payment',
+            self::STATUS_PAYMENT_ON_DELIVERY => 'Payment on delivery',
+            self::STATUS_PAID => 'Paid',
+            self::STATUS_RECEIVED => 'Received',
+            self::STATUS_IN_TRANSIT => 'In transit',
+            self::STATUS_AT_PICKUP => 'At pickup',
+            self::STATUS_COLLECTED => 'Collected',
+            self::STATUS_RETURNED => 'Returned',
+            self::STATUS_CANCELLED => 'Cancelled',
+        ];
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // Boot: auto-generate tracking + handover
+    // ─────────────────────────────────────────────────────────────
+
     protected static function booted(): void
     {
         static::creating(function (Parcel $parcel) {
             $parcel->tracking_no ??= self::generateTrackingNo();
-            $parcel->handover_code ??= (string) random_int(1000, 9999);
+            $parcel->handover_code ??= self::generateHandoverCode();
+
+            // Sensible default; PricingService may overwrite afterwards.
+            $parcel->status ??= self::STATUS_BOOKED;
         });
     }
 
+    /**
+     * PS + yymmdd + 3-digit suffix, e.g. PS27010873.
+     * Retries on collision (rare but possible under concurrent inserts).
+     */
     public static function generateTrackingNo(): string
     {
-        do {
-            $no = 'PS'.now()->format('ymd').random_int(100, 999);
-        } while (self::withTrashed()->where('tracking_no', $no)->exists());
+        $prefix = 'PS' . now()->format('ymd');
 
-        return $no;
+        for ($i = 0; $i < 5; $i++) {
+            $candidate = $prefix . random_int(100, 999);
+            if (!self::withTrashed()->where('tracking_no', $candidate)->exists()) {
+                return $candidate;
+            }
+        }
+
+        // Fallback: guaranteed unique suffix. Still short enough for UI.
+        return $prefix . substr((string) hrtime(true), -3);
+    }
+
+    /**
+     * 4-digit numeric code. Skips 0000.
+     */
+    public static function generateHandoverCode(): string
+    {
+        return (string) random_int(1000, 9999);
     }
 }

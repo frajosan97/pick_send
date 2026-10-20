@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('parcels', function (Blueprint $table) {
@@ -44,6 +43,14 @@ return new class extends Migration
             $table->unsignedInteger('drop_off_fee')->default(0);
             $table->unsignedInteger('cod_amount')->default(0);
             $table->unsignedInteger('cod_fee')->default(0);
+            $table->enum('payment_option', [
+                'prepaid',
+                'cod_fee',
+                'cod_full'
+            ])->default('prepaid');
+            $table->unsignedInteger('amount_due_now')->default(0);
+            $table->unsignedInteger('amount_paid')->default(0);
+            $table->string('mpesa_code')->nullable()->change();
             $table->unsignedInteger('total')->default(0);
             $table->unsignedInteger('points_earned')->default(0);
 
@@ -57,13 +64,14 @@ return new class extends Migration
                 'draft',
                 'booked',
                 'awaiting_payment',
+                'payment_on_delivery',
                 'paid',
                 'received',
                 'in_transit',
                 'at_pickup',
                 'collected',
                 'returned',
-                'cancelled',
+                'cancelled'
             ])->default('draft');
 
             $table->timestamps();
