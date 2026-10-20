@@ -121,7 +121,6 @@ export default function Index({ parcels, filters, options }: Props) {
         <>
             <Head title="Parcels" />
             <div className="space-y-4 p-6">
-                
                 {/* filters */}
                 <form
                     onSubmit={submitSearch}
@@ -348,32 +347,6 @@ export default function Index({ parcels, filters, options }: Props) {
                                         aria-label={`Open ${row.tracking_no}`}
                                     >
                                         <Eye className="h-3.5 w-3.5" />
-                                    </Link>
-                                </Button>
-
-                                {/*
-                                    Retry STK needs a specific payment_id,
-                                    which lives on the Show page. The
-                                    shortcut here was posting `payment_id: 0`
-                                    and always erroring, so it now routes
-                                    to the parcel where the admin picks
-                                    the pending payment explicitly.
-                                */}
-                                <Button
-                                    asChild
-                                    size="icon"
-                                    variant="outline"
-                                    className="h-7 w-7"
-                                    title="Open to retry STK"
-                                >
-                                    <Link
-                                        href={route(
-                                            "admin.parcels.show",
-                                            row.id,
-                                        )}
-                                        aria-label={`Open ${row.tracking_no} to retry STK`}
-                                    >
-                                        <RotateCw className="h-3.5 w-3.5" />
                                     </Link>
                                 </Button>
                             </RowActions>
