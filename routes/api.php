@@ -16,6 +16,7 @@ Route::get('/config', [ConfigController::class, 'index']);
 
 Route::prefix('webhooks/payments')
     ->name('webhooks.payments.')
+    // ->middleware(['mpesa.ip'])
     ->group(function () {
 
         // STK Push callback
