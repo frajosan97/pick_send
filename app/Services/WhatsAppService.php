@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class WhatsappService
+class WhatsAppService
 {
     /**
      * Create a new class instance.
