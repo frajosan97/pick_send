@@ -41,6 +41,32 @@ class Payment extends Model
     public const CHANNEL_MANUAL = 'manual';
 
     /* -----------------------------------------------------------------
+     | Human labels — single source of truth for admin UIs / exports
+     | ----------------------------------------------------------------- */
+
+    public const TYPE_LABELS = [
+        self::TYPE_DELIVERY => 'Delivery',
+        self::TYPE_COD => 'COD',
+        self::TYPE_WITHDRAWAL => 'Withdrawal',
+        self::TYPE_REFUND => 'Refund',
+        self::TYPE_POINTS => 'Points',
+    ];
+
+    public const STATUS_LABELS = [
+        self::STATUS_PENDING => 'Pending',
+        self::STATUS_SUCCESS => 'Success',
+        self::STATUS_FAILED => 'Failed',
+    ];
+
+    public const CHANNEL_LABELS = [
+        self::CHANNEL_PENDING => 'Pending',
+        self::CHANNEL_MPESA => 'M-PESA',
+        self::CHANNEL_CASH => 'Cash',
+        self::CHANNEL_WALLET => 'Wallet',
+        self::CHANNEL_MANUAL => 'Manual',
+    ];
+
+    /* -----------------------------------------------------------------
      | Attributes
      | ----------------------------------------------------------------- */
 
@@ -94,6 +120,25 @@ class Payment extends Model
     public function isFailed(): bool
     {
         return $this->status === self::STATUS_FAILED;
+    }
+
+    /* -----------------------------------------------------------------
+     | Label helpers
+     | ----------------------------------------------------------------- */
+
+    public function typeLabel(): ?string
+    {
+        return self::TYPE_LABELS[$this->type] ?? null;
+    }
+
+    public function statusLabel(): ?string
+    {
+        return self::STATUS_LABELS[$this->status] ?? null;
+    }
+
+    public function channelLabel(): ?string
+    {
+        return self::CHANNEL_LABELS[$this->channel] ?? null;
     }
 
     /* -----------------------------------------------------------------

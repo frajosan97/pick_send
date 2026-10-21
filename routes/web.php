@@ -45,6 +45,7 @@ Route::middleware(['auth', 'verified', 'can:admin'])
             ->group(function () {
             Route::resources([
                 'parcels' => \App\Http\Controllers\Admin\ParcelController::class,
+                'payments' => \App\Http\Controllers\Admin\PaymentController::class,
                 'pricing-constants' => \App\Http\Controllers\Admin\PricingConstantController::class,
                 'general-prices' => \App\Http\Controllers\Admin\GeneralPriceController::class,
                 'item-groups' => \App\Http\Controllers\Admin\ItemGroupController::class,
