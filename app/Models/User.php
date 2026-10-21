@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -39,7 +40,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, PasskeyAuthenticatable, TwoFactorAuthenticatable, HasRoles;
+    use HasFactory, Notifiable, PasskeyAuthenticatable, TwoFactorAuthenticatable, HasRoles, SoftDeletes;
 
     /**
      * Get the attributes that should be cast.
@@ -53,6 +54,7 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
             'phone_verified_at' => 'datetime',
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
+            'deleted_at' => 'datetime',
         ];
     }
 
@@ -122,5 +124,12 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
     public function walletOrCreate(): Wallet
     {
         return $this->wallet()->firstOrCreate([], ['balance' => 0]);
+    }
+
+    public function supplyRequestMasters(): HasMany
+    {
+        return $this->hasMany(SupplyRequest::class)
+            ->where('recurring', true)
+            ->whereNull('parent_id');
     }
 }

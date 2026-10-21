@@ -47,6 +47,7 @@ class HandleInertiaRequests extends Middleware
                 'toast' => fn() => $request->session()->get('toast'),
                 'status' => fn() => $request->session()->get('status'),
                 'booking' => fn() => $request->session()->get('booking'),
+                'supply' => fn() => $request->session()->get('supply'),
                 'stk_error' => fn() => $request->session()->get('stk_error'),
                 'error' => fn() => $request->session()->get('error'),
             ],

@@ -1,26 +1,26 @@
 // src/pages/PickAndSend.tsx
-import { useState } from 'react';
-import { Head, usePage } from '@inertiajs/react';
-import type { Config } from '@/types/config';
+import { useState } from "react";
+import { Head, usePage } from "@inertiajs/react";
+import type { Config } from "@/types/config";
 
-import { TopStrip } from '@/components/welcome/TopStrip';
-import { Header } from '@/components/welcome/Header';
-import { Hero } from '@/components/welcome/Hero';
-import { SendParcel } from '@/components/welcome/SendParcel';
-import { Supplies } from '@/components/welcome/Supplies';
-import { Merchants } from '@/components/welcome/Merchants';
-import { Pricing } from '@/components/welcome/Pricing';
-import { Track } from '@/components/welcome/Track';
-import { Community } from '@/components/welcome/Community';
-import { Faq } from '@/components/welcome/Faq';
-import { Footer } from '@/components/welcome/Footer';
-import { FloatingWhatsApp } from '@/components/welcome/FloatingWhatsApp';
+import { TopStrip } from "@/components/welcome/TopStrip";
+import { Header } from "@/components/welcome/Header";
+import { Hero } from "@/components/welcome/Hero";
+import { SendParcel } from "@/components/welcome/SendParcel";
+import { Supplies } from "@/components/welcome/Supplies";
+import { Merchants } from "@/components/welcome/Merchants";
+import { Pricing } from "@/components/welcome/Pricing";
+import { Track } from "@/components/welcome/Track";
+import { Community } from "@/components/welcome/Community";
+import { Faq } from "@/components/welcome/Faq";
+import { Footer } from "@/components/welcome/Footer";
+import { FloatingWhatsApp } from "@/components/welcome/FloatingWhatsApp";
 
 import type {
     AuthUser,
     Flash,
     MerchantData,
-} from '@/components/welcome/shared';
+} from "@/components/welcome/shared";
 
 export default function PickAndSend() {
     const page = usePage<{
@@ -64,7 +64,11 @@ export default function PickAndSend() {
                     error={flash?.error}
                     paymentConfirmed={flash?.payment_confirmed}
                 />
-                <Supplies config={config} supply={flash?.supply ?? null} />
+                <Supplies
+                    config={config}
+                    supply={flash?.supply ?? null}
+                    error={flash?.error}
+                />
                 <Merchants
                     user={auth?.user ?? null}
                     merchant={merchant}

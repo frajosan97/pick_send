@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Payment extends Model
@@ -21,6 +22,7 @@ class Payment extends Model
     public const TYPE_WITHDRAWAL = 'withdrawal';
     public const TYPE_REFUND = 'refund';
     public const TYPE_POINTS = 'points';
+    public const TYPE_SUPPLY = 'supply';
 
     /* -----------------------------------------------------------------
      | Status  (must match the `payments.status` enum)
@@ -50,6 +52,7 @@ class Payment extends Model
         self::TYPE_WITHDRAWAL => 'Withdrawal',
         self::TYPE_REFUND => 'Refund',
         self::TYPE_POINTS => 'Points',
+        self::TYPE_SUPPLY => 'Supply',
     ];
 
     public const STATUS_LABELS = [
@@ -78,8 +81,32 @@ class Payment extends Model
     ];
 
     /* -----------------------------------------------------------------
+     | Hooks — keep parcel_id ↔ payable_* in sync
+     | ----------------------------------------------------------------- */
+
+    protected static function booted(): void
+    {
+        static::saving(function (Payment $p) {
+            // Parcel payment created via payable_id only → stamp parcel_id
+            if ($p->payable_type === Parcel::class && !$p->parcel_id) {
+                $p->parcel_id = $p->payable_id;
+            }
+            // Parcel payment created via parcel_id only → stamp payable_*
+            if ($p->parcel_id && !$p->payable_id) {
+                $p->payable_id = $p->parcel_id;
+                $p->payable_type = Parcel::class;
+            }
+        });
+    }
+
+    /* -----------------------------------------------------------------
      | Relationships
      | ----------------------------------------------------------------- */
+
+    public function payable(): MorphTo
+    {
+        return $this->morphTo();
+    }
 
     public function parcel(): BelongsTo
     {
@@ -89,6 +116,16 @@ class Payment extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Convenience accessor for supply payments. Only resolves when the
+     * payable is a SupplyRequest; returns null otherwise.
+     */
+    public function supplyRequest(): BelongsTo
+    {
+        return $this->belongsTo(SupplyRequest::class, 'payable_id')
+            ->where('payable_type', SupplyRequest::class);
     }
 
     /**
@@ -120,6 +157,21 @@ class Payment extends Model
     public function isFailed(): bool
     {
         return $this->status === self::STATUS_FAILED;
+    }
+
+    /* -----------------------------------------------------------------
+     | Payable-type helpers
+     | ----------------------------------------------------------------- */
+
+    public function isParcelPayment(): bool
+    {
+        return $this->payable_type === Parcel::class
+            || ($this->payable_type === null && $this->parcel_id !== null);
+    }
+
+    public function isSupplyPayment(): bool
+    {
+        return $this->payable_type === SupplyRequest::class;
     }
 
     /* -----------------------------------------------------------------

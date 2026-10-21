@@ -1,75 +1,131 @@
 <?php
 
+use App\Http\Controllers\Admin\PointController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\ParcelController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SupplyRequestController;
 use App\Http\Controllers\TrackingController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ParcelController as AdminParcelController;
+use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
+use App\Http\Controllers\Admin\ParcelActionController;
+use App\Http\Controllers\Admin\PdfController;
+use App\Http\Controllers\Admin\PricingConstantController;
+use App\Http\Controllers\Admin\SupplyRequestController as AdminSupplyRequestController;
+use App\Http\Controllers\Admin\GeneralPriceController;
+use App\Http\Controllers\Admin\ItemGroupController;
+use App\Http\Controllers\Admin\ItemController;
+use App\Http\Controllers\Admin\RouteController;
+use App\Http\Controllers\Admin\TownController;
+use App\Http\Controllers\Admin\FaqController;
 use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/', HomeController::class)->name('home');
 
-/* Parcels */
-Route::post('/parcels', [ParcelController::class, 'store'])->name('parcels.store');
-Route::get('/parcels/{tracking}', [ParcelController::class, 'show'])->name('parcels.show');
-Route::post('/parcels/{parcel}/confirm-payment', [PaymentController::class, 'confirm'])->name('parcels.confirm-payment');
+// Parcels
+Route::prefix('parcels')->name('parcels.')->group(function () {
+    Route::post('/', [ParcelController::class, 'store'])->name('store');
+    Route::get('/{tracking}', [ParcelController::class, 'show'])->name('show');
+    Route::post('/{parcel}/confirm-payment', [PaymentController::class, 'confirm'])
+        ->name('confirm-payment');
+});
 
-/* Supplies */
+// Supplies
 Route::post('/supplies', [SupplyRequestController::class, 'store'])->name('supplies.store');
 
-/* Tracking */
+// Tracking
 Route::get('/track/{tracking}', [TrackingController::class, 'show'])->name('track.show');
 
-/* Merchant (OTP login) */
-Route::prefix('merchant')
-    ->name('merchant.')
-    // ->middleware(['auth', 'verified'])
-    ->group(function () {
-        Route::post('/otp', [MerchantController::class, 'requestOtp'])->name('otp');
-        Route::post('/verify', [MerchantController::class, 'verifyOtp'])->name('verify');
-        Route::post('/logout', [MerchantController::class, 'logout'])->name('logout');
-        Route::post('/withdraw', [MerchantController::class, 'withdraw'])->name('withdraw');
-    });
+/*
+|--------------------------------------------------------------------------
+| Merchant Routes (OTP Login)
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('merchant')->name('merchant.')->group(function () {
+    Route::post('/otp', [MerchantController::class, 'requestOtp'])->name('otp');
+    Route::post('/verify', [MerchantController::class, 'verifyOtp'])->name('verify');
+    Route::post('/logout', [MerchantController::class, 'logout'])->name('logout');
+    Route::post('/withdraw', [MerchantController::class, 'withdraw'])->name('withdraw');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+*/
 
 Route::middleware(['auth', 'verified', 'can:admin'])
     ->prefix('admin')
+    ->name('admin.')
     ->group(function () {
         // Dashboard
-        Route::get('/', fn() => redirect()->route('dashboard'));
-        Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
-        Route::get('/dashboard.json', [\App\Http\Controllers\Admin\DashboardController::class, 'json'])->name('dashboard.json');
+        Route::redirect('/', '/admin/dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])
+            ->name('dashboard');
+        Route::get('/dashboard.json', [DashboardController::class, 'json'])
+            ->name('dashboard.json');
 
-        // Admin
-        Route::name('admin.')
-            ->group(function () {
+        // Resource routes
+        Route::resources([
+            'users' => UserController::class,
+            'parcels' => AdminParcelController::class,
+            'payments' => AdminPaymentController::class,
+            'points' => PointController::class,
+            'supply-requests' => AdminSupplyRequestController::class,
+        ]);
+
+        // Parcel mutations
+        Route::prefix('parcels/{parcel}')->name('parcels.')->group(function () {
+            Route::post('/retry-stk', [ParcelActionController::class, 'retryStk'])
+                ->name('retry-stk');
+            Route::post('/mark-paid', [ParcelActionController::class, 'markPaid'])
+                ->name('mark-paid');
+            Route::post('/claim', [ParcelActionController::class, 'claim'])
+                ->name('claim');
+            Route::post('/transition', [ParcelActionController::class, 'transition'])
+                ->name('transition');
+            Route::post('/payments/{payment}/link-tx', [ParcelActionController::class, 'linkTx'])
+                ->name('payments.link-tx');
+            Route::post('/cash-cod', [ParcelActionController::class, 'cashCod'])
+                ->name('cash-cod');
+            Route::get('/pdf', [PdfController::class, 'download'])
+                ->name('pdf');
+            Route::get('/print', [PdfController::class, 'print'])
+                ->name('print');
+        });
+
+        Route::prefix('suply-requests/{supplyRequest}')->name('supply-requests.')->group(function () {
+            Route::patch('/update-status', [AdminSupplyRequestController::class, 'updateStatus'])
+                ->name('update-status');
+            Route::patch('/quote', [AdminSupplyRequestController::class, 'quote'])
+                ->name('quote');
+            Route::patch('/payment', [AdminSupplyRequestController::class, 'recordPayment'])
+                ->name('record-payment');
+            Route::post('/stk', [AdminSupplyRequestController::class, 'initiateStk'])
+                ->name('initiate-stk');
+        });
+
+        // Settings
+        Route::prefix('settings')->name('settings.')->group(function () {
             Route::resources([
-                'users' => \App\Http\Controllers\Admin\UserController::class,
-                'parcels' => \App\Http\Controllers\Admin\ParcelController::class,
-                'payments' => \App\Http\Controllers\Admin\PaymentController::class,
-                'pricing-constants' => \App\Http\Controllers\Admin\PricingConstantController::class,
-                'general-prices' => \App\Http\Controllers\Admin\GeneralPriceController::class,
-                'item-groups' => \App\Http\Controllers\Admin\ItemGroupController::class,
-                'items' => \App\Http\Controllers\Admin\ItemController::class,
-                'routes' => \App\Http\Controllers\Admin\RouteController::class,
-                'routes.towns' => \App\Http\Controllers\Admin\TownController::class,
-                'faqs' => \App\Http\Controllers\Admin\FaqController::class,
+                'pricing-constants' => PricingConstantController::class,
+                'general-prices' => GeneralPriceController::class,
+                'item-groups' => ItemGroupController::class,
+                'items' => ItemController::class,
+                'routes' => RouteController::class,
+                'routes.towns' => TownController::class,
+                'faqs' => FaqController::class,
             ]);
-
-            // Parcel mutations
-            Route::prefix('parcels/{parcel}')
-                ->name('parcels.')
-                ->group(function () {
-                Route::post('/retry-stk', [\App\Http\Controllers\Admin\ParcelActionController::class, 'retryStk'])->name('retry-stk');
-                Route::post('/mark-paid', [\App\Http\Controllers\Admin\ParcelActionController::class, 'markPaid'])->name('mark-paid');
-                Route::post('/claim', [\App\Http\Controllers\Admin\ParcelActionController::class, 'claim'])->name('claim');
-                Route::post('/transition', [\App\Http\Controllers\Admin\ParcelActionController::class, 'transition'])->name('transition');
-                Route::post('/payments/{payment}/link-tx', [\App\Http\Controllers\Admin\ParcelActionController::class, 'linkTx'])->name('payments.link-tx');
-                Route::post('/cash-cod', [\App\Http\Controllers\Admin\ParcelActionController::class, 'cashCod'])->name('cash-cod');
-                Route::get('/pdf', [\App\Http\Controllers\Admin\PdfController::class, 'download'])->name('pdf');
-                Route::get('/print', [\App\Http\Controllers\Admin\PdfController::class, 'print'])->name('print');
-            });
-
         });
     });
 

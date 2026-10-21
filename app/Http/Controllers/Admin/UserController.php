@@ -20,18 +20,18 @@ class UserController extends Controller
         $validated = $request->validate([
             'role' => [
                 'nullable',
-                Rule::in(['staff', 'merchant', 'customer', 'admin', 'admin_staff']),
+                Rule::in(['staff', 'merchant', 'customer', 'admin', 'user']),
             ],
             'q' => ['nullable', 'string', 'max:255'],
         ]);
 
-        // "admin_staff" is a UI group, not a real role.
+        // "user" is a UI group, not a real role.
         // It expands to users having EITHER 'admin' OR 'staff'.
-        $role = $validated['role'] ?? 'admin_staff';
+        $role = $validated['role'] ?? 'user';
         $q = $validated['q'] ?? null;
 
         $users = User::query()
-            ->when($role === 'admin_staff', function ($query) {
+            ->when($role === 'user', function ($query) {
                 // hasRole() with array => "has any of these roles"
                 $query->whereHas('roles', function ($q) {
                     $q->whereIn('name', ['admin', 'staff']);
@@ -89,7 +89,6 @@ class UserController extends Controller
             ],
             'options' => [
                 'roles' => [
-                    'admin_staff' => 'Admin & Staff',
                     'admin' => 'Admin',
                     'staff' => 'Staff',
                     'merchant' => 'Merchant',
@@ -102,8 +101,8 @@ class UserController extends Controller
     public function create(Request $request)
     {
         $role = $request->query('role', 'staff');
-        // "admin_staff" is a group, not a real assignable role.
-        if ($role === 'admin_staff') {
+        // "user" is a group, not a real assignable role.
+        if ($role === 'user') {
             $role = 'staff';
         }
 

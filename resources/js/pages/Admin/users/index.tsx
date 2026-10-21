@@ -127,8 +127,7 @@ export default function Index({ users, filters, options }: Props) {
             <div className="space-y-4 p-6">
                 <div className="flex items-center justify-between">
                     <h1 className="text-xl font-semibold">
-                        {options.roles[filters.role ?? "admin_staff"] ??
-                            "Users"}
+                        {options.roles[filters.role ?? "Users"] ?? "Users"}
                     </h1>
                     <Button asChild size="sm">
                         <Link
@@ -137,7 +136,8 @@ export default function Index({ users, filters, options }: Props) {
                             })}
                         >
                             <PlusCircle className="mr-1 h-4 w-4" />
-                            Add user
+                            Add{" "}
+                            {options.roles[filters.role ?? "User"] ?? "User"}
                         </Link>
                     </Button>
                 </div>

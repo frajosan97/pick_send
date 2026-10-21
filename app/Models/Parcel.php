@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Parcel extends Model
@@ -224,5 +225,11 @@ class Parcel extends Model
         }
 
         $this->forceFill(['status' => $status])->save();
+    }
+
+    /** Morph counterpart — same set as payments() once backfilled. */
+    public function payablePayments(): MorphMany
+    {
+        return $this->morphMany(Payment::class, 'payable');
     }
 }

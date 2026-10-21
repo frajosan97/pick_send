@@ -33,12 +33,11 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import type { NavItem } from "@/types";
-import { dashboard } from "@/routes";
 
 const mainNavItems: NavItem[] = [
     {
         title: "Dashboard",
-        href: dashboard(),
+        href: "/admin",
         icon: LayoutGrid,
     },
     {
@@ -58,7 +57,7 @@ const mainNavItems: NavItem[] = [
         children: [
             {
                 title: "Admin & Staff",
-                href: "/admin/users?role=admin_staff",
+                href: "/admin/users?role=user",
                 icon: ShieldCheck,
             },
             {
@@ -91,39 +90,51 @@ const mainNavItems: NavItem[] = [
     //         },
     //     ],
     // },
-    // {
-    //     title: "Points",
-    //     href: "/admin/points",
-    //     icon: Sparkles,
-    // },
-    // {
-    //     title: "Supply Requests",
-    //     href: "/admin/supply-requests",
-    //     icon: Boxes,
-    // },
+    {
+        title: "Points",
+        href: "/admin/points",
+        icon: Sparkles,
+    },
+    {
+        title: "Supply Requests",
+        href: "/admin/supply-requests",
+        icon: Boxes,
+    },
     {
         title: "Settings",
-        href: "/admin",
+        href: "/admin/settings",
         icon: Settings,
         children: [
             {
                 title: "Pricing Constants",
-                href: "/admin/pricing-constants",
+                href: "/admin/settings/pricing-constants",
                 icon: Coins,
             },
             {
                 title: "General Prices",
-                href: "/admin/general-prices",
+                href: "/admin/settings/general-prices",
                 icon: Tags,
             },
             {
                 title: "Item Groups",
-                href: "/admin/item-groups",
+                href: "/admin/settings/item-groups",
                 icon: FolderTree,
             },
-            { title: "Items", href: "/admin/items", icon: Package },
-            { title: "Routes", href: "/admin/routes", icon: Map },
-            { title: "FAQs", href: "/admin/faqs", icon: HelpCircle },
+            {
+                title: "Items",
+                href: "/admin/settings/items",
+                icon: Package,
+            },
+            {
+                title: "Routes",
+                href: "/admin/settings/routes",
+                icon: Map,
+            },
+            {
+                title: "FAQs",
+                href: "/admin/settings/faqs",
+                icon: HelpCircle,
+            },
         ],
     },
 ];
@@ -137,7 +148,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={dashboard()} prefetch>
+                            <Link href={"/admin"} prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>
