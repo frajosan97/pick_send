@@ -56,43 +56,51 @@ const mainNavItems: NavItem[] = [
         href: "/admin/users",
         icon: Users,
         children: [
-            { title: "Merchants", href: "/admin/users/merchants", icon: Store },
             {
-                title: "Recipients",
-                href: "/admin/users/recipients",
+                title: "Admin & Staff",
+                href: "/admin/users?role=admin_staff",
+                icon: ShieldCheck,
+            },
+            {
+                title: "Merchants",
+                href: "/admin/users?role=merchant",
+                icon: Store,
+            },
+            {
+                title: "Customers",
+                href: "/admin/users?role=customer",
                 icon: UserCircle,
             },
-            { title: "Staff", href: "/admin/users/staff", icon: ShieldCheck },
         ],
     },
-    {
-        title: "Wallets",
-        href: "/admin/wallets",
-        icon: Wallet,
-        children: [
-            { title: "Balances", href: "/admin/wallets", icon: Wallet },
-            {
-                title: "Withdrawals",
-                href: "/admin/wallets/withdrawals",
-                icon: Banknote,
-            },
-            {
-                title: "Transactions",
-                href: "/admin/wallets/transactions",
-                icon: Receipt,
-            },
-        ],
-    },
-    {
-        title: "Points",
-        href: "/admin/points",
-        icon: Sparkles,
-    },
-    {
-        title: "Supply Requests",
-        href: "/admin/supply-requests",
-        icon: Boxes,
-    },
+    // {
+    //     title: "Wallets",
+    //     href: "/admin/wallets",
+    //     icon: Wallet,
+    //     children: [
+    //         { title: "Balances", href: "/admin/wallets", icon: Wallet },
+    //         {
+    //             title: "Withdrawals",
+    //             href: "/admin/wallets/withdrawals",
+    //             icon: Banknote,
+    //         },
+    //         {
+    //             title: "Transactions",
+    //             href: "/admin/wallets/transactions",
+    //             icon: Receipt,
+    //         },
+    //     ],
+    // },
+    // {
+    //     title: "Points",
+    //     href: "/admin/points",
+    //     icon: Sparkles,
+    // },
+    // {
+    //     title: "Supply Requests",
+    //     href: "/admin/supply-requests",
+    //     icon: Boxes,
+    // },
     {
         title: "Settings",
         href: "/admin",

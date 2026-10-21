@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -19,17 +18,16 @@ class UserSeeder extends Seeder
             [
                 'name' => 'System Administrator',
                 'phone' => env('ADMIN_PHONE', '+254700000000'),
-                'type' => 'admin',
                 'business_name' => 'Pick & Send HQ',
                 'password' => Hash::make($password),
                 'email_verified_at' => now(),
             ]
         );
 
-        // Ensure an admin wallet exists (balance 0)
-        $admin->walletOrCreate();
+        // Assign role (must exist — RolePermissionSeeder must run first)
+        $admin->syncRoles(['admin']);
 
-        $this->command->info("✅ Admin user ready: {$admin->email}");
-        $this->command->warn("   Password: {$password}  (change this after first login!)");
+        // Ensure wallet exists
+        $admin->walletOrCreate();
     }
 }

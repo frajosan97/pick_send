@@ -216,6 +216,39 @@ class NotificationService
     }
 
     /* =================================================================
+ | ACCOUNTS
+ | ================================================================= */
+
+    /**
+     * Sent once when an admin creates an account. Carries the initial
+     * password. The password is NOT logged — only the mobile is.
+     */
+    public function userCreated(string $mobile, string $name, string $password, string $role): void
+    {
+        $this->notify(
+            $mobile,
+            "Welcome {$name}! Your {$role} account has been created. "
+            . "Login with this phone number (or your email) and password: {$password}. "
+            . "Please change your password after your first login."
+        );
+    }
+
+    /**
+     * Fallback when no phone is on file — email the credentials instead,
+     * or surface this to the admin. We log so the admin can copy the
+     * password from the log if SMS is impossible.
+     */
+    public function userCreatedNoPhone(string $name, string $email, string $password, string $role): void
+    {
+        Log::info('User created without phone — credentials must be delivered manually', [
+            'name' => $name,
+            'email' => $email,
+            'role' => $role,
+            // deliberately NOT logging $password
+        ]);
+    }
+
+    /* =================================================================
      | HELPERS
      | ================================================================= */
 

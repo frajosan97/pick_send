@@ -5,18 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PaymentIndexRequest;
 use App\Models\Payment;
-use App\Models\Parcel;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class PaymentController extends Controller
 {
     /**
-     * Filterable, paginated payments list.
+     * Filterable payments list.
      *
-     * Mirrors ParcelController::index() in spirit: same filter shape,
-     * same money-cast discipline, same Inertia payload structure so the
-     * front-end components (StatusPill, money(), RowActions) are reused.
+     * Returns a plain array (not a paginator) because the front-end uses
+     * client-side DataTables: all rows are shipped once and sorting,
+     * paging, length-change, info and search are handled in the browser.
      */
     public function index(PaymentIndexRequest $request): Response
     {
@@ -26,8 +25,6 @@ class PaymentController extends Controller
             ->with([
                 'parcel:id,tracking_no,recipient_name,recipient_phone,status,payment_option,total',
                 'user:id,name,business_name,phone',
-                // eager-load the 1:1 receipt so method()/receiptNumber()
-                // never hit N+1 in the mapper below
                 'mpesaTransaction',
             ])
             ->when($f['q'], function ($q) use ($f) {
@@ -52,9 +49,9 @@ class PaymentController extends Controller
             ->when($f['from'], fn($q) => $q->where('created_at', '>=', $f['from']))
             ->when($f['to'], fn($q) => $q->where('created_at', '<=', $f['to']))
             ->orderBy($f['sort'], $f['dir'])
-            ->paginate($f['per_page'])
-            ->withQueryString()
-            ->through(fn(Payment $pay) => $this->toRow($pay));
+            ->get()                    // ⬅ flat collection, NOT paginate()
+            ->map(fn(Payment $pay) => $this->toRow($pay))
+            ->values();                // ⬅ reindex 0..n-1 for clean JSON array
 
         return Inertia::render('admin/payments/index', [
             'payments' => $payments,
@@ -97,7 +94,6 @@ class PaymentController extends Controller
 
     /**
      * Single source of truth for the row shape returned to the client.
-     * Keeps the mapper out of the query closure so it's testable.
      *
      * @return array<string, mixed>
      */

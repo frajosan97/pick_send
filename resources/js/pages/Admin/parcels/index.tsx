@@ -1,12 +1,13 @@
 // resources/js/pages/Admin/Parcels/Index.tsx
 import { Head, Link, router } from "@inertiajs/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import SharedDataTable, { Column } from "@/components/admin/data-table";
 import { Button } from "@/components/ui/button";
-import { money, num } from "@/components/admin/money";
+import { money } from "@/components/admin/money";
 import { StatusPill } from "@/components/admin/status-pill";
 import { RowActions } from "@/components/admin/row-actions";
-import { Eye, RotateCw } from "lucide-react";
+import { Eye } from "lucide-react";
+
+import SharedDataTable, { Column } from "@/components/admin/data-table";
 
 type ParcelRow = {
     id: number;

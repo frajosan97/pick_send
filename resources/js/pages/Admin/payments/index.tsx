@@ -55,19 +55,8 @@ type Filters = {
     to: string | null;
 };
 
-type Paginated<T> = {
-    data: T[];
-    current_page: number;
-    last_page: number;
-    per_page: number;
-    total: number;
-    from: number | null;
-    to: number | null;
-    links: { url: string | null; label: string; active: boolean }[];
-};
-
 type Props = {
-    payments: Paginated<PaymentRow>;
+    payments: PaymentRow[];
     filters: Filters;
     options: {
         types: Record<string, string>;
@@ -87,7 +76,9 @@ const TYPE_TONE: Record<string, string> = {
 export default function Index({ payments, filters, options }: Props) {
     const [q, setQ] = useState(filters.q ?? "");
 
-    // keep the search box in sync with the URL
+    // Keep the input in sync when the URL changes (Reset, back button,
+    // direct link with ?q=…). Without this, Reset clears the table but
+    // the input keeps the old value.
     useEffect(() => {
         setQ(filters.q ?? "");
     }, [filters.q]);
@@ -131,16 +122,23 @@ export default function Index({ payments, filters, options }: Props) {
         [filters],
     );
 
-    // Server-side pagination: DataTables is used purely for ordering of
-    // the current page. Length changes are pushed to the URL instead.
+    // Client-side DataTables — same configuration style as Parcels/Index.
+    // All rows are loaded once; DataTables handles sorting, paging,
+    // length change, table search and the info line.
     const tableOptions = useMemo(
         () => ({
-            paging: false, // real paging lives on the server
-            info: false,
-            order: [],
+            order: [[0, "desc" as const]],
+            pageLength: 25,
             columnDefs: [
-                { targets: [7], orderable: false, searchable: false }, // Actions
-                { targets: [4], type: "num" as const }, // Amount
+                {
+                    targets: [0, 7], // Created, Actions
+                    orderable: false,
+                    searchable: false,
+                },
+                {
+                    targets: [4], // Amount
+                    type: "num" as const,
+                },
             ],
         }),
         [],
@@ -261,7 +259,7 @@ export default function Index({ payments, filters, options }: Props) {
                 </form>
 
                 <SharedDataTable
-                    data={payments.data}
+                    data={payments}
                     className="display w-full"
                     options={tableOptions}
                 >
@@ -377,40 +375,6 @@ export default function Index({ payments, filters, options }: Props) {
                         )}
                     </Column>
                 </SharedDataTable>
-
-                {/* server-side pagination */}
-                <div className="flex items-center justify-between text-sm">
-                    <div className="text-muted-foreground">
-                        {payments.total === 0
-                            ? "No payments"
-                            : `Showing ${payments.from}–${payments.to} of ${payments.total}`}
-                    </div>
-                    <div className="flex flex-wrap items-center gap-1">
-                        {payments.links.map((l, i) => (
-                            <Button
-                                key={i}
-                                size="sm"
-                                variant={l.active ? "default" : "outline"}
-                                disabled={!l.url}
-                                onClick={() =>
-                                    l.url &&
-                                    router.get(
-                                        l.url,
-                                        {},
-                                        {
-                                            preserveScroll: true,
-                                            preserveState: true,
-                                            replace: true,
-                                        },
-                                    )
-                                }
-                                dangerouslySetInnerHTML={{
-                                    __html: l.label,
-                                }}
-                            />
-                        ))}
-                    </div>
-                </div>
             </div>
         </>
     );
