@@ -13,9 +13,6 @@ import {
     Store,
     UserCircle,
     ShieldCheck,
-    Wallet,
-    Banknote,
-    Receipt,
     Sparkles,
     Boxes,
 } from "lucide-react";
@@ -33,6 +30,7 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import type { NavItem } from "@/types";
+import { Wordmark } from "./wordmark";
 
 const mainNavItems: NavItem[] = [
     {
@@ -149,7 +147,8 @@ export function AppSidebar() {
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
                             <Link href={"/admin"} prefetch>
-                                <AppLogo />
+                                {/* <AppLogo /> */}
+                                <Wordmark onBand size="text-[1.35rem]" />
                             </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>

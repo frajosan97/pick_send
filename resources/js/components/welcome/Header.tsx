@@ -1,6 +1,6 @@
 // src/components/pickandsend/Header.tsx
 import { ListIcon, XIcon } from "lucide-react";
-import { Wordmark } from "./Wordmark";
+import { Wordmark } from "../wordmark";
 import { GHOST, PRIMARY, WRAP, NAV } from "./shared";
 
 export function Header({

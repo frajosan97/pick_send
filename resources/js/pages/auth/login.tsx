@@ -1,28 +1,27 @@
-import { Form, Head } from '@inertiajs/react';
-import InputError from '@/components/input-error';
-import PasswordInput from '@/components/password-input';
-import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Spinner } from '@/components/ui/spinner';
-import { store } from '@/routes/login';
-import { request } from '@/routes/password';
-import PasskeyVerify from '@/components/passkey-verify';
+import { Form, Head } from "@inertiajs/react";
+import { useId } from "react";
+import InputError from "@/components/input-error";
+import PasswordInput from "@/components/password-input";
+import TextLink from "@/components/text-link";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
+import { store } from "@/routes/login";
+import { request } from "@/routes/password";
+import PasskeyVerify from "@/components/passkey-verify";
 
 type Props = {
     status?: string;
     canResetPassword: boolean;
 };
 
-/**
- * Random token so the browser never recognises this as a
- * "known" login form and stops offering to save/autofill.
- */
-const nonce = Math.random().toString(36).slice(2);
-
 export default function Login({ status, canResetPassword }: Props) {
+    // useId is guaranteed to be identical on the server and the client,
+    // preventing React hydration mismatches while still giving a unique string.
+    const nonce = useId();
+
     return (
         <>
             <Head title="Log in" />
@@ -31,7 +30,7 @@ export default function Login({ status, canResetPassword }: Props) {
 
             <Form
                 {...store.form()}
-                resetOnSuccess={['password']}
+                resetOnSuccess={["password"]}
                 className="flex flex-col gap-6"
                 autoComplete="off"
                 data-form-type="other"
@@ -42,24 +41,24 @@ export default function Login({ status, canResetPassword }: Props) {
                         <div
                             aria-hidden="true"
                             style={{
-                                position: 'absolute',
-                                left: '-9999px',
+                                position: "absolute",
+                                left: "-9999px",
                                 width: 1,
                                 height: 1,
-                                overflow: 'hidden',
+                                overflow: "hidden",
                                 opacity: 0,
-                                pointerEvents: 'none',
+                                pointerEvents: "none",
                             }}
                         >
                             <input
                                 type="text"
-                                name={`fakeusernameremembered-${nonce}`}
+                                name={`fakeusernameremembered${nonce}`}
                                 autoComplete="username"
                                 tabIndex={-1}
                             />
                             <input
                                 type="password"
-                                name={`fakepasswordremembered-${nonce}`}
+                                name={`fakepasswordremembered${nonce}`}
                                 autoComplete="current-password"
                                 tabIndex={-1}
                             />
@@ -141,13 +140,6 @@ export default function Login({ status, canResetPassword }: Props) {
                                 Log in
                             </Button>
                         </div>
-
-                        {/* <div className="text-center text-sm text-muted-foreground">
-                            Don't have an account?{' '}
-                            <TextLink href={register()} tabIndex={5}>
-                                Sign up
-                            </TextLink>
-                        </div> */}
                     </>
                 )}
             </Form>
@@ -162,6 +154,6 @@ export default function Login({ status, canResetPassword }: Props) {
 }
 
 Login.layout = {
-    title: 'Log in to your account',
-    description: 'Enter your email and password below to log in',
+    title: "Log in to your account",
+    description: "Enter your email and password below to log in",
 };

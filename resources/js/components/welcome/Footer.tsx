@@ -1,5 +1,5 @@
 // src/components/pickandsend/Footer.tsx
-import { Wordmark } from "./Wordmark";
+import { Wordmark } from "../wordmark";
 import { WRAP, waHref, usePhone } from "./shared";
 
 export function Footer({ wa }: { wa: string }) {
