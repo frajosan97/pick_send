@@ -116,7 +116,7 @@ Route::middleware(['auth', 'verified', 'can:admin'])
         });
 
         // Settings
-        Route::prefix('settings')->name('settings.')->group(function () {
+        Route::prefix('settings')->group(function () {
             Route::resources([
                 'pricing-constants' => PricingConstantController::class,
                 'general-prices' => GeneralPriceController::class,
