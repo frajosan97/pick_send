@@ -4,7 +4,7 @@ import { fmt, num } from "@/lib/pricing";
 import { Block } from "./Block";
 import { SectionHead } from "./SectionHead";
 import { Table } from "./FormBits";
-import { EYEBROW, FACTS, H3, PRIMARY, WRAP } from "./shared";
+import { EYEBROW, FACTS, H3, PRIMARY, TD, WRAP, usePhone } from "./shared";
 
 export function Pricing({ config }: { config: Config }) {
     const {
@@ -19,6 +19,9 @@ export function Pricing({ config }: { config: Config }) {
         maxKg: MAX_KG,
         dropOffFee,
     } = constants;
+
+    // Pull the display phone number from the shared hook
+    const displayPhone = usePhone();
 
     const kgPrice = (n: number) =>
         n <= 10 ? BASE10 : BASE10 + (n - 10) * PER_KG;
@@ -52,7 +55,10 @@ export function Pricing({ config }: { config: Config }) {
                         ))}
                     </div>
                 </SectionHead>
-                <h3 className={`mt-[26px] mb-2.5 text-[1.15rem] ${H3}`}>
+
+                <h3
+                    className={`mt-6 mb-2.5 text-[clamp(1.05rem,2.2vw,1.15rem)] ${H3}`}
+                >
                     General parcels
                 </h3>
                 <div className="overflow-x-auto rounded-[14px] border border-ps-line bg-ps-surface">
@@ -63,10 +69,10 @@ export function Pricing({ config }: { config: Config }) {
                                 key={x.id}
                                 className={`group ${x.perKg ? "bg-ps-soft text-ps-softink" : ""}`}
                             >
-                                <td className="border-b border-ps-line px-4 py-[13px] font-semibold group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]">
+                                <td className={`${TD} font-semibold`}>
                                     {x.label}
                                 </td>
-                                <td className="border-b border-ps-line px-4 py-[13px] text-right group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]">
+                                <td className={`${TD} text-right`}>
                                     {x.perKg
                                         ? `${num(BASE10)} + ${PER_KG} per extra kg`
                                         : num(x.p)}
@@ -78,7 +84,10 @@ export function Pricing({ config }: { config: Config }) {
                 <p className="mt-2.5 text-[.92rem] text-ps-muted">
                     {`Example: 15 kg is ${fmt(kgPrice(15))}. Parcels above 10 kg and big appliances carry their own collection fee. Over ${MAX_KG} kg, ask us for a quote.`}
                 </p>
-                <h3 className={`mt-[26px] mb-2.5 text-[1.15rem] ${H3}`}>
+
+                <h3
+                    className={`mt-6 mb-2.5 text-[clamp(1.05rem,2.2vw,1.15rem)] ${H3}`}
+                >
                     Electronics and appliances
                 </h3>
                 <p className="mb-2.5 text-[.92rem] text-ps-muted">
@@ -89,27 +98,45 @@ export function Pricing({ config }: { config: Config }) {
                     {ELEC.map((g) => (
                         <details
                             key={g.group}
-                            className="rounded-xl border border-ps-line bg-ps-surface px-[18px]"
+                            className="group rounded-xl border border-ps-line bg-ps-surface px-4 transition-colors open:border-ps-brand/60 sm:px-[18px]"
                         >
-                            <summary className="flex min-h-[52px] cursor-pointer items-center justify-between gap-3 font-bold">
-                                {g.group.replace(", by weight", "")}
-                                <span className="font-semibold whitespace-nowrap text-ps-muted">
-                                    {`from ${fmt(Math.min(...g.items.map((i) => i.p)))}`}
+                            <summary className="flex min-h-[52px] cursor-pointer list-none items-center justify-between gap-3 font-bold text-ps-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ps-brand/40 focus-visible:ring-offset-2 focus-visible:ring-offset-ps-surface [&::-webkit-details-marker]:hidden [&::marker]:content-['']">
+                                <span className="min-w-0">
+                                    {g.group.replace(", by weight", "")}
                                 </span>
+                                <div className="flex items-center gap-3">
+                                    <span className="font-semibold whitespace-nowrap text-ps-muted">
+                                        {`from ${fmt(Math.min(...g.items.map((i) => i.p)))}`}
+                                    </span>
+                                    <span
+                                        aria-hidden="true"
+                                        className="flex h-6 w-6 flex-none items-center justify-center rounded-full border border-ps-line text-ps-muted transition-transform duration-200 group-open:rotate-180"
+                                    >
+                                        <svg
+                                            viewBox="0 0 20 20"
+                                            className="h-3 w-3 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round]"
+                                        >
+                                            <path d="m5 8 5 5 5-5" />
+                                        </svg>
+                                    </span>
+                                </div>
                             </summary>
-                            <div className="mb-2.5 [&_td]:!px-2 [&_td]:!py-2.5 [&_td:first-child]:!pl-0 [&_td:last-child]:!pr-0 [&_th]:!px-2 [&_th]:!py-2.5 [&_th:first-child]:!pl-0 [&_th:last-child]:!pr-0">
+
+                            <div className="mb-2.5 mt-1">
                                 <Table
                                     small
                                     head={["Item", "Delivery", "CBD pickup"]}
                                     rows={g.items.map((it) => (
                                         <tr key={it.id} className="group">
-                                            <td className="border-b border-ps-line px-4 py-[13px] group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]">
-                                                {it.label}
-                                            </td>
-                                            <td className="border-b border-ps-line px-4 py-[13px] text-right group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]">
+                                            <td className={TD}>{it.label}</td>
+                                            <td
+                                                className={`${TD} text-right whitespace-nowrap`}
+                                            >
                                                 {num(it.p)}
                                             </td>
-                                            <td className="border-b border-ps-line px-4 py-[13px] text-right group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]">
+                                            <td
+                                                className={`${TD} text-right whitespace-nowrap`}
+                                            >
                                                 {it.pu <= 100
                                                     ? "Free"
                                                     : num(it.pu + 50)}
@@ -129,15 +156,15 @@ export function Pricing({ config }: { config: Config }) {
                     <li>Cash on Delivery: 1.6% of what we collect</li>
                     <li>
                         <b className="text-ps-ink">
-                            Bulk items: get a quote, call or WhatsApp 0718 819
-                            413
+                            Bulk items: get a quote, call or WhatsApp{" "}
+                            {displayPhone}
                         </b>
                     </li>
                 </ul>
                 <div className="mt-7 grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] items-center gap-[18px] rounded-2xl bg-ps-soft p-4 text-ps-softink sm:px-6 sm:py-[22px]">
                     <div>
                         <span className={EYEBROW}>Pick&amp;Send points</span>
-                        <h3 className="mt-1 text-[1.35rem] font-extrabold text-ps-brandink">
+                        <h3 className="mt-1 text-[clamp(1.2rem,2.8vw,1.35rem)] font-extrabold text-ps-brandink">
                             Every parcel earns you points
                         </h3>
                     </div>

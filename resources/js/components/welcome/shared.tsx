@@ -153,6 +153,13 @@ export function useWhatsApp(): string | null {
     return usePage().props.config.whatsapp;
 }
 
+/** The public-facing phone number (e.g. "0716 983 983") for display purposes. */
+export function usePhone(): string {
+    // If config.phone exists use it, otherwise fall back to the WhatsApp number.
+    const config = usePage().props.config as AppConfig & { phone?: string };
+    return config.phone || config.whatsapp || "0716 983 983";
+}
+
 /**
  * Builds a wa.me deep link.
  *

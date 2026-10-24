@@ -1,8 +1,10 @@
 // src/components/pickandsend/Footer.tsx
 import { Wordmark } from "./Wordmark";
-import { WRAP } from "./shared";
+import { WRAP, waHref, usePhone } from "./shared";
 
 export function Footer({ wa }: { wa: string }) {
+    const displayPhone = usePhone();
+
     return (
         <footer
             className={[
@@ -44,12 +46,8 @@ export function Footer({ wa }: { wa: string }) {
                         <b>Talk to us</b>
                         <span className="block">
                             Call or WhatsApp{" "}
-                            <a
-                                href={`https://wa.me/${wa}`}
-                                rel="noopener"
-                                target="_blank"
-                            >
-                                0716 983 983
+                            <a href={waHref(wa)} rel="noopener" target="_blank">
+                                {displayPhone}
                             </a>
                         </span>
                         <span className="mt-1 block">

@@ -9,11 +9,15 @@ import {
     PRIMARY,
     WRAP,
     waHref,
+    usePhone,
 } from "./shared";
 import type { Config } from "@/types/config";
 
 export function Hero({ config }: { config: Config }) {
     const { wa: WA, routes: ROUTES, towns: TOWNS } = config;
+
+    // Pull the display phone number from the shared hook
+    const displayPhone = usePhone();
 
     const ROUTE_LIST = Object.entries(ROUTES).map(([key, name], i) => [
         key,
@@ -116,7 +120,7 @@ export function Hero({ config }: { config: Config }) {
                                 Sending bulk items? Get a quote.
                             </b>
                             <span className="text-[clamp(.82rem,1.6vw,.95rem)] font-semibold opacity-90">
-                                Call or WhatsApp 0716 983 983
+                                Call or WhatsApp {displayPhone}
                             </span>
                         </span>
                         <i
