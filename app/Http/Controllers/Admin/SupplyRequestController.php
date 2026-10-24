@@ -390,19 +390,16 @@ class SupplyRequestController extends Controller
         ]);
 
         try {
+            $phone = formatPhoneNumber($phone, 0);
+
             app(MpesaService::class)->stkPush(
                 $phone,
                 $amount,
                 $payment->reference,
-                $payment->id
             );
         } catch (\Throwable $e) {
-            // Mark the payment failed so the UI doesn't show a
-            // pending payment that will never complete.
             $payment->update(['status' => Payment::STATUS_FAILED]);
-
             report($e);
-
             return back()->with('error', 'Could not initiate M-PESA. Please try again.');
         }
 

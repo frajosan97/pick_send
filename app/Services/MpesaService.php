@@ -108,8 +108,8 @@ class MpesaService
     public function stkPush(
         $phone,
         float $amount,
-        string $reference,
-        string $description
+        string $reference = null,
+        string $description = null
     ): array {
         $token = $this->generateToken();
 
