@@ -1,45 +1,52 @@
 // src/components/pickandsend/SectionHead.tsx
-import type { ReactNode } from 'react';
-import { EYEBROW } from './shared';
+import type { ReactNode } from "react";
+import { EYEBROW } from "./shared";
+
+type SectionHeadProps = {
+    eyebrow: string;
+    title: string;
+    text?: string;
+    band?: boolean;
+    className?: string;
+    children?: ReactNode;
+};
 
 export function SectionHead({
     eyebrow,
     title,
     text,
-    dark,
-    className = 'mb-6',
+    band = false,
+    className = "",
     children,
-}: {
-    eyebrow: string;
-    title: string;
-    text?: string;
-    dark?: boolean;
-    className?: string;
-    children?: ReactNode;
-}) {
+}: SectionHeadProps) {
     return (
         <div className={`flex flex-col gap-2 ${className}`}>
-            <span
-                className={
-                    dark
-                        ? EYEBROW.replace('text-ps-accent', 'text-ps-key')
-                        : EYEBROW
-                }
-            >
+            {/* Eyebrow: reuse the shared pill, swap only the accent when on a band */}
+            <span className={band ? `${EYEBROW} !text-ps-key` : EYEBROW}>
                 {eyebrow}
             </span>
+
             <h2
-                className={`text-[clamp(1.7rem,3.4vw,2.4rem)] leading-[1.1] font-extrabold tracking-[-.03em] ${dark ? 'text-white' : 'text-ps-brandink'}`}
+                className={[
+                    "text-[clamp(1.5rem,3.4vw,2.4rem)]",
+                    "leading-[1.1] font-extrabold tracking-[-.03em] text-balance",
+                    band ? "text-ps-ink" : "text-ps-brandink",
+                ].join(" ")}
             >
                 {title}
             </h2>
+
             {text && (
                 <p
-                    className={`max-w-[40rem] ${dark ? 'text-ps-bandmuted' : 'text-ps-muted'}`}
+                    className={[
+                        "max-w-[40rem] text-pretty",
+                        band ? "text-ps-bandmuted" : "text-ps-muted",
+                    ].join(" ")}
                 >
                     {text}
                 </p>
             )}
+
             {children}
         </div>
     );

@@ -27,6 +27,10 @@ const FREQUENCIES: { value: Often; label: string }[] = [
     { value: "monthly", label: "Monthly" },
 ];
 
+/** Shared alert surface — theme-aware, works on both dark and light. */
+const ALERT =
+    "mb-4 rounded-2xl border-2 border-destructive/60 bg-destructive/10 p-4 text-sm text-foreground sm:px-5";
+
 function firstErrorMessage(errors: Record<string, string>): string {
     const first = Object.values(errors)[0];
     return typeof first === "string" && first.length
@@ -132,10 +136,10 @@ export function Supplies({
 
     return (
         <Block id="supplies" tone="band">
-            <div className={`${WRAP} ${G400} items-start`}>
-                <div>
+            <div className={`${WRAP} ${G400} items-start gap-8 lg:gap-12`}>
+                {/* ── Left: pitch ─────────────────────────────── */}
+                <div className="min-w-0">
                     <SectionHead
-                        dark
                         className="mb-6"
                         eyebrow="Live outside Nairobi?"
                         title="Get your Nairobi supplies through Pick&Send"
@@ -157,24 +161,19 @@ export function Supplies({
                     </ul>
                 </div>
 
+                {/* ── Right: form ─────────────────────────────── */}
                 <form
-                    className={CARD}
+                    className={`${CARD} min-w-0`}
                     noValidate
                     onSubmit={submitSupplies}
                     aria-busy={sSending}
                 >
-                    <h3 className={`text-[1.25rem] ${H3}`}>
+                    <h3 className={`text-[clamp(1.1rem,2.2vw,1.25rem)] ${H3}`}>
                         Ask us to pick for you
                     </h3>
 
-                    {/* Server flash error (e.g. town-not-found thrown as
-                        ValidationException keyed at field level would show
-                        in the banner below — this is for non-field flashes). */}
                     {error && (
-                        <p
-                            role="alert"
-                            className="mb-4 rounded-2xl border-2 border-ps-wa bg-red-50 p-4 text-sm text-red-900 sm:px-[22px]"
-                        >
+                        <p role="alert" className={ALERT}>
                             {error}
                         </p>
                     )}
@@ -183,7 +182,7 @@ export function Supplies({
                         <div
                             role="alert"
                             aria-live="polite"
-                            className="mb-4 flex flex-col gap-1 rounded-2xl border-2 border-ps-wa bg-red-50 p-4 text-sm text-red-900 sm:px-[22px]"
+                            className={`${ALERT} flex flex-col gap-1`}
                         >
                             <b>We couldn’t send your request.</b>
                             <ul className="ml-4 list-disc">
@@ -249,6 +248,7 @@ export function Supplies({
                         onChange={(e: any) => update("sphone", e.target.value)}
                         error={sErr.sphone}
                     />
+
                     <Choice label="How often?" cols={4}>
                         {FREQUENCIES.map(({ value, label }) => (
                             <Opt
@@ -265,14 +265,14 @@ export function Supplies({
                     </Choice>
 
                     {isRecurring && (
-                        <p className="m-0 -mt-2 text-xs text-ps-ink/70">
+                        <p className="m-0 text-xs leading-relaxed text-ps-ink/70">
                             Recurring requests are quoted per delivery — you
                             approve the price each time before we dispatch.
                         </p>
                     )}
 
                     <button
-                        className={PRIMARY}
+                        className={`${PRIMARY} w-full sm:w-auto`}
                         type="submit"
                         disabled={sSending}
                     >
@@ -283,7 +283,7 @@ export function Supplies({
                         <div
                             role="status"
                             aria-live="polite"
-                            className="flex flex-col gap-3 rounded-2xl border-2 border-ps-wa bg-ps-surface p-4 sm:px-[22px] sm:py-5"
+                            className="flex flex-col gap-3 rounded-2xl border-2 border-ps-wa/70 bg-ps-surface p-4 sm:px-5 sm:py-5"
                         >
                             <b>Request #{supply.id} received.</b>
 
@@ -299,12 +299,14 @@ export function Supplies({
                             <p className="m-0 text-sm">
                                 Send this to us on WhatsApp: <b>0718 819 413</b>
                             </p>
+
                             <pre
-                                className="m-0 rounded-[10px] bg-ps-surface2 p-3.5 font-sans text-[.96rem] whitespace-pre-wrap select-all"
+                                className="m-0 overflow-x-auto rounded-[10px] bg-ps-surface2 p-3 font-sans text-[.92rem] whitespace-pre-wrap break-words select-all sm:p-3.5 sm:text-[.96rem]"
                                 tabIndex={0}
                             >
                                 {supply.text}
                             </pre>
+
                             <a
                                 className={PAY}
                                 href={supply.waHref}
@@ -313,6 +315,7 @@ export function Supplies({
                             >
                                 Open WhatsApp
                             </a>
+
                             <span className={HINT}>
                                 Keep this number handy — we’ll SMS the quote
                                 here.

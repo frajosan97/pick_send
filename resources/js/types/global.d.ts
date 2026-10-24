@@ -1,4 +1,6 @@
+// src/types/global.d.ts
 import type { Auth } from '@/types/auth';
+import type { AppConfig, Flash } from '@/types/pickandsend';
 
 declare module 'react' {
     interface InputHTMLAttributes<T> {
@@ -12,6 +14,8 @@ declare module '@inertiajs/core' {
             name: string;
             auth: Auth;
             sidebarOpen: boolean;
+            config: AppConfig;
+            flash: Flash;
             [key: string]: unknown;
         };
     }

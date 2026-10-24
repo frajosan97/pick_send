@@ -13,7 +13,7 @@ class HomeController extends Controller
     public function __invoke(PricingService $pricing): Response
     {
         return Inertia::render('welcome', [
-            'config' => $pricing->buildConfig(),
+            'pricing' => $pricing->buildConfig(),
         ]);
     }
 }

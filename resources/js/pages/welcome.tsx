@@ -1,6 +1,7 @@
 // src/pages/PickAndSend.tsx
 import { useState } from "react";
 import { Head, usePage } from "@inertiajs/react";
+
 import type { Config } from "@/types/config";
 
 import { TopStrip } from "@/components/welcome/TopStrip";
@@ -16,30 +17,31 @@ import { Faq } from "@/components/welcome/Faq";
 import { Footer } from "@/components/welcome/Footer";
 import { FloatingWhatsApp } from "@/components/welcome/FloatingWhatsApp";
 
-import type {
-    AuthUser,
-    Flash,
-    MerchantData,
+import {
+    useWhatsApp,
+    type AuthUser,
+    type Flash,
+    type MerchantData,
 } from "@/components/welcome/shared";
 
 export default function PickAndSend() {
     const page = usePage<{
-        config: Config;
+        pricing: Config;
         flash: Flash;
         auth: { user: AuthUser | null };
         merchant: MerchantData | null;
     }>();
 
-    const { config, flash, auth, merchant } = page.props;
+    const { pricing, flash, auth, merchant } = page.props;
 
     const [menu, setMenu] = useState(false);
     const [typing, setTyping] = useState(false);
 
-    const WA = config.wa;
+    const wa = useWhatsApp() ?? "";
 
     return (
         <div
-            className="min-h-screen scroll-smooth bg-ps-bg font-sans text-base leading-[1.55] text-ps-ink [color-scheme:dark] [&_h1]:text-balance [&_h2]:text-balance [&_h3]:text-balance"
+            className="min-h-screen scroll-smooth bg-ps-bg font-sans text-base leading-[1.55] text-ps-ink [&_h1]:text-balance [&_h2]:text-balance [&_h3]:text-balance"
             onFocusCapture={(e) =>
                 /^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName) &&
                 setTyping(true)
@@ -53,19 +55,19 @@ export default function PickAndSend() {
                 />
             </Head>
 
-            <TopStrip wa={WA} />
+            <TopStrip wa={wa} />
             <Header menu={menu} setMenu={setMenu} />
 
             <main id="home">
-                <Hero config={config} />
+                <Hero config={pricing} />
                 <SendParcel
-                    config={config}
+                    config={pricing}
                     booking={flash?.booking ?? null}
                     error={flash?.error}
                     paymentConfirmed={flash?.payment_confirmed}
                 />
                 <Supplies
-                    config={config}
+                    config={pricing}
                     supply={flash?.supply ?? null}
                     error={flash?.error}
                 />
@@ -74,14 +76,14 @@ export default function PickAndSend() {
                     merchant={merchant}
                     flash={flash}
                 />
-                <Pricing config={config} />
+                <Pricing config={pricing} />
                 <Track />
-                <Community wa={WA} />
-                <Faq config={config} />
+                <Community wa={wa} />
+                <Faq config={pricing} />
             </main>
 
-            <Footer wa={WA} />
-            <FloatingWhatsApp wa={WA} typing={typing} />
+            <Footer wa={wa} />
+            <FloatingWhatsApp typing={typing} />
         </div>
     );
 }

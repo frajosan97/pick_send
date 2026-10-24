@@ -1,21 +1,19 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@source '../views';
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../js';
+@source "../views";
+@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
+@source "../js";
 
 /* ============================================================
    VARIANTS
    ============================================================ */
-@custom-variant dark (&:where(:not(.light *)));
-@custom-variant light (&:where(.light *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* ============================================================
-   THEME TOKENS (Tailwind v4 @theme)
+   THEME TOKENS
    ============================================================ */
 @theme {
-    /* ---------- fonts ---------- */
     --font-sans:
         "Plus Jakarta Sans", "Instrument Sans", ui-sans-serif, system-ui,
         sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
@@ -24,12 +22,11 @@
         "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
         "Liberation Mono", "Courier New", monospace;
 
-    /* ---------- radii ---------- */
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);
 
-    /* ---------- shadcn semantic tokens ---------- */
+    /* shadcn semantic tokens */
     --color-background: var(--background);
     --color-foreground: var(--foreground);
     --color-card: var(--card);
@@ -63,17 +60,17 @@
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
 
-    /* ---------- Pick&Send palette (names; values below) ---------- */
+    /* Pick&Send palette — ps-* names only for ps-specific extras */
     --color-ps-bg: var(--ps-bg);
-    --color-ps-surface: var(--ps-surface);
-    --color-ps-surface2: var(--ps-surface2);
-    --color-ps-ink: var(--ps-ink);
-    --color-ps-muted: var(--ps-muted);
-    --color-ps-line: var(--ps-line);
-    --color-ps-brand: var(--ps-brand);
-    --color-ps-onbrand: var(--ps-onbrand);
+    --color-ps-surface: var(--card);
+    --color-ps-surface2: var(--secondary);
+    --color-ps-ink: var(--foreground);
+    --color-ps-muted: var(--muted-foreground);
+    --color-ps-line: var(--border);
+    --color-ps-brand: var(--primary);
+    --color-ps-onbrand: var(--primary-foreground);
     --color-ps-brandink: var(--ps-brandink);
-    --color-ps-accent: var(--ps-accent);
+    --color-ps-accent: var(--accent);
     --color-ps-soft: var(--ps-soft);
     --color-ps-softink: var(--ps-softink);
     --color-ps-wa: var(--ps-wa);
@@ -91,78 +88,9 @@
 }
 
 /* ============================================================
-   DEFAULT THEME = NAVY DARK
+   DEFAULT = LIGHT  (React/Inertia/Tailwind convention)
    ============================================================ */
 :root {
-    color-scheme: dark;
-
-    --background: #0b1424;
-    --foreground: #e8edf6;
-    --card: #121e33;
-    --card-foreground: #e8edf6;
-    --popover: #18263f;
-    --popover-foreground: #e8edf6;
-    --primary: #8fb8f2;
-    --primary-foreground: #0b1f3d;
-    --secondary: #18263f;
-    --secondary-foreground: #e8edf6;
-    --muted: #18263f;
-    --muted-foreground: #a7b3c9;
-    --accent: #4fd1c0;
-    --accent-foreground: #062a27;
-    --destructive: #f87171;
-    --destructive-foreground: #1a0a0a;
-    --border: #2a3a57;
-    --input: #2a3a57;
-    --ring: #8fb8f2;
-
-    --chart-1: #8fb8f2;
-    --chart-2: #4fd1c0;
-    --chart-3: #e3b04b;
-    --chart-4: #f08a5d;
-    --chart-5: #7fb0f5;
-
-    --radius: 0.625rem;
-
-    --sidebar: #0f1c33;
-    --sidebar-foreground: #e8edf6;
-    --sidebar-primary: #8fb8f2;
-    --sidebar-primary-foreground: #0b1f3d;
-    --sidebar-accent: #18263f;
-    --sidebar-accent-foreground: #e8edf6;
-    --sidebar-border: #2a3a57;
-    --sidebar-ring: #8fb8f2;
-
-    --ps-bg: #0b1424;
-    --ps-surface: #121e33;
-    --ps-surface2: #18263f;
-    --ps-ink: #e8edf6;
-    --ps-muted: #a7b3c9;
-    --ps-line: #2a3a57;
-    --ps-brand: #8fb8f2;
-    --ps-onbrand: #0b1f3d;
-    --ps-brandink: #cfe0fa;
-    --ps-accent: #4fd1c0;
-    --ps-soft: #123b38;
-    --ps-softink: #a9ede3;
-    --ps-wa: #3cb652;
-    --ps-onwa: #06260c;
-    --ps-band: #0f2747;
-    --ps-bandmuted: #b9c8e0;
-    --ps-bandline: #35507b;
-    --ps-key: #4fd1c0;
-    --ps-warn: #3d2e0c;
-    --ps-warnink: #f3d08a;
-    --ps-coast: #f08a5d;
-    --ps-mount: #4fd1c0;
-    --ps-rift: #e3b04b;
-    --ps-lake: #7fb0f5;
-}
-
-/* ============================================================
-   LIGHT OVERRIDE
-   ============================================================ */
-.light {
     color-scheme: light;
 
     --background: #f4f7fc;
@@ -191,6 +119,8 @@
     --chart-4: #ea580c;
     --chart-5: #2563eb;
 
+    --radius: 0.625rem;
+
     --sidebar: #ffffff;
     --sidebar-foreground: #0b1424;
     --sidebar-primary: #2a5db0;
@@ -200,16 +130,9 @@
     --sidebar-border: #d6deec;
     --sidebar-ring: #2a5db0;
 
+    /* ps-specific extras */
     --ps-bg: #f4f7fc;
-    --ps-surface: #ffffff;
-    --ps-surface2: #eef2f9;
-    --ps-ink: #0b1424;
-    --ps-muted: #5b6a82;
-    --ps-line: #d6deec;
-    --ps-brand: #2a5db0;
-    --ps-onbrand: #ffffff;
     --ps-brandink: #1c3f7c;
-    --ps-accent: #0d9488;
     --ps-soft: #ccfbf1;
     --ps-softink: #0f766e;
     --ps-wa: #25d366;
@@ -227,18 +150,128 @@
 }
 
 /* ============================================================
-   LEGACY ALIAS
+   DARK OVERRIDE — opt-in via `.dark` on <html>
    ============================================================ */
 .dark {
     color-scheme: dark;
+
+    --background: #0b1424;
+    --foreground: #e8edf6;
+    --card: #121e33;
+    --card-foreground: #e8edf6;
+    --popover: #18263f;
+    --popover-foreground: #e8edf6;
+    --primary: #8fb8f2;
+    --primary-foreground: #0b1f3d;
+    --secondary: #18263f;
+    --secondary-foreground: #e8edf6;
+    --muted: #18263f;
+    --muted-foreground: #a7b3c9;
+    --accent: #4fd1c0;
+    --accent-foreground: #062a27;
+    --destructive: #f87171;
+    --destructive-foreground: #1a0a0a;
+    --border: #2a3a57;
+    --input: #2a3a57;
+    --ring: #8fb8f2;
+
+    --chart-1: #8fb8f2;
+    --chart-2: #4fd1c0;
+    --chart-3: #e3b04b;
+    --chart-4: #f08a5d;
+    --chart-5: #7fb0f5;
+
+    --sidebar: #0f1c33;
+    --sidebar-foreground: #e8edf6;
+    --sidebar-primary: #8fb8f2;
+    --sidebar-primary-foreground: #0b1f3d;
+    --sidebar-accent: #18263f;
+    --sidebar-accent-foreground: #e8edf6;
+    --sidebar-border: #2a3a57;
+    --sidebar-ring: #8fb8f2;
+
+    --ps-bg: #0b1424;
+    --ps-brandink: #cfe0fa;
+    --ps-soft: #123b38;
+    --ps-softink: #a9ede3;
+    --ps-wa: #3cb652;
+    --ps-onwa: #06260c;
+    --ps-band: #0f2747;
+    --ps-bandmuted: #b9c8e0;
+    --ps-bandline: #35507b;
+    --ps-key: #4fd1c0;
+    --ps-warn: #3d2e0c;
+    --ps-warnink: #f3d08a;
+    --ps-coast: #f08a5d;
+    --ps-mount: #4fd1c0;
+    --ps-rift: #e3b04b;
+    --ps-lake: #7fb0f5;
+}
+
+/* Optional: follow OS preference unless the user forced a theme.
+   Add `.light` or `.dark` on <html> to override. */
+@media (prefers-color-scheme: dark) {
+    :root:not(.light) {
+        color-scheme: dark;
+        --background: #0b1424;
+        --foreground: #e8edf6;
+        --card: #121e33;
+        --card-foreground: #e8edf6;
+        --popover: #18263f;
+        --popover-foreground: #e8edf6;
+        --primary: #8fb8f2;
+        --primary-foreground: #0b1f3d;
+        --secondary: #18263f;
+        --secondary-foreground: #e8edf6;
+        --muted: #18263f;
+        --muted-foreground: #a7b3c9;
+        --accent: #4fd1c0;
+        --accent-foreground: #062a27;
+        --destructive: #f87171;
+        --destructive-foreground: #1a0a0a;
+        --border: #2a3a57;
+        --input: #2a3a57;
+        --ring: #8fb8f2;
+        --chart-1: #8fb8f2;
+        --chart-2: #4fd1c0;
+        --chart-3: #e3b04b;
+        --chart-4: #f08a5d;
+        --chart-5: #7fb0f5;
+        --sidebar: #0f1c33;
+        --sidebar-foreground: #e8edf6;
+        --sidebar-primary: #8fb8f2;
+        --sidebar-primary-foreground: #0b1f3d;
+        --sidebar-accent: #18263f;
+        --sidebar-accent-foreground: #e8edf6;
+        --sidebar-border: #2a3a57;
+        --sidebar-ring: #8fb8f2;
+        --ps-bg: #0b1424;
+        --ps-brandink: #cfe0fa;
+        --ps-soft: #123b38;
+        --ps-softink: #a9ede3;
+        --ps-wa: #3cb652;
+        --ps-onwa: #06260c;
+        --ps-band: #0f2747;
+        --ps-bandmuted: #b9c8e0;
+        --ps-bandline: #35507b;
+        --ps-key: #4fd1c0;
+        --ps-warn: #3d2e0c;
+        --ps-warnink: #f3d08a;
+        --ps-coast: #f08a5d;
+        --ps-mount: #4fd1c0;
+        --ps-rift: #e3b04b;
+        --ps-lake: #7fb0f5;
+    }
 }
 
 /* ============================================================
-   BASE LAYER
+   BASE
    ============================================================ */
 @layer base {
     * {
         @apply border-border;
+        scrollbar-width: thin;
+        scrollbar-color: var(--border) transparent;
     }
 
     html {
@@ -253,21 +286,8 @@
         -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ---------- Native form controls pick up tokens ---------- */
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    input[type="search"],
-    input[type="tel"],
-    input[type="url"],
-    input[type="number"],
-    input[type="date"],
-    input[type="datetime-local"],
-    input[type="month"],
-    input[type="time"],
-    input[type="week"],
-    textarea,
-    select {
+    /* Native form controls */
+    :is(input:not([type="checkbox"]):not([type="radio"]), textarea, select) {
         background-color: var(--card);
         color: var(--card-foreground);
         border: 1px solid var(--input);
@@ -279,23 +299,18 @@
             background-color 150ms ease;
     }
 
-    input::placeholder,
-    textarea::placeholder {
+    :is(input, textarea)::placeholder {
         color: var(--muted-foreground);
         opacity: 1;
     }
 
-    input:focus-visible,
-    textarea:focus-visible,
-    select:focus-visible {
+    :is(input, textarea, select):focus-visible {
         outline: none;
         border-color: var(--ring);
         box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 35%, transparent);
     }
 
-    input:disabled,
-    textarea:disabled,
-    select:disabled {
+    :is(input, textarea, select):disabled {
         opacity: 0.5;
         cursor: not-allowed;
     }
@@ -309,17 +324,10 @@
         cursor: pointer;
     }
 
-    input[type="checkbox"]:focus-visible,
-    input[type="radio"]:focus-visible {
-        outline: none;
-        box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 35%, transparent);
-    }
-
     a {
         color: var(--primary);
         transition: color 150ms ease;
     }
-
     a:hover {
         color: color-mix(in oklab, var(--primary) 80%, var(--foreground));
     }
@@ -329,30 +337,21 @@
         color: var(--foreground);
     }
 
-    * {
-        scrollbar-width: thin;
-        scrollbar-color: var(--border) transparent;
-    }
-
     *::-webkit-scrollbar {
         width: 10px;
         height: 10px;
     }
-
     *::-webkit-scrollbar-track {
         background: transparent;
     }
-
     *::-webkit-scrollbar-thumb {
         background-color: var(--border);
         border-radius: 9999px;
         border: 2px solid transparent;
         background-clip: content-box;
     }
-
     *::-webkit-scrollbar-thumb:hover {
         background-color: var(--muted-foreground);
-        background-clip: content-box;
     }
 
     input:-webkit-autofill,
@@ -367,91 +366,67 @@
 }
 
 /* ============================================================
-   ADMIN DASHBOARD — component styles
+   COMPONENTS
    ============================================================ */
 @layer components {
-    /* ---------------- Layout shell ---------------- */
+    /* Layout */
     .ps-dash {
         @apply mx-auto w-full max-w-[1440px] px-4 py-5 sm:px-6 lg:px-8;
     }
-
     .ps-dash-grid {
         @apply grid gap-4;
         grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
     }
-
     .ps-dash-grid--kpi {
         grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
     }
-
     .ps-dash-grid--split {
         grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
     }
 
-    /* ---------------- Cards / panels ---------------- */
+    /* Cards */
     .ps-card {
-        @apply relative flex min-w-0 flex-col gap-3 rounded-xl border p-4 sm:p-5;
-        background: var(--card);
-        border-color: var(--border);
-        color: var(--card-foreground);
+        @apply relative flex min-w-0 flex-col gap-3 rounded-xl border bg-card p-4 text-card-foreground sm:p-5;
     }
-
     .ps-card__head {
         @apply flex flex-wrap items-start justify-between gap-3;
     }
-
     .ps-card__title {
-        @apply m-0 text-[1rem] leading-tight font-bold;
-        color: var(--foreground);
+        @apply m-0 text-base leading-tight font-bold text-foreground;
     }
-
     .ps-card__sub {
-        @apply text-[.82rem];
-        color: var(--muted-foreground);
+        @apply text-[.82rem] text-muted-foreground;
     }
-
     .ps-card__body {
         @apply min-w-0 flex-1;
     }
 
-    /* ---------------- KPI tile ---------------- */
+    /* KPI */
     .ps-kpi {
-        @apply relative flex min-w-0 flex-col gap-2 overflow-hidden rounded-xl border p-4 sm:p-5;
-        background: var(--card);
-        border-color: var(--border);
+        @apply relative flex min-w-0 flex-col gap-2 overflow-hidden rounded-xl border bg-card p-4 sm:p-5;
     }
-
     .ps-kpi__label {
-        @apply text-[.78rem] font-semibold tracking-[.02em] uppercase;
-        color: var(--muted-foreground);
+        @apply text-[.78rem] font-semibold tracking-[.02em] text-muted-foreground uppercase;
     }
-
     .ps-kpi__value {
-        @apply text-[1.7rem] leading-none font-extrabold tabular-nums;
-        color: var(--foreground);
+        @apply text-[1.7rem] leading-none font-extrabold text-foreground tabular-nums;
     }
-
     .ps-kpi__hint {
-        @apply text-[.78rem];
-        color: var(--muted-foreground);
+        @apply text-[.78rem] text-muted-foreground;
     }
-
     .ps-kpi__trend {
-        @apply mt-1 h-10 w-full;
-        color: var(--accent);
+        @apply mt-1 h-10 w-full text-accent;
     }
-
     .ps-kpi--brand {
-        border-color: color-mix(in oklab, var(--ps-brand) 40%, var(--border));
+        border-color: color-mix(in oklab, var(--primary) 40%, var(--border));
         background:
             linear-gradient(
                 180deg,
-                color-mix(in oklab, var(--ps-brand) 8%, transparent),
+                color-mix(in oklab, var(--primary) 8%, transparent),
                 transparent 60%
             ),
             var(--card);
     }
-
     .ps-kpi--warn {
         border-color: color-mix(in oklab, var(--ps-warnink) 40%, var(--border));
         background:
@@ -462,7 +437,6 @@
             ),
             var(--card);
     }
-
     .ps-kpi--danger {
         border-color: color-mix(
             in oklab,
@@ -470,215 +444,149 @@
             var(--border)
         );
     }
-
     .ps-kpi__delta {
         @apply inline-flex items-center gap-1 rounded-full px-2 py-[2px] text-[.72rem] font-bold tabular-nums;
     }
-
     .ps-kpi__delta--up {
         background: color-mix(in oklab, var(--accent) 22%, transparent);
         color: var(--accent);
     }
-
     .ps-kpi__delta--down {
         background: color-mix(in oklab, var(--destructive) 22%, transparent);
         color: var(--destructive);
     }
 
-    /* ---------------- Toolbar ---------------- */
+    /* Toolbar */
     .ps-toolbar {
-        @apply flex flex-wrap items-center justify-between gap-3 rounded-xl border px-3 py-2.5;
-        background: var(--card);
-        border-color: var(--border);
+        @apply flex flex-wrap items-center justify-between gap-3 rounded-xl border bg-card px-3 py-2.5;
     }
-
     .ps-toolbar__group {
         @apply flex flex-wrap items-center gap-1.5;
     }
-
     .ps-toolbar__meta {
-        @apply text-[.8rem] tabular-nums;
-        color: var(--muted-foreground);
+        @apply text-[.8rem] text-muted-foreground tabular-nums;
     }
-
     .ps-chip {
-        @apply inline-flex min-h-9 items-center rounded-lg border px-3 text-[.82rem] font-semibold no-underline transition;
-        background: var(--card);
-        border-color: var(--border);
-        color: var(--foreground);
-        cursor: pointer;
+        @apply inline-flex min-h-9 cursor-pointer items-center rounded-lg border bg-card px-3 text-[.82rem] font-semibold text-foreground no-underline transition hover:bg-muted;
     }
-
-    .ps-chip:hover {
-        background: var(--muted);
-    }
-
     .ps-chip[aria-pressed="true"],
     .ps-chip--active {
-        background: var(--ps-brand);
-        border-color: var(--ps-brand);
-        color: var(--ps-onbrand);
+        @apply border-primary bg-primary text-primary-foreground;
     }
-
     .ps-chip--ghost {
-        background: transparent;
+        @apply bg-transparent;
     }
 
-    /* ---------------- Data table ---------------- */
+    /* Table */
     .ps-table {
         @apply w-full border-collapse text-[.88rem] tabular-nums;
     }
-
     .ps-table thead th {
-        @apply sticky top-0 z-[1] border-b px-4 py-2.5 text-left text-[.72rem] font-bold tracking-[.06em] uppercase;
-        background: var(--card);
-        border-color: var(--border);
-        color: var(--muted-foreground);
-        backdrop-filter: blur(6px);
+        @apply sticky top-0 z-[1] border-b bg-card px-4 py-2.5 text-left text-[.72rem] font-bold tracking-[.06em] text-muted-foreground uppercase backdrop-blur;
     }
-
-    .ps-table thead th.text-right,
-    .ps-table tbody td.text-right {
-        text-align: right;
-    }
-
     .ps-table tbody td {
         @apply border-b px-4 py-2.5 align-middle;
         border-color: color-mix(in oklab, var(--border) 70%, transparent);
     }
-
     .ps-table tbody tr:last-child td {
-        border-bottom: 0;
+        @apply border-b-0;
     }
-
     .ps-table tbody tr:hover td {
         background: color-mix(in oklab, var(--muted) 60%, transparent);
     }
-
     .ps-table--zebra tbody tr:nth-child(even) td {
         background: color-mix(in oklab, var(--muted) 35%, transparent);
     }
-
     .ps-table__num {
         @apply text-right font-mono;
     }
-
     .ps-table__mono {
         @apply font-mono text-[.82rem];
     }
 
-    /* ---------------- Pill / badge ---------------- */
+    /* Pills */
     .ps-pill {
-        @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-[3px] text-[.78rem] font-bold whitespace-nowrap;
-        background: var(--muted);
-        color: var(--muted-foreground);
+        @apply inline-flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-[3px] text-[.78rem] font-bold whitespace-nowrap text-muted-foreground;
     }
-
     .ps-pill--wait {
         background: color-mix(in oklab, var(--ps-warn) 70%, transparent);
         color: var(--ps-warnink);
     }
-
     .ps-pill--move {
-        background: color-mix(in oklab, var(--ps-brand) 22%, transparent);
+        background: color-mix(in oklab, var(--primary) 22%, transparent);
         color: var(--ps-brandink);
     }
-
     .ps-pill--done {
-        background: color-mix(in oklab, var(--ps-accent) 22%, transparent);
+        background: color-mix(in oklab, var(--accent) 22%, transparent);
         color: var(--accent);
     }
-
     .ps-pill--danger {
         background: color-mix(in oklab, var(--destructive) 22%, transparent);
         color: var(--destructive);
     }
 
-    /* ---------------- Charts ---------------- */
+    /* Charts */
     .ps-chart {
         @apply relative w-full;
     }
-
     .ps-chart svg {
-        display: block;
-        width: 100%;
-        height: auto;
+        @apply block h-auto w-full;
     }
-
     .ps-chart__legend {
-        @apply mt-2 flex flex-wrap gap-x-4 gap-y-1.5 text-[.78rem];
-        color: var(--muted-foreground);
+        @apply mt-2 flex flex-wrap gap-x-4 gap-y-1.5 text-[.78rem] text-muted-foreground;
     }
-
     .ps-chart__legend i {
         @apply inline-block h-2.5 w-2.5 flex-none rounded-full;
     }
-
     .ps-chart__axis {
-        @apply flex justify-between text-[.68rem];
-        color: var(--muted-foreground);
+        @apply flex justify-between text-[.68rem] text-muted-foreground;
     }
-
     .ps-chart__grid line {
         stroke: var(--border);
         stroke-width: 0.5;
         vector-effect: non-scaling-stroke;
         opacity: 0.6;
     }
-
     .ps-donut__track {
         stroke: var(--border);
     }
-
     .ps-donut__label {
         fill: var(--foreground);
         font-weight: 700;
     }
 
-    /* ---------------- Funnel rows ---------------- */
+    /* Funnel */
     .ps-funnel {
         @apply m-0 flex list-none flex-col gap-2 p-0;
     }
-
     .ps-funnel__row {
         @apply flex items-center gap-3;
     }
-
     .ps-funnel__label {
-        @apply w-[130px] flex-none text-[.82rem] font-semibold capitalize;
-        color: var(--muted-foreground);
+        @apply w-[130px] flex-none text-[.82rem] font-semibold text-muted-foreground capitalize;
     }
-
     .ps-funnel__track {
-        @apply relative h-6 flex-1 overflow-hidden rounded-md;
-        background: var(--muted);
+        @apply relative h-6 flex-1 overflow-hidden rounded-md bg-muted;
     }
-
     .ps-funnel__fill {
         @apply absolute inset-y-0 left-0 rounded-md transition-[width] duration-500;
         background: linear-gradient(
             90deg,
             var(--accent),
-            color-mix(in oklab, var(--accent) 70%, var(--ps-brand))
+            color-mix(in oklab, var(--accent) 70%, var(--primary))
         );
     }
-
     .ps-funnel__value {
         @apply w-14 flex-none text-right font-mono text-[.82rem];
     }
 
-    /* ---------------- Empty state ---------------- */
+    /* Empty + skeleton */
     .ps-empty {
-        @apply flex flex-col items-center justify-center gap-1 rounded-lg border border-dashed px-4 py-8 text-center text-[.86rem];
-        border-color: var(--border);
-        color: var(--muted-foreground);
+        @apply flex flex-col items-center justify-center gap-1 rounded-lg border border-dashed px-4 py-8 text-center text-[.86rem] text-muted-foreground;
     }
-
     .ps-empty b {
-        color: var(--foreground);
+        @apply text-foreground;
     }
-
-    /* ---------------- Skeleton ---------------- */
     .ps-skel {
         @apply block rounded-md;
         background: linear-gradient(
@@ -690,7 +598,6 @@
         background-size: 400% 100%;
         animation: ps-skel 1.4s ease-in-out infinite;
     }
-
     @keyframes ps-skel {
         0% {
             background-position: 100% 50%;
@@ -699,12 +606,9 @@
             background-position: 0 50%;
         }
     }
-
-    /* ---------------- Value change flash ---------------- */
     .ps-flash {
         animation: ps-flash 900ms ease-out;
     }
-
     @keyframes ps-flash {
         0% {
             background-color: color-mix(
@@ -717,272 +621,193 @@
             background-color: transparent;
         }
     }
-
     @media (prefers-reduced-motion: reduce) {
         .ps-skel,
         .ps-flash,
         .ps-funnel__fill {
-            animation: none !important;
-            transition: none !important;
+            animation: none;
+            transition: none;
         }
     }
 
-    /* ---------------- Print ---------------- */
+    /* Print */
     @media print {
         .ps-dash {
             max-width: none;
             padding: 0;
         }
-
         .ps-toolbar,
         .ps-chip {
-            display: none !important;
+            display: none;
         }
-
         .ps-card,
         .ps-kpi {
             border: 1px solid #ccc;
-            background: #fff !important;
-            color: #000 !important;
+            background: #fff;
+            color: #000;
             break-inside: avoid;
         }
-
         .ps-table thead th {
-            background: #f5f5f5 !important;
-            color: #000 !important;
+            background: #f5f5f5;
+            color: #000;
         }
     }
 }
 
 /* ============================================================
-   DATATABLES — theme-aligned styling (v1 + v2 compatible)
-   ------------------------------------------------------------
-   Add `.ps-datatable` to the *container* in your component:
-
-       <div className="ps-datatable">
-           <SharedDataTable … />
-       </div>
-
-   The wrapper itself stays `overflow-hidden`; the *scroll body*
-   inside DataTables takes over scrolling when `scrollY` is set
-   on the DataTable options.
+   DATATABLES — unified v1 + v2 via :is()
    ============================================================ */
 @layer components {
     .ps-datatable {
-        @apply relative w-full rounded-lg border bg-card;
-        border-color: var(--border);
-        color: var(--card-foreground);
-        /* NOTE: no `overflow: hidden` here on purpose — the inner
-           .dataTables_scrollBody must be allowed to size itself.
-           Rounded corners are applied to the inner pieces instead. */
+        @apply relative w-full rounded-lg border border-border bg-card text-card-foreground;
     }
 
-    /* ------------------------------------------------------------------
-     | Top/bottom bars (search, length, info, pager)
-     | v2: .dt-layout-row / .dt-layout-cell
-     | v1: .dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate
-     | ------------------------------------------------------------------ */
-
-    .ps-datatable .dt-layout-row,
-    .ps-datatable .dataTables_wrapper > .row:first-child,
-    .ps-datatable .dataTables_wrapper > .row:last-child {
+    .ps-datatable :is(.dt-layout-row, .dataTables_wrapper > .row) {
         @apply m-0 flex flex-wrap items-center justify-between gap-3 px-4 py-3;
     }
-
-    .ps-datatable .dt-layout-row + .dt-layout-row,
-    .ps-datatable .dataTables_wrapper > .row + .row {
-        @apply border-t;
-        border-color: var(--border);
+    .ps-datatable
+        :is(.dt-layout-row, .dataTables_wrapper > .row)
+        + :is(.dt-layout-row, .dataTables_wrapper > .row) {
+        @apply border-t border-border;
     }
-
     .ps-datatable .dt-layout-cell {
-        @apply flex items-center gap-2 text-[.82rem];
-        color: var(--muted-foreground);
+        @apply flex items-center gap-2 text-[.82rem] text-muted-foreground;
+    }
+    .ps-datatable :is(.dataTables_wrapper .row > [class*="col-"]) {
+        padding-inline: 0;
     }
 
-    /* v1 wrapper row uses Bootstrap-style .row; neutralise it */
-    .ps-datatable .dataTables_wrapper .row {
-        margin-left: 0;
-        margin-right: 0;
-    }
-    .ps-datatable .dataTables_wrapper .row > [class*="col-"] {
-        padding-left: 0;
-        padding-right: 0;
-    }
-
-    /* ------------------------------------------------------------------
-     | Search + length
-     | ------------------------------------------------------------------ */
-
-    .ps-datatable .dt-search,
-    .ps-datatable .dt-length,
-    .ps-datatable .dataTables_filter,
-    .ps-datatable .dataTables_length {
+    .ps-datatable
+        :is(.dt-search, .dt-length, .dataTables_filter, .dataTables_length) {
         @apply flex items-center gap-2;
     }
-
-    .ps-datatable .dt-search label,
-    .ps-datatable .dt-length label,
-    .ps-datatable .dataTables_filter label,
-    .ps-datatable .dataTables_length label {
-        @apply m-0 text-[.82rem] font-medium;
-        color: var(--muted-foreground);
+    .ps-datatable
+        :is(
+            .dt-search label,
+            .dt-length label,
+            .dataTables_filter label,
+            .dataTables_length label
+        ) {
+        @apply m-0 text-[.82rem] font-medium text-muted-foreground;
     }
-
-    .ps-datatable .dt-search input,
-    .ps-datatable .dt-length select,
-    .ps-datatable .dataTables_filter input,
-    .ps-datatable .dataTables_length select {
-        @apply h-8 rounded-md border px-2.5 text-[.82rem];
-        background-color: var(--card);
-        color: var(--card-foreground);
-        border-color: var(--input);
-        transition:
-            border-color 150ms ease,
-            box-shadow 150ms ease;
+    .ps-datatable
+        :is(
+            .dt-search input,
+            .dt-length select,
+            .dataTables_filter input,
+            .dataTables_length select
+        ) {
+        @apply h-8 rounded-md border border-input bg-card px-2.5 text-[.82rem] text-card-foreground transition;
     }
-
-    .ps-datatable .dt-search input:focus-visible,
-    .ps-datatable .dt-length select:focus-visible,
-    .ps-datatable .dataTables_filter input:focus-visible,
-    .ps-datatable .dataTables_length select:focus-visible {
-        outline: none;
+    .ps-datatable
+        :is(
+            .dt-search input,
+            .dt-length select,
+            .dataTables_filter input,
+            .dataTables_length select
+        ):focus-visible {
+        @apply outline-none;
         border-color: var(--ring);
         box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 35%, transparent);
     }
 
-    /* ------------------------------------------------------------------
-     | Info text
-     | ------------------------------------------------------------------ */
-
-    .ps-datatable .dt-info,
-    .ps-datatable .dataTables_info {
-        @apply text-[.8rem] tabular-nums;
-        color: var(--muted-foreground);
+    .ps-datatable :is(.dt-info, .dataTables_info) {
+        @apply text-[.8rem] text-muted-foreground tabular-nums;
     }
-
-    /* ------------------------------------------------------------------
-     | Table
-     | ------------------------------------------------------------------ */
 
     .ps-datatable table.dataTable {
-        @apply w-full border-collapse text-[.88rem] tabular-nums;
-        margin: 0;
+        @apply m-0 w-full border-collapse text-[.88rem] tabular-nums;
     }
-
     .ps-datatable table.dataTable thead th {
-        @apply border-b px-4 py-2.5 text-left text-[.72rem] font-bold tracking-[.06em] uppercase;
-        background-color: var(--muted);
-        border-color: var(--border);
-        color: var(--muted-foreground);
-        /* Keeps the header sticky when the body scrolls */
-        position: sticky;
-        top: 0;
-        z-index: 1;
+        @apply sticky top-0 z-[1] border-b border-border bg-muted px-4 py-2.5 text-left text-[.72rem] font-bold tracking-[.06em] text-muted-foreground uppercase;
     }
-
-    /* Sort indicators — v2 */
-    .ps-datatable table.dataTable thead th.dt-orderable-asc,
-    .ps-datatable table.dataTable thead th.dt-orderable-desc {
+    .ps-datatable
+        table.dataTable
+        thead
+        th:is(
+            .sorting,
+            .sorting_asc,
+            .sorting_desc,
+            .dt-orderable-asc,
+            .dt-orderable-desc
+        ) {
         cursor: pointer;
     }
-    .ps-datatable table.dataTable thead th.dt-ordering-asc,
-    .ps-datatable table.dataTable thead th.dt-ordering-desc {
+    .ps-datatable
+        table.dataTable
+        thead
+        th:is(
+            .sorting_asc,
+            .sorting_desc,
+            .dt-ordering-asc,
+            .dt-ordering-desc
+        ) {
         color: var(--foreground);
     }
-    .ps-datatable table.dataTable thead th.dt-ordering-asc::after,
-    .ps-datatable table.dataTable thead th.dt-ordering-desc::after {
+    .ps-datatable
+        table.dataTable
+        thead
+        th:is(
+            .sorting_asc,
+            .sorting_desc,
+            .dt-ordering-asc,
+            .dt-ordering-desc
+        )::after {
         color: var(--primary);
     }
-
-    /* Sort indicators — v1 */
     .ps-datatable table.dataTable thead th.sorting,
     .ps-datatable table.dataTable thead th.sorting_asc,
     .ps-datatable table.dataTable thead th.sorting_desc {
-        cursor: pointer;
         background-image: none;
-    }
-    .ps-datatable table.dataTable thead th.sorting_asc,
-    .ps-datatable table.dataTable thead th.sorting_desc {
-        color: var(--foreground);
     }
     .ps-datatable table.dataTable thead th.sorting_asc::after {
         content: " ▲";
-        color: var(--primary);
         font-size: 0.55rem;
         opacity: 0.85;
     }
     .ps-datatable table.dataTable thead th.sorting_desc::after {
         content: " ▼";
-        color: var(--primary);
         font-size: 0.55rem;
         opacity: 0.85;
     }
 
     .ps-datatable table.dataTable tbody td {
-        @apply border-b px-4 py-2.5 align-middle;
+        @apply border-b px-4 py-2.5 align-middle text-card-foreground;
         border-color: color-mix(in oklab, var(--border) 70%, transparent);
-        color: var(--card-foreground);
     }
-
     .ps-datatable table.dataTable tbody tr:last-child td {
         border-bottom: 0;
     }
-
     .ps-datatable table.dataTable tbody tr:hover td {
         background-color: color-mix(in oklab, var(--muted) 60%, transparent);
     }
-
     .ps-datatable table.dataTable tbody tr:nth-child(even) td {
         background-color: color-mix(in oklab, var(--muted) 35%, transparent);
     }
-
-    /* Right-align a column only when the author asked for it —
-       don't blanket-right-align the last column, it breaks tables
-       where `Actions` isn't last. */
-    .ps-datatable table.dataTable thead th.text-right,
-    .ps-datatable table.dataTable tbody td.text-right {
+    .ps-datatable table.dataTable :is(thead th, tbody td).text-right {
         text-align: right;
     }
-
     .ps-datatable table.dataTable tbody td .ps-row-actions {
         justify-content: flex-end;
     }
 
-    /* ------------------------------------------------------------------
-     | Scroll wrappers — this is what makes Y axis scroll
-     | ------------------------------------------------------------------ */
-
     .ps-datatable .dataTables_scroll {
-        @apply relative;
-        border-top: 1px solid var(--border);
+        @apply relative border-t border-border;
     }
-
     .ps-datatable .dataTables_scrollHead {
-        @apply relative z-[2];
-        background: var(--muted);
+        @apply relative z-[2] bg-muted;
     }
-
     .ps-datatable .dataTables_scrollHead table {
         border-collapse: separate;
         border-spacing: 0;
     }
-
     .ps-datatable .dataTables_scrollBody {
-        @apply relative;
-        /* The options.scrollY sets the height; we just theme the box. */
-        background: var(--card);
-        overflow-y: auto !important;
-        overflow-x: auto;
+        @apply relative overflow-x-auto overflow-y-auto bg-card;
         -webkit-overflow-scrolling: touch;
     }
-
-    /* Strip the duplicated thead DataTables injects inside the body */
     .ps-datatable .dataTables_scrollBody thead {
         display: none;
     }
-
-    /* Match scrollbar to the rest of the app */
     .ps-datatable .dataTables_scrollBody::-webkit-scrollbar {
         width: 10px;
         height: 10px;
@@ -996,122 +821,79 @@
         border: 2px solid transparent;
         background-clip: content-box;
     }
-    .ps-datatable .dataTables_scrollBody::-webkit-scrollbar-thumb:hover {
-        background-color: var(--muted-foreground);
-        background-clip: content-box;
-    }
 
-    /* When there are fewer rows than scrollY, collapse the body —
-       use `scrollCollapse: true` on the options side; this rule
-       keeps the border honest in both states. */
-    .ps-datatable .dataTables_scrollBody table {
-        border-bottom: 0;
-    }
-
-    /* ------------------------------------------------------------------
-     | Pager — v2 + v1
-     | ------------------------------------------------------------------ */
-
-    .ps-datatable .dt-paging,
-    .ps-datatable .dataTables_paginate {
+    .ps-datatable :is(.dt-paging, .dataTables_paginate) {
         @apply flex items-center gap-1;
     }
-
-    .ps-datatable .dt-paging .dt-paging-button,
-    .ps-datatable .dataTables_paginate .paginate_button {
-        @apply inline-flex h-8 min-w-8 items-center justify-center rounded-md border px-2 text-[.8rem] font-semibold;
-        background-color: var(--card);
-        border-color: var(--border);
-        color: var(--foreground) !important;
-        transition:
-            background-color 150ms ease,
-            border-color 150ms ease,
-            color 150ms ease;
-        box-shadow: none;
+    .ps-datatable
+        :is(
+            .dt-paging .dt-paging-button,
+            .dataTables_paginate .paginate_button
+        ) {
+        @apply inline-flex h-8 min-w-8 items-center justify-center rounded-md border border-border bg-card px-2 text-[.8rem] font-semibold text-foreground shadow-none transition;
+    }
+    .ps-datatable
+        :is(
+            .dt-paging .dt-paging-button,
+            .dataTables_paginate .paginate_button
+        ):hover:not(.disabled) {
+        @apply border-border bg-muted;
+    }
+    .ps-datatable
+        :is(
+            .dt-paging .dt-paging-button.current,
+            .dataTables_paginate .paginate_button.current,
+            .dataTables_paginate .paginate_button.current:hover
+        ) {
+        @apply border-primary bg-primary text-primary-foreground;
+    }
+    .ps-datatable
+        :is(
+            .dt-paging .dt-paging-button.disabled,
+            .dt-paging .dt-paging-button.disabled:hover,
+            .dataTables_paginate .paginate_button.disabled,
+            .dataTables_paginate .paginate_button.disabled:hover
+        ) {
+        @apply cursor-not-allowed border-border bg-card text-muted-foreground opacity-45;
     }
 
-    .ps-datatable .dt-paging .dt-paging-button:hover:not(.disabled),
-    .ps-datatable .dataTables_paginate .paginate_button:hover:not(.disabled) {
-        background-color: var(--muted) !important;
-        border-color: var(--border) !important;
+    .ps-datatable table.dataTable :is(td.dt-empty, td.dataTables_empty) {
+        @apply py-8 text-center text-[.86rem] text-muted-foreground;
     }
-
-    .ps-datatable .dt-paging .dt-paging-button.current,
-    .ps-datatable .dataTables_paginate .paginate_button.current,
-    .ps-datatable .dataTables_paginate .paginate_button.current:hover {
-        background-color: var(--primary) !important;
-        border-color: var(--primary) !important;
-        color: var(--primary-foreground) !important;
-    }
-
-    .ps-datatable .dt-paging .dt-paging-button.disabled,
-    .ps-datatable .dt-paging .dt-paging-button.disabled:hover,
-    .ps-datatable .dataTables_paginate .paginate_button.disabled,
-    .ps-datatable .dataTables_paginate .paginate_button.disabled:hover {
-        opacity: 0.45;
-        cursor: not-allowed;
-        background-color: var(--card) !important;
-        color: var(--muted-foreground) !important;
-        border-color: var(--border) !important;
-    }
-
-    /* ------------------------------------------------------------------
-     | Empty state
-     | ------------------------------------------------------------------ */
-
-    .ps-datatable table.dataTable td.dt-empty,
-    .ps-datatable table.dataTable td.dataTables_empty {
-        @apply py-8 text-center text-[.86rem];
-        color: var(--muted-foreground);
-    }
-
-    /* ------------------------------------------------------------------
-     | Responsive
-     | ------------------------------------------------------------------ */
 
     @media (max-width: 640px) {
-        .ps-datatable .dt-layout-row,
-        .ps-datatable .dataTables_wrapper > .row {
+        .ps-datatable :is(.dt-layout-row, .dataTables_wrapper > .row) {
             @apply items-start;
         }
-
-        .ps-datatable .dt-search,
-        .ps-datatable .dataTables_filter {
+        .ps-datatable :is(.dt-search, .dataTables_filter) {
             @apply w-full;
         }
-
-        .ps-datatable .dt-search input,
-        .ps-datatable .dataTables_filter input {
+        .ps-datatable :is(.dt-search input, .dataTables_filter input) {
             @apply w-full;
         }
     }
-
-    /* ------------------------------------------------------------------
-     | Print
-     | ------------------------------------------------------------------ */
-
     @media print {
         .ps-datatable {
             border: 1px solid #ccc;
-            background: #fff !important;
-            color: #000 !important;
+            background: #fff;
+            color: #000;
         }
-
-        .ps-datatable .dt-layout-row:first-child,
-        .ps-datatable .dt-paging,
-        .ps-datatable .dataTables_paginate,
-        .ps-datatable .dataTables_filter {
-            display: none !important;
+        .ps-datatable
+            :is(
+                .dt-layout-row:first-child,
+                .dt-paging,
+                .dataTables_paginate,
+                .dataTables_filter
+            ) {
+            display: none;
         }
-
         .ps-datatable .dataTables_scrollBody {
-            max-height: none !important;
-            overflow: visible !important;
+            max-height: none;
+            overflow: visible;
         }
-
         .ps-datatable table.dataTable thead th {
-            background: #f5f5f5 !important;
-            color: #000 !important;
+            background: #f5f5f5;
+            color: #000;
         }
     }
 }

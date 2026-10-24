@@ -42,7 +42,9 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
-
+            'config' => [
+                'whatsapp' => (string) config('services.pick_and_send.whatsapp', ''),
+            ],
             'flash' => [
                 'toast' => fn() => $request->session()->get('toast'),
                 'status' => fn() => $request->session()->get('status'),

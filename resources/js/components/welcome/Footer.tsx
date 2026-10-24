@@ -1,40 +1,79 @@
 // src/components/pickandsend/Footer.tsx
-import { Wordmark } from './Wordmark';
-import { WRAP } from './shared';
+import { Wordmark } from "./Wordmark";
+import { WRAP } from "./shared";
 
 export function Footer({ wa }: { wa: string }) {
     return (
-        <footer className="bg-ps-band pt-11 pb-7 text-[.94rem] text-ps-bandmuted [&_a]:text-white [&_b]:mb-1 [&_b]:block [&_b]:text-white">
+        <footer
+            className={[
+                "bg-ps-band text-[.9rem] text-ps-bandmuted sm:text-[.94rem]",
+                "pt-8 pb-6 sm:pt-11 sm:pb-7",
+                // every link inside inherits the correct band-safe color
+                "[&_a]:text-ps-ink [&_a]:underline-offset-2 [&_a]:hover:underline",
+                // every <b> label inside flips correctly
+                "[&_b]:mb-1.5 [&_b]:block [&_b]:text-ps-ink",
+            ].join(" ")}
+        >
             <div className={WRAP}>
-                <div className="grid grid-cols-[repeat(auto-fit,minmax(min(210px,100%),1fr))] gap-[26px]">
-                    <div>
+                <div
+                    className={[
+                        "grid gap-6 sm:gap-7",
+                        // 1 col < 480, 2 col < 768, 4 col above
+                        "grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-4",
+                    ].join(" ")}
+                >
+                    {/* Brand */}
+                    <div className="min-w-0">
                         <Wordmark onBand size="text-[1.4rem]" />
-                        <br />
-                        Parcels from Nairobi to towns across Kenya.
+                        <p className="mt-2">
+                            Parcels from Nairobi to towns across Kenya.
+                        </p>
                     </div>
-                    <div>
-                        <b>Visit us</b>1st Floor, Stanbank House, Moi Avenue,
-                        Nairobi CBD
-                        <br />
-                        P.O. Box 25079-00100 GPO Nairobi
+
+                    {/* Address */}
+                    <address className="min-w-0 not-italic">
+                        <b>Visit us</b>
+                        <span className="block">
+                            1st Floor, Stanbank House, Moi Avenue,
+                        </span>
+                        <span className="block">Nairobi CBD</span>
+                        <span className="mt-1 block">
+                            P.O. Box 25079-00100 GPO Nairobi
+                        </span>
+                    </address>
+
+                    {/* Contact */}
+                    <div className="min-w-0">
+                        <b>Talk to us</b>
+                        <span className="block">
+                            Call or WhatsApp{" "}
+                            <a
+                                href={`https://wa.me/${wa}`}
+                                rel="noopener"
+                                target="_blank"
+                            >
+                                0716 983 983
+                            </a>
+                        </span>
+                        <span className="mt-1 block">
+                            <a href="#community">Join our WhatsApp community</a>
+                        </span>
+                        <span className="mt-1 block">
+                            Nairobi CBD: open 7am to 8pm
+                        </span>
                     </div>
-                    <div>
-                        <b>Talk to us</b>Call or WhatsApp{' '}
-                        <a href={`https://wa.me/${wa}`}>0716 983 983</a>
-                        <br />
-                        <a href="#community">
-                            Join our WhatsApp community on 0716 983 983
-                        </a>
-                        <br />
-                        Nairobi CBD: open 7am to 8pm
-                    </div>
-                    <div>
-                        <b>Pay</b>M-PESA Till [TILL NO.]
-                        <br />
-                        M-PESA only. No cash, no cards.
+
+                    {/* Payment */}
+                    <div className="min-w-0">
+                        <b>Pay</b>
+                        <span className="block">M-PESA Till [TILL NO.]</span>
+                        <span className="mt-1 block">
+                            M-PESA only. No cash, no cards.
+                        </span>
                     </div>
                 </div>
-                <div className="mt-[26px] border-t border-ps-bandline pt-4 text-[.84rem]">
+
+                <div className="mt-6 border-t border-ps-bandline pt-4 text-[.82rem] sm:mt-7 sm:text-[.84rem]">
                     Neerabup Logistics Ltd trading as Pick&amp;Send
                 </div>
             </div>
