@@ -1,5 +1,5 @@
 // src/components/pickandsend/Block.tsx
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 export function Block({
     id,
@@ -7,15 +7,15 @@ export function Block({
     children,
 }: {
     id: string;
-    tone?: 'tint' | 'band';
+    tone?: "tint" | "band";
     children: ReactNode;
 }) {
     const bg =
-        tone === 'tint'
-            ? 'bg-ps-surface2'
-            : tone === 'band'
-              ? 'bg-ps-band text-ps-bandmuted'
-              : '';
+        tone === "tint"
+            ? "bg-ps-surface2"
+            : tone === "band"
+              ? "bg-ps-band text-ps-bandmuted"
+              : "";
     return (
         <section
             id={id}

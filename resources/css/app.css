@@ -60,11 +60,12 @@
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
 
-    /* Pick&Send palette — ps-* names only for ps-specific extras */
+    /* Pick&Send palette — ps-* names for ps-specific extras */
     --color-ps-bg: var(--ps-bg);
     --color-ps-surface: var(--card);
     --color-ps-surface2: var(--secondary);
     --color-ps-ink: var(--foreground);
+    --color-ps-ink-inverse: var(--ps-ink-inverse);
     --color-ps-muted: var(--muted-foreground);
     --color-ps-line: var(--border);
     --color-ps-brand: var(--primary);
@@ -88,7 +89,7 @@
 }
 
 /* ============================================================
-   DEFAULT = LIGHT  (React/Inertia/Tailwind convention)
+   DEFAULT = LIGHT
    ============================================================ */
 :root {
     color-scheme: light;
@@ -132,6 +133,7 @@
 
     /* ps-specific extras */
     --ps-bg: #f4f7fc;
+    --ps-ink-inverse: #e8edf6;
     --ps-brandink: #1c3f7c;
     --ps-soft: #ccfbf1;
     --ps-softink: #0f766e;
@@ -150,7 +152,7 @@
 }
 
 /* ============================================================
-   DARK OVERRIDE — opt-in via `.dark` on <html>
+   DARK OVERRIDE
    ============================================================ */
 .dark {
     color-scheme: dark;
@@ -191,6 +193,7 @@
     --sidebar-ring: #8fb8f2;
 
     --ps-bg: #0b1424;
+    --ps-ink-inverse: #0b1424;
     --ps-brandink: #cfe0fa;
     --ps-soft: #123b38;
     --ps-softink: #a9ede3;
@@ -206,62 +209,6 @@
     --ps-mount: #4fd1c0;
     --ps-rift: #e3b04b;
     --ps-lake: #7fb0f5;
-}
-
-/* Optional: follow OS preference unless the user forced a theme.
-   Add `.light` or `.dark` on <html> to override. */
-@media (prefers-color-scheme: dark) {
-    :root:not(.light) {
-        color-scheme: dark;
-        --background: #0b1424;
-        --foreground: #e8edf6;
-        --card: #121e33;
-        --card-foreground: #e8edf6;
-        --popover: #18263f;
-        --popover-foreground: #e8edf6;
-        --primary: #8fb8f2;
-        --primary-foreground: #0b1f3d;
-        --secondary: #18263f;
-        --secondary-foreground: #e8edf6;
-        --muted: #18263f;
-        --muted-foreground: #a7b3c9;
-        --accent: #4fd1c0;
-        --accent-foreground: #062a27;
-        --destructive: #f87171;
-        --destructive-foreground: #1a0a0a;
-        --border: #2a3a57;
-        --input: #2a3a57;
-        --ring: #8fb8f2;
-        --chart-1: #8fb8f2;
-        --chart-2: #4fd1c0;
-        --chart-3: #e3b04b;
-        --chart-4: #f08a5d;
-        --chart-5: #7fb0f5;
-        --sidebar: #0f1c33;
-        --sidebar-foreground: #e8edf6;
-        --sidebar-primary: #8fb8f2;
-        --sidebar-primary-foreground: #0b1f3d;
-        --sidebar-accent: #18263f;
-        --sidebar-accent-foreground: #e8edf6;
-        --sidebar-border: #2a3a57;
-        --sidebar-ring: #8fb8f2;
-        --ps-bg: #0b1424;
-        --ps-brandink: #cfe0fa;
-        --ps-soft: #123b38;
-        --ps-softink: #a9ede3;
-        --ps-wa: #3cb652;
-        --ps-onwa: #06260c;
-        --ps-band: #0f2747;
-        --ps-bandmuted: #b9c8e0;
-        --ps-bandline: #35507b;
-        --ps-key: #4fd1c0;
-        --ps-warn: #3d2e0c;
-        --ps-warnink: #f3d08a;
-        --ps-coast: #f08a5d;
-        --ps-mount: #4fd1c0;
-        --ps-rift: #e3b04b;
-        --ps-lake: #7fb0f5;
-    }
 }
 
 /* ============================================================
@@ -286,7 +233,6 @@
         -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Native form controls */
     :is(input:not([type="checkbox"]):not([type="radio"]), textarea, select) {
         background-color: var(--card);
         color: var(--card-foreground);
@@ -369,7 +315,6 @@
    COMPONENTS
    ============================================================ */
 @layer components {
-    /* Layout */
     .ps-dash {
         @apply mx-auto w-full max-w-[1440px] px-4 py-5 sm:px-6 lg:px-8;
     }
@@ -384,7 +329,6 @@
         grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
     }
 
-    /* Cards */
     .ps-card {
         @apply relative flex min-w-0 flex-col gap-3 rounded-xl border bg-card p-4 text-card-foreground sm:p-5;
     }
@@ -401,7 +345,6 @@
         @apply min-w-0 flex-1;
     }
 
-    /* KPI */
     .ps-kpi {
         @apply relative flex min-w-0 flex-col gap-2 overflow-hidden rounded-xl border bg-card p-4 sm:p-5;
     }
@@ -456,7 +399,6 @@
         color: var(--destructive);
     }
 
-    /* Toolbar */
     .ps-toolbar {
         @apply flex flex-wrap items-center justify-between gap-3 rounded-xl border bg-card px-3 py-2.5;
     }
@@ -477,7 +419,6 @@
         @apply bg-transparent;
     }
 
-    /* Table */
     .ps-table {
         @apply w-full border-collapse text-[.88rem] tabular-nums;
     }
@@ -504,7 +445,6 @@
         @apply font-mono text-[.82rem];
     }
 
-    /* Pills */
     .ps-pill {
         @apply inline-flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-[3px] text-[.78rem] font-bold whitespace-nowrap text-muted-foreground;
     }
@@ -525,7 +465,6 @@
         color: var(--destructive);
     }
 
-    /* Charts */
     .ps-chart {
         @apply relative w-full;
     }
@@ -555,7 +494,6 @@
         font-weight: 700;
     }
 
-    /* Funnel */
     .ps-funnel {
         @apply m-0 flex list-none flex-col gap-2 p-0;
     }
@@ -580,7 +518,6 @@
         @apply w-14 flex-none text-right font-mono text-[.82rem];
     }
 
-    /* Empty + skeleton */
     .ps-empty {
         @apply flex flex-col items-center justify-center gap-1 rounded-lg border border-dashed px-4 py-8 text-center text-[.86rem] text-muted-foreground;
     }
@@ -630,7 +567,6 @@
         }
     }
 
-    /* Print */
     @media print {
         .ps-dash {
             max-width: none;
@@ -655,7 +591,7 @@
 }
 
 /* ============================================================
-   DATATABLES — unified v1 + v2 via :is()
+   DATATABLES
    ============================================================ */
 @layer components {
     .ps-datatable {

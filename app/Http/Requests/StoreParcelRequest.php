@@ -14,29 +14,12 @@ class StoreParcelRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Normalise the payload BEFORE validation runs.
-     *
-     * The frontend clears paynum to "" when the user picks cod_full
-     * (nobody pays via M-PESA at booking time). But `nullable` only
-     * skips validation for null, not for "". An empty string still
-     * hits the regex rule and fails, which is why the user was
-     * seeing "The paynum field is required" / regex errors on a
-     * hidden field.
-     *
-     * Coercing "" -> null here means:
-     *   - cod_full  + paynum ""  -> null -> requiredIf false -> passes
-     *   - prepaid   + paynum ""  -> null -> requiredIf true  -> fails (correct)
-     *   - prepaid   + paynum set -> untouched -> passes
-     */
     protected function prepareForValidation(): void
     {
         if ($this->input('paynum') === '') {
             $this->merge(['paynum' => null]);
         }
 
-        // cod_full never carries an M-PESA number; drop any stale
-        // value a client might still submit.
         if ($this->input('payment_option') === Parcel::PAYMENT_COD_FULL) {
             $this->merge(['paynum' => null]);
         }
@@ -69,9 +52,6 @@ class StoreParcelRequest extends FormRequest
             'pack' => ['boolean'],
 
             // ── payment ─────────────────────────────────────────────
-            // paynum is only required when some amount is due now,
-            // i.e. prepaid or cod_fee. For cod_full nobody pays via
-            // M-PESA at booking time, so the number is not needed.
             'paynum' => [
                 Rule::requiredIf(fn() => in_array(
                     $this->input('payment_option'),
@@ -83,8 +63,6 @@ class StoreParcelRequest extends FormRequest
                 'regex:/^0?7\d{8}$|^2547\d{8}$/',
             ],
             'cod' => ['nullable', 'numeric', 'min:0', 'max:1000000'],
-
-            // The one field that drives everything downstream.
             'payment_option' => [
                 'required',
                 Rule::in(Parcel::PAYMENT_OPTIONS),
@@ -92,37 +70,23 @@ class StoreParcelRequest extends FormRequest
         ];
     }
 
-    /**
-     * Cross-field checks that the flat rules cannot express.
-     */
     public function withValidator(Validator $validator): void
     {
         $validator->after(function (Validator $v) {
             $opt = $this->input('payment_option');
             $cod = (float) $this->input('cod', 0);
 
-            // COD options only make sense with a positive COD amount.
             if (
                 in_array($opt, [Parcel::PAYMENT_COD_FEE, Parcel::PAYMENT_COD_FULL], true)
                 && $cod <= 0
             ) {
-                $v->errors()->add(
-                    'cod',
-                    'Enter the Cash on Delivery amount the recipient will pay on delivery.'
-                );
+                $v->errors()->add('cod', 'Enter the Cash on Delivery amount the recipient will pay on delivery.');
             }
 
-            // Prepaid must NOT carry a COD amount — otherwise it silently
-            // becomes a split payment and the wrong STK amount fires.
             if ($opt === Parcel::PAYMENT_PREPAID && $cod > 0) {
-                $v->errors()->add(
-                    'cod',
-                    'Prepaid parcels cannot have a Cash on Delivery amount. '
-                    . 'Choose "Pay delivery now, recipient pays goods" if the recipient is paying for goods.'
-                );
+                $v->errors()->add('cod', 'Prepaid parcels cannot have a Cash on Delivery amount.');
             }
 
-            // Weight is required when a general parcel uses the kg tier.
             if (
                 $this->input('kind') === 'g'
                 && $this->input('size') === 'kg'
@@ -143,15 +107,9 @@ class StoreParcelRequest extends FormRequest
         ];
     }
 
-    /**
-     * The exact shape the PricingService and BookingService expect.
-     * Renaming happens here, in one place, so the services never see
-     * form keys and the form never sees DB keys.
-     */
     public function payload(): array
     {
         return [
-            // sender
             'sname' => $this->input('sname'),
             'sphone' => $this->input('sphone'),
             'hand' => $this->input('hand'),
@@ -159,13 +117,9 @@ class StoreParcelRequest extends FormRequest
             'addr' => $this->input('addr'),
             'count' => (int) $this->input('count', 1),
             'same' => (bool) $this->input('same', false),
-
-            // recipient
             'rname' => $this->input('rname'),
             'rphone' => $this->input('rphone'),
             'rtown' => $this->input('rtown'),
-
-            // contents
             'what' => $this->input('what'),
             'worth' => (float) $this->input('worth'),
             'kind' => $this->input('kind'),
@@ -174,15 +128,11 @@ class StoreParcelRequest extends FormRequest
             'item' => $this->input('item'),
             'pack' => (bool) $this->input('pack', false),
 
-            // payment
-            // Normalise paynum to null for cod_full so nothing
-            // downstream accidentally treats an empty string as a
-            // real phone number. (prepareForValidation() already
-            // handles this, but keeping it here as defence-in-depth
-            // if payload() is called from elsewhere.)
+            // Null out the paynum for COD full, otherwise pass it as-is
             'paynum' => $this->input('payment_option') === Parcel::PAYMENT_COD_FULL
                 ? null
                 : ($this->filled('paynum') ? $this->input('paynum') : null),
+
             'cod' => (int) round((float) $this->input('cod', 0)),
             'payment_option' => $this->input('payment_option'),
         ];

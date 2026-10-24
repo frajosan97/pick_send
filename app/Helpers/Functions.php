@@ -1,8 +1,21 @@
 <?php
 
 if (!function_exists('formatPhoneNumber')) {
-    function formatPhoneNumber(string $phone, $preceeding = '254')
+    /**
+     * Normalise a Kenyan mobile number.
+     *
+     * Accepts: 07XXXXXXXX, 7XXXXXXXX, 2547XXXXXXXX, +2547XXXXXXXX, 00254...
+     * Returns: MSISDN (e.g. 2547XXXXXXXX) or `0` + 9-digit local (per $preceeding),
+     *          or `null` if the input was null/empty.
+     */
+    function formatPhoneNumber(?string $phone, string $preceeding = '254'): ?string
     {
+        // Null / empty — caller has no number (e.g. cod_full bookings).
+        // Return null so callers can skip the M-PESA step safely.
+        if ($phone === null || trim($phone) === '') {
+            return null;
+        }
+
         $digits = preg_replace('/\D/', '', $phone) ?? '';
 
         // Strip leading 00 (e.g. 00254...)
@@ -17,14 +30,16 @@ if (!function_exists('formatPhoneNumber')) {
             $digits = substr($digits, 1); // 07XXXXXXXX -> 7XXXXXXXX
         }
 
-        // Reject anything that isn't a valid 9-digit local number
+        // Reject anything that isn't a valid 9-digit local number.
+        // Return the original (non-null) input as-is — matches your
+        // previous behaviour so invalid input is still visible to the user.
         if (
             !(
                 (str_starts_with($digits, '7') || str_starts_with($digits, '1'))
                 && strlen($digits) === 9
             )
         ) {
-            return $phone; // invalid / unrecognized, return as-is
+            return $phone;
         }
 
         // Prefix according to caller preference

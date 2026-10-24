@@ -40,27 +40,16 @@ export const H3 = "font-extrabold text-ps-brandink";
 
 /* ---------- check lists (theme-safe in both modes) ---------- */
 
-/**
- * Plain checklist (on `bg-ps-surface`).
- * Body: `--ps-muted`, emphasis: `--ps-ink`. Both flip with `.dark`.
- */
 export const CHECKS = [
     "m-0 flex list-none flex-col gap-3 p-0",
     "text-[1.03rem] leading-relaxed text-ps-muted",
     "[&_b]:font-bold [&_b]:text-ps-ink",
 ].join(" ");
 
-/**
- * Checklist rendered on a colored band (`bg-ps-band`).
- * Body: `--ps-bandmuted`, emphasis: `--ps-ink`, tick: `--ps-wa` on `--ps-onwa`.
- * Everything flips with `.dark` — no hard-coded white.
- */
 export const CHECKS_BAND = [
     "m-0 flex list-none flex-col gap-3 p-0",
     "text-[1.03rem] leading-relaxed text-ps-bandmuted",
-    // emphasis: near-black in light, near-white in dark
     "[&_b]:font-bold [&_b]:text-ps-ink",
-    // optional tick circle — only applied if you also want markers here
     "[&_li]:relative [&_li]:pl-8",
     "[&_li]:before:absolute [&_li]:before:left-0 [&_li]:before:top-0.5",
     "[&_li]:before:flex [&_li]:before:h-5 [&_li]:before:w-5",
@@ -151,20 +140,15 @@ export const NAV: NavItem[] = [
     ["pricing", "Pricing"],
     ["track", "Track"],
     ["community", "Community"],
-    ["faq", "Questions"],
+    ["faq", "FAQ"],
 ];
 
 /* ---------- shared app config hooks ---------- */
 
-/**
- * The shared `config` object from HandleInertiaRequests.
- * Typed globally via InertiaConfig.sharedPageProps.
- */
 export function useAppConfig(): AppConfig {
     return usePage().props.config;
 }
 
-/** Shorthand for the WhatsApp number, or `null` when not configured. */
 export function useWhatsApp(): string | null {
     return usePage().props.config.whatsapp;
 }
@@ -173,15 +157,13 @@ export function useWhatsApp(): string | null {
  * Builds a wa.me deep link.
  *
  * `wa.me` only accepts digits (country code + number, no "+", no spaces),
- * so we strip everything non-numeric. Returns `null` when the number is
- * empty after normalisation — callers should treat that as "no WhatsApp".
+ * so we strip everything non-numeric. Returns "#" when the number is empty
+ * after normalisation, so callers can safely use the return value in
+ * `<a href>` without a null check.
  */
-export function waHref(
-    wa: string | null | undefined,
-    text = "",
-): string | null {
+export function waHref(wa: string | null | undefined, text = ""): string {
     const digits = (wa ?? "").replace(/\D/g, "");
-    if (!digits) return null;
+    if (!digits) return "#";
     const q = text ? `?text=${encodeURIComponent(text)}` : "";
     return `https://wa.me/${digits}${q}`;
 }

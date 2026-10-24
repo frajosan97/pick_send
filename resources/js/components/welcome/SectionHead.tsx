@@ -6,6 +6,11 @@ type SectionHeadProps = {
     eyebrow: string;
     title: string;
     text?: string;
+    /**
+     * Set when rendered on a colored band (`.bg-ps-band`).
+     * Uses band tokens (`ps-bandmuted`, `ps-ink`) that flip with theme.
+     * Not to be confused with "dark theme" — theming is handled by CSS vars.
+     */
     band?: boolean;
     className?: string;
     children?: ReactNode;
@@ -21,7 +26,6 @@ export function SectionHead({
 }: SectionHeadProps) {
     return (
         <div className={`flex flex-col gap-2 ${className}`}>
-            {/* Eyebrow: reuse the shared pill, swap only the accent when on a band */}
             <span className={band ? `${EYEBROW} !text-ps-key` : EYEBROW}>
                 {eyebrow}
             </span>

@@ -2,16 +2,22 @@
 export function Wordmark({
     onBand = false,
     size = "text-[1.35rem]",
+    invert = false,
 }: {
     onBand?: boolean;
     size?: string;
+    /**
+     * Use the inverse ink for the wordmark text.
+     * Light theme → dark-theme ink; dark theme → light-theme ink.
+     * Only enable this on a surface whose background already contrasts with
+     * the default ink (e.g. a dark hero). Do NOT enable on the default header.
+     */
+    invert?: boolean;
 }) {
-    // One source of truth for the accent color used by the dot, rule, and arrow
     const accent = onBand ? "bg-ps-key" : "bg-ps-accent";
     const accentBorder = onBand ? "border-l-ps-key" : "border-l-ps-accent";
     const ampersand = onBand ? "text-ps-key" : "text-ps-accent";
-    // Wordmark itself is always the theme's strong ink — flips with .dark
-    const wordmark = "text-ps-ink";
+    const wordmark = invert ? "text-ps-ink-inverse" : "text-ps-ink";
 
     return (
         <span className="inline-flex flex-col gap-[3px]">

@@ -1,6 +1,6 @@
 // src/components/pickandsend/FormBits.tsx
-import type { ReactNode } from 'react';
-import { INPUT, HINT, H3, TH } from './shared';
+import type { ReactNode } from "react";
+import { INPUT, HINT, H3, TH } from "./shared";
 
 export function Fld({
     id,
@@ -14,7 +14,7 @@ export function Fld({
     ...rest
 }: any) {
     if (hidden) return null;
-    const err = typeof error === 'string' && error ? error : '';
+    const err = typeof error === "string" && error ? error : "";
     return (
         <div className="flex min-w-0 flex-col gap-1.5">
             <label htmlFor={id} className="text-[.88rem] font-semibold">
@@ -23,7 +23,7 @@ export function Fld({
             {select ? (
                 <select
                     id={id}
-                    className={`${INPUT} ${err ? 'border-ps-warn' : ''}`}
+                    className={`${INPUT} ${err ? "border-ps-warn" : ""}`}
                     {...rest}
                 >
                     {children}
@@ -31,7 +31,7 @@ export function Fld({
             ) : (
                 <input
                     id={id}
-                    className={`${INPUT} ${err ? 'border-ps-warn' : ''} ${className ?? ''}`}
+                    className={`${INPUT} ${err ? "border-ps-warn" : ""} ${className ?? ""}`}
                     aria-invalid={!!err}
                     {...rest}
                 />
@@ -61,7 +61,7 @@ export function Choice({
             <span className="text-[.88rem] font-semibold">{label}</span>
             <div
                 role="radiogroup"
-                className={`grid gap-2 ${cols === 1 ? 'grid-cols-1' : cols === 4 ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-2'}`}
+                className={`grid gap-2 ${cols === 1 ? "grid-cols-1" : cols === 4 ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-2"}`}
             >
                 {children}
             </div>
@@ -69,7 +69,7 @@ export function Choice({
     );
 }
 
-export function Opt({ children, className = '', ...input }: any) {
+export function Opt({ children, className = "", ...input }: any) {
     return (
         <label
             className={`flex min-h-12 cursor-pointer items-center gap-2 rounded-[10px] border-[1.5px] border-ps-line px-3 py-1.5 text-[.92rem] font-semibold has-[:checked]:border-ps-accent has-[:checked]:bg-ps-soft has-[:checked]:text-ps-softink ${className}`}
@@ -116,14 +116,14 @@ export function Table({
 }) {
     return (
         <table
-            className={`w-full border-collapse tabular-nums ${small ? '' : 'min-w-[560px] max-sm:min-w-0'}`}
+            className={`w-full border-collapse tabular-nums ${small ? "" : "min-w-[560px] max-sm:min-w-0"}`}
         >
             <thead>
                 <tr>
                     {head.map((h, i) => (
                         <th
                             key={h}
-                            className={`${TH} ${i ? 'text-right' : ''}`}
+                            className={`${TH} ${i ? "text-right" : ""}`}
                         >
                             {h}
                         </th>

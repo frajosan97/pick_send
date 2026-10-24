@@ -56,7 +56,7 @@ class BookingService
                 ),
                 'total' => $price['total'],
                 'points_earned' => 0, // awarded by PointsService when paid
-                'payer_phone' => formatPhoneNumber($data['paynum']),
+                'payer_phone' => formatPhoneNumber($data['paynum'] ?? null),
                 // tracking_no & handover_code are injected by createWithUniqueCodes()
             ]);
 
@@ -76,11 +76,6 @@ class BookingService
      | UNIQUE CODE GENERATION
      | ================================================================= */
 
-    /**
-     * Insert the parcel, generating tracking_no and handover_code, and
-     * retrying up to 5 times if the unique index on tracking_no rejects
-     * a value (astronomically rare, but free to handle).
-     */
     private function createWithUniqueCodes(array $attributes): Parcel
     {
         $attempts = 0;
@@ -114,10 +109,6 @@ class BookingService
             || str_contains($e->getMessage(), 'Duplicate entry');
     }
 
-    /**
-     * PS + YYMMDD + 5 random digits, e.g. "PS26102004231".
-     * 100_000 slots per calendar day.
-     */
     private function generateTrackingNo(): string
     {
         return sprintf(
@@ -127,13 +118,6 @@ class BookingService
         );
     }
 
-    /**
-     * 4-digit pickup code, unique among ACTIVE parcels only. A collected
-     * or cancelled parcel's code is free to be reused.
-     *
-     * Uses a bounded loop so that in the extreme (all 10k active codes
-     * taken) it still returns something rather than hanging.
-     */
     private function generateHandoverCode(): string
     {
         for ($i = 0; $i < 10; $i++) {
@@ -144,8 +128,6 @@ class BookingService
             }
         }
 
-        // Last-ditch fallback: widen to 6 digits. Should never trigger
-        // in practice (10,000 active parcels at once is unrealistic).
         return str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
     }
 

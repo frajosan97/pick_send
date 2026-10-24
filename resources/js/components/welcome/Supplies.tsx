@@ -27,7 +27,6 @@ const FREQUENCIES: { value: Often; label: string }[] = [
     { value: "monthly", label: "Monthly" },
 ];
 
-/** Shared alert surface — theme-aware, works on both dark and light. */
 const ALERT =
     "mb-4 rounded-2xl border-2 border-destructive/60 bg-destructive/10 p-4 text-sm text-foreground sm:px-5";
 
@@ -137,9 +136,9 @@ export function Supplies({
     return (
         <Block id="supplies" tone="band">
             <div className={`${WRAP} ${G400} items-start gap-8 lg:gap-12`}>
-                {/* ── Left: pitch ─────────────────────────────── */}
                 <div className="min-w-0">
                     <SectionHead
+                        band
                         className="mb-6"
                         eyebrow="Live outside Nairobi?"
                         title="Get your Nairobi supplies through Pick&Send"
@@ -161,7 +160,6 @@ export function Supplies({
                     </ul>
                 </div>
 
-                {/* ── Right: form ─────────────────────────────── */}
                 <form
                     className={`${CARD} min-w-0`}
                     noValidate

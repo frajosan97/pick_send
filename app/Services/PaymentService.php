@@ -253,18 +253,6 @@ class PaymentService
      | CORE — attach a receipt to a payment and finalize
      | ================================================================= */
 
-    /**
-     * The payment is created by the caller with its FINAL `amount`. This
-     * method only:
-     *  - enforces one M-PESA tx per payment,
-     *  - links the tx,
-     *  - flips status to success, stamps confirmed_at,
-     *  - writes the ParcelEvent,
-     *  - recomputes the parcel,
-     *  - awards points on first full payment.
-     *
-     * It NEVER mutates `payment.amount`.
-     */
     private function attachReceipt(
         ?MpesaTransaction $tx,
         Payment $payment,
@@ -437,17 +425,16 @@ class PaymentService
         $parcel->events()
             ->where('status', 'payment')
             ->latest('id')
-            ->first()
-                ?->update([
-                'staff_id' => $staffId,
-                'description' => $note,
-            ]);
+            ->first()?->update([
+                    'staff_id' => $staffId,
+                    'description' => $note,
+                ]);
 
         return $payment->fresh();
     }
 
     /* =================================================================
-     | ROLLUP — sum of successful amount is the parcel's real money
+     | ROLLUP
      | ================================================================= */
 
     public function recalculateParcel(Parcel $parcel): void
@@ -476,7 +463,6 @@ class PaymentService
 
     private function pointsForAmount(int $total): int
     {
-        // 1 point per 100 KSh. Tune to business rule.
         return intdiv($total, 100);
     }
 
@@ -489,7 +475,7 @@ class PaymentService
         $phone = $parcel->payer_phone ?: $parcel->sender_phone;
         $stkPhone = formatPhoneNumber((string) $phone);
 
-        if (!preg_match('/^254[17]\d{8}$/', $stkPhone)) {
+        if (!$stkPhone || !preg_match('/^254[17]\d{8}$/', $stkPhone)) {
             return ['mpesa_tx' => null, 'error' => 'Invalid phone number for M-PESA.'];
         }
 
@@ -569,7 +555,6 @@ class PaymentService
     {
         $code = strtoupper(trim($code));
 
-        // Idempotent: reject duplicate claims of the same code.
         if (MpesaTransaction::where('mpesa_receipt_number', $code)->exists()) {
             Log::info('M-PESA claim duplicate ignored', [
                 'parcel_id' => $parcel->id,
@@ -591,7 +576,6 @@ class PaymentService
             return;
         }
 
-        // Record the claim as an unlinked tx. Attach later via reconcile.
         MpesaTransaction::create([
             'payment_id' => null,
             'mpesa_receipt_number' => $code,
@@ -655,7 +639,6 @@ class PaymentService
             throw new \DomainException('Unsupported transaction type for reconciliation.');
         }
 
-        // One receipt = one payment row.
         $payment = $this->openSettledPayment(
             parcel: $parcel,
             amount: (int) $tx->amount,
@@ -690,17 +673,12 @@ class PaymentService
             'amount' => $amount,
             'channel' => Payment::CHANNEL_PENDING,
             'phone' => formatPhoneNumber(
-                (string) ($parcel->payer_phone ?: $parcel->sender_phone)
+                $parcel->payer_phone ?: $parcel->sender_phone
             ),
             'reference' => $parcel->tracking_no,
         ]);
     }
 
-    /**
-     * Open a payment row that WILL be settled by the caller (cash, C2B,
-     * reconciliation). Its `amount` is final at creation. Status starts
-     * pending and is flipped to success by attachReceipt().
-     */
     private function openSettledPayment(
         Parcel $parcel,
         int $amount,
@@ -711,6 +689,8 @@ class PaymentService
             ? Payment::TYPE_COD
             : Payment::TYPE_DELIVERY;
 
+        $phoneToUse = $phone ?? $parcel->recipient_phone;
+
         return Payment::create([
             'parcel_id' => $parcel->id,
             'user_id' => $parcel->sender_id,
@@ -718,9 +698,7 @@ class PaymentService
             'status' => Payment::STATUS_PENDING,
             'amount' => max(0, $amount),
             'channel' => $channel,
-            'phone' => $phone !== null
-                ? formatPhoneNumber($phone)
-                : formatPhoneNumber((string) $parcel->recipient_phone),
+            'phone' => formatPhoneNumber($phoneToUse),
             'reference' => $parcel->tracking_no,
         ]);
     }
@@ -735,7 +713,7 @@ class PaymentService
             return null;
         }
         $normalised = formatPhoneNumber($raw);
-        if (!preg_match('/^254[17]\d{8}$/', $normalised)) {
+        if (!$normalised || !preg_match('/^254[17]\d{8}$/', $normalised)) {
             return null;
         }
         return $normalised;

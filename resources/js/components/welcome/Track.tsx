@@ -1,39 +1,39 @@
 // src/components/pickandsend/Track.tsx
-import { useState } from 'react';
-import { Block } from './Block';
-import { SectionHead } from './SectionHead';
-import { Fld } from './FormBits';
-import { ERR, EYEBROW, H3, PRIMARY, WRAP } from './shared';
-import type { TrackingData } from './shared';
-import { fmt } from '@/lib/pricing';
+import { useState } from "react";
+import { Block } from "./Block";
+import { SectionHead } from "./SectionHead";
+import { Fld } from "./FormBits";
+import { ERR, EYEBROW, H3, PRIMARY, WRAP } from "./shared";
+import type { TrackingData } from "./shared";
+import { fmt } from "@/lib/pricing";
 
 const TL_BASE =
-    'relative pb-4 pl-8 last:pb-0 before:absolute before:left-0 before:top-[3px] before:h-[18px] before:w-[18px] before:rounded-full after:absolute after:-bottom-[3px] after:left-2 after:top-[21px] after:w-0.5 last:after:hidden';
+    "relative pb-4 pl-8 last:pb-0 before:absolute before:left-0 before:top-[3px] before:h-[18px] before:w-[18px] before:rounded-full after:absolute after:-bottom-[3px] after:left-2 after:top-[21px] after:w-0.5 last:after:hidden";
 const TL: Record<string, string> = {
-    '': `${TL_BASE} before:bg-ps-accent after:bg-ps-accent`,
+    "": `${TL_BASE} before:bg-ps-accent after:bg-ps-accent`,
     now: `${TL_BASE} before:border-[5px] before:border-ps-brand before:bg-ps-surface after:bg-ps-line`,
     next: `${TL_BASE} before:border-2 before:border-ps-muted before:bg-ps-surface after:bg-ps-line`,
 };
 
 export function Track() {
-    const [tNo, setTNo] = useState('');
+    const [tNo, setTNo] = useState("");
     const [tracking, setTracking] = useState<TrackingData | null>(null);
-    const [tErr, setTErr] = useState('');
+    const [tErr, setTErr] = useState("");
     const [tLoading, setTLoading] = useState(false);
 
     const submitTrack = async (e: React.FormEvent) => {
         e.preventDefault();
-        setTErr('');
+        setTErr("");
         setTracking(null);
         const code = tNo.trim();
         if (!code) {
-            setTErr('Enter a tracking number.');
+            setTErr("Enter a tracking number.");
             return;
         }
         setTLoading(true);
         try {
             const res = await fetch(`/track/${encodeURIComponent(code)}`, {
-                headers: { Accept: 'application/json' },
+                headers: { Accept: "application/json" },
             });
             if (!res.ok) {
                 setTErr(
@@ -43,7 +43,7 @@ export function Track() {
                 setTracking(await res.json());
             }
         } catch {
-            setTErr('Network error. Please try again.');
+            setTErr("Network error. Please try again.");
         } finally {
             setTLoading(false);
         }
@@ -79,7 +79,7 @@ export function Track() {
                         type="submit"
                         disabled={tLoading}
                     >
-                        {tLoading ? 'Searching…' : 'Track'}
+                        {tLoading ? "Searching…" : "Track"}
                     </button>
                 </form>
 
@@ -106,14 +106,14 @@ export function Track() {
                                     className={
                                         TL[
                                             i === tracking.events.length - 1
-                                                ? 'now'
-                                                : ''
+                                                ? "now"
+                                                : ""
                                         ]
                                     }
                                 >
                                     <b className="block">{e.label}</b>
                                     <span className="text-[.9rem] text-ps-muted">
-                                        {e.description} ·{' '}
+                                        {e.description} ·{" "}
                                         {new Date(
                                             e.happened_at,
                                         ).toLocaleString()}

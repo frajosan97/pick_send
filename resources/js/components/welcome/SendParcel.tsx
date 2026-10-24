@@ -49,9 +49,6 @@ function firstErrorMessage(errors: Record<string, string>): string {
 
 /**
  * Safely coerce booking.rows into an array of [label, value] pairs.
- * The backend may omit `rows` on some flash paths (e.g. cod_full
- * summaries built without payment lines), and undefined/null entries
- * would otherwise crash the destructure in .map(([k, v]) => …).
  */
 function normaliseRows(
     rows: FlashBooking["rows"] | undefined | null,
@@ -149,7 +146,7 @@ export function SendParcel({
     const cod = toNum(f.cod);
     const total = p.total;
 
-    // Mirror of PaymentService::amountDueNow() — keep in sync with the PHP.
+    // Mirror of PaymentService::amountDueNow()
     const amountDueNow = useMemo(() => {
         switch (f.payment_option) {
             case "prepaid":
@@ -164,13 +161,6 @@ export function SendParcel({
     const needsMpesaNumber = MPESA_REQUIRED_OPTIONS.has(f.payment_option);
     const codRequired = COD_REQUIRED_OPTIONS.has(f.payment_option);
 
-    // Centralised payment-option switch:
-    //  - clears the M-PESA number when switching to cod_full (nobody
-    //    pays via M-PESA now, and the server will null it anyway);
-    //  - clears the COD amount when switching to prepaid (the server
-    //    rejects prepaid + cod);
-    //  - clears stale validation errors on the fields we just touched
-    //    so the user doesn't keep seeing a red border on a hidden field.
     const choosePaymentOption = useCallback(
         (option: PaymentOption) => {
             setF("payment_option", option);
@@ -192,9 +182,6 @@ export function SendParcel({
     const submitSend = (e?: React.FormEvent) => {
         e?.preventDefault();
 
-        // Track what actually happened so onFinish can distinguish
-        // validation failure, success and a hard server/network
-        // exception (which never fires onError).
         let outcome: "success" | "error" | "exception" = "exception";
 
         postParcel("/parcels", {
@@ -230,8 +217,6 @@ export function SendParcel({
         }
     };
 
-    // Manual code entry only when there is a due-now amount AND the
-    // STK push did not reach the phone.
     const showManualCode =
         !!booking && booking.amount_due_now > 0 && !booking.stk_sent;
 
@@ -270,12 +255,8 @@ export function SendParcel({
         </optgroup>
     ));
 
-    // Safe rows used in the receipt render. Computed once per render,
-    // memoised so the .map below doesn't allocate twice.
     const receiptRows = useMemo(() => normaliseRows(booking?.rows), [booking]);
 
-    // Dynamic copy for the M-PESA field so the sender understands who
-    // it is for in each mode.
     const paynumLabel =
         f.payment_option === "cod_fee"
             ? "Your M-PESA number (to pay the delivery fee)"
@@ -573,8 +554,6 @@ export function SendParcel({
                             </Opt>
                         </Choice>
 
-                        {/* M-PESA number: only rendered when something is
-                            actually due now. cod_full hides it entirely. */}
                         {needsMpesaNumber && (
                             <Fld
                                 id="p-paynum"
@@ -589,7 +568,6 @@ export function SendParcel({
                             />
                         )}
 
-                        {/* COD amount: only rendered for the two COD modes. */}
                         {codRequired && (
                             <Fld
                                 id="p-cod"
@@ -646,7 +624,7 @@ export function SendParcel({
                             <button
                                 type="submit"
                                 disabled={sending}
-                                className={`${PAY} !min-h-[60px] !text-[1.1rem] !font-extrabold disabled:opacity-60`}
+                                className={`${PAY} min-h-[60px] text-[1.1rem] font-extrabold disabled:opacity-60`}
                             >
                                 {amountDueNow > 0 && (
                                     <span className={M_PESA_BADGE}>M-PESA</span>
@@ -659,7 +637,7 @@ export function SendParcel({
                             </button>
                             {booking?.receiptHref && (
                                 <a
-                                    className={`${BTN} !min-h-12 border-ps-wa bg-ps-surface !text-base text-ps-wa max-sm:!px-2 max-sm:!text-[.92rem]`}
+                                    className={`${BTN} min-h-12 border-ps-wa bg-ps-surface text-base text-ps-wa max-sm:px-2 max-sm:text-[.92rem]`}
                                     target="_blank"
                                     rel="noopener"
                                     href={booking.receiptHref}
@@ -688,23 +666,18 @@ export function SendParcel({
                             className="flex flex-col gap-3 rounded-2xl border-2 border-ps-wa bg-ps-surface p-4 sm:px-[22px] sm:py-5"
                         >
                             <div className="flex flex-col gap-2.5 rounded-[14px] bg-ps-band px-[18px] py-4 text-ps-bandmuted">
-                                <span
-                                    className={EYEBROW.replace(
-                                        "text-ps-accent",
-                                        "text-ps-key",
-                                    )}
-                                >
+                                <span className={`${EYEBROW} !text-ps-key`}>
                                     {booking.who?.[0] ?? "Booked"}
                                 </span>
                                 <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
                                     <span
-                                        className="grid h-[52px] w-[52px] flex-none place-items-center rounded-full bg-ps-key font-extrabold text-ps-band"
+                                        className="grid h-[52px] w-[52px] flex-none place-items-center rounded-full bg-ps-key font-extrabold text-ps-ink"
                                         aria-hidden="true"
                                     >
                                         PS
                                     </span>
                                     <div className="flex min-w-0 flex-1 basis-[180px] flex-col">
-                                        <b className="text-white">
+                                        <b className="text-ps-ink">
                                             {booking.who?.[1] ?? ""}
                                         </b>
                                         <span>{booking.who?.[2] ?? ""}</span>
@@ -713,13 +686,13 @@ export function SendParcel({
                                         <span className="text-[.75rem] font-bold tracking-[.08em] uppercase">
                                             Handover code
                                         </span>
-                                        <b className="font-mono text-[1.7rem] tracking-[.18em] text-white">
+                                        <b className="font-mono text-[1.7rem] tracking-[.18em] text-ps-ink">
                                             {booking.parcel?.handover_code ??
                                                 "—"}
                                         </b>
                                     </div>
                                 </div>
-                                <p className="text-white">
+                                <p className="text-ps-ink">
                                     {booking.who?.[3] ?? ""}
                                 </p>
                             </div>

@@ -1,10 +1,10 @@
 // src/components/pickandsend/Pricing.tsx
-import type { Config } from '@/types/config';
-import { fmt, num } from '@/lib/pricing';
-import { Block } from './Block';
-import { SectionHead } from './SectionHead';
-import { Table } from './FormBits';
-import { EYEBROW, FACTS, H3, PRIMARY, WRAP } from './shared';
+import type { Config } from "@/types/config";
+import { fmt, num } from "@/lib/pricing";
+import { Block } from "./Block";
+import { SectionHead } from "./SectionHead";
+import { Table } from "./FormBits";
+import { EYEBROW, FACTS, H3, PRIMARY, WRAP } from "./shared";
 
 export function Pricing({ config }: { config: Config }) {
     const {
@@ -33,11 +33,11 @@ export function Pricing({ config }: { config: Config }) {
                 >
                     <div className="mb-2 grid grid-cols-[repeat(auto-fit,minmax(min(260px,100%),1fr))] gap-3">
                         {[
-                            ['Bring it to our CBD point', 'Free'],
-                            ['We pick up from your CBD shop', 'Free'],
+                            ["Bring it to our CBD point", "Free"],
+                            ["We pick up from your CBD shop", "Free"],
                             [
-                                'Bring it to our agent in a Nairobi satellite town',
-                                `From ${fmt(dropOffFee)}, at ${SATELLITES.join(', ')}`,
+                                "Bring it to our agent in a Nairobi satellite town",
+                                `From ${fmt(dropOffFee)}, at ${SATELLITES.join(", ")}`,
                             ],
                         ].map(([t, d]) => (
                             <div
@@ -57,11 +57,11 @@ export function Pricing({ config }: { config: Config }) {
                 </h3>
                 <div className="overflow-x-auto rounded-[14px] border border-ps-line bg-ps-surface">
                     <Table
-                        head={['Weight', 'Delivery price (KSh)']}
+                        head={["Weight", "Delivery price (KSh)"]}
                         rows={GENERAL.map((x) => (
                             <tr
                                 key={x.id}
-                                className={`group ${x.perKg ? 'bg-ps-soft text-ps-softink' : ''}`}
+                                className={`group ${x.perKg ? "bg-ps-soft text-ps-softink" : ""}`}
                             >
                                 <td className="border-b border-ps-line px-4 py-[13px] font-semibold group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]">
                                     {x.label}
@@ -92,7 +92,7 @@ export function Pricing({ config }: { config: Config }) {
                             className="rounded-xl border border-ps-line bg-ps-surface px-[18px]"
                         >
                             <summary className="flex min-h-[52px] cursor-pointer items-center justify-between gap-3 font-bold">
-                                {g.group.replace(', by weight', '')}
+                                {g.group.replace(", by weight", "")}
                                 <span className="font-semibold whitespace-nowrap text-ps-muted">
                                     {`from ${fmt(Math.min(...g.items.map((i) => i.p)))}`}
                                 </span>
@@ -100,7 +100,7 @@ export function Pricing({ config }: { config: Config }) {
                             <div className="mb-2.5 [&_td]:!px-2 [&_td]:!py-2.5 [&_td:first-child]:!pl-0 [&_td:last-child]:!pr-0 [&_th]:!px-2 [&_th]:!py-2.5 [&_th:first-child]:!pl-0 [&_th:last-child]:!pr-0">
                                 <Table
                                     small
-                                    head={['Item', 'Delivery', 'CBD pickup']}
+                                    head={["Item", "Delivery", "CBD pickup"]}
                                     rows={g.items.map((it) => (
                                         <tr key={it.id} className="group">
                                             <td className="border-b border-ps-line px-4 py-[13px] group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]">
@@ -111,7 +111,7 @@ export function Pricing({ config }: { config: Config }) {
                                             </td>
                                             <td className="border-b border-ps-line px-4 py-[13px] text-right group-last:border-b-0 max-sm:px-1.5 max-sm:py-2.5 max-sm:text-[.86rem]">
                                                 {it.pu <= 100
-                                                    ? 'Free'
+                                                    ? "Free"
                                                     : num(it.pu + 50)}
                                             </td>
                                         </tr>

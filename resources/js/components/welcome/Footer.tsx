@@ -8,9 +8,7 @@ export function Footer({ wa }: { wa: string }) {
             className={[
                 "bg-ps-band text-[.9rem] text-ps-bandmuted sm:text-[.94rem]",
                 "pt-8 pb-6 sm:pt-11 sm:pb-7",
-                // every link inside inherits the correct band-safe color
                 "[&_a]:text-ps-ink [&_a]:underline-offset-2 [&_a]:hover:underline",
-                // every <b> label inside flips correctly
                 "[&_b]:mb-1.5 [&_b]:block [&_b]:text-ps-ink",
             ].join(" ")}
         >
@@ -18,7 +16,6 @@ export function Footer({ wa }: { wa: string }) {
                 <div
                     className={[
                         "grid gap-6 sm:gap-7",
-                        // 1 col < 480, 2 col < 768, 4 col above
                         "grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-4",
                     ].join(" ")}
                 >

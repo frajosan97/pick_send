@@ -59,8 +59,9 @@ export function Hero({ config }: { config: Config }) {
 
     return (
         <section className="py-8 sm:py-12 md:py-14 lg:py-16">
-            <div className={`${WRAP} ${G400} items-start gap-8 sm:gap-10 lg:gap-12`}>
-                {/* ── Left column ─────────────────────────────── */}
+            <div
+                className={`${WRAP} ${G400} items-start gap-8 sm:gap-10 lg:gap-12`}
+            >
                 <div className="flex min-w-0 flex-col gap-4 sm:gap-5">
                     <span className={EYEBROW}>
                         The coast · the mountain · the Rift · the lake
@@ -134,9 +135,7 @@ export function Hero({ config }: { config: Config }) {
                     </ul>
                 </div>
 
-                {/* ── Right column ─────────────────────────────── */}
                 <div className="flex min-w-0 flex-col gap-3.5">
-                    {/* Where we go */}
                     <div
                         className="flex min-w-0 flex-col gap-1 rounded-[18px] border border-ps-line bg-ps-surface p-4 sm:px-5 sm:py-5"
                         aria-labelledby="board-h"
@@ -180,7 +179,6 @@ export function Hero({ config }: { config: Config }) {
                         </ul>
                     </div>
 
-                    {/* How it works */}
                     <div
                         className="rounded-[18px] border border-ps-line bg-ps-surface p-4 sm:px-5 sm:py-5"
                         aria-labelledby="how-h"

@@ -1,7 +1,9 @@
 // src/components/pickandsend/TopStrip.tsx
-import { WRAP } from "./shared";
+import { WRAP, waHref } from "./shared";
 
 export function TopStrip({ wa }: { wa: string }) {
+    const displayPhone = wa || "0718 819 413";
+
     return (
         <div className="bg-ps-band py-1.5 text-[.78rem] text-ps-bandmuted sm:py-2 sm:text-[.85rem]">
             <div
@@ -22,9 +24,11 @@ export function TopStrip({ wa }: { wa: string }) {
                     Call or WhatsApp{" "}
                     <a
                         className="font-semibold text-ps-brandink underline-offset-2 hover:underline"
-                        href={`https://wa.me/${wa}`}
+                        href={waHref(wa)}
+                        target="_blank"
+                        rel="noopener"
                     >
-                        <b>0718 819 413</b>
+                        <b>{displayPhone}</b>
                     </a>
                 </span>
             </div>
