@@ -10,52 +10,36 @@ use App\Models\ItemGroup;
 use App\Models\PricingConstant;
 use App\Models\Route;
 use App\Models\Town;
-use Illuminate\Support\Facades\Cache;
 
 class PricingService
 {
-    private const CACHE_KEY = 'picksend.config.v1';
-
-    private const TTL = 3600;
-
-    /** In-request memo of the config, so price()/breakdown() don't rebuild it. */
-    private ?array $config = null;
-
     /* =================================================================
      |  CONFIG
      * =================================================================*/
 
     public function buildConfig(): array
     {
-        if ($this->config !== null) {
-            return $this->config;
-        }
-
-        return $this->config = Cache::remember(
-            self::CACHE_KEY,
-            self::TTL,
-            fn() => [
-                'constants' => $this->constants(),
-                'routes' => $this->routes(),
-                'towns' => $this->towns(),
-                'satellites' => $this->satellites(),
-                'general' => $this->general(),
-                'elec' => $this->elec(),
-                'faq' => $this->faq(),
-            ]
-        );
+        return [
+            'constants' => $this->constants(),
+            'routes' => $this->routes(),
+            'towns' => $this->towns(),
+            'satellites' => $this->satellites(),
+            'general' => $this->general(),
+            'elec' => $this->elec(),
+            'faq' => $this->faq(),
+        ];
     }
 
+    /** Kept for backwards compatibility — no-op now that cache is gone. */
     public static function flush(): void
     {
-        Cache::forget(self::CACHE_KEY);
+        // no cache to flush
     }
 
-    /** Useful in long-running tests / queue workers. */
+    /** Kept for backwards compatibility — no-op now that cache is gone. */
     public function refresh(): void
     {
-        self::flush();
-        $this->config = null;
+        // no cache to refresh
     }
 
     /* ----------------------------------------------------------------- */
