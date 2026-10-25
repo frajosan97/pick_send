@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\MerchantOrder;
 use App\Models\Parcel;
 use App\Models\ParcelEvent;
 use App\Models\Town;
@@ -67,6 +68,14 @@ class BookingService
                 'description' => 'Booked by ' . $data['sname'] . ' via web',
                 'happened_at' => now(),
             ]);
+
+            // NEW: if the sender is a merchant, attach the parcel to a
+            // merchant order. Runs inside the same transaction, so a
+            // failure here rolls back the whole booking — no orphan
+            // parcels without their merchant-order ledger row.
+            if ($sender !== null) {
+                app(MerchantOrderService::class)->attachParcel($parcel, $sender);
+            }
 
             return $parcel;
         });

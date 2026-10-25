@@ -1,4 +1,4 @@
-// src/components/pickandsend/Block.tsx
+// src/components/welcome/Block.tsx
 import type { ReactNode } from "react";
 
 export function Block({

@@ -42,7 +42,16 @@ type Parcel = {
     status: string;
     total: number;
 };
-type Order = { id: number; status: string; total: number };
+
+// Updated to match the new backend payload
+type MerchantOrder = {
+    id: number;
+    tracking_no: string | null;
+    recipient_name: string | null;
+    status: string | null;
+    total: number;
+};
+
 type SupplyReq = { id: number; status: string };
 type Payment = {
     id: number;
@@ -58,7 +67,7 @@ type Props = {
     user: UserDetail;
     recipients: Recipient[];
     parcels: Parcel[];
-    merchant_orders: Order[];
+    merchant_orders: MerchantOrder[];
     supply_requests: SupplyReq[];
     payments: Payment[];
     parcel_events: Event[];
@@ -771,10 +780,11 @@ export default function Show({
                                     <table className="ps-table w-full text-sm">
                                         <thead>
                                             <tr>
-                                                <th>Order</th>
+                                                <th>Parcel (Tracking)</th>
+                                                <th>Recipient</th>
                                                 <th>Status</th>
                                                 <th className="text-right">
-                                                    Total
+                                                    COD Amount
                                                 </th>
                                             </tr>
                                         </thead>
@@ -784,15 +794,42 @@ export default function Show({
                                                     key={o.id}
                                                     className="hover:bg-neutral-50/60 dark:hover:bg-neutral-800/40"
                                                 >
-                                                    <td className="font-mono text-xs">
-                                                        #{o.id}
+                                                    <td>
+                                                        {/* If we have the tracking_no, we can link directly to the parcel */}
+                                                        {o.tracking_no ? (
+                                                            <Link
+                                                                href={route(
+                                                                    "admin.parcels.show",
+                                                                    // We pass the tracking number or you can update backend to pass the parcel ID directly
+                                                                    // assuming you have a route that accepts tracking_no or id
+                                                                    o.tracking_no,
+                                                                )}
+                                                                className="font-mono text-xs font-semibold hover:underline"
+                                                            >
+                                                                {o.tracking_no}
+                                                            </Link>
+                                                        ) : (
+                                                            <span className="text-muted-foreground italic text-xs">
+                                                                Deleted Parcel
+                                                            </span>
+                                                        )}
                                                     </td>
                                                     <td>
-                                                        <StatusPill
-                                                            status={o.status}
-                                                        />
+                                                        {o.recipient_name ??
+                                                            "—"}
                                                     </td>
-                                                    <td className="text-right font-mono">
+                                                    <td>
+                                                        {o.status ? (
+                                                            <StatusPill
+                                                                status={
+                                                                    o.status
+                                                                }
+                                                            />
+                                                        ) : (
+                                                            "—"
+                                                        )}
+                                                    </td>
+                                                    <td className="text-right font-mono font-medium">
                                                         {money(o.total)}
                                                     </td>
                                                 </tr>

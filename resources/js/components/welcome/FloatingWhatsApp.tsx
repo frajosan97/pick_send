@@ -1,4 +1,4 @@
-// src/components/pickandsend/FloatingWhatsApp.tsx
+// src/components/welcome/FloatingWhatsApp.tsx
 import { useWhatsApp, waHref } from "./shared";
 
 export function FloatingWhatsApp({ typing }: { typing: boolean }) {

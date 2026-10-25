@@ -10,13 +10,16 @@ class MerchantOrder extends Model
 {
     use SoftDeletes;
 
+    /**
+     * merchant_id — who owns the ledger row
+     * parcel_id   — which parcel it points at
+     *
+     * Everything else (customer_name, cod_amount, status, …) is read
+     * from the parcel via ->parcel — no duplication, no drift.
+     */
     protected $fillable = [
         'merchant_id',
         'parcel_id',
-        'customer_name',
-        'customer_phone',
-        'cod_amount',
-        'status',
     ];
 
     public function merchant(): BelongsTo

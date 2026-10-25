@@ -46,11 +46,16 @@ class HandleInertiaRequests extends Middleware
                 'whatsapp' => (string) config('services.pick_and_send.whatsapp', ''),
             ],
             'flash' => [
-                'toast' => fn() => $request->session()->get('toast'),
-                'status' => fn() => $request->session()->get('status'),
                 'booking' => fn() => $request->session()->get('booking'),
                 'supply' => fn() => $request->session()->get('supply'),
+                'payment_confirmed' => fn() => $request->session()->get('payment_confirmed'),
                 'stk_error' => fn() => $request->session()->get('stk_error'),
+                'otp_attempted' => fn() => $request->session()->get('otp_attempted'),
+                'otp_sent' => fn() => $request->session()->get('otp_sent'),
+                'otp_phone' => fn() => $request->session()->get('otp_phone'),
+                'withdrawn' => fn() => $request->session()->get('withdrawn'),
+                'withdraw_receipt' => fn() => $request->session()->get('withdraw_receipt'),
+                'success' => fn() => $request->session()->get('success'),
                 'error' => fn() => $request->session()->get('error'),
             ],
         ];

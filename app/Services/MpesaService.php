@@ -165,7 +165,8 @@ class MpesaService
     public function processB2C(
         $phone,
         float $amount,
-        ?string $transactionId = null
+        ?string $transactionId = null,
+        ?string $reference = null
     ): array {
         $token = $this->generateToken();
 

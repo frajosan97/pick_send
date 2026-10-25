@@ -8,7 +8,6 @@ use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
@@ -186,7 +185,10 @@ class UserController extends Controller
             'roles:id,name',
             'recipients' => fn($q) => $q->latest()->limit(20),
             'sentParcels' => fn($q) => $q->latest()->limit(20),
-            'merchantOrders' => fn($q) => $q->latest()->limit(20),
+            // Eager load the related parcel data for merchant orders
+            'merchantOrders' => fn($q) => $q->with('parcel:id,tracking_no,status,recipient_name,total')
+                ->latest()
+                ->limit(20),
             'supplyRequests' => fn($q) => $q->latest()->limit(20),
             'payments' => fn($q) => $q->latest()->limit(20),
             'parcelEvents' => fn($q) => $q->latest()->limit(20),
@@ -217,10 +219,13 @@ class UserController extends Controller
                 'status' => $p->status,
                 'total' => (float) $p->total,
             ]),
+            // Correctly map the merchant order fields from the parcel relation
             'merchant_orders' => $user->merchantOrders->map(fn($o) => [
                 'id' => $o->id,
-                'status' => $o->status,
-                'total' => (float) $o->total,
+                'tracking_no' => $o->parcel?->tracking_no,
+                'recipient_name' => $o->parcel?->recipient_name,
+                'status' => $o->parcel?->status,
+                'total' => (float) ($o->parcel?->total ?? 0),
             ]),
             'supply_requests' => $user->supplyRequests->map(fn($s) => [
                 'id' => $s->id,

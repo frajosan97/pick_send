@@ -1,4 +1,4 @@
-// src/components/pickandsend/Track.tsx
+// src/components/welcome/Track.tsx
 import { useState } from "react";
 import { Block } from "./Block";
 import { SectionHead } from "./SectionHead";

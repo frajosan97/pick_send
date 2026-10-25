@@ -1,4 +1,4 @@
-// src/components/pickandsend/Faq.tsx
+// src/components/welcome/Faq.tsx
 import type { Config } from "@/types/config";
 import { Block } from "./Block";
 import { SectionHead } from "./SectionHead";

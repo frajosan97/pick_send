@@ -1,52 +1,54 @@
-// src/components/pickandsend/Merchants.tsx
-import { useForm, router } from "@inertiajs/react";
+// src/components/welcome/Merchants.tsx
+import { useState } from "react";
+import { useForm, usePage } from "@inertiajs/react";
 import { Block } from "./Block";
 import { SectionHead } from "./SectionHead";
-import { Fld, Table } from "./FormBits";
-import {
-    CARD,
-    CHECKS,
-    EYEBROW,
-    G230,
-    G400,
-    GHOST,
-    H3,
-    HINT,
-    M_PESA_BADGE,
-    PAY,
-    PILLS,
-    PRIMARY,
-    TD,
-    WRAP,
-} from "./shared";
-import type { AuthUser, Flash, MerchantData } from "./shared";
-import { fmt } from "@/lib/pricing";
+import { Fld } from "./FormBits";
+import { CARD, CHECKS, G400, H3, HINT, PRIMARY, WRAP } from "./shared";
+import { useWhatsApp } from "./shared";
+import type { AuthUser, Flash } from "./shared";
+import { MerchantSignupModal } from "./MerchantSignupModal";
 
 export function Merchants({
     user,
-    merchant,
     flash,
 }: {
     user: AuthUser | null;
-    merchant: MerchantData | null;
     flash: Flash;
 }) {
-    const merchantUser = user?.is_merchant ? user : null;
+    const [signupOpen, setSignupOpen] = useState(false);
+    const wa = useWhatsApp();
+
+    // Hooks must run unconditionally — early return is after all of them.
     const otpForm = useForm({ phone: "", code: "" });
-    const requestingOtp = flash?.otp_sent === true;
+    const pageErrors = usePage().props.errors as Record<
+        string,
+        string | undefined
+    >;
+
+    // Hide the entire section for signed-in merchants — the dashboard
+    // lives on the /merchants route now, not here.
+    if (user?.is_merchant) return null;
+
+    const otpSent = flash?.otp_sent === true;
+    const otpAttempted = flash?.otp_attempted === true;
+
+    const sendError =
+        pageErrors.otp ?? pageErrors.sms ?? otpForm.errors.phone ?? undefined;
+    const codeError = otpForm.errors.code;
+
+    const showCodeField = otpSent && !sendError;
 
     const requestOtp = (e: React.FormEvent) => {
         e.preventDefault();
-        otpForm.post("/merchant/otp", { preserveScroll: true });
+        otpForm.post("/merchants/otp", { preserveScroll: true });
     };
     const verifyOtp = (e: React.FormEvent) => {
         e.preventDefault();
-        otpForm.post("/merchant/verify", { preserveScroll: true });
+        otpForm.post("/merchants/verify", { preserveScroll: true });
     };
-    const logout = () =>
-        router.post("/merchant/logout", {}, { preserveScroll: true });
-    const withdraw = () =>
-        router.post("/merchant/withdraw", {}, { preserveScroll: true });
+
+    const onSubmit = showCodeField ? verifyOtp : requestOtp;
 
     return (
         <Block id="merchants" tone="tint">
@@ -57,228 +59,120 @@ export function Merchants({
                     text="Sell with Cash on Delivery to customers across Kenya. Log in to see every order and your wallet."
                 />
 
-                {!merchantUser ? (
-                    <div className={`${G400} items-start gap-8 lg:gap-12`}>
-                        <ul className={`${CHECKS} min-w-0`}>
-                            <li>
-                                <b>Your customer pays our M-PESA Till,</b> never
-                                the agent and never in cash.
-                            </li>
-                            <li>
-                                <b>Released only when</b> the code matches and
-                                the payment is confirmed.
-                            </li>
-                            <li>
-                                <b>Money in your wallet instantly,</b> less
-                                1.6%. Withdraw to M-PESA any time.
-                            </li>
-                            <li>
-                                <b>Free pickup from your CBD shop,</b> however
-                                many parcels you send.
-                            </li>
-                            <li>
-                                <b>Not collected in 7 days?</b> The parcel comes
-                                back to you. A return fee applies.
-                            </li>
-                        </ul>
-                        <form
-                            className={`${CARD} min-w-0`}
-                            onSubmit={requestingOtp ? verifyOtp : requestOtp}
+                <div className={`${G400} items-start gap-8 lg:gap-12`}>
+                    <ul className={`${CHECKS} min-w-0`}>
+                        <li>
+                            <b>Your customer pays our M-PESA Till,</b> never the
+                            agent and never in cash.
+                        </li>
+                        <li>
+                            <b>Released only when</b> the code matches and the
+                            payment is confirmed.
+                        </li>
+                        <li>
+                            <b>Money in your wallet instantly,</b> less 1.6%.
+                            Withdraw to M-PESA any time.
+                        </li>
+                        <li>
+                            <b>Free pickup from your CBD shop,</b> however many
+                            parcels you send.
+                        </li>
+                        <li>
+                            <b>Not collected in 7 days?</b> The parcel comes
+                            back to you. A return fee applies.
+                        </li>
+                    </ul>
+
+                    <form className={`${CARD} min-w-0`} onSubmit={onSubmit}>
+                        <h3
+                            className={`text-[clamp(1.1rem,2.2vw,1.25rem)] ${H3}`}
                         >
-                            <h3
-                                className={`text-[clamp(1.1rem,2.2vw,1.25rem)] ${H3}`}
-                            >
-                                Merchant log in
-                            </h3>
+                            Merchant log in
+                        </h3>
+
+                        <Fld
+                            id="m-phone"
+                            label="M-PESA phone number"
+                            type="tel"
+                            placeholder="07XX XXX XXX"
+                            autoComplete="tel"
+                            value={otpForm.data.phone}
+                            onChange={(e: any) =>
+                                otpForm.setData("phone", e.target.value)
+                            }
+                            error={otpForm.errors.phone}
+                        />
+
+                        {showCodeField && (
                             <Fld
-                                id="m-phone"
-                                label="M-PESA phone number"
-                                type="tel"
-                                placeholder="07XX XXX XXX"
-                                autoComplete="tel"
-                                value={otpForm.data.phone}
+                                id="m-code"
+                                label="6-digit code we sent you"
+                                inputMode="numeric"
+                                value={otpForm.data.code}
                                 onChange={(e: any) =>
-                                    otpForm.setData("phone", e.target.value)
+                                    otpForm.setData("code", e.target.value)
                                 }
-                                error={otpForm.errors.phone}
+                                error={codeError}
                             />
-                            {requestingOtp && (
-                                <Fld
-                                    id="m-code"
-                                    label="6-digit code we sent you"
-                                    inputMode="numeric"
-                                    value={otpForm.data.code}
-                                    onChange={(e: any) =>
-                                        otpForm.setData("code", e.target.value)
-                                    }
-                                    error={otpForm.errors.code}
-                                />
-                            )}
-                            <button
-                                className={`${PRIMARY} w-full sm:w-auto`}
-                                type="submit"
-                                disabled={otpForm.processing}
+                        )}
+
+                        <button
+                            className={`${PRIMARY} w-full sm:w-auto`}
+                            type="submit"
+                            disabled={otpForm.processing}
+                        >
+                            {otpForm.processing
+                                ? "Sending…"
+                                : showCodeField
+                                  ? "Verify and log in"
+                                  : "Send code"}
+                        </button>
+
+                        {showCodeField && (
+                            <span className={HINT} role="status">
+                                Code sent. Check your messages.
+                            </span>
+                        )}
+                        {otpAttempted && !showCodeField && !sendError && (
+                            <span className={HINT} role="status">
+                                If this number belongs to a merchant, a code is
+                                on its way.
+                            </span>
+                        )}
+                        {sendError && (
+                            <span
+                                className={`${HINT} text-ps-danger`}
+                                role="alert"
                             >
-                                {otpForm.processing
-                                    ? "Sending…"
-                                    : requestingOtp
-                                      ? "Verify and log in"
-                                      : "Send code"}
-                            </button>
+                                {sendError}
+                            </span>
+                        )}
+                        {!otpAttempted && !sendError && (
                             <span className={HINT}>
                                 We text you a code each time. No password to
                                 remember.
                             </span>
-                        </form>
-                    </div>
-                ) : (
-                    <div className="min-w-0 rounded-[18px] border border-ps-line bg-ps-surface p-4 sm:p-6">
-                        {/* Header */}
-                        <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-                            <div className="min-w-0">
-                                <span className={EYEBROW}>Signed in</span>
-                                <h3
-                                    className={`text-[clamp(1.1rem,2.4vw,1.3rem)] break-words ${H3}`}
-                                >
-                                    {merchantUser.business_name ??
-                                        merchantUser.name}
-                                </h3>
-                            </div>
+                        )}
+
+                        {/* NEW: merchant signup CTA */}
+                        <div className="mt-2 border-t border-ps-line pt-3">
                             <button
                                 type="button"
-                                className={`${GHOST} w-auto px-4`}
-                                onClick={logout}
+                                onClick={() => setSignupOpen(true)}
+                                className="text-left text-[.9rem] font-semibold text-ps-brandink underline-offset-2 hover:underline"
                             >
-                                Log out
+                                Become a merchant? Request via WhatsApp
                             </button>
                         </div>
-
-                        {/* Wallet Grid */}
-                        <div className={G230}>
-                            {(
-                                [
-                                    [
-                                        "Wallet, ready to withdraw",
-                                        fmt(merchant?.wallet ?? 0),
-                                        null,
-                                        true,
-                                    ],
-                                    [
-                                        "Waiting for customers to collect",
-                                        fmt(merchant?.waiting ?? 0),
-                                        null,
-                                        false,
-                                    ],
-                                    [
-                                        "Withdrawn this month",
-                                        fmt(merchant?.withdrawn_month ?? 0),
-                                        null,
-                                        false,
-                                    ],
-                                    [
-                                        "Pick&Send points",
-                                        String(merchant?.points ?? 0),
-                                        "Worth KSh 1 off each on delivery",
-                                        false,
-                                    ],
-                                ] as [string, string, string | null, boolean][]
-                            ).map(([label, v, sub, main]) => (
-                                <div
-                                    key={label}
-                                    className={`flex min-w-0 flex-col gap-1.5 rounded-[14px] border p-4 sm:p-[18px] ${main ? "border-transparent bg-ps-soft" : "border-ps-line"}`}
-                                >
-                                    <span
-                                        className={`text-[.9rem] font-semibold ${main ? "text-ps-softink" : "text-ps-muted"}`}
-                                    >
-                                        {label}
-                                    </span>
-                                    <b className="text-[clamp(1.4rem,3vw,1.7rem)] leading-tight font-extrabold text-ps-brandink tabular-nums">
-                                        {v}
-                                    </b>
-                                    {sub && <span className={HINT}>{sub}</span>}
-                                    {main && (
-                                        <>
-                                            <button
-                                                type="button"
-                                                className={`${PAY} mt-1 self-start w-full sm:w-auto`}
-                                                onClick={withdraw}
-                                                disabled={
-                                                    (merchant?.wallet ?? 0) <= 0
-                                                }
-                                            >
-                                                <span className={M_PESA_BADGE}>
-                                                    M-PESA
-                                                </span>
-                                                Withdraw
-                                            </button>
-                                            {flash?.withdrawn && (
-                                                <span
-                                                    className={HINT}
-                                                    role="status"
-                                                >
-                                                    Withdrawal sent to your
-                                                    M-PESA.
-                                                </span>
-                                            )}
-                                        </>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Orders Table */}
-                        <h3
-                            className={`mt-6 mb-2.5 text-[clamp(1.1rem,2.4vw,1.3rem)] ${H3}`}
-                        >
-                            Orders
-                        </h3>
-
-                        <div className="overflow-x-auto rounded-[14px] border border-ps-line bg-ps-surface">
-                            <Table
-                                head={[
-                                    "Tracking no.",
-                                    "Recipient",
-                                    "Town",
-                                    "Status",
-                                    "COD",
-                                ]}
-                                rows={(merchant?.orders ?? []).map((o) => (
-                                    <tr key={o.tracking_no} className="group">
-                                        <td className={`${TD} font-mono`}>
-                                            {o.tracking_no}
-                                        </td>
-                                        <td className={TD}>
-                                            {o.recipient_name}
-                                        </td>
-                                        <td className={TD}>{o.town}</td>
-                                        <td className={TD}>
-                                            <span
-                                                className={
-                                                    PILLS[
-                                                        o.status === "at_pickup"
-                                                            ? "wait"
-                                                            : o.status ===
-                                                                "in_transit"
-                                                              ? "move"
-                                                              : "done"
-                                                    ]
-                                                }
-                                            >
-                                                {o.status}
-                                            </span>
-                                        </td>
-                                        <td
-                                            className={`${TD} text-right whitespace-nowrap`}
-                                        >
-                                            {fmt(o.cod_amount)}
-                                        </td>
-                                    </tr>
-                                ))}
-                            />
-                        </div>
-                    </div>
-                )}
+                    </form>
+                </div>
             </div>
+
+            <MerchantSignupModal
+                open={signupOpen}
+                onClose={() => setSignupOpen(false)}
+                whatsapp={wa}
+            />
         </Block>
     );
 }

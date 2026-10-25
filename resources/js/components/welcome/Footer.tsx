@@ -1,4 +1,4 @@
-// src/components/pickandsend/Footer.tsx
+// src/components/welcome/Footer.tsx
 import { Wordmark } from "../wordmark";
 import { WRAP, waHref, usePhone } from "./shared";
 

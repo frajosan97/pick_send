@@ -1,4 +1,4 @@
-// src/components/pickandsend/FormBits.tsx
+// src/components/welcome/FormBits.tsx
 import type { ReactNode } from "react";
 import { INPUT, HINT, H3, TH } from "./shared";
 

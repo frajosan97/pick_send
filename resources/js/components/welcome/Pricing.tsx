@@ -1,4 +1,4 @@
-// src/components/pickandsend/Pricing.tsx
+// src/components/welcome/Pricing.tsx
 import type { Config } from "@/types/config";
 import { fmt, num } from "@/lib/pricing";
 import { Block } from "./Block";

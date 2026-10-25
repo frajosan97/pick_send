@@ -1,4 +1,4 @@
-// src/components/pickandsend/TopStrip.tsx
+// src/components/welcome/TopStrip.tsx
 import { WRAP, waHref } from "./shared";
 
 export function TopStrip({ wa }: { wa: string }) {

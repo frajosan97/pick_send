@@ -1,4 +1,4 @@
-// src/components/pickandsend/shared.tsx
+// src/components/welcome/shared.tsx
 import { usePage } from "@inertiajs/react";
 import type { AppConfig } from "@/types/pickandsend";
 

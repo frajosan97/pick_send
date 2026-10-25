@@ -69,8 +69,24 @@ export type Flash = {
     supply?: FlashSupply;
     payment_confirmed?: boolean;
     stk_error?: string | null;
+
+    /**
+     * Set on every accepted OTP request — tells the UI to show the code
+     * input. Does NOT imply an SMS was actually sent (anti-enumeration).
+     */
+    otp_attempted?: boolean;
+    /**
+     * Set only when an OTP SMS was actually dispatched by MerchantService.
+     * Absent on non-merchant numbers, cooldown, and delivery failure.
+     */
     otp_sent?: boolean;
+    /** The normalised phone the OTP flow is pinned to. */
+    otp_phone?: string;
+
     withdrawn?: boolean;
+    /** M-PESA receipt number from the payout, when available. */
+    withdraw_receipt?: string | null;
+
     success?: string;
     error?: string;
 };

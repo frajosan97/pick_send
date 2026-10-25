@@ -51,7 +51,9 @@ Route::get('/track/{tracking}', [TrackingController::class, 'show'])->name('trac
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('merchant')->name('merchant.')->group(function () {
+Route::prefix('merchants')->name('merchants.')->group(function () {
+    Route::get('/', [MerchantController::class, 'index'])->name('index');
+
     Route::post('/otp', [MerchantController::class, 'requestOtp'])->name('otp');
     Route::post('/verify', [MerchantController::class, 'verifyOtp'])->name('verify');
     Route::post('/logout', [MerchantController::class, 'logout'])->name('logout');

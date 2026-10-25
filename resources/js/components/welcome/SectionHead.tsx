@@ -1,4 +1,4 @@
-// src/components/pickandsend/SectionHead.tsx
+// src/components/welcome/SectionHead.tsx
 import type { ReactNode } from "react";
 import { EYEBROW } from "./shared";
 

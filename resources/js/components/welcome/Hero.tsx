@@ -1,4 +1,4 @@
-// src/components/pickandsend/Hero.tsx
+// src/components/welcome/Hero.tsx
 import type { CSSProperties, ReactNode } from "react";
 import {
     EYEBROW,

@@ -42,6 +42,13 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, PasskeyAuthenticatable, TwoFactorAuthenticatable, HasRoles, SoftDeletes;
 
+    protected $appends = [
+        'is_merchant',
+        'is_admin',
+        'is_staff',
+        'is_customer',
+    ];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -120,6 +127,26 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
         return $this->hasRole('customer');
     }
 
+    public function getIsAdminAttribute(): bool
+    {
+        return $this->isAdmin();
+    }
+
+    public function getIsMerchantAttribute(): bool
+    {
+        return $this->isMerchant();
+    }
+
+    public function getIsStaffAttribute(): bool
+    {
+        return $this->isStaff();
+    }
+
+    public function getIsCustomerAttribute(): bool
+    {
+        return $this->isCustomer();
+    }
+
     /* ---------- helpers ---------- */
     public function walletOrCreate(): Wallet
     {
@@ -131,5 +158,23 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
         return $this->hasMany(SupplyRequest::class)
             ->where('recurring', true)
             ->whereNull('parent_id');
+    }
+
+    /**
+     * Determine if the user has verified their phone number.
+     */
+    public function hasVerifiedPhone(): bool
+    {
+        return !is_null($this->phone_verified_at);
+    }
+
+    /**
+     * Mark the user's phone as verified.
+     */
+    public function markPhoneAsVerified(): bool
+    {
+        return $this->forceFill([
+            'phone_verified_at' => $this->freshTimestamp(),
+        ])->save();
     }
 }

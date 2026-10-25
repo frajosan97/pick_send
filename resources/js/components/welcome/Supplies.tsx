@@ -1,4 +1,4 @@
-// src/components/pickandsend/Supplies.tsx
+// src/components/welcome/Supplies.tsx
 import { useForm } from "@inertiajs/react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";

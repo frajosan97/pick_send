@@ -1,4 +1,4 @@
-// src/components/pickandsend/SendParcel.tsx
+// src/components/welcome/SendParcel.tsx
 import { useCallback, useMemo, useState } from "react";
 import { useForm } from "@inertiajs/react";
 import { toast } from "sonner";
