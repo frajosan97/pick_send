@@ -80,11 +80,17 @@ class StoreParcelRequest extends FormRequest
                 in_array($opt, [Parcel::PAYMENT_COD_FEE, Parcel::PAYMENT_COD_FULL], true)
                 && $cod <= 0
             ) {
-                $v->errors()->add('cod', 'Enter the Cash on Delivery amount the recipient will pay on delivery.');
+                $v->errors()->add(
+                    'cod',
+                    'Enter the Cash on Delivery amount the recipient will pay on delivery.'
+                );
             }
 
             if ($opt === Parcel::PAYMENT_PREPAID && $cod > 0) {
-                $v->errors()->add('cod', 'Prepaid parcels cannot have a Cash on Delivery amount.');
+                $v->errors()->add(
+                    'cod',
+                    'Prepaid parcels cannot have a Cash on Delivery amount.'
+                );
             }
 
             if (
@@ -92,18 +98,134 @@ class StoreParcelRequest extends FormRequest
                 && $this->input('size') === 'kg'
                 && (float) $this->input('kg', 0) <= 0
             ) {
-                $v->errors()->add('kg', 'Enter the parcel weight in kg.');
+                $v->errors()->add(
+                    'kg',
+                    'Enter the parcel weight in kg.'
+                );
             }
         });
     }
 
+    /**
+     * Friendly names for every attribute. These names are used inside
+     * any default Laravel message (e.g. "The Recipient name field is required.").
+     */
+    public function attributes(): array
+    {
+        return [
+            // sender
+            'sname' => 'Sender name',
+            'sphone' => 'Sender phone',
+            'hand' => 'Handling option',
+            'point' => 'Pickup point',
+            'addr' => 'Sender address',
+            'count' => 'Parcel count',
+            'same' => 'Same recipient',
+
+            // recipient
+            'rname' => 'Recipient name',
+            'rphone' => 'Recipient phone',
+            'rtown' => 'Destination town',
+
+            // contents
+            'what' => 'Parcel contents',
+            'worth' => 'Parcel worth',
+            'kind' => 'Parcel kind',
+            'size' => 'Size',
+            'kg' => 'Weight (kg)',
+            'item' => 'Item',
+            'pack' => 'Packaging',
+
+            // payment
+            'paynum' => 'Payment phone',
+            'cod' => 'Cash on Delivery amount',
+            'payment_option' => 'Payment option',
+        ];
+    }
+
+    /**
+     * Custom messages — one per rule that needs friendlier wording.
+     * Anything not listed here falls back to the default message,
+     * using the friendly names from attributes().
+     */
     public function messages(): array
     {
         return [
-            'sphone.regex' => 'Enter a valid Kenyan mobile number (07XX XXX XXX).',
-            'rphone.regex' => 'Enter a valid Kenyan mobile number (07XX XXX XXX).',
-            'paynum.regex' => 'Enter a valid Kenyan mobile number (07XX XXX XXX).',
-            'rtown.required' => 'Choose a destination town.',
+            // ── sender ──────────────────────────────────────────────
+            'sname.required' => "Enter the sender's full name.",
+            'sname.string' => "Sender name must be text.",
+            'sname.max' => "Sender name is too long (max 120 characters).",
+
+            'sphone.required' => "Enter the sender's phone number.",
+            'sphone.string' => "Sender phone must be text.",
+            'sphone.regex' => "Enter a valid Kenyan mobile number (07XX XXX XXX).",
+
+            'hand.required' => "Choose how the parcel will be handed over.",
+            'hand.in' => "Handling option must be either drop-off or collect.",
+
+            'point.required' => "Enter the pickup point.",
+            'point.string' => "Pickup point must be text.",
+            'point.max' => "Pickup point is too long (max 200 characters).",
+
+            'addr.required_if' => "Enter the sender's address when the parcel is collected.",
+            'addr.string' => "Sender address must be text.",
+            'addr.max' => "Sender address is too long (max 200 characters).",
+
+            'count.integer' => "Parcel count must be a whole number.",
+            'count.min' => "You must send at least 1 parcel.",
+            'count.max' => "You cannot send more than 50 parcels at once.",
+
+            'same.boolean' => "The same-recipient flag must be true or false.",
+
+            // ── recipient ───────────────────────────────────────────
+            'rname.required' => "Enter the recipient's full name.",
+            'rname.string' => "Recipient name must be text.",
+            'rname.max' => "Recipient name is too long (max 120 characters).",
+
+            'rphone.required' => "Enter the recipient's phone number.",
+            'rphone.string' => "Recipient phone must be text.",
+            'rphone.regex' => "Enter a valid Kenyan mobile number (07XX XXX XXX).",
+
+            'rtown.required' => "Choose a destination town.",
+            'rtown.string' => "Destination town must be text.",
+            'rtown.max' => "Destination town is too long (max 100 characters).",
+
+            // ── contents ────────────────────────────────────────────
+            'what.required' => "Describe what is inside the parcel.",
+            'what.string' => "Parcel contents must be text.",
+            'what.max' => "Parcel description is too long (max 200 characters).",
+
+            'worth.required' => "Enter the value of the parcel.",
+            'worth.numeric' => "Parcel worth must be a number.",
+            'worth.min' => "Parcel worth must be at least KES 1.",
+            'worth.max' => "Parcel worth cannot exceed KES 1,000,000.",
+
+            'kind.required' => "Select the parcel kind (general or express).",
+            'kind.in' => "Parcel kind must be either general (g) or express (e).",
+
+            'size.string' => "Size must be text.",
+            'size.max' => "Size is too long (max 20 characters).",
+
+            'kg.numeric' => "Weight must be a number.",
+            'kg.min' => "Weight cannot be negative.",
+            'kg.max' => "Weight cannot exceed 100 kg.",
+
+            'item.string' => "Item must be text.",
+            'item.max' => "Item name is too long (max 50 characters).",
+
+            'pack.boolean' => "The packaging flag must be true or false.",
+
+            // ── payment ─────────────────────────────────────────────
+            'paynum.required' => "Enter the phone number that will pay for this parcel.",
+            'paynum.string' => "Payment phone must be text.",
+            'paynum.regex' => "Enter a valid Kenyan mobile number (07XX XXX XXX).",
+
+            'cod.numeric' => "Cash on Delivery amount must be a number.",
+            'cod.min' => "Cash on Delivery amount cannot be negative.",
+            'cod.max' => "Cash on Delivery amount cannot exceed KES 1,000,000.",
+
+            'payment_option.required' => "Choose a payment option.",
+            'payment_option.in' => "Invalid payment option selected.",
         ];
     }
 
