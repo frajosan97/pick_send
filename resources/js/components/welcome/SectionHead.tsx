@@ -25,7 +25,7 @@ export function SectionHead({
     children,
 }: SectionHeadProps) {
     return (
-        <div className={`flex flex-col gap-2 ${className}`}>
+        <div className={`flex flex-col gap-2 ${className} mb-4`}>
             <span className={band ? `${EYEBROW} !text-ps-key` : EYEBROW}>
                 {eyebrow}
             </span>
