@@ -11,7 +11,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $email = env('ADMIN_EMAIL', 'admin@picksend.co.ke');
-        $password = env('ADMIN_PASSWORD', 'Admin@12345');
+        $password = env('ADMIN_PASSWORD', 'PickSend@2026TestPassword');
 
         $admin = User::firstOrCreate(
             ['email' => $email],
